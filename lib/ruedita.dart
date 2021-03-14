@@ -30,6 +30,7 @@ class CustomLoaderScreenState extends State<CustomLoaderScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: redColor,
         body: SingleChildScrollView(
           child: Align(
             alignment: Alignment.topCenter,
@@ -44,20 +45,26 @@ class CustomLoaderScreenState extends State<CustomLoaderScreen> {
                 animationWidget(SpinKitPumpingHeart(color: Colors.green)),
                 animationWidget(SpinKitPulse(color: Colors.purple)),
                 animationWidget(SpinKitDoubleBounce(color: Colors.deepPurple)),
-                animationWidget(SpinKitWave(color: Colors.orange, type: SpinKitWaveType.start)),
+                animationWidget(SpinKitWave(
+                    color: Colors.orange, type: SpinKitWaveType.start)),
                 animationWidget(SpinKitThreeBounce(color: Colors.amberAccent)),
-                animationWidget(SpinKitWanderingCubes(color: Colors.blueAccent)),
+                animationWidget(
+                    SpinKitWanderingCubes(color: Colors.blueAccent)),
                 animationWidget(SpinKitCircle(color: Colors.brown)),
                 animationWidget(SpinKitFadingFour(color: Colors.cyan)),
                 animationWidget(SpinKitFadingCube(color: Colors.blueGrey)),
-                animationWidget(SpinKitCubeGrid(color: Colors.deepOrangeAccent)),
-                animationWidget(SpinKitFadingCube(color: Colors.lightGreenAccent)),
+                animationWidget(
+                    SpinKitCubeGrid(color: Colors.deepOrangeAccent)),
+                animationWidget(
+                    SpinKitFadingCube(color: Colors.lightGreenAccent)),
                 animationWidget(SpinKitRing(color: Colors.greenAccent)),
                 animationWidget(SpinKitDualRing(color: Colors.teal)),
                 animationWidget(SpinKitRipple(color: Colors.purple)),
                 animationWidget(SpinKitFadingGrid(color: Colors.orangeAccent)),
-                animationWidget(SpinKitFadingGrid(color: Colors.green, shape: BoxShape.rectangle)),
-                animationWidget(SpinKitHourGlass(color: Colors.deepOrangeAccent)),
+                animationWidget(SpinKitFadingGrid(
+                    color: Colors.green, shape: BoxShape.rectangle)),
+                animationWidget(
+                    SpinKitHourGlass(color: Colors.deepOrangeAccent)),
               ],
             ),
           ).paddingAll(16),
@@ -70,7 +77,10 @@ class CustomLoaderScreenState extends State<CustomLoaderScreen> {
     return Container(
       height: 80,
       width: 80,
-      decoration: boxDecorationWithRoundedCorners(boxShadow: defaultBoxShadow(), borderRadius: radius(12), backgroundColor: Colors.cyan),
+      decoration: boxDecorationWithRoundedCorners(
+          boxShadow: defaultBoxShadow(),
+          borderRadius: radius(12),
+          backgroundColor: Colors.cyan),
       child: widget,
     );
   }
