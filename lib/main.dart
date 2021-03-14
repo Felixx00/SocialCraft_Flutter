@@ -44,13 +44,3 @@ class MyHome extends StatelessWidget {
         );
   }
 }
-
-
-/*
-return List<Widget>[Center(
-      child: OutlinedButton(
-        child: Text("Login"),
-        onPressed: () => Navigator.pushNamed(context, "texto"),
-      ),
-    )];
-    */
