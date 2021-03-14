@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'text.dart';
-import 'ruedita.dart';
+import 'login.dart';
+import 'register.dart';
 import 'edit.dart';
 
 void main() {
@@ -11,10 +11,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(routes: <String, WidgetBuilder>{
-      'texto': (BuildContext context) => Texto(),
-      'ruedita': (BuildContext context) => CustomLoaderScreen(),
+      'login': (BuildContext context) => Login(),
+      'register': (BuildContext context) => Register(),
       'edit': (BuildContext context) => Edit(),
-    }, home: MyHome());
+    }, debugShowCheckedModeBanner: false, home: MyHome());
   }
 }
 
@@ -27,11 +27,11 @@ class MyHome extends StatelessWidget {
           children: <Widget>[
             OutlinedButton(
               child: Text("Login"),
-              onPressed: () => Navigator.pushNamed(context, "texto"),
+              onPressed: () => Navigator.pushNamed(context, "login"),
             ),
             OutlinedButton(
               child: Text("Register"),
-              onPressed: () => Navigator.pushNamed(context, "ruedita"),
+              onPressed: () => Navigator.pushNamed(context, "register"),
             ),
             OutlinedButton(
               child: Text("Edit"),

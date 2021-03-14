@@ -4,9 +4,9 @@
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(Texto());
+void main() => runApp(Register());
 
-class Texto extends StatelessWidget {
+class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,6 +19,7 @@ class Texto extends StatelessWidget {
           child: Text('Hello World'),
         ),
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
