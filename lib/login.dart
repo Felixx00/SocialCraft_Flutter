@@ -126,7 +126,7 @@ class Login extends StatelessWidget {
                         text: "¿No estas registrado?",
                         style: TextStyle(color: Color(0xFF757575))),
                     TextSpan(
-                        text: "Crear cuenta",
+                        text: "  Crear cuenta",
                         style: boldTextStyle(color: Colors.blue)),
                   ]).onTap(() {
                     Navigator.pushNamed(context, "register");
