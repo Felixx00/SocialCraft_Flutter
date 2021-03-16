@@ -1,25 +1,104 @@
-// Copyright 2018 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 
-void main() => runApp(Edit());
+class Edit extends StatefulWidget {
+  static String tag = '/EGProfileScreen';
 
-class Edit extends StatelessWidget {
+  @override
+  EditState createState() => EditState();
+}
+
+class EditState extends State<Edit> {
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  init() async {}
+
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Welcome to Flutter'),
-        ),
-        body: Center(
-          child: Text('Hello World'),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('SocialCraft'),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.blue,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.menu_rounded),
+            tooltip: 'Show Snackbar',
+            onPressed: () {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('Hola')));
+            },
+          ),
+        ],
       ),
-      debugShowCheckedModeBanner: false,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            16.height,
+            Stack(
+              children: [
+                CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.lightBlue,
+                    child: Text("?",
+                        style: boldTextStyle(size: 20, color: white))),
+                Positioned(
+                  bottom: 0,
+                  right: 5,
+                  child: CircleAvatar(
+                    backgroundColor: lightBlue,
+                    radius: 15,
+                    child: Icon(Icons.camera_alt_rounded,
+                        size: 20, color: blueColor),
+                  ).onTap(() async {
+                    //ImagePicker().getImage(source: ImageSource.gallery);
+                  }),
+                ),
+              ],
+            ).center(),
+            16.height,
+            Text("Username", style: boldTextStyle(size: 20)).center(),
+            2.height,
+            Text("Descripción", style: secondaryTextStyle(size: 14)).center(),
+            15.height,
+            new Align(
+              alignment: Alignment.centerRight,
+              child: ElevatedButton.icon(
+                icon: Icon(Icons.person_outline_sharp, size: 18),
+                label: Text('Editar Perfil'),
+              ),
+            ),
+          ],
+        ).paddingAll(16),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Buscar',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Perfil',
+          ),
+        ],
+        currentIndex: 2,
+        selectedItemColor: Colors.lightBlueAccent,
+      ),
     );
   }
 }
