@@ -5,6 +5,7 @@ import 'package:socialcraft/utils/images.dart';
 
 void main() => runApp(Login());
 
+// ignore: must_be_immutable
 class Login extends StatelessWidget {
   bool showPassword = false;
   FocusNode emailNode = FocusNode();
@@ -22,9 +23,8 @@ class Login extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(color: Colors.blue),
+                        child: Image.asset(socialcraft_logo,
+                            width: 100, height: 100),
                       ).cornerRadiusWithClipRRect(16).paddingTop(50),
                       8.height,
                       Text("SocialCraft", style: boldTextStyle(size: 32)),
@@ -50,7 +50,7 @@ class Login extends StatelessWidget {
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "Email or Phone number",
+                              hintText: "Nombre de usuario o Email",
                               hintStyle: secondaryTextStyle(size: 16),
                             ),
                           ).paddingOnly(left: 8, top: 2),
@@ -76,7 +76,7 @@ class Login extends StatelessWidget {
                                     color: Colors.grey),
                               ),
                               border: InputBorder.none,
-                              hintText: "Password",
+                              hintText: "contraseña",
                               hintStyle: secondaryTextStyle(size: 16),
                             ),
                           ).paddingOnly(left: 8, top: 2),
@@ -85,7 +85,7 @@ class Login extends StatelessWidget {
                             .paddingOnly(top: 16, bottom: 16),
                         Container(
                           alignment: Alignment.centerRight,
-                          child: Text("Forgot Password?",
+                          child: Text("¿Has olvidado la contraseña?",
                               style: boldTextStyle(color: Colors.blue)),
                         ).onTap(() {
                           //HMForgotPasswordScreen().launch(context);
@@ -97,11 +97,11 @@ class Login extends StatelessWidget {
                 Container(
                   child: Column(
                     children: [
-                      CommonButton("Sign In")
+                      CommonButton("Iniciar sesión")
                           .paddingOnly(top: 16, bottom: 16)
                           .onTap(() {
                         finish(context);
-                        //HMDashBoard().launch(context);
+                        Navigator.pushNamed(context, "edit");
                       }),
                       Container(
                         width: context.width(),
@@ -110,7 +110,7 @@ class Login extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(google_login, width: 25, height: 25),
-                            Text("Connect with google",
+                            Text("Conectar con google",
                                     style: TextStyle(
                                         color: Color(0xFF757575), fontSize: 16))
                                 .paddingAll(16),
@@ -123,10 +123,10 @@ class Login extends StatelessWidget {
                 Container(
                   child: createRichText([
                     TextSpan(
-                        text: "You don't have an account?",
+                        text: "¿No estas registrado?",
                         style: TextStyle(color: Color(0xFF757575))),
                     TextSpan(
-                        text: "Sign Up",
+                        text: "Crear cuenta",
                         style: boldTextStyle(color: Colors.blue)),
                   ]).onTap(() {
                     Navigator.pushNamed(context, "register");
