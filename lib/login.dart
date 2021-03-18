@@ -5,16 +5,36 @@ import 'package:socialcraft/utils/images.dart';
 
 void main() => runApp(Login());
 
-// ignore: must_be_immutable
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  static String tag = '/login';
+
+  @override
+  LoginState createState() => LoginState();
+}
+
+class LoginState extends State<Login> {
   bool showPassword = false;
   FocusNode emailNode = FocusNode();
   FocusNode passwordNode = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  init() async {}
+
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Center(
             child: Column(
@@ -38,6 +58,7 @@ class Login extends StatelessWidget {
                       children: [
                         Container(
                           //decoration: BoxDecoration(color: appStore.isDarkModeOn ? appStore.cardColor : Colors.grey[100]),
+                          decoration: BoxDecoration(color: Colors.grey[100]),
                           child: TextFormField(
                             focusNode: emailNode,
                             autofocus: false,
@@ -57,6 +78,7 @@ class Login extends StatelessWidget {
                         ).cornerRadiusWithClipRRect(12),
                         Container(
                           //decoration: BoxDecoration(color: appStore.isDarkModeOn ? appStore.cardColor : Colors.grey[100]),
+                          decoration: BoxDecoration(color: Colors.grey[100]),
                           child: TextFormField(
                             focusNode: passwordNode,
                             autofocus: false,
@@ -67,7 +89,7 @@ class Login extends StatelessWidget {
                               suffixIcon: GestureDetector(
                                 onTap: () {
                                   showPassword = !showPassword;
-                                  //setState(() {});
+                                  setState(() {});
                                 },
                                 child: Icon(
                                     showPassword
@@ -76,7 +98,7 @@ class Login extends StatelessWidget {
                                     color: Colors.grey),
                               ),
                               border: InputBorder.none,
-                              hintText: "contraseña",
+                              hintText: "Contraseña",
                               hintStyle: secondaryTextStyle(size: 16),
                             ),
                           ).paddingOnly(left: 8, top: 2),
@@ -88,7 +110,7 @@ class Login extends StatelessWidget {
                           child: Text("¿Has olvidado la contraseña?",
                               style: boldTextStyle(color: Colors.blue)),
                         ).onTap(() {
-                          //HMForgotPasswordScreen().launch(context);
+                          Navigator.pushNamed(context, "forgotPassword");
                         }),
                       ],
                     ),
@@ -101,7 +123,7 @@ class Login extends StatelessWidget {
                           .paddingOnly(top: 16, bottom: 16)
                           .onTap(() {
                         finish(context);
-                        Navigator.pushNamed(context, "edit");
+                        Navigator.pushNamed(context, "perfil");
                       }),
                       Container(
                         width: context.width(),
@@ -130,7 +152,7 @@ class Login extends StatelessWidget {
                         style: boldTextStyle(color: Colors.blue)),
                   ]).onTap(() {
                     Navigator.pushNamed(context, "register");
-                    //setState(() {});
+                    setState(() {});
                   }),
                 ).paddingOnly(top: 32, bottom: 32)
               ],
