@@ -131,7 +131,7 @@ class LoginState extends State<Login> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(google_login, width: 25, height: 25),
+                            Image.asset(google_logo, width: 25, height: 25),
                             Text("Conectar con google",
                                     style: TextStyle(
                                         color: Color(0xFF757575), fontSize: 16))
