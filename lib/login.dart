@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/images.dart';
+import 'package:socialcraft/utils/fonts.dart';
 
 void main() => runApp(Login());
 
 class Login extends StatefulWidget {
-  static String tag = '/login';
-
   @override
   LoginState createState() => LoginState();
 }
@@ -46,8 +45,11 @@ class LoginState extends State<Login> {
                         child: Image.asset(socialcraft_logo,
                             width: 100, height: 100),
                       ).cornerRadiusWithClipRRect(16).paddingTop(50),
-                      8.height,
-                      Text("SocialCraft", style: boldTextStyle(size: 32)),
+                      Container(
+                        child: Image.asset(socialcraft_logo_letras,
+                            width: 300, height: 100),
+                      ).cornerRadiusWithClipRRect(16).paddingTop(1),
+                      //Text("SocialCraft", style: boldTextStyle(size: 32)),
                     ],
                   ),
                 ),
@@ -108,7 +110,7 @@ class LoginState extends State<Login> {
                         Container(
                           alignment: Alignment.centerRight,
                           child: Text("¿Has olvidado la contraseña?",
-                              style: boldTextStyle(color: Colors.blue)),
+                              style: boldTextStyle(color: azul_logo)),
                         ).onTap(() {
                           Navigator.pushNamed(context, "forgotPassword");
                         }),

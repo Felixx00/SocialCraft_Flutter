@@ -52,6 +52,7 @@ flutter:
   assets:
     - images/google_login.png
     - images/socialcraft_logo.png
+    - images/socialcraft_logo_letras.png
     - images/insignia.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
