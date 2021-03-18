@@ -123,7 +123,8 @@ class PerfilState extends State<Perfil> {
               ),
               icon: Icon(Icons.person_outline_sharp, size: 18),
               onPressed: () {
-                print('Pressed');
+                Navigator.pushNamed(context, "editar");
+                setState(() {});
               },
             ).center(),
             Divider(

@@ -3,6 +3,7 @@ import 'login.dart';
 import 'register.dart';
 import 'perfil.dart';
 import 'forgotPassword.dart';
+import 'editar.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       'register': (BuildContext context) => Register(),
       'perfil': (BuildContext context) => Perfil(),
       'forgotPassword': (BuildContext context) => ForgotPassword(),
+      'editar': (BuildContext context) => Editar(),
     }, debugShowCheckedModeBanner: false, home: MyHome());
   }
 }
