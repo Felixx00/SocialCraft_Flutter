@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'register.dart';
-import 'edit.dart';
+import 'perfil.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(routes: <String, WidgetBuilder>{
       'login': (BuildContext context) => Login(),
       'register': (BuildContext context) => Register(),
-      'edit': (BuildContext context) => Edit(),
+      'perfil': (BuildContext context) => Perfil(),
     }, debugShowCheckedModeBanner: false, home: MyHome());
   }
 }
@@ -34,8 +34,8 @@ class MyHome extends StatelessWidget {
               onPressed: () => Navigator.pushNamed(context, "register"),
             ),
             OutlinedButton(
-              child: Text("Edit"),
-              onPressed: () => Navigator.pushNamed(context, "edit"),
+              child: Text("Perfil"),
+              onPressed: () => Navigator.pushNamed(context, "perfil"),
             ),
           ],
         )

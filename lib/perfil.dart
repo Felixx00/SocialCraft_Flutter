@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class Edit extends StatefulWidget {
+class Perfil extends StatefulWidget {
   static String tag = '/EGProfileScreen';
 
   @override
-  EditState createState() => EditState();
+  PerfilState createState() => PerfilState();
 }
 
-class EditState extends State<Edit> {
+class PerfilState extends State<Perfil> {
   @override
   void initState() {
     super.initState();
