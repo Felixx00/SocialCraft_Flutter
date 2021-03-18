@@ -4,8 +4,6 @@ import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
 
-void main() => runApp(Login());
-
 class Login extends StatefulWidget {
   @override
   LoginState createState() => LoginState();

@@ -16,9 +16,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
     init();
   }
 
-  Future<void> init() async {
-    //
-  }
+  init() async {}
 
   @override
   void setState(fn) {
