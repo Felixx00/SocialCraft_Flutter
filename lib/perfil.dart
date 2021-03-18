@@ -47,32 +47,47 @@ class PerfilState extends State<Perfil> {
           children: [
             16.height,
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Colors.lightBlue,
-                  child:
-                      Text("?", style: boldTextStyle(size: 20, color: white))),
+              Stack(
+                children: [
+                  CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.blue,
+                      child: Text("?",
+                          style: boldTextStyle(size: 20, color: white))),
+                  Positioned(
+                    bottom: 0,
+                    right: 5,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.lightBlueAccent[100],
+                      radius: 15,
+                      child: Icon(Icons.camera_alt_rounded,
+                          size: 20, color: Colors.blue[800]),
+                    ).onTap(() async {
+                      //ImagePicker().getImage(source: ImageSource.gallery);
+                    }),
+                  ),
+                ],
+              ),
               Column(
                 children: [
                   Text(
                     "64",
-                    style: boldTextStyle(size: 20, color: black),
+                    style: boldTextStyle(size: 16, color: black),
                   ),
-                  Text("Publicaciones",
-                      style: boldTextStyle(size: 14, color: black))
+                  Text("Posts", style: boldTextStyle(size: 12, color: black))
                 ],
               ),
               Column(
                 children: [
-                  Text("124", style: boldTextStyle(size: 20, color: black)),
+                  Text("124", style: boldTextStyle(size: 16, color: black)),
                   Text("Seguidores",
-                      style: boldTextStyle(size: 14, color: black))
+                      style: boldTextStyle(size: 12, color: black))
                 ],
               ),
               Column(
                 children: [
-                  Text("212", style: boldTextStyle(size: 20, color: black)),
-                  Text("Seguidos", style: boldTextStyle(size: 14, color: black))
+                  Text("212", style: boldTextStyle(size: 16, color: black)),
+                  Text("Seguidos", style: boldTextStyle(size: 12, color: black))
                 ],
               ),
             ]),
@@ -101,7 +116,8 @@ class PerfilState extends State<Perfil> {
               label: Text('Editar Perfil'),
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(180, 30),
-                primary: Colors.lightBlueAccent[200],
+                //primary: Colors.lightBlueAccent[200],
+                primary: Color.fromRGBO(68, 102, 216, 1.0),
                 onPrimary: Colors.white,
                 onSurface: Colors.grey,
               ),
