@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/utils/images.dart';
 
 class Perfil extends StatefulWidget {
   static String tag = '/EGProfileScreen';
@@ -45,38 +46,74 @@ class PerfilState extends State<Perfil> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             16.height,
-            Stack(
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+              CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.lightBlue,
+                  child:
+                      Text("?", style: boldTextStyle(size: 20, color: white))),
+              Column(
+                children: [
+                  Text(
+                    "64",
+                    style: boldTextStyle(size: 20, color: black),
+                  ),
+                  Text("Publicaciones",
+                      style: boldTextStyle(size: 14, color: black))
+                ],
+              ),
+              Column(
+                children: [
+                  Text("124", style: boldTextStyle(size: 20, color: black)),
+                  Text("Seguidores",
+                      style: boldTextStyle(size: 14, color: black))
+                ],
+              ),
+              Column(
+                children: [
+                  Text("212", style: boldTextStyle(size: 20, color: black)),
+                  Text("Seguidos", style: boldTextStyle(size: 14, color: black))
+                ],
+              ),
+            ]),
+            12.height,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Colors.lightBlue,
-                    child: Text("?",
-                        style: boldTextStyle(size: 20, color: white))),
-                Positioned(
-                  bottom: 0,
-                  right: 5,
-                  child: CircleAvatar(
-                    backgroundColor: lightBlue,
-                    radius: 15,
-                    child: Icon(Icons.camera_alt_rounded,
-                        size: 20, color: blueColor),
-                  ).onTap(() async {
-                    //ImagePicker().getImage(source: ImageSource.gallery);
-                  }),
+                Column(
+                  children: [
+                    Text("Username", style: boldTextStyle(size: 20))
+                        .paddingLeft(12),
+                    2.height,
+                    Text("Descripción", style: secondaryTextStyle(size: 14))
+                        .paddingLeft(12),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.asset(insignia, width: 90, height: 90),
+                  ],
                 ),
               ],
-            ).center(),
-            16.height,
-            Text("Username", style: boldTextStyle(size: 20)).center(),
-            2.height,
-            Text("Descripción", style: secondaryTextStyle(size: 14)).center(),
-            15.height,
-            new Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton.icon(
-                icon: Icon(Icons.person_outline_sharp, size: 18),
-                label: Text('Editar Perfil'),
+            ),
+            10.height,
+            ElevatedButton.icon(
+              label: Text('Editar Perfil'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(180, 30),
+                primary: Colors.lightBlueAccent[200],
+                onPrimary: Colors.white,
+                onSurface: Colors.grey,
               ),
+              icon: Icon(Icons.person_outline_sharp, size: 18),
+              onPressed: () {
+                print('Pressed');
+              },
+            ).center(),
+            Divider(
+              height: 30,
+              thickness: 3,
+              color: Colors.grey[650],
             ),
           ],
         ).paddingAll(16),
