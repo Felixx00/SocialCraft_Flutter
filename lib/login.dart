@@ -18,6 +18,7 @@ class LoginState extends State<Login> {
   FocusNode passwordNode = FocusNode();
   String user = "";
   String pass = "";
+  var resp;
 
   @override
   void initState() {
@@ -32,7 +33,7 @@ class LoginState extends State<Login> {
     if (mounted) super.setState(fn);
   }
 
-  Future<Resp> loginUser(String user, String pass) async {
+  Future loginUser(String user, String pass) async {
     final response = await http.post(
       Uri.https('api.socialcraft.club', 'login'),
       headers: <String, String>{
@@ -40,7 +41,9 @@ class LoginState extends State<Login> {
       },
       body: jsonEncode(<String, String>{'user': user, 'pass': pass}),
     );
-    return Resp.fromJson(jsonDecode(response.body));
+    //print('Response body: ${response.body}');
+    //print(response.body);
+    return (response.body);
   }
 
   @override
@@ -141,10 +144,11 @@ class LoginState extends State<Login> {
                       CommonButton("Iniciar sesión")
                           .paddingOnly(top: 16, bottom: 16)
                           .onTap(() {
-                        //Future<Resp> r = loginUser('Arnau', '1234');
-                        loginUser('Arnau', '1234').then((response) {
-                          print(response);
+                        //loginUser('arnau', '1234');
+                        loginUser('Arnau', '1234').then((data) {
+                          print(data);
                         });
+
                         finish(context);
                         Navigator.pushNamed(context, "perfil");
                       }),
