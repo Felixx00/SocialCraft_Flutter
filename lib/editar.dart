@@ -76,8 +76,10 @@ class EditarState extends State<Editar> {
                             border: InputBorder.none,
                             hintText: "Nombre",
                           ),
-                        ).paddingOnly(left: 8, top: 10),
-                      ).cornerRadiusWithClipRRect(12).paddingOnly(bottom: 8),
+                        ).paddingOnly(left: 8),
+                      )
+                          .cornerRadiusWithClipRRect(12)
+                          .paddingOnly(top: 10, bottom: 10),
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
@@ -87,10 +89,10 @@ class EditarState extends State<Editar> {
                             border: InputBorder.none,
                             hintText: "Nombre de Usuario",
                           ),
-                        ).paddingOnly(left: 8, top: 10),
+                        ).paddingOnly(left: 8),
                       )
                           .cornerRadiusWithClipRRect(12)
-                          .paddingOnly(top: 8, bottom: 8),
+                          .paddingOnly(top: 10, bottom: 10),
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
@@ -100,10 +102,10 @@ class EditarState extends State<Editar> {
                             border: InputBorder.none,
                             hintText: "Email",
                           ),
-                        ).paddingOnly(left: 8, top: 10),
+                        ).paddingOnly(left: 8),
                       )
                           .cornerRadiusWithClipRRect(12)
-                          .paddingOnly(top: 8, bottom: 8),
+                          .paddingOnly(top: 10, bottom: 10),
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
@@ -113,10 +115,10 @@ class EditarState extends State<Editar> {
                             border: InputBorder.none,
                             hintText: "Dirección",
                           ),
-                        ).paddingOnly(left: 8, top: 10),
+                        ).paddingOnly(left: 8),
                       )
                           .cornerRadiusWithClipRRect(12)
-                          .paddingOnly(top: 8, bottom: 8),
+                          .paddingOnly(top: 10, bottom: 10),
                       Align(
                           alignment: Alignment.centerLeft,
                           child: ElevatedButton.icon(
@@ -129,7 +131,9 @@ class EditarState extends State<Editar> {
                               onSurface: Colors.grey,
                             ),
                             icon: Icon(Icons.lock_outline_rounded, size: 18),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, "password");
+                            },
                           )).paddingTop(10),
                     ],
                   ))
