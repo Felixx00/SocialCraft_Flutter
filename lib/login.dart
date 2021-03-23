@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
+import 'package:socialcraft/resp.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   @override
@@ -13,6 +16,8 @@ class LoginState extends State<Login> {
   bool showPassword = false;
   FocusNode emailNode = FocusNode();
   FocusNode passwordNode = FocusNode();
+  String user = "";
+  String pass = "";
 
   @override
   void initState() {
@@ -25,6 +30,17 @@ class LoginState extends State<Login> {
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
+  }
+
+  Future<Resp> loginUser(String user, String pass) async {
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', 'login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{'user': user, 'pass': pass}),
+    );
+    return Resp.fromJson(jsonDecode(response.body));
   }
 
   @override
@@ -67,6 +83,9 @@ class LoginState extends State<Login> {
                             onFieldSubmitted: (term) {
                               emailNode.unfocus();
                               FocusScope.of(context).requestFocus(passwordNode);
+                            },
+                            onSaved: (newValue) {
+                              user = newValue;
                             },
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
@@ -122,6 +141,10 @@ class LoginState extends State<Login> {
                       CommonButton("Iniciar sesión")
                           .paddingOnly(top: 16, bottom: 16)
                           .onTap(() {
+                        //Future<Resp> r = loginUser('Arnau', '1234');
+                        loginUser('Arnau', '1234').then((response) {
+                          print(response);
+                        });
                         finish(context);
                         Navigator.pushNamed(context, "perfil");
                       }),
@@ -149,7 +172,7 @@ class LoginState extends State<Login> {
                         style: TextStyle(color: Color(0xFF757575))),
                     TextSpan(
                         text: "  Crear cuenta",
-                        style: boldTextStyle(color: Colors.blue)),
+                        style: boldTextStyle(color: azul_logo)),
                   ]).onTap(() {
                     Navigator.pushNamed(context, "register");
                     setState(() {});

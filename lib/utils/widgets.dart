@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/utils/fonts.dart';
 
 class CommonButton extends StatelessWidget {
   final String buttonName;
@@ -11,7 +12,7 @@ class CommonButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Colors.blue),
+      decoration: BoxDecoration(color: azul_logo),
       width: context.width(),
       child: Text(buttonName,
           textAlign: TextAlign.center,
