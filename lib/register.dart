@@ -9,7 +9,12 @@ import 'package:socialcraft/utils/images.dart';
 void main() => runApp(Register());
 FocusNode nameNode;
 class Register extends StatelessWidget {
-
+  String name = "";
+  String user = "";
+  String pwd = "";
+  String mail = "";
+  String direction = "";
+  final myController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,56 +29,24 @@ class Register extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              child: Column(
-                children: [
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(130, 0, 0, 0),
-                      child: Image.asset(socialcraft_logo,
-                          width: 100, height: 100),
-                    ),
-                  ).cornerRadiusWithClipRRect(16).paddingTop(50),/*
-                  Container(
-                    child: Image.asset(socialcraft_logo_letras,
-                        width: 300, height: 100),
-                  ).cornerRadiusWithClipRRect(16).paddingTop(50),*/
-                  //Text("SocialCraft", style: boldTextStyle(size: 32)),
-                ],
+              child:Center(
+                child: Column(
+                  children: [
+                    Container(
+                        child: Image.asset(socialcraft_logo_letras,
+                            width: 200, height: 200),
+                    ).cornerRadiusWithClipRRect(16).paddingTop(50),/*
+                    Container(
+                      child: Image.asset(socialcraft_logo_letras,
+                          width: 300, height: 100),
+                    ).cornerRadiusWithClipRRect(16).paddingTop(50),*/
+                    //Text("SocialCraft", style: boldTextStyle(size: 32)),
+                  ],
+                ),
               ),
             ),
-              Row(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(130, 20, 0, 0),
-                    child: ClipOval(
-                        child:Material(
-                          child: InkWell(
-                            child: SizedBox(
-                              width: 34, height: 34 ,
-                                child: Image.asset(google_logo, width: 25, height: 25),
-                            )
-                                ),
-                              ),
-                          ),
-                        ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
-                    child: ClipOval(
-                      child:Material(
-                        child: InkWell(
-                            child: SizedBox(
-                              width: 34, height: 34 ,
-                              child: Image.asset(facebook_logo, width: 25, height: 25),
-                            )
-                        ),
-                      ),
-                    ),
-                  ),
-                ]
-              ),
-
-            Container(
-              padding: EdgeInsets.only(top:35.0, left:20.0, right:20.0),
+          Container(
+              padding: EdgeInsets.only(left:20.0, right:20.0),
               child: Column(
                 children: <Widget> [
                   Container(
@@ -85,6 +58,8 @@ class Register extends StatelessWidget {
                       border: InputBorder.none,
                       hintText: "Nombre",
                     ),
+                    controller: myController,
+
                     ).paddingOnly(left: 8, top: 2),
                   ).cornerRadiusWithClipRRect(12)
                     .paddingOnly( bottom: 8),
@@ -97,6 +72,9 @@ class Register extends StatelessWidget {
                         border: InputBorder.none,
                         hintText: "Nombre de Usuario",
                       ),
+                      onSaved: (newValue) {
+                        user = newValue;
+                      },
                     ).paddingOnly(left: 8, top: 2),
                   ).cornerRadiusWithClipRRect(12)
                     .paddingOnly(top: 8, bottom: 8),
@@ -109,6 +87,9 @@ class Register extends StatelessWidget {
                         border: InputBorder.none,
                         hintText: "Contraseña",
                       ),
+                      onSaved: (newValue) {
+                      pwd = newValue;
+                    },
                     ).paddingOnly(left: 8, top: 2),
                   ).cornerRadiusWithClipRRect(12)
                       .paddingOnly(top: 8, bottom: 8),
@@ -121,6 +102,9 @@ class Register extends StatelessWidget {
                         border: InputBorder.none,
                         hintText: "Repetir Contraseña",
                       ),
+                      onSaved: (newValue) {
+                        //pwd2 = newValue;
+                      },
                     ).paddingOnly(left: 8, top: 2),
                   ).cornerRadiusWithClipRRect(12)
                       .paddingOnly(top: 8, bottom: 8),
@@ -133,6 +117,9 @@ class Register extends StatelessWidget {
                         border: InputBorder.none,
                         hintText: "Email",
                       ),
+                      onSaved: (newValue) {
+                        mail = newValue;
+                      },
                     ).paddingOnly(left: 8, top: 2),
                   ).cornerRadiusWithClipRRect(12)
                       .paddingOnly(top: 8, bottom: 8),
@@ -145,6 +132,9 @@ class Register extends StatelessWidget {
                         border: InputBorder.none,
                         hintText: "Dirección",
                       ),
+                      onSaved: (newValue) {
+                        direction = newValue;
+                      },
                     ).paddingOnly(left: 8, top: 2),
                   ).cornerRadiusWithClipRRect(12)
                       .paddingOnly(top: 8, bottom: 8),
@@ -158,7 +148,17 @@ class Register extends StatelessWidget {
                       color: Colors.blue,
                       elevation: 7.0,
                       child: GestureDetector(
-                        onTap: (){},
+                          onTap: () {
+                            return showDialog(
+                              context: context,
+                              // ignore: missing_return
+                              builder: (context) {
+                                print(myController.text);
+                               return Text(myController.text);
+                              },
+
+                            );
+                          },
                         child: Center(
                           child: Text(
                             'Registrar',
