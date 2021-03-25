@@ -18,7 +18,7 @@ class LoginState extends State<Login> {
   FocusNode passwordNode = FocusNode();
   String user = "";
   String pass = "";
-
+  bool correct = true;
   @override
   void initState() {
     super.initState();
@@ -83,13 +83,18 @@ class LoginState extends State<Login> {
                             focusNode: emailNode,
                             autofocus: false,
                             textInputAction: TextInputAction.next,
-                            style: secondaryTextStyle(color: field_wrong),
+                            style: secondaryTextStyle(
+                                color: correct ? Colors.black : Colors.red),
                             onFieldSubmitted: (term) {
                               emailNode.unfocus();
                               FocusScope.of(context).requestFocus(passwordNode);
                             },
                             onChanged: (newValue) {
                               user = newValue;
+                              if (newValue == "") {
+                                correct = true;
+                                setState(() {});
+                              }
                             },
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
@@ -108,9 +113,14 @@ class LoginState extends State<Login> {
                             autofocus: false,
                             obscureText: showPassword ? false : true,
                             keyboardType: TextInputType.emailAddress,
-                            style: secondaryTextStyle(),
+                            style: secondaryTextStyle(
+                                color: correct ? Colors.black : Colors.red),
                             onChanged: (newValue) {
                               pass = newValue;
+                              if (newValue == "") {
+                                correct = true;
+                                setState(() {});
+                              }
                             },
                             decoration: InputDecoration(
                               suffixIcon: GestureDetector(
@@ -150,10 +160,14 @@ class LoginState extends State<Login> {
                           .paddingOnly(top: 16, bottom: 16)
                           .onTap(() {
                         if (user == "" || pass == "") {
+                          correct = false;
+                          setState(() {});
                           print("escribe algo");
                         } else {
                           loginUser(user, pass).then((respuesta) {
                             if (respuesta.success == false) {
+                              correct = false;
+                              setState(() {});
                               print("no existe");
                             } else {
                               finish(context);
