@@ -90,10 +90,8 @@ class LoginState extends State<Login> {
                             },
                             onChanged: (newValue) {
                               user = newValue;
-                              if (newValue == "") {
-                                correct = true;
-                                setState(() {});
-                              }
+                              correct = true;
+                              setState(() {});
                             },
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
@@ -115,10 +113,8 @@ class LoginState extends State<Login> {
                                 color: correct ? Colors.black : Colors.red),
                             onChanged: (newValue) {
                               pass = newValue;
-                              if (newValue == "") {
-                                correct = true;
-                                setState(() {});
-                              }
+                              correct = true;
+                              setState(() {});
                             },
                             decoration: InputDecoration(
                               suffixIcon: GestureDetector(
@@ -160,13 +156,13 @@ class LoginState extends State<Login> {
                         if (user == "" || pass == "") {
                           correct = false;
                           setState(() {});
-                          print("escribe algo");
+                          toast("Rellena los campos");
                         } else {
                           loginUser(user, pass).then((respuesta) {
                             if (respuesta.success == false) {
                               correct = false;
                               setState(() {});
-                              print("no existe");
+                              toast("Datos incorrectos");
                             } else {
                               finish(context);
                               Navigator.pushNamed(context, "perfil");

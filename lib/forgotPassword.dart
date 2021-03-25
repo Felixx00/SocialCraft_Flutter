@@ -10,6 +10,9 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class ForgotPasswordState extends State<ForgotPassword> {
+  String mail = "";
+  bool correct_mail = true;
+
   @override
   void initState() {
     super.initState();
@@ -46,7 +49,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                     Text("¿Has olvidado \nla contraseña?",
                         style: boldTextStyle(size: 32)),
                     Text(
-                      "Porfavor introduce tu email debajo y te \nenviaremos el código de recuperación",
+                      "Porfavor introduce tu email a continuación \ny te enviaremos el código de recuperación.",
                       style: TextStyle(color: Color(0xFF757575), fontSize: 16),
                       textAlign: TextAlign.center,
                     ).paddingTop(18.0),
@@ -54,8 +57,14 @@ class ForgotPasswordState extends State<ForgotPassword> {
                       decoration: BoxDecoration(color: Colors.grey[100]),
                       child: TextFormField(
                         autofocus: false,
-                        style: secondaryTextStyle(),
+                        style: secondaryTextStyle(
+                            color: correct_mail ? Colors.black : Colors.red),
                         keyboardType: TextInputType.emailAddress,
+                        onChanged: (newValue) {
+                          mail = newValue;
+                          correct_mail = true;
+                          setState(() {});
+                        },
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: "Email",
@@ -69,7 +78,15 @@ class ForgotPasswordState extends State<ForgotPassword> {
               ),
               20.height,
               CommonButton("Enviar").onTap(() {
-                finish(context);
+                if (mail.validateEmail()) {
+                  correct_mail = true;
+                  finish(context);
+                  toast("Email enviado correctamente");
+                } else {
+                  correct_mail = false;
+                  setState(() {});
+                  toast("Email incorrecto");
+                }
               })
             ],
           ).paddingAll(16),
