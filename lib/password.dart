@@ -60,7 +60,7 @@ class PasswordState extends State<Password> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text('Cambiar Contraseña'),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.blueAccent[100],
         ),
         body: SingleChildScrollView(
           child: Column(

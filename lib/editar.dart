@@ -71,12 +71,13 @@ class EditarState extends State<Editar> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text('Editar Perfil'),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.blueAccent[100],
           actions: <Widget>[
             Padding(
               padding: EdgeInsets.all(10.0),
               child: OutlinedButton.icon(
-                label: Text('Guardar', style: primaryTextStyle(color: white)),
+                label: Text('Guardar',
+                    style: primaryTextStyle(color: Colors.white)),
                 style: OutlinedButton.styleFrom(
                   primary: Colors.white,
                   side: BorderSide(color: Colors.white, width: 1.5),
