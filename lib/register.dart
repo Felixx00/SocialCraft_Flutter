@@ -59,6 +59,7 @@ class RegisterW extends State<Register> {
   String mail = "";
   String city = "";
   bool correct = true;
+  bool correct_mail = true;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -181,7 +182,7 @@ class RegisterW extends State<Register> {
                             keyboardType: TextInputType.emailAddress,
                             cursorColor: azul_logo,
                             decoration: InputDecoration(
-                              icon: Icon(Icons.email, color: azul_logo),
+                              icon: Icon(Icons.email, color: correct_mail ? azul_logo : Colors.red[600]),
                               border: InputBorder.none,
                               hintText: "Email",
                             ),
@@ -225,8 +226,15 @@ class RegisterW extends State<Register> {
                                 correct = false;
                                 setState(() {});
                               }
-
-                              if(correct) {
+                              if(mail.validateEmail()){
+                                correct_mail=true;
+                                setState(() {});
+                              }
+                              else{
+                                correct_mail=false;
+                                setState(() {});
+                              }
+                              if(correct & correct_mail) {
                                 registerUser(user, name, mail, city, pwd)
                                     .then((answer) {
                                   print(answer.success);
