@@ -26,6 +26,7 @@ class PerfilState extends State<Perfil> {
       about = respuesta.data['about'];
       setState(() {});
     });
+    setState(() {});
 
     init();
   }
