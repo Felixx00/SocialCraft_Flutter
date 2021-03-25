@@ -79,10 +79,11 @@ class LoginState extends State<Login> {
                           //decoration: BoxDecoration(color: appStore.isDarkModeOn ? appStore.cardColor : Colors.grey[100]),
                           decoration: BoxDecoration(color: Colors.grey[100]),
                           child: TextFormField(
+                            cursorColor: azul_logo,
                             focusNode: emailNode,
                             autofocus: false,
                             textInputAction: TextInputAction.next,
-                            style: secondaryTextStyle(),
+                            style: secondaryTextStyle(color: field_wrong),
                             onFieldSubmitted: (term) {
                               emailNode.unfocus();
                               FocusScope.of(context).requestFocus(passwordNode);
@@ -102,6 +103,7 @@ class LoginState extends State<Login> {
                           //decoration: BoxDecoration(color: appStore.isDarkModeOn ? appStore.cardColor : Colors.grey[100]),
                           decoration: BoxDecoration(color: Colors.grey[100]),
                           child: TextFormField(
+                            cursorColor: azul_logo,
                             focusNode: passwordNode,
                             autofocus: false,
                             obscureText: showPassword ? false : true,
@@ -120,7 +122,7 @@ class LoginState extends State<Login> {
                                     showPassword
                                         ? Icons.visibility
                                         : Icons.visibility_off,
-                                    color: Colors.grey),
+                                    color: azul_logo),
                               ),
                               border: InputBorder.none,
                               hintText: "Contraseña",
@@ -148,13 +150,16 @@ class LoginState extends State<Login> {
                           .paddingOnly(top: 16, bottom: 16)
                           .onTap(() {
                         if (user == "" || pass == "") {
-                          print("escribe algo crack");
+                          print("escribe algo");
                         } else {
                           loginUser(user, pass).then((respuesta) {
-                            print(respuesta.success);
+                            if (respuesta.success == false) {
+                              print("no existe");
+                            } else {
+                              finish(context);
+                              Navigator.pushNamed(context, "perfil");
+                            }
                           });
-                          finish(context);
-                          Navigator.pushNamed(context, "perfil");
                         }
                       }),
                       Container(
