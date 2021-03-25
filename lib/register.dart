@@ -58,7 +58,7 @@ class RegisterW extends State<Register> {
   String pwd2 = "";
   String mail = "";
   String city = "";
-  bool correct = false;
+  bool correct = true;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -163,7 +163,7 @@ class RegisterW extends State<Register> {
                             cursorColor: azul_logo,
                             decoration: InputDecoration(
                               icon: Icon(
-                                  Icons.lock, color: correct ? azul_logo:field_wrong),
+                                  Icons.lock, color: correct ? azul_logo : Colors.red[600]),
                               border: InputBorder.none,
                               hintText: "Repetir Contraseña",
                             ),
