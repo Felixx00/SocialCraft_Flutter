@@ -31,8 +31,6 @@ class ForgotPasswordState extends State<ForgotPassword> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.black),
-          //appStore.cardColor,
-          //iconTheme: IconThemeData(color: appStore.isDarkModeOn ? appBarBackgroundColor : scaffoldColorDark),
           elevation: 0,
           leading: Icon(Icons.arrow_back).onTap(() {
             finish(context);
@@ -53,7 +51,6 @@ class ForgotPasswordState extends State<ForgotPassword> {
                       textAlign: TextAlign.center,
                     ).paddingTop(18.0),
                     Container(
-                      //decoration: BoxDecoration(color: appStore.isDarkModeOn ? appStore.cardColor : Colors.grey[100]),
                       decoration: BoxDecoration(color: Colors.grey[100]),
                       child: TextFormField(
                         autofocus: false,
@@ -73,7 +70,6 @@ class ForgotPasswordState extends State<ForgotPassword> {
               20.height,
               CommonButton("Enviar").onTap(() {
                 finish(context);
-                //HMEmailVerificationScreen().launch(context);
               })
             ],
           ).paddingAll(16),

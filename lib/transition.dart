@@ -57,7 +57,6 @@ class TransitionState extends State<Transition> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        //backgroundColor: appStore.isDarkModeOn ? scaffoldColorDark : appBarBackgroundColor,
         body: Center(
           child: ScaleTransition(
               scale: _animation,

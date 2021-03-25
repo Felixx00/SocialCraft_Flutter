@@ -76,7 +76,6 @@ class LoginState extends State<Login> {
                     child: Column(
                       children: [
                         Container(
-                          //decoration: BoxDecoration(color: appStore.isDarkModeOn ? appStore.cardColor : Colors.grey[100]),
                           decoration: BoxDecoration(color: Colors.grey[100]),
                           child: TextFormField(
                             cursorColor: azul_logo,
@@ -105,7 +104,6 @@ class LoginState extends State<Login> {
                           ).paddingOnly(left: 8, top: 2),
                         ).cornerRadiusWithClipRRect(12),
                         Container(
-                          //decoration: BoxDecoration(color: appStore.isDarkModeOn ? appStore.cardColor : Colors.grey[100]),
                           decoration: BoxDecoration(color: Colors.grey[100]),
                           child: TextFormField(
                             cursorColor: azul_logo,
@@ -178,7 +176,6 @@ class LoginState extends State<Login> {
                       }),
                       Container(
                         width: context.width(),
-                        //color: appStore.cardColor,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
