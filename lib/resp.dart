@@ -20,4 +20,19 @@ class Resp {
       );
     }
   }
+  factory Resp.modificar(Map<String, dynamic> json) {
+    if (json['success'] == true) {
+      return Resp(
+        success: json['success'],
+        ecode: json['ecode'],
+        data: null,
+      );
+    } else {
+      return Resp(
+        success: json['success'],
+        ecode: json['ecode'],
+        data: null,
+      );
+    }
+  }
 }

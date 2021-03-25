@@ -30,7 +30,14 @@ class PerfilState extends State<Perfil> {
     init();
   }
 
-  init() async {}
+  init() async {
+    username().then((respuesta) {
+      //print(respuesta.data['name']);
+      user = respuesta.data['name'];
+      about = respuesta.data['about'];
+      setState(() {});
+    });
+  }
 
   @override
   void setState(fn) {

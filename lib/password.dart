@@ -80,6 +80,7 @@ class PasswordState extends State<Password> {
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
+                          obscureText: true,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (newValue) {
                             passActual = newValue;
@@ -94,6 +95,7 @@ class PasswordState extends State<Password> {
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
+                          obscureText: true,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (newValue) {
                             passNew = newValue;
@@ -110,6 +112,7 @@ class PasswordState extends State<Password> {
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
+                          obscureText: true,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (newValue) {
                             passNewConfirm = newValue;
