@@ -156,13 +156,13 @@ class LoginState extends State<Login> {
                         if (user == "" || pass == "") {
                           correct = false;
                           setState(() {});
-                          toast("Rellena los campos");
+                          toast("Rellena los campos", bgColor: toast_color);
                         } else {
                           loginUser(user, pass).then((respuesta) {
                             if (respuesta.success == false) {
                               correct = false;
                               setState(() {});
-                              toast("Datos incorrectos");
+                              toast("Datos incorrectos", bgColor: toast_color);
                             } else {
                               finish(context);
                               Navigator.pushNamed(context, "perfil");

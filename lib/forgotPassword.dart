@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/widgets.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -56,6 +57,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                     Container(
                       decoration: BoxDecoration(color: Colors.grey[100]),
                       child: TextFormField(
+                        cursorColor: azul_logo,
                         autofocus: false,
                         style: secondaryTextStyle(
                             color: correct_mail ? Colors.black : Colors.red),
@@ -81,11 +83,11 @@ class ForgotPasswordState extends State<ForgotPassword> {
                 if (mail.validateEmail()) {
                   correct_mail = true;
                   finish(context);
-                  toast("Email enviado correctamente");
+                  toast("Email enviado correctamente", bgColor: toast_color);
                 } else {
                   correct_mail = false;
                   setState(() {});
-                  toast("Email incorrecto");
+                  toast("Email incorrecto", bgColor: toast_color);
                 }
               })
             ],
