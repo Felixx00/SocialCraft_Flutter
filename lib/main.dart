@@ -6,6 +6,7 @@ import 'forgotPassword.dart';
 import 'editar.dart';
 import 'password.dart';
 import 'settings.dart';
+import 'transition.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       'editar': (BuildContext context) => Editar(),
       'password': (BuildContext context) => Password(),
       'settings': (BuildContext context) => Settings(),
+      'transition': (BuildContext context) => Transition(),
     }, debugShowCheckedModeBanner: false, home: MyHome());
   }
 }
@@ -44,6 +46,10 @@ class MyHome extends StatelessWidget {
             OutlinedButton(
               child: Text("Perfil"),
               onPressed: () => Navigator.pushNamed(context, "perfil"),
+            ),
+            OutlinedButton(
+              child: Text("Transition"),
+              onPressed: () => Navigator.pushNamed(context, "transition"),
             ),
           ],
         )
