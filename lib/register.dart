@@ -13,9 +13,10 @@ import 'package:socialcraft/utils/images.dart';
 
 void main() => runApp(Register());
 FocusNode nameNode;
-class Register extends StatelessWidget {
 
-  Future<Resp> registerUser(String user, String name, String mail, String city, String pwd) async {
+class Register extends StatelessWidget {
+  Future<Resp> registerUser(
+      String user, String name, String mail, String city, String pwd) async {
     var map = new Map<String, dynamic>();
     map['name'] = name;
     map['userName'] = user;
@@ -32,10 +33,11 @@ class Register extends StatelessWidget {
       throw Exception('Failed to load response');
     }
   }
+
   String name = "";
   String user = "";
   String pwd = "";
-  String pwd2= "";
+  String pwd2 = "";
   String mail = "";
   String city = "";
   bool correct = false;
@@ -56,166 +58,165 @@ class Register extends StatelessWidget {
           }),
         ),
         body: Center(
-        child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child:Center(
-                child: Column(
-                  children: <Widget> [
-                    Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            child: Image.asset(socialcraft_logo,
-                                width: 100, height: 100),
-                          ).cornerRadiusWithClipRRect(16).paddingTop(50),
-                          Container(
-                            child: Image.asset(socialcraft_logo_letras,
-                                width: 300, height: 100),
-                          ).cornerRadiusWithClipRRect(16).paddingTop(1),
-                        ],
-                      ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  child: Center(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          child: Column(
+                            children: [
+                              Container(
+                                child: Image.asset(socialcraft_logo,
+                                    width: 100, height: 100),
+                              ).cornerRadiusWithClipRRect(16).paddingTop(5),
+                              Container(
+                                child: Image.asset(socialcraft_logo_letras,
+                                    width: 300, height: 100),
+                              ).cornerRadiusWithClipRRect(16).paddingTop(1),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                ],
-              ),
-            ),
-            ),
-          Container(
-              padding: EdgeInsets.only(left:20.0, right:20.0),
-              child: Column(
-                children: <Widget> [
-                  Container(
-                  decoration: BoxDecoration(color: Colors.grey[100]),
-                  child:TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    cursorColor: azul_logo,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.portrait,color: azul_logo),
-                      border: InputBorder.none,
-                      hintText: "Nombre",
-                    ),
-                    onChanged: (texto) {
-                      name = texto;
-                    },
-                    ).paddingOnly(left: 8, top: 2),
-                  ).cornerRadiusWithClipRRect(12)
-                    .paddingOnly( bottom: 8),
-                  Container(
-                    decoration: BoxDecoration(color: Colors.grey[100]),
-                    child:TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      cursorColor: azul_logo,
-                      decoration: InputDecoration(
-                        icon: Icon(Icons.person, color: azul_logo),
-                        border: InputBorder.none,
-                        hintText: "Nombre de Usuario",
-                      ),
-                      onChanged: (texto) {
-                        user = texto;
-                      },
-                    ).paddingOnly(left: 8, top: 2),
-                  ).cornerRadiusWithClipRRect(12)
-                    .paddingOnly(top: 8, bottom: 8),
-                  Container(
-                    decoration: BoxDecoration(color: Colors.grey[100]),
-                    child:TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      cursorColor: azul_logo,
-                      decoration: InputDecoration(
-                        icon: Icon(Icons.lock,color: azul_logo),
-                        border: InputBorder.none,
-                        hintText: "Contraseña",
-                      ),
-                      obscureText: true,
-                      onChanged: (texto) {
-                        pwd = texto;
-                      },
-                    ).paddingOnly(left: 8, top: 2),
-                  ).cornerRadiusWithClipRRect(12)
-                      .paddingOnly(top: 8, bottom: 8),
-                  Container(
-                    decoration: BoxDecoration(color: Colors.grey[100]),
-                    child:TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      cursorColor: azul_logo,
-                      decoration: InputDecoration(
-                        icon: Icon(Icons.lock,color: azul_logo),
-                        border: InputBorder.none,
-                        hintText: "Repetir Contraseña",
-                      ),
-                      obscureText: true,
-                      onChanged: (texto) {
-                        pwd2 = texto;
-                      },
-                      /*if(pwd == pwd2){
+                  ),
+                ),
+                Container(
+                    padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(color: Colors.grey[100]),
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            cursorColor: azul_logo,
+                            decoration: InputDecoration(
+                              icon: Icon(Icons.portrait, color: azul_logo),
+                              border: InputBorder.none,
+                              hintText: "Nombre",
+                            ),
+                            onChanged: (texto) {
+                              name = texto;
+                            },
+                          ).paddingOnly(left: 8, top: 2),
+                        ).cornerRadiusWithClipRRect(12).paddingOnly(bottom: 8),
+                        Container(
+                          decoration: BoxDecoration(color: Colors.grey[100]),
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            cursorColor: azul_logo,
+                            decoration: InputDecoration(
+                              icon: Icon(Icons.person, color: azul_logo),
+                              border: InputBorder.none,
+                              hintText: "Nombre de Usuario",
+                            ),
+                            onChanged: (texto) {
+                              user = texto;
+                            },
+                          ).paddingOnly(left: 8, top: 2),
+                        )
+                            .cornerRadiusWithClipRRect(12)
+                            .paddingOnly(top: 8, bottom: 8),
+                        Container(
+                          decoration: BoxDecoration(color: Colors.grey[100]),
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            cursorColor: azul_logo,
+                            decoration: InputDecoration(
+                              icon: Icon(Icons.lock, color: azul_logo),
+                              border: InputBorder.none,
+                              hintText: "Contraseña",
+                            ),
+                            obscureText: true,
+                            onChanged: (texto) {
+                              pwd = texto;
+                            },
+                          ).paddingOnly(left: 8, top: 2),
+                        )
+                            .cornerRadiusWithClipRRect(12)
+                            .paddingOnly(top: 8, bottom: 8),
+                        Container(
+                          decoration: BoxDecoration(color: Colors.grey[100]),
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            cursorColor: azul_logo,
+                            decoration: InputDecoration(
+                              icon: Icon(Icons.lock, color: azul_logo),
+                              border: InputBorder.none,
+                              hintText: "Repetir Contraseña",
+                            ),
+                            obscureText: true,
+                            onChanged: (texto) {
+                              pwd2 = texto;
+                            },
+                            /*if(pwd == pwd2){
                         correct = true;
                         }
                       else {
                         }*/
-                    ).paddingOnly(left: 8, top: 2),
-                  ).cornerRadiusWithClipRRect(12)
-                      .paddingOnly(top: 8, bottom: 8),
-                  Container(
-                    decoration: BoxDecoration(color: Colors.grey[100]),
-                    child:TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      cursorColor: azul_logo,
-                      decoration: InputDecoration(
-                        icon: Icon(Icons.email,color: azul_logo),
-                        border: InputBorder.none,
-                        hintText: "Email",
-                      ),
-                      onChanged: (texto) {
-                        mail = texto;
-                      },
-                    ).paddingOnly(left: 8, top: 2),
-                  ).cornerRadiusWithClipRRect(12)
-                      .paddingOnly(top: 8, bottom: 8),
-                  Container(
-                    decoration: BoxDecoration(color: Colors.grey[100]),
-                    child:TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      cursorColor: azul_logo,
-                      decoration: InputDecoration(
-                        icon: Icon(Icons.location_on,color: azul_logo),
-                        border: InputBorder.none,
-                        hintText: "Ciudad",
-                      ),
-                      onChanged: (texto) {
-                        city = texto;
-                      },
-                    ).paddingOnly(left: 8, top: 2),
-                  ).cornerRadiusWithClipRRect(12)
-                      .paddingOnly(top: 8, bottom: 8),
-
-                  Container(
-                  child:
-                      CommonButton("Registrar")
-                      .paddingOnly(top: 16, bottom: 16)
-                            .onTap( () {//enviar la info a la base de datos
-                              registerUser(user, name, mail, city, pwd).then((answer) {
+                          ).paddingOnly(left: 8, top: 2),
+                        )
+                            .cornerRadiusWithClipRRect(12)
+                            .paddingOnly(top: 8, bottom: 8),
+                        Container(
+                          decoration: BoxDecoration(color: Colors.grey[100]),
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            cursorColor: azul_logo,
+                            decoration: InputDecoration(
+                              icon: Icon(Icons.email, color: azul_logo),
+                              border: InputBorder.none,
+                              hintText: "Email",
+                            ),
+                            onChanged: (texto) {
+                              mail = texto;
+                            },
+                          ).paddingOnly(left: 8, top: 2),
+                        )
+                            .cornerRadiusWithClipRRect(12)
+                            .paddingOnly(top: 8, bottom: 8),
+                        Container(
+                          decoration: BoxDecoration(color: Colors.grey[100]),
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            cursorColor: azul_logo,
+                            decoration: InputDecoration(
+                              icon: Icon(Icons.location_on, color: azul_logo),
+                              border: InputBorder.none,
+                              hintText: "Ciudad",
+                            ),
+                            onChanged: (texto) {
+                              city = texto;
+                            },
+                          ).paddingOnly(left: 8, top: 2),
+                        )
+                            .cornerRadiusWithClipRRect(12)
+                            .paddingOnly(top: 8, bottom: 8),
+                        Container(
+                          child: CommonButton("Registrar")
+                              .paddingOnly(top: 16, bottom: 16)
+                              .onTap(
+                            () {
+                              //enviar la info a la base de datos
+                              registerUser(user, name, mail, city, pwd)
+                                  .then((answer) {
                                 print(answer.success);
                                 print(answer.ecode);
                               });
                             },
                           ),
-                    ),
-                ],
-              )
-            )
-          ],
+                        ),
+                      ],
+                    ))
+              ],
+            ),
+          ),
         ),
-      ),
-      ),
       ),
       debugShowCheckedModeBanner: false,
     );
   }
 }
-
-
-
-
-
