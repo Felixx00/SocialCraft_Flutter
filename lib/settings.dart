@@ -56,7 +56,10 @@ class SettingsState extends State<Settings> {
                       onSurface: Colors.grey,
                     ),
                     icon: Icon(Icons.close, size: 18),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, 'login', (Route<dynamic> route) => false);
+                    },
                   )).paddingTop(10),
             ],
           ),
