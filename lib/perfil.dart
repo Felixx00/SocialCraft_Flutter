@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
+import 'package:socialcraft/resp.dart';
+import 'package:http/http.dart' as http;
 
 class Perfil extends StatefulWidget {
   static String tag = '/EGProfileScreen';
@@ -10,10 +13,20 @@ class Perfil extends StatefulWidget {
   PerfilState createState() => PerfilState();
 }
 
+String user = "";
+String about = "";
+
 class PerfilState extends State<Perfil> {
   @override
   void initState() {
     super.initState();
+    username().then((respuesta) {
+      //print(respuesta.data['name']);
+      user = respuesta.data['name'];
+      about = respuesta.data['about'];
+      setState(() {});
+    });
+
     init();
   }
 
@@ -22,6 +35,26 @@ class PerfilState extends State<Perfil> {
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
+  }
+
+  String token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLnNvY2lhbGNyYWZ0LmNsdWIiLCJpYXQiOjE2MTY2NjY0MjMsInVzZXJJZCI6IjEyIn0.zSfDG1InrzwC9dQWwYbinGyqW27DzpNNnr9bHZw_AvhfKFDPLXeR4Gf6JNw9FhsrmyzyRg0Z5TtngROGglRee8fAIUBAndnNCj10RR6R-TWs71SkZa_3-NKK4Y8LWtNBTJbjgOx_9IGRyL7TmAyliHNBnA7WRImwmF9gLbH0ay-s64VY7y70BW3ez0iasaJrzDTEGJqOcdhWo7eq-3F1fgSOTtW2TGfT-6zOCA7klSPwHdiddrdhmRS5nrXme3tZ-Hb34Lhy7He-Bgg10PFPxS2J7CtVTNR_heUxzXw3TSObtcSqYTiHRmVoJfP4UaDmbWTa7A96-TpjnnZZwj3kYg';
+
+  Future<Resp> username() async {
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', 'users/getMyProfile'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
   }
 
   @override
@@ -101,10 +134,9 @@ class PerfilState extends State<Perfil> {
               children: [
                 Column(
                   children: [
-                    Text("Username", style: boldTextStyle(size: 20))
-                        .paddingLeft(12),
+                    Text(user, style: boldTextStyle(size: 20)).paddingLeft(12),
                     2.height,
-                    Text("Descripción", style: secondaryTextStyle(size: 14))
+                    Text(about, style: secondaryTextStyle(size: 14))
                         .paddingLeft(12),
                   ],
                 ),
