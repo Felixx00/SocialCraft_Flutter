@@ -34,12 +34,13 @@ class LoginState extends State<Login> {
   }
 
   Future loginUser(String user, String pass) async {
+    var map = new Map<String, dynamic>();
+    map['user'] = user;
+    map['pass'] = pass;
     final response = await http.post(
       Uri.https('api.socialcraft.club', 'login'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{'user': user, 'pass': pass}),
+      headers: <String, String>{},
+      body: map,
     );
     //print('Response body: ${response.body}');
     //print(response.body);

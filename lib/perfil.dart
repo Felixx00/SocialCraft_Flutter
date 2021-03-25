@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/images.dart';
+import 'package:socialcraft/utils/fonts.dart';
 
 class Perfil extends StatefulWidget {
   static String tag = '/EGProfileScreen';
@@ -27,16 +28,19 @@ class PerfilState extends State<Perfil> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SocialCraft'),
+        title: Image.asset(socialcraft_logo_letras, width: 140, height: 140),
+        // child: Image.asset(insignia, width: 90, height: 90),
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blueAccent[100],
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.menu_rounded),
+            icon: const Icon(
+              Icons.settings,
+              color: azul_logo,
+            ),
             tooltip: 'Show Snackbar',
             onPressed: () {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text('Hola')));
+              Navigator.pushNamed(context, "settings");
             },
           ),
         ],
