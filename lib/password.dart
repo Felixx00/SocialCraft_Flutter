@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/images.dart';
+import 'package:socialcraft/resp.dart';
+import 'package:http/http.dart' as http;
 
 class Password extends StatefulWidget {
   static String tag = '/password';
@@ -23,6 +26,31 @@ class PasswordState extends State<Password> {
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
+  }
+
+  String pass = '';
+  String passNew = '';
+  String passConfirm = '';
+
+  String token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLnNvY2lhbGNyYWZ0LmNsdWIiLCJpYXQiOjE2MTY2NjY0MjMsInVzZXJJZCI6IjEyIn0.zSfDG1InrzwC9dQWwYbinGyqW27DzpNNnr9bHZw_AvhfKFDPLXeR4Gf6JNw9FhsrmyzyRg0Z5TtngROGglRee8fAIUBAndnNCj10RR6R-TWs71SkZa_3-NKK4Y8LWtNBTJbjgOx_9IGRyL7TmAyliHNBnA7WRImwmF9gLbH0ay-s64VY7y70BW3ez0iasaJrzDTEGJqOcdhWo7eq-3F1fgSOTtW2TGfT-6zOCA7klSPwHdiddrdhmRS5nrXme3tZ-Hb34Lhy7He-Bgg10PFPxS2J7CtVTNR_heUxzXw3TSObtcSqYTiHRmVoJfP4UaDmbWTa7A96-TpjnnZZwj3kYg';
+
+  Future<Resp> cambiarpassword(String p) async {
+    var map = new Map<String, dynamic>();
+    map['newPass'] = p;
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', 'users/editProfile'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      body: map,
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
   }
 
   @override
@@ -64,6 +92,9 @@ class PasswordState extends State<Password> {
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
                           keyboardType: TextInputType.emailAddress,
+                          onChanged: (newValue) {
+                            passNew = newValue;
+                          },
                           decoration: InputDecoration(
                             icon: Icon(Icons.lock_rounded),
                             border: InputBorder.none,
@@ -100,7 +131,9 @@ class PasswordState extends State<Password> {
                       onSurface: Colors.grey,
                     ),
                     icon: Icon(Icons.check_circle_outline_rounded, size: 18),
-                    onPressed: () {},
+                    onPressed: () {
+                      cambiarpassword(passNew);
+                    },
                   )).paddingTop(10),
             ],
           ),

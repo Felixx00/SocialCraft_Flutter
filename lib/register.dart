@@ -2,26 +2,56 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/resp.dart';
+import 'package:socialcraft/utils/fonts.dart';
+import 'package:socialcraft/utils/widgets.dart';
+import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
 
 void main() => runApp(Register());
 FocusNode nameNode;
 class Register extends StatelessWidget {
+
+  Future<Resp> registerUser(String user, String name, String mail, String city, String pwd) async {
+    var map = new Map<String, dynamic>();
+    map['name'] = name;
+    map['userName'] = user;
+    map['email'] = mail;
+    map['city'] = city;
+    map['password'] = pwd;
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', 'register'),
+      body: map,
+    );
+    if (response.statusCode == 200) {
+      return Resp.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
   String name = "";
   String user = "";
   String pwd = "";
+  String pwd2= "";
   String mail = "";
-  String direction = "";
-  final myController = TextEditingController();
+  String city = "";
+  bool correct = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Welcome to Flutter',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('SocialCraft'),
+          iconTheme: IconThemeData(color: Colors.black),
+          //appStore.cardColor,
+          //iconTheme: IconThemeData(color: appStore.isDarkModeOn ? appBarBackgroundColor : scaffoldColorDark),
+          elevation: 0,
+          leading: Icon(Icons.arrow_back).onTap(() {
+            finish(context);
+          }),
         ),
         body: Center(
         child: SingleChildScrollView(
@@ -31,19 +61,24 @@ class Register extends StatelessWidget {
             Container(
               child:Center(
                 child: Column(
-                  children: [
+                  children: <Widget> [
                     Container(
-                        child: Image.asset(socialcraft_logo_letras,
-                            width: 200, height: 200),
-                    ).cornerRadiusWithClipRRect(16).paddingTop(50),/*
-                    Container(
-                      child: Image.asset(socialcraft_logo_letras,
-                          width: 300, height: 100),
-                    ).cornerRadiusWithClipRRect(16).paddingTop(50),*/
-                    //Text("SocialCraft", style: boldTextStyle(size: 32)),
-                  ],
-                ),
+                      child: Column(
+                        children: [
+                          Container(
+                            child: Image.asset(socialcraft_logo,
+                                width: 100, height: 100),
+                          ).cornerRadiusWithClipRRect(16).paddingTop(50),
+                          Container(
+                            child: Image.asset(socialcraft_logo_letras,
+                                width: 300, height: 100),
+                          ).cornerRadiusWithClipRRect(16).paddingTop(1),
+                        ],
+                      ),
+                    ),
+                ],
               ),
+            ),
             ),
           Container(
               padding: EdgeInsets.only(left:20.0, right:20.0),
@@ -53,13 +88,15 @@ class Register extends StatelessWidget {
                   decoration: BoxDecoration(color: Colors.grey[100]),
                   child:TextFormField(
                     keyboardType: TextInputType.emailAddress,
+                    cursorColor: azul_logo,
                     decoration: InputDecoration(
-                      icon: Icon(Icons.portrait),
+                      icon: Icon(Icons.portrait,color: azul_logo),
                       border: InputBorder.none,
                       hintText: "Nombre",
                     ),
-                    controller: myController,
-
+                    onChanged: (texto) {
+                      name = texto;
+                    },
                     ).paddingOnly(left: 8, top: 2),
                   ).cornerRadiusWithClipRRect(12)
                     .paddingOnly( bottom: 8),
@@ -67,13 +104,14 @@ class Register extends StatelessWidget {
                     decoration: BoxDecoration(color: Colors.grey[100]),
                     child:TextFormField(
                       keyboardType: TextInputType.emailAddress,
+                      cursorColor: azul_logo,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.person),
+                        icon: Icon(Icons.person, color: azul_logo),
                         border: InputBorder.none,
                         hintText: "Nombre de Usuario",
                       ),
-                      onSaved: (newValue) {
-                        user = newValue;
+                      onChanged: (texto) {
+                        user = texto;
                       },
                     ).paddingOnly(left: 8, top: 2),
                   ).cornerRadiusWithClipRRect(12)
@@ -82,14 +120,16 @@ class Register extends StatelessWidget {
                     decoration: BoxDecoration(color: Colors.grey[100]),
                     child:TextFormField(
                       keyboardType: TextInputType.emailAddress,
+                      cursorColor: azul_logo,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.lock),
+                        icon: Icon(Icons.lock,color: azul_logo),
                         border: InputBorder.none,
                         hintText: "Contraseña",
                       ),
-                      onSaved: (newValue) {
-                      pwd = newValue;
-                    },
+                      obscureText: true,
+                      onChanged: (texto) {
+                        pwd = texto;
+                      },
                     ).paddingOnly(left: 8, top: 2),
                   ).cornerRadiusWithClipRRect(12)
                       .paddingOnly(top: 8, bottom: 8),
@@ -97,14 +137,21 @@ class Register extends StatelessWidget {
                     decoration: BoxDecoration(color: Colors.grey[100]),
                     child:TextFormField(
                       keyboardType: TextInputType.emailAddress,
+                      cursorColor: azul_logo,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.lock),
+                        icon: Icon(Icons.lock,color: azul_logo),
                         border: InputBorder.none,
                         hintText: "Repetir Contraseña",
                       ),
-                      onSaved: (newValue) {
-                        //pwd2 = newValue;
+                      obscureText: true,
+                      onChanged: (texto) {
+                        pwd2 = texto;
                       },
+                      /*if(pwd == pwd2){
+                        correct = true;
+                        }
+                      else {
+                        }*/
                     ).paddingOnly(left: 8, top: 2),
                   ).cornerRadiusWithClipRRect(12)
                       .paddingOnly(top: 8, bottom: 8),
@@ -112,13 +159,14 @@ class Register extends StatelessWidget {
                     decoration: BoxDecoration(color: Colors.grey[100]),
                     child:TextFormField(
                       keyboardType: TextInputType.emailAddress,
+                      cursorColor: azul_logo,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.email),
+                        icon: Icon(Icons.email,color: azul_logo),
                         border: InputBorder.none,
                         hintText: "Email",
                       ),
-                      onSaved: (newValue) {
-                        mail = newValue;
+                      onChanged: (texto) {
+                        mail = texto;
                       },
                     ).paddingOnly(left: 8, top: 2),
                   ).cornerRadiusWithClipRRect(12)
@@ -127,51 +175,31 @@ class Register extends StatelessWidget {
                     decoration: BoxDecoration(color: Colors.grey[100]),
                     child:TextFormField(
                       keyboardType: TextInputType.emailAddress,
+                      cursorColor: azul_logo,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.location_on),
+                        icon: Icon(Icons.location_on,color: azul_logo),
                         border: InputBorder.none,
-                        hintText: "Dirección",
+                        hintText: "Ciudad",
                       ),
-                      onSaved: (newValue) {
-                        direction = newValue;
+                      onChanged: (texto) {
+                        city = texto;
                       },
                     ).paddingOnly(left: 8, top: 2),
                   ).cornerRadiusWithClipRRect(12)
                       .paddingOnly(top: 8, bottom: 8),
 
                   Container(
-                      padding: EdgeInsets.only(top:10),
-                      height: 53.0,
-                      child: Material(
-                      borderRadius: BorderRadius.circular(20.0),
-                      shadowColor: Colors.blueAccent,
-                      color: Colors.blue,
-                      elevation: 7.0,
-                      child: GestureDetector(
-                          onTap: () {
-                            return showDialog(
-                              context: context,
-                              // ignore: missing_return
-                              builder: (context) {
-                                print(myController.text);
-                               return Text(myController.text);
-                              },
-
-                            );
-                          },
-                        child: Center(
-                          child: Text(
-                            'Registrar',
-                            style: TextStyle(
-                              color:Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Montserrat'
-                            ),
+                  child:
+                      CommonButton("Registrar")
+                      .paddingOnly(top: 16, bottom: 16)
+                            .onTap( () {//enviar la info a la base de datos
+                              registerUser(user, name, mail, city, pwd).then((answer) {
+                                print(answer.success);
+                                print(answer.ecode);
+                              });
+                            },
                           ),
-                        )
-                      )
-                    )
-                  )
+                    ),
                 ],
               )
             )
