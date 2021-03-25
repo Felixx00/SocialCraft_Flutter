@@ -39,13 +39,9 @@ class LoginState extends State<Login> {
     map['pass'] = pass;
     final response = await http.post(
       Uri.https('api.socialcraft.club', 'login'),
-      headers: <String, String>{},
       body: map,
     );
     return Resp.fromJson(jsonDecode(response.body));
-
-    //print('Response body: ${response.body}');
-    //print(response.body);
   }
 
   @override
@@ -148,7 +144,7 @@ class LoginState extends State<Login> {
                           .onTap(() {
                         //loginUser('arnau', '1234');
                         loginUser('Arnau', '1234').then((respuesta) {
-                          print(respuesta.data);
+                          print(respuesta.data['token']);
                         });
 
                         finish(context);
