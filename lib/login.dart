@@ -18,7 +18,7 @@ class LoginState extends State<Login> {
   FocusNode passwordNode = FocusNode();
   String user = "";
   String pass = "";
-  var resp;
+  Resp r;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class LoginState extends State<Login> {
     if (mounted) super.setState(fn);
   }
 
-  Future loginUser(String user, String pass) async {
+  Future<Resp> loginUser(String user, String pass) async {
     var map = new Map<String, dynamic>();
     map['user'] = user;
     map['pass'] = pass;
@@ -42,9 +42,10 @@ class LoginState extends State<Login> {
       headers: <String, String>{},
       body: map,
     );
+    return Resp.fromJson(jsonDecode(response.body));
+
     //print('Response body: ${response.body}');
     //print(response.body);
-    return (response.body);
   }
 
   @override
@@ -146,8 +147,8 @@ class LoginState extends State<Login> {
                           .paddingOnly(top: 16, bottom: 16)
                           .onTap(() {
                         //loginUser('arnau', '1234');
-                        loginUser('Arnau', '1234').then((data) {
-                          print(data);
+                        loginUser('Arnau', '1234').then((respuesta) {
+                          print(respuesta.data);
                         });
 
                         finish(context);
