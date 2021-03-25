@@ -14,7 +14,25 @@ import 'package:socialcraft/utils/images.dart';
 void main() => runApp(Register());
 FocusNode nameNode;
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
+  @override
+  RegisterW createState() => RegisterW();
+}
+class RegisterW extends State<Register> {
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  init() async {}
+
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
   Future<Resp> registerUser(
       String user, String name, String mail, String city, String pwd) async {
     var map = new Map<String, dynamic>();
@@ -144,7 +162,8 @@ class Register extends StatelessWidget {
                             keyboardType: TextInputType.emailAddress,
                             cursorColor: azul_logo,
                             decoration: InputDecoration(
-                              icon: Icon(Icons.lock, color: azul_logo),
+                              icon: Icon(
+                                  Icons.lock, color: correct ? azul_logo:field_wrong),
                               border: InputBorder.none,
                               hintText: "Repetir Contraseña",
                             ),
@@ -152,11 +171,6 @@ class Register extends StatelessWidget {
                             onChanged: (texto) {
                               pwd2 = texto;
                             },
-                            /*if(pwd == pwd2){
-                        correct = true;
-                        }
-                      else {
-                        }*/
                           ).paddingOnly(left: 8, top: 2),
                         )
                             .cornerRadiusWithClipRRect(12)
@@ -201,11 +215,24 @@ class Register extends StatelessWidget {
                               .onTap(
                             () {
                               //enviar la info a la base de datos
-                              registerUser(user, name, mail, city, pwd)
-                                  .then((answer) {
-                                print(answer.success);
-                                print(answer.ecode);
-                              });
+                              if(pwd == pwd2){
+                                correct = true;
+                                print("bien");
+                                setState(() {});
+                              }
+                              else {
+                                print("mal");
+                                correct = false;
+                                setState(() {});
+                              }
+
+                              if(correct) {
+                                registerUser(user, name, mail, city, pwd)
+                                    .then((answer) {
+                                  print(answer.success);
+                                  print(answer.ecode);
+                                });
+                              };
                             },
                           ),
                         ),
