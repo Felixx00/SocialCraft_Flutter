@@ -18,7 +18,6 @@ class LoginState extends State<Login> {
   FocusNode passwordNode = FocusNode();
   String user = "";
   String pass = "";
-  Resp r;
 
   @override
   void initState() {
@@ -41,7 +40,11 @@ class LoginState extends State<Login> {
       Uri.https('api.socialcraft.club', 'login'),
       body: map,
     );
-    return Resp.fromJson(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      return Resp.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
   }
 
   @override
@@ -64,7 +67,6 @@ class LoginState extends State<Login> {
                         child: Image.asset(socialcraft_logo_letras,
                             width: 300, height: 100),
                       ).cornerRadiusWithClipRRect(16).paddingTop(1),
-                      //Text("SocialCraft", style: boldTextStyle(size: 32)),
                     ],
                   ),
                 ),
@@ -85,7 +87,7 @@ class LoginState extends State<Login> {
                               emailNode.unfocus();
                               FocusScope.of(context).requestFocus(passwordNode);
                             },
-                            onSaved: (newValue) {
+                            onChanged: (newValue) {
                               user = newValue;
                             },
                             keyboardType: TextInputType.emailAddress,
@@ -105,6 +107,9 @@ class LoginState extends State<Login> {
                             obscureText: showPassword ? false : true,
                             keyboardType: TextInputType.emailAddress,
                             style: secondaryTextStyle(),
+                            onChanged: (newValue) {
+                              pass = newValue;
+                            },
                             decoration: InputDecoration(
                               suffixIcon: GestureDetector(
                                 onTap: () {
@@ -142,13 +147,15 @@ class LoginState extends State<Login> {
                       CommonButton("Iniciar sesión")
                           .paddingOnly(top: 16, bottom: 16)
                           .onTap(() {
-                        //loginUser('arnau', '1234');
-                        loginUser('Arnau', '1234').then((respuesta) {
-                          print(respuesta.data['token']);
-                        });
-
-                        finish(context);
-                        Navigator.pushNamed(context, "perfil");
+                        if (user == "" || pass == "") {
+                          print("escribe algo crack");
+                        } else {
+                          loginUser(user, pass).then((respuesta) {
+                            print(respuesta.success);
+                          });
+                          finish(context);
+                          Navigator.pushNamed(context, "perfil");
+                        }
                       }),
                       Container(
                         width: context.width(),

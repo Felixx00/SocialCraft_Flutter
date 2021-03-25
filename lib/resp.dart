@@ -6,10 +6,18 @@ class Resp {
   Resp({this.success, this.ecode, this.data});
 
   factory Resp.fromJson(Map<String, dynamic> json) {
-    return Resp(
-      success: json['success'],
-      ecode: json['ecode'],
-      data: json['data'],
-    );
+    if (json['success'] == true) {
+      return Resp(
+        success: json['success'],
+        ecode: json['ecode'],
+        data: json['data'],
+      );
+    } else {
+      return Resp(
+        success: json['success'],
+        ecode: json['ecode'],
+        data: null,
+      );
+    }
   }
 }
