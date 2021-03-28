@@ -218,13 +218,12 @@ class RegisterW extends State<Register> {
                               //enviar la info a la base de datos
                               if(pwd == pwd2){
                                 correct = true;
-                                print("bien");
                                 setState(() {});
                               }
                               else {
-                                print("mal");
                                 correct = false;
                                 setState(() {});
+                                toast("Las contraseñas no coinciden", bgColor: toast_color);
                               }
                               if(mail.validateEmail()){
                                 correct_mail=true;
@@ -233,16 +232,22 @@ class RegisterW extends State<Register> {
                               else{
                                 correct_mail=false;
                                 setState(() {});
+                                toast("Introduce un email válido", bgColor: toast_color);
                               }
-                              if(correct & correct_mail) {
+                              if(user.isNotEmpty & name.isNotEmpty & pwd.isNotEmpty & pwd2.isNotEmpty  & mail.isNotEmpty & city.isNotEmpty){
+                                if(correct & correct_mail){
                                 registerUser(user, name, mail, city, pwd)
                                     .then((answer) {
-                                  print(answer.success);
-                                  print(answer.ecode);
-                                });
-                              };
-                            },
-                          ),
+                                Navigator.pushNamed(context, "login");
+                                },
+                                );
+                              }
+                            }
+                              else{
+                                toast("Rellena los campos", bgColor: toast_color);
+                            }
+                          },
+                        ),
                         ),
                       ],
                     ))
