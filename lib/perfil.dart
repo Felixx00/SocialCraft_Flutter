@@ -62,15 +62,16 @@ class PerfilState extends State<Perfil> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(socialcraft_logo_letras, width: 140, height: 140),
+        title: Image.asset(socialcraft_logo_letras_blanco,
+            width: 140, height: 140),
         // child: Image.asset(insignia, width: 90, height: 90),
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.blueAccent[100],
+        backgroundColor: azul_logo,
         actions: <Widget>[
           IconButton(
             icon: const Icon(
               Icons.settings,
-              color: azul_logo,
+              color: Colors.white,
             ),
             tooltip: 'Show Snackbar',
             onPressed: () {
@@ -89,7 +90,7 @@ class PerfilState extends State<Perfil> {
                 children: [
                   CircleAvatar(
                       radius: 50,
-                      backgroundColor: Colors.blue,
+                      backgroundColor: azul_logo,
                       child: Text("?",
                           style: boldTextStyle(size: 20, color: white))),
                   Positioned(
@@ -99,7 +100,7 @@ class PerfilState extends State<Perfil> {
                       backgroundColor: Colors.lightBlueAccent[100],
                       radius: 15,
                       child: Icon(Icons.camera_alt_rounded,
-                          size: 20, color: Colors.blue[800]),
+                          size: 20, color: azul_logo),
                     ).onTap(() async {
                       //ImagePicker().getImage(source: ImageSource.gallery);
                     }),
@@ -188,7 +189,7 @@ class PerfilState extends State<Perfil> {
           ),
         ],
         currentIndex: 2,
-        selectedItemColor: Colors.lightBlueAccent,
+        selectedItemColor: azul_logo,
       ),
     );
   }

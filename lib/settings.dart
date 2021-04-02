@@ -32,7 +32,7 @@ class SettingsState extends State<Settings> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text('Configuración'),
-          backgroundColor: Colors.blue,
+          backgroundColor: azul_logo,
         ),
         body: SingleChildScrollView(
           child: Column(

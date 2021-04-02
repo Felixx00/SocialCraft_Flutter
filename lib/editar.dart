@@ -71,7 +71,7 @@ class EditarState extends State<Editar> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text('Editar Perfil'),
-          backgroundColor: Colors.blueAccent[100],
+          backgroundColor: azul_logo,
           actions: <Widget>[
             Padding(
               padding: EdgeInsets.all(10.0),
@@ -90,8 +90,9 @@ class EditarState extends State<Editar> {
                     } else {
                       print('a');
                       //finish(context);
-                      setState(() {});
-                      Navigator.pop(context);
+                      //setState(() {});
+                      finish(context);
+                      Navigator.pushNamed(context, 'perfil');
                     }
                   });
                 },
@@ -105,7 +106,7 @@ class EditarState extends State<Editar> {
               20.height,
               CircleAvatar(
                   radius: 65,
-                  backgroundColor: Colors.blue,
+                  backgroundColor: azul_logo,
                   child:
                       Text("?", style: boldTextStyle(size: 20, color: white))),
               7.height,
@@ -120,12 +121,13 @@ class EditarState extends State<Editar> {
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
+                          cursorColor: azul_logo,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (newValue) {
                             nombre = newValue;
                           },
                           decoration: InputDecoration(
-                            icon: Icon(Icons.portrait),
+                            icon: Icon(Icons.portrait, color: azul_logo),
                             border: InputBorder.none,
                             hintText: "Nombre",
                           ),
@@ -136,12 +138,13 @@ class EditarState extends State<Editar> {
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
+                          cursorColor: azul_logo,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (newValue) {
                             desc = newValue;
                           },
                           decoration: InputDecoration(
-                            icon: Icon(Icons.person),
+                            icon: Icon(Icons.person, color: azul_logo),
                             border: InputBorder.none,
                             hintText: "Descripción",
                           ),
@@ -152,12 +155,13 @@ class EditarState extends State<Editar> {
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
+                          cursorColor: azul_logo,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (newValue) {
                             email = newValue;
                           },
                           decoration: InputDecoration(
-                            icon: Icon(Icons.email),
+                            icon: Icon(Icons.email, color: azul_logo),
                             border: InputBorder.none,
                             hintText: "Email",
                           ),
@@ -168,12 +172,13 @@ class EditarState extends State<Editar> {
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
+                          cursorColor: azul_logo,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (newValue) {
                             ciutat = newValue;
                           },
                           decoration: InputDecoration(
-                            icon: Icon(Icons.location_on),
+                            icon: Icon(Icons.location_on, color: azul_logo),
                             border: InputBorder.none,
                             hintText: "Ciudad",
                           ),
@@ -192,7 +197,10 @@ class EditarState extends State<Editar> {
                               onPrimary: Colors.white,
                               onSurface: Colors.grey,
                             ),
-                            icon: Icon(Icons.lock_outline_rounded, size: 18),
+                            icon: Icon(
+                              Icons.lock_outline_rounded,
+                              size: 18,
+                            ),
                             onPressed: () {
                               Navigator.pushNamed(context, "password");
                             },

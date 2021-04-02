@@ -61,6 +61,7 @@ flutter:
     - images/socialcraft_logo_letras.png
     - images/insignia.png
     - images/key2.png
+    - images/socialcraft_logo_letras_blanco.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
