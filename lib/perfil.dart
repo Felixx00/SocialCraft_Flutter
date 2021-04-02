@@ -23,21 +23,22 @@ class PerfilState extends State<Perfil> {
   void initState() {
     super.initState();
     init();
-    username().then((respuesta) {
-      //print(respuesta.data['name']);
-      user = respuesta.data['name'];
-      about = respuesta.data['about'];
-      setState(() {});
-    });
+
     setState(() {});
 
     //init();
   }
 
   init() async {
-    final storage = new FlutterSecureStorage();
-    token = await storage.read(key: 'jwt');
+    final storage2 = new FlutterSecureStorage();
+    token = await storage2.read(key: 'jwt');
     print(token);
+    username().then((respuesta) {
+      //print(respuesta.data['name']);
+      user = respuesta.data['name'];
+      about = respuesta.data['about'];
+      setState(() {});
+    });
   }
 
   @override
