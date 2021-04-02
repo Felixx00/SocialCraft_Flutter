@@ -168,7 +168,7 @@ class LoginState extends State<Login> {
                               final storage = new FlutterSecureStorage();
                               await storage.write(
                                   key: 'jwt', value: respuesta.data['token']);
-                              print(respuesta.data['token']);
+                              //print(respuesta.data['token']);
                               finish(context);
                               Navigator.pushNamed(context, "perfil");
                             }

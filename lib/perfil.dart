@@ -32,7 +32,7 @@ class PerfilState extends State<Perfil> {
   init() async {
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
-    print(token);
+    //print(token);
     username().then((respuesta) {
       //print(respuesta.data['name']);
       user = respuesta.data['name'];
