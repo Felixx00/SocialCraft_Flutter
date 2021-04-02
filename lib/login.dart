@@ -6,6 +6,7 @@ import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -158,12 +159,16 @@ class LoginState extends State<Login> {
                           setState(() {});
                           toast("Rellena los campos", bgColor: toast_color);
                         } else {
-                          loginUser(user, pass).then((respuesta) {
+                          loginUser(user, pass).then((respuesta) async {
                             if (respuesta.success == false) {
                               correct = false;
                               setState(() {});
                               toast("Datos incorrectos", bgColor: toast_color);
                             } else {
+                              final storage = new FlutterSecureStorage();
+                              await storage.write(
+                                  key: 'jwt', value: respuesta.data['token']);
+                              print(respuesta.data['token']);
                               finish(context);
                               Navigator.pushNamed(context, "perfil");
                             }

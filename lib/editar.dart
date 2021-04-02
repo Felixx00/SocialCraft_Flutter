@@ -5,6 +5,7 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Editar extends StatefulWidget {
   static String tag = '/editar';
@@ -13,6 +14,8 @@ class Editar extends StatefulWidget {
   EditarState createState() => EditarState();
 }
 
+String token;
+
 class EditarState extends State<Editar> {
   @override
   void initState() {
@@ -20,10 +23,15 @@ class EditarState extends State<Editar> {
     init();
   }
 
+/*
   String token =
       'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLnNvY2lhbGNyYWZ0LmNsdWIiLCJpYXQiOjE2MTY2NjY0MjMsInVzZXJJZCI6IjEyIn0.zSfDG1InrzwC9dQWwYbinGyqW27DzpNNnr9bHZw_AvhfKFDPLXeR4Gf6JNw9FhsrmyzyRg0Z5TtngROGglRee8fAIUBAndnNCj10RR6R-TWs71SkZa_3-NKK4Y8LWtNBTJbjgOx_9IGRyL7TmAyliHNBnA7WRImwmF9gLbH0ay-s64VY7y70BW3ez0iasaJrzDTEGJqOcdhWo7eq-3F1fgSOTtW2TGfT-6zOCA7klSPwHdiddrdhmRS5nrXme3tZ-Hb34Lhy7He-Bgg10PFPxS2J7CtVTNR_heUxzXw3TSObtcSqYTiHRmVoJfP4UaDmbWTa7A96-TpjnnZZwj3kYg';
+      */
 
-  init() async {}
+  init() async {
+    final storage = new FlutterSecureStorage();
+    token = await storage.read(key: 'jwt');
+  }
 
   @override
   void setState(fn) {
