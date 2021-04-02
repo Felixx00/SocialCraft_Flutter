@@ -35,9 +35,10 @@ class PasswordState extends State<Password> {
   String token =
       'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLnNvY2lhbGNyYWZ0LmNsdWIiLCJpYXQiOjE2MTY2NjY0MjMsInVzZXJJZCI6IjEyIn0.zSfDG1InrzwC9dQWwYbinGyqW27DzpNNnr9bHZw_AvhfKFDPLXeR4Gf6JNw9FhsrmyzyRg0Z5TtngROGglRee8fAIUBAndnNCj10RR6R-TWs71SkZa_3-NKK4Y8LWtNBTJbjgOx_9IGRyL7TmAyliHNBnA7WRImwmF9gLbH0ay-s64VY7y70BW3ez0iasaJrzDTEGJqOcdhWo7eq-3F1fgSOTtW2TGfT-6zOCA7klSPwHdiddrdhmRS5nrXme3tZ-Hb34Lhy7He-Bgg10PFPxS2J7CtVTNR_heUxzXw3TSObtcSqYTiHRmVoJfP4UaDmbWTa7A96-TpjnnZZwj3kYg';
 
-  Future<Resp> cambiarpassword(String p) async {
+  Future<Resp> cambiarpassword(String p, String p2) async {
     var map = new Map<String, dynamic>();
     map['password'] = p;
+    map['cpassword'] = p2;
     final response = await http.post(
       Uri.https('api.socialcraft.club', 'users/editProfile'),
       headers: {
@@ -142,7 +143,7 @@ class PasswordState extends State<Password> {
                     icon: Icon(Icons.check_circle_outline_rounded, size: 18),
                     onPressed: () {
                       if (passNew == passNewConfirm && passNew != '') {
-                        cambiarpassword(passNew);
+                        cambiarpassword(passNew, passActual);
                         Navigator.pop(context);
                       } else {
                         print('no coinciden');
