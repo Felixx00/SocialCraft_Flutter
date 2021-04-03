@@ -6,6 +6,8 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:socialcraft/utils/widgets.dart';
 
 class Perfil extends StatefulWidget {
   static String tag = '/EGProfileScreen';
@@ -113,6 +115,30 @@ class PerfilState extends State<Perfil> {
                           size: 20, color: azul_logo),
                     ).onTap(() async {
                       //ImagePicker().getImage(source: ImageSource.gallery);
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext bc) {
+                            return Container(
+                              child: new Wrap(
+                                children: <Widget>[
+                                  new ListTile(
+                                      leading: new Icon(
+                                          Icons.add_a_photo_rounded,
+                                          color: azul_logo),
+                                      title: new Text('Editar foto de perfil'),
+                                      onTap: () => {}),
+                                  new ListTile(
+                                    leading: new Icon(
+                                      Icons.delete,
+                                      color: Colors.redAccent,
+                                    ),
+                                    title: new Text('Eliminar foto de perfil'),
+                                    onTap: () => {},
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
                     }),
                   ),
                 ],
