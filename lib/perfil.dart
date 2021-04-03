@@ -19,6 +19,7 @@ class Perfil extends StatefulWidget {
 String user = "";
 String about = "";
 String token;
+String link_foto;
 
 class PerfilState extends State<Perfil> {
   @override
@@ -102,6 +103,8 @@ class PerfilState extends State<Perfil> {
                 children: [
                   CircleAvatar(
                       radius: 50,
+                      backgroundImage: NetworkImage(
+                          'https://www.woolha.com/media/2020/03/eevee.png'),
                       backgroundColor: azul_logo,
                       child: Text("?",
                           style: boldTextStyle(size: 20, color: white))),
@@ -126,7 +129,19 @@ class PerfilState extends State<Perfil> {
                                           Icons.add_a_photo_rounded,
                                           color: azul_logo),
                                       title: new Text('Editar foto de perfil'),
-                                      onTap: () => {}),
+                                      onTap: () async {
+                                        var foto = await ImagePicker().getImage(
+                                            source: ImageSource.gallery);
+                                        setState(() {
+                                          if (foto != null) {
+                                            //var _image = File(foto.path);
+                                            link_foto = foto.path;
+                                            //print(foto.path);
+                                          } else {
+                                            print('No image selected.');
+                                          }
+                                        });
+                                      }),
                                   new ListTile(
                                     leading: new Icon(
                                       Icons.delete,

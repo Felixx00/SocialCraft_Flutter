@@ -2,6 +2,7 @@
     package="com.example.socialcraft">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
+   android:requestLegacyExternalStorage="true"
         android:label="socialcraft"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -38,5 +39,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            
     </application>
 </manifest>
