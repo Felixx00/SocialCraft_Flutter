@@ -39,31 +39,19 @@ class SettingsState extends State<Settings> {
           child: Column(
             children: [
               30.height,
-              15.height,
-              Text(
-                'Configuración',
-                style: TextStyle(fontSize: 28),
-              ),
-              20.height,
               Align(
                   alignment: Alignment.center,
                   child: ElevatedButton.icon(
                     label: Text('Cerrar Sesión'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(140, 40),
-                      //primary: Colors.lightBlueAccent[200],
                       primary: Colors.red[400],
                       onPrimary: Colors.white,
                       onSurface: Colors.grey,
                     ),
                     icon: Icon(Icons.close, size: 18),
-                    onPressed: () async {
-                      final storage = new FlutterSecureStorage();
-                      await storage.deleteAll();
-                      String token = await storage.read(key: 'jwt');
-                      print(token);
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, 'login', (Route<dynamic> route) => false);
+                    onPressed: () {
+                      showAlertDialog(context);
                     },
                   )).paddingTop(10),
             ],
@@ -72,4 +60,39 @@ class SettingsState extends State<Settings> {
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  Widget cancelButton = TextButton(
+    child: Text("Sí"),
+    onPressed: () async {
+      final storage = new FlutterSecureStorage();
+      await storage.deleteAll();
+      String token = await storage.read(key: 'jwt');
+      print(token);
+      Navigator.pushNamedAndRemoveUntil(
+          context, 'login', (Route<dynamic> route) => false);
+    },
+  );
+  Widget continueButton = TextButton(
+    child: Text("No"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    content: Text("¿Estas seguro que deseas cerrar sesión?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
