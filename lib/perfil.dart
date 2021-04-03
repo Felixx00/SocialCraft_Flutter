@@ -102,12 +102,11 @@ class PerfilState extends State<Perfil> {
               Stack(
                 children: [
                   CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(
-                          'https://www.woolha.com/media/2020/03/eevee.png'),
-                      backgroundColor: azul_logo,
-                      child: Text("?",
-                          style: boldTextStyle(size: 20, color: white))),
+                    radius: 50,
+                    backgroundImage: NetworkImage(
+                        'https://www.woolha.com/media/2020/03/eevee.png'),
+                    backgroundColor: azul_logo,
+                  ),
                   Positioned(
                     bottom: 0,
                     right: 5,
