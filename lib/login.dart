@@ -192,7 +192,7 @@ class LoginState extends State<Login> {
                   ),
                 ).paddingTop(32),
                 Container(
-                  child: createRichText([
+                  child: createRichText(list: [
                     TextSpan(
                         text: "¿No estas registrado?",
                         style: TextStyle(color: Color(0xFF757575))),
