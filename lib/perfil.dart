@@ -22,7 +22,7 @@ class Perfil extends StatefulWidget {
 String user = "";
 String about = "";
 String token;
-var link_foto;
+var linkfoto = "";
 
 class PerfilState extends State<Perfil> {
   @override
@@ -39,16 +39,16 @@ class PerfilState extends State<Perfil> {
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
     //print(token);
-    username().then((respuesta) {
+    username().then((respuesta) async {
       //print(respuesta.data['name']);
       user = respuesta.data['name'];
       about = respuesta.data['about'];
+      await Firebase.initializeApp();
+      await getImage();
       setState(() {});
     });
-    await Firebase.initializeApp();
     //await FirebaseAuth.instance.signInAnonymously();
-    // ignore: await_only_futures
-    await getImage();
+
     setState(() {});
   }
 
@@ -79,14 +79,14 @@ class PerfilState extends State<Perfil> {
     }
   }
 
-  void getImage() async {
+  Future getImage() async {
     //FirebaseStorage storage = FirebaseStorage.instance;
 
     final ref = FirebaseStorage.instance.ref().child('default_user.png');
 
     //link_foto = ref;
-    link_foto = (await ref.getDownloadURL()).toString();
-    print(link_foto);
+    linkfoto = (await ref.getDownloadURL()).toString();
+    print(linkfoto);
     //var url = await ref.getDownloadURL();
   }
 
@@ -132,7 +132,7 @@ class PerfilState extends State<Perfil> {
                     ),*/
 
                     backgroundImage: NetworkImage(
-                      link_foto,
+                      linkfoto,
                     ),
                     onBackgroundImageError: (_, __) {
                       setState(() {
@@ -141,6 +141,15 @@ class PerfilState extends State<Perfil> {
                     },
                     backgroundColor: azul_logo,
                   ),
+                  /*Image.network(
+                    linkfoto,
+                    width: 100,
+                    height: 100,
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace stackTrace) {
+                      return Text('Your error widget...');
+                    },
+                  ).cornerRadiusWithClipRRect(60),*/
                   Positioned(
                     bottom: 0,
                     right: 5,
@@ -168,7 +177,7 @@ class PerfilState extends State<Perfil> {
                                         setState(() {
                                           if (foto != null) {
                                             //var _image = File(foto.path);
-                                            link_foto = foto.path;
+                                            linkfoto = foto.path;
                                             //print(foto.path);
                                           } else {
                                             print('No image selected.');
