@@ -192,6 +192,7 @@ class PerfilState extends State<Perfil> {
                                       onTap: () async {
                                         var foto = await ImagePicker().getImage(
                                             source: ImageSource.gallery);
+                                        Navigator.pop(context);
                                         print(foto);
 
                                         if (foto != null) {
@@ -207,6 +208,7 @@ class PerfilState extends State<Perfil> {
                                         } else {
                                           print('No image selected.');
                                         }
+
                                         init();
                                         setState(() {});
                                       }),
@@ -217,6 +219,7 @@ class PerfilState extends State<Perfil> {
                                     ),
                                     title: new Text('Eliminar foto de perfil'),
                                     onTap: () async {
+                                      Navigator.pop(context);
                                       final _firebaseStorage =
                                           FirebaseStorage.instance;
                                       var snapshot = await _firebaseStorage

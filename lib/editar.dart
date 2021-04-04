@@ -6,6 +6,8 @@ import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Editar extends StatefulWidget {
   static String tag = '/editar';
@@ -15,6 +17,8 @@ class Editar extends StatefulWidget {
 }
 
 String token;
+String userName = "";
+var linkfoto = "";
 
 class EditarState extends State<Editar> {
   @override
@@ -31,6 +35,43 @@ class EditarState extends State<Editar> {
   init() async {
     final storage = new FlutterSecureStorage();
     token = await storage.read(key: 'jwt');
+
+    username().then((respuesta) async {
+      //print(respuesta.data['name']);
+
+      userName = respuesta.data['username'];
+
+      await Firebase.initializeApp();
+      await getImage();
+      setState(() {});
+    });
+    //await FirebaseAuth.instance.signInAnonymously();
+
+    setState(() {});
+  }
+
+  Future getImage() async {
+    //FirebaseStorage storage = FirebaseStorage.instance;
+    /*var ref = FirebaseStorage.instance
+        .ref()
+        .child('Usuario_Default/default-user-image.png');*/
+
+    var r = FirebaseStorage.instance.ref(userName + '/image');
+    try {
+      await r.getDownloadURL();
+      var ref = FirebaseStorage.instance.ref().child(userName + '/image');
+      linkfoto = (await ref.getDownloadURL()).toString();
+    } catch (err) {
+      var ref = FirebaseStorage.instance
+          .ref()
+          .child('Usuario_Default/default-user-image.png');
+      linkfoto = (await ref.getDownloadURL()).toString();
+    }
+
+    //link_foto = ref;
+    //linkfoto = (await ref.getDownloadURL()).toString();
+    print(linkfoto);
+    //var url = await ref.getDownloadURL();
   }
 
   @override
@@ -67,6 +108,23 @@ class EditarState extends State<Editar> {
     if (response.statusCode == 200) {
       print(response.body);
       return Resp.modificar(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
+  Future<Resp> username() async {
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', 'users/getMyProfile'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -113,10 +171,17 @@ class EditarState extends State<Editar> {
             children: [
               20.height,
               CircleAvatar(
-                  radius: 65,
-                  backgroundColor: azul_logo,
-                  child:
-                      Text("?", style: boldTextStyle(size: 20, color: white))),
+                radius: 65,
+                backgroundImage: NetworkImage(
+                  linkfoto,
+                ),
+                onBackgroundImageError: (_, __) {
+                  setState(() {
+                    //this._isError = true;
+                  });
+                },
+                backgroundColor: azul_logo,
+              ),
               7.height,
               Text(
                 'Cambiar foto de perfil',
