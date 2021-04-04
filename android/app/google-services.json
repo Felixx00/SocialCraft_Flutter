@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "101124449518",
+    "project_id": "burnished-sweep-303717",
+    "storage_bucket": "burnished-sweep-303717.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101124449518:android:a1c07f7519bddac5e7ffff",
+        "android_client_info": {
+          "package_name": "com.example.socialcraft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "101124449518-emisiadfni48gg50s66ua75rmoh8op7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeq109PJRozu4N_cIP_7r-Gz03LC1ANbY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "101124449518-emisiadfni48gg50s66ua75rmoh8op7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

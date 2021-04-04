@@ -8,6 +8,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:socialcraft/utils/widgets.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Perfil extends StatefulWidget {
   static String tag = '/EGProfileScreen';
@@ -19,7 +22,7 @@ class Perfil extends StatefulWidget {
 String user = "";
 String about = "";
 String token;
-String link_foto;
+var link_foto;
 
 class PerfilState extends State<Perfil> {
   @override
@@ -42,6 +45,11 @@ class PerfilState extends State<Perfil> {
       about = respuesta.data['about'];
       setState(() {});
     });
+    await Firebase.initializeApp();
+    //await FirebaseAuth.instance.signInAnonymously();
+    // ignore: await_only_futures
+    await getImage();
+    setState(() {});
   }
 
   @override
@@ -69,6 +77,17 @@ class PerfilState extends State<Perfil> {
     } else {
       throw Exception('Failed to load response');
     }
+  }
+
+  void getImage() async {
+    //FirebaseStorage storage = FirebaseStorage.instance;
+
+    final ref = FirebaseStorage.instance.ref().child('default_user.png');
+
+    //link_foto = ref;
+    link_foto = (await ref.getDownloadURL()).toString();
+    print(link_foto);
+    //var url = await ref.getDownloadURL();
   }
 
   @override
@@ -103,8 +122,23 @@ class PerfilState extends State<Perfil> {
                 children: [
                   CircleAvatar(
                     radius: 50,
+                    /*child: Image.network(
+                      link_foto.toString(),
+                      fit: BoxFit.scaleDown,
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace stackTrace) {
+                        return Text(link_foto.toString());
+                      },
+                    ),*/
+
                     backgroundImage: NetworkImage(
-                        'https://www.woolha.com/media/2020/03/eevee.png'),
+                      link_foto,
+                    ),
+                    onBackgroundImageError: (_, __) {
+                      setState(() {
+                        //this._isError = true;
+                      });
+                    },
                     backgroundColor: azul_logo,
                   ),
                   Positioned(
