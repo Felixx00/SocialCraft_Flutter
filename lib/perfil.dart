@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/images.dart';
@@ -20,6 +22,7 @@ class Perfil extends StatefulWidget {
 }
 
 String user = "";
+String userName = "";
 String about = "";
 String token;
 var linkfoto = "";
@@ -43,6 +46,8 @@ class PerfilState extends State<Perfil> {
       //print(respuesta.data['name']);
       user = respuesta.data['name'];
       about = respuesta.data['about'];
+      userName = respuesta.data['username'];
+
       await Firebase.initializeApp();
       await getImage();
       setState(() {});
@@ -81,11 +86,24 @@ class PerfilState extends State<Perfil> {
 
   Future getImage() async {
     //FirebaseStorage storage = FirebaseStorage.instance;
+    /*var ref = FirebaseStorage.instance
+        .ref()
+        .child('Usuario_Default/default-user-image.png');*/
 
-    final ref = FirebaseStorage.instance.ref().child('default_user.png');
+    var r = FirebaseStorage.instance.ref(userName + '/image');
+    try {
+      await r.getDownloadURL();
+      var ref = FirebaseStorage.instance.ref().child(userName + '/image');
+      linkfoto = (await ref.getDownloadURL()).toString();
+    } catch (err) {
+      var ref = FirebaseStorage.instance
+          .ref()
+          .child('Usuario_Default/default-user-image.png');
+      linkfoto = (await ref.getDownloadURL()).toString();
+    }
 
     //link_foto = ref;
-    linkfoto = (await ref.getDownloadURL()).toString();
+    //linkfoto = (await ref.getDownloadURL()).toString();
     print(linkfoto);
     //var url = await ref.getDownloadURL();
   }
@@ -174,15 +192,23 @@ class PerfilState extends State<Perfil> {
                                       onTap: () async {
                                         var foto = await ImagePicker().getImage(
                                             source: ImageSource.gallery);
-                                        setState(() {
-                                          if (foto != null) {
-                                            //var _image = File(foto.path);
-                                            linkfoto = foto.path;
-                                            //print(foto.path);
-                                          } else {
-                                            print('No image selected.');
-                                          }
-                                        });
+                                        print(foto);
+
+                                        if (foto != null) {
+                                          final _firebaseStorage =
+                                              FirebaseStorage.instance;
+                                          var file = File(foto.path);
+                                          var snapshot = await _firebaseStorage
+                                              .ref()
+                                              .child(userName + '/image')
+                                              .putFile(file);
+
+                                          //print(foto.path);
+                                        } else {
+                                          print('No image selected.');
+                                        }
+                                        init();
+                                        setState(() {});
                                       }),
                                   new ListTile(
                                     leading: new Icon(
@@ -190,7 +216,16 @@ class PerfilState extends State<Perfil> {
                                       color: Colors.redAccent,
                                     ),
                                     title: new Text('Eliminar foto de perfil'),
-                                    onTap: () => {},
+                                    onTap: () async {
+                                      final _firebaseStorage =
+                                          FirebaseStorage.instance;
+                                      var snapshot = await _firebaseStorage
+                                          .ref()
+                                          .child(userName + '/image')
+                                          .delete();
+                                      init();
+                                      setState(() {});
+                                    },
                                   ),
                                 ],
                               ),
