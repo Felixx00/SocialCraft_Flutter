@@ -24,37 +24,6 @@ class MyApp extends StatelessWidget {
       'password': (BuildContext context) => Password(),
       'settings': (BuildContext context) => Settings(),
       'transition': (BuildContext context) => Transition(),
-    }, debugShowCheckedModeBanner: false, home: MyHome());
-  }
-}
-
-class MyHome extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.all(100.0),
-        child: Wrap(
-          children: <Widget>[
-            OutlinedButton(
-              child: Text("Login"),
-              onPressed: () => Navigator.pushNamed(context, "login"),
-            ),
-            OutlinedButton(
-              child: Text("Register"),
-              onPressed: () => Navigator.pushNamed(context, "register"),
-            ),
-            OutlinedButton(
-              child: Text("Perfil"),
-              onPressed: () => Navigator.pushNamed(context, "perfil"),
-            ),
-            OutlinedButton(
-              child: Text("Transition"),
-              onPressed: () => Navigator.pushNamed(context, "transition"),
-            ),
-          ],
-        )
-        // ignore: unnecessary_statements
-
-        );
+    }, debugShowCheckedModeBanner: false, home: Transition());
   }
 }
