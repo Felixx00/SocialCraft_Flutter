@@ -24,7 +24,7 @@ class Perfil extends StatefulWidget {
 String user = "";
 String userName = "";
 String about = "";
-String token;
+String token = "";
 var linkfoto = "";
 
 class PerfilState extends State<Perfil> {
@@ -45,7 +45,11 @@ class PerfilState extends State<Perfil> {
     username().then((respuesta) async {
       //print(respuesta.data['name']);
       user = respuesta.data['name'];
-      about = respuesta.data['about'];
+      if (respuesta.data['about'] == null) {
+        about = "Hey there, I'm using SocialCraft!";
+      } else {
+        about = respuesta.data['about'];
+      }
       userName = respuesta.data['username'];
 
       await Firebase.initializeApp();
