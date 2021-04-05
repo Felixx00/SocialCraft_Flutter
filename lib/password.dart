@@ -61,7 +61,7 @@ class PasswordState extends State<Password> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text('Cambiar Contraseña'),
-          backgroundColor: Colors.blueAccent[100],
+          backgroundColor: azul_logo,
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -87,7 +87,7 @@ class PasswordState extends State<Password> {
                             passActual = newValue;
                           },
                           decoration: InputDecoration(
-                            icon: Icon(Icons.lock_rounded),
+                            icon: Icon(Icons.lock_rounded, color: azul_logo),
                             border: InputBorder.none,
                             hintText: "Contraseña actual",
                           ),
@@ -102,7 +102,7 @@ class PasswordState extends State<Password> {
                             passNew = newValue;
                           },
                           decoration: InputDecoration(
-                            icon: Icon(Icons.lock_rounded),
+                            icon: Icon(Icons.lock_rounded, color: azul_logo),
                             border: InputBorder.none,
                             hintText: "Nueva Contraseña",
                           ),
@@ -119,7 +119,8 @@ class PasswordState extends State<Password> {
                             passNewConfirm = newValue;
                           },
                           decoration: InputDecoration(
-                            icon: Icon(Icons.lock_open_rounded),
+                            icon:
+                                Icon(Icons.lock_open_rounded, color: azul_logo),
                             border: InputBorder.none,
                             hintText: "Confirma nueva contraseña",
                           ),
