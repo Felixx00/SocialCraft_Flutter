@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/widgets.dart';
@@ -8,6 +10,7 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Editar extends StatefulWidget {
   static String tag = '/editar';
@@ -183,9 +186,35 @@ class EditarState extends State<Editar> {
                 backgroundColor: azul_logo,
               ),
               7.height,
-              Text(
-                'Cambiar foto de perfil',
-                style: TextStyle(color: azul_logo),
+              TextButton(
+                child: Text('Cambiar foto de perfil',
+                    style: TextStyle(color: azul_logo)),
+                onPressed: () async {
+                  var foto =
+                      await ImagePicker().getImage(source: ImageSource.gallery);
+                  //Navigator.pop(context);
+                  print(foto);
+
+                  //Navigator.pushNamed(context, 'perfil');
+                  if (foto != null) {
+                    finish(context);
+                    Navigator.pushNamed(context, 'perfil');
+                    final _firebaseStorage = FirebaseStorage.instance;
+                    var file = File(foto.path);
+                    var snapshot = await _firebaseStorage
+                        .ref()
+                        .child(userName + '/image')
+                        .putFile(file);
+
+                    //print(foto.path);
+                  } else {
+                    print('No image selected.');
+                  }
+                  //finish(context);
+                  //Navigator.pushNamed(context, 'perfil');
+                  //init();
+                  //setState(() {});
+                },
               ),
               Container(
                   padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
