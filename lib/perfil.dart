@@ -305,18 +305,6 @@ class PerfilState extends State<Perfil> {
               thickness: 3,
               color: Colors.grey[650],
             ),
-            FloatingActionButton(
-              heroTag: '1',
-              elevation: 5,
-              onPressed: () {
-                toast('post');
-              },
-              backgroundColor: azul_logo,
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-            ),
           ],
         ).paddingAll(16),
       ),
@@ -338,6 +326,18 @@ class PerfilState extends State<Perfil> {
         ],
         currentIndex: 2,
         selectedItemColor: azul_logo,
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: '1',
+        elevation: 5,
+        onPressed: () {
+          toast('post');
+        },
+        backgroundColor: azul_logo,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }
