@@ -305,10 +305,23 @@ class PerfilState extends State<Perfil> {
               thickness: 3,
               color: Colors.grey[650],
             ),
+            FloatingActionButton(
+              heroTag: '1',
+              elevation: 5,
+              onPressed: () {
+                toast('post');
+              },
+              backgroundColor: azul_logo,
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+            ),
           ],
         ).paddingAll(16),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        //backgroundColor: Colors.grey[200],
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
