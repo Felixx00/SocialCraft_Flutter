@@ -4,6 +4,7 @@ import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/images.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 
 class Settings extends StatefulWidget {
   static String tag = '/settings';
@@ -49,9 +50,25 @@ class SettingsState extends State<Settings> {
                       onPrimary: Colors.white,
                       onSurface: Colors.grey,
                     ),
-                    icon: Icon(Icons.close, size: 18),
+                    icon: Icon(Icons.exit_to_app_rounded, size: 18),
                     onPressed: () {
                       showAlertDialog(context);
+                    },
+                  )).paddingTop(10),
+              10.height,
+              Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton.icon(
+                    label: Text('Eliminar Cuenta'),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(140, 40),
+                      primary: Colors.red[400],
+                      onPrimary: Colors.white,
+                      onSurface: Colors.grey,
+                    ),
+                    icon: Icon(Icons.close, size: 18),
+                    onPressed: () {
+                      showAlertDialogEliminar(context);
                     },
                   )).paddingTop(10),
             ],
@@ -83,6 +100,56 @@ showAlertDialog(BuildContext context) {
 
   AlertDialog alert = AlertDialog(
     content: Text("¿Estas seguro que deseas cerrar sesión?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+showAlertDialogEliminar(BuildContext context) {
+  Widget cancelButton = TextButton(
+    child: Text("Sí"),
+    onPressed: () async {
+      final storage = new FlutterSecureStorage();
+      String token = await storage.read(key: 'jwt');
+
+      print(token);
+      final response = await http.post(
+        Uri.https('api.socialcraft.club', 'users/deleteAccount'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      if (response.statusCode == 200) {
+        await storage.deleteAll();
+        print(response.body);
+        Navigator.pushNamedAndRemoveUntil(
+            context, 'login', (Route<dynamic> route) => false);
+      } else {
+        Navigator.pop(context);
+        throw Exception('Failed to load response');
+      }
+    },
+  );
+  Widget continueButton = TextButton(
+    child: Text("No"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    content: Text("¿Estas seguro que deseas eliminar tu cuenta?"),
     actions: [
       cancelButton,
       continueButton,
