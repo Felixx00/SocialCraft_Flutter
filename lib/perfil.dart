@@ -46,7 +46,7 @@ class PerfilState extends State<Perfil> {
       //print(respuesta.data['name']);
       user = respuesta.data['name'];
       if (respuesta.data['about'] == null) {
-        about = "Hey there, I'm using SocialCraft!";
+        about = "SocialCraft!";
       } else {
         about = respuesta.data['about'];
       }
