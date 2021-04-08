@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'buscar.dart';
 import 'perfil2.dart';
 import 'login.dart';
 import 'register.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       'perfil2': (BuildContext context) => Perfil2(),
       'forgotPassword': (BuildContext context) => ForgotPassword(),
       'editar': (BuildContext context) => Editar(),
+      'search': (BuildContext context) => Search(),
       'password': (BuildContext context) => Password(),
       'settings': (BuildContext context) => Settings(),
       'transition': (BuildContext context) => Transition(),

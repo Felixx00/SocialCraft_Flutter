@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/images.dart';
@@ -8,11 +8,11 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:socialcraft/utils/widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
+import 'buscar.dart';
+
 
 class Perfil2 extends StatefulWidget {
   static String tag = '/EGProfileScreen';
@@ -31,9 +31,12 @@ int follow = 0;
 String nFollow = "";
 int followers = 0;
 String nFollowers = "";
+bool unfollow= true;
 var linkfoto = "";
+int _selectedIndex = 0;
 
 class Perfil2State extends State<Perfil2> {
+  final _pages = [SearchW()];
   @override
   void initState() {
     super.initState();
@@ -123,7 +126,7 @@ class Perfil2State extends State<Perfil2> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.arrow_back).onTap(() {
-          finish(context);
+          Navigator.pop(context);
         }),
         title: Text(user, style: boldTextStyle(size: 20,color: Colors.white)),
         automaticallyImplyLeading: false,
@@ -203,23 +206,25 @@ class Perfil2State extends State<Perfil2> {
               ),
           ],
               ),
-              ElevatedButton.icon(
-                label: Text('Seguir Perfil'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(100, 40),
-                  //primary: Colors.lightBlueAccent[200],
-                  primary: Color.fromRGBO(68, 102, 216, 1.0),
-                  onPrimary: Colors.white,
-                  onSurface: Colors.grey,
+                ElevatedButton.icon(
+                  label: Text(unfollow ? 'Seguir Perfil' : 'Dejar de seguir'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(100, 40),
+                    //primary: Colors.lightBlueAccent[200],
+                    primary: unfollow? Color.fromRGBO(68, 102, 216, 1.0) : Colors.red,
+                    onPrimary: Colors.white,
+                    onSurface: Colors.grey,
+                  ),
+                  icon: Icon(unfollow? Icons.person_add : Icons.person_add_disabled, size: 18),
+                  onPressed: () {
+                    unfollow = !unfollow;
+                    if(unfollow){follow = follow - 1;}
+                    else{follow = follow + 1;}
+                    setState(() {});
+                  },
                 ),
-                icon: Icon(Icons.person_add, size: 18),
-                onPressed: () {
-                  Navigator.pushNamed(context, "editar");
-                  setState(() {});
-                },
-              )
-            ]),
 
+            ]),
             10.height,
             Divider(
               height: 30,
@@ -242,9 +247,18 @@ class Perfil2State extends State<Perfil2> {
           ],
         ).paddingAll(16),
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         //backgroundColor: Colors.grey[200],
+        currentIndex: _selectedIndex,
+        onTap: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+
         items: const <BottomNavigationBarItem>[
+
           BottomNavigationBarItem(
             icon: Icon(Icons.home, color: Colors.black38),
             label: 'Home',
@@ -262,9 +276,10 @@ class Perfil2State extends State<Perfil2> {
             label: 'Perfil',
           ),
         ],
-        currentIndex: 3,
         selectedItemColor: azul_logo,
+       // body:_pages.elementAt(_selectedIndex),
       ),
+
       floatingActionButton: FloatingActionButton(
         heroTag: '1',
         elevation: 5,
