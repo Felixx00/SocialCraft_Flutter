@@ -9,6 +9,7 @@ import 'password.dart';
 import 'settings.dart';
 import 'transition.dart';
 import 'post.dart';
+import 'upload.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       'settings': (BuildContext context) => Settings(),
       'transition': (BuildContext context) => Transition(),
       'post': (BuildContext context) => Post(),
+      'upload': (BuildContext context) => Upload(),
     }, debugShowCheckedModeBanner: false, home: Transition());
   }
 }
