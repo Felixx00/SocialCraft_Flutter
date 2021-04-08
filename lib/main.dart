@@ -8,6 +8,7 @@ import 'editar.dart';
 import 'password.dart';
 import 'settings.dart';
 import 'transition.dart';
+import 'post.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       'password': (BuildContext context) => Password(),
       'settings': (BuildContext context) => Settings(),
       'transition': (BuildContext context) => Transition(),
+      'post': (BuildContext context) => Post(),
     }, debugShowCheckedModeBanner: false, home: Transition());
   }
 }
