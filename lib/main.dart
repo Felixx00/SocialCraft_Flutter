@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'perfil2.dart';
 import 'login.dart';
 import 'register.dart';
 import 'perfil.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       'login': (BuildContext context) => Login(),
       'register': (BuildContext context) => Register(),
       'perfil': (BuildContext context) => Perfil(),
+      'perfil2': (BuildContext context) => Perfil2(),
       'forgotPassword': (BuildContext context) => ForgotPassword(),
       'editar': (BuildContext context) => Editar(),
       'password': (BuildContext context) => Password(),
