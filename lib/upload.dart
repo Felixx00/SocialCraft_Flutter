@@ -30,7 +30,7 @@ class UploadState extends State<Upload> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Configuración'),
+          title: const Text('Upload'),
           backgroundColor: azul_logo,
         ),
         body: SingleChildScrollView(),

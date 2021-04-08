@@ -331,7 +331,7 @@ class PerfilState extends State<Perfil> {
         heroTag: '1',
         elevation: 5,
         onPressed: () {
-          toast('post');
+          Navigator.pushNamed(context, 'upload');
         },
         backgroundColor: azul_logo,
         child: Icon(
