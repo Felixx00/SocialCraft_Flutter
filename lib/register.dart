@@ -59,7 +59,8 @@ class RegisterW extends State<Register> {
   String mail = "";
   String city = "";
   bool correct = true;
-  bool correct_mail = true;
+  bool correctMail = true;
+  bool wrongName = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -110,7 +111,7 @@ class RegisterW extends State<Register> {
                         Container(
                           decoration: BoxDecoration(color: Colors.grey[100]),
                           child: TextFormField(
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.name,
                             cursorColor: azul_logo,
                             decoration: InputDecoration(
                               icon: Icon(Icons.portrait, color: azul_logo),
@@ -125,10 +126,10 @@ class RegisterW extends State<Register> {
                         Container(
                           decoration: BoxDecoration(color: Colors.grey[100]),
                           child: TextFormField(
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.name,
                             cursorColor: azul_logo,
                             decoration: InputDecoration(
-                              icon: Icon(Icons.person, color: azul_logo),
+                              icon: Icon(Icons.person, color: wrongName ? Colors.red[600] : azul_logo),
                               border: InputBorder.none,
                               hintText: "Nombre de Usuario",
                             ),
@@ -142,7 +143,7 @@ class RegisterW extends State<Register> {
                         Container(
                           decoration: BoxDecoration(color: Colors.grey[100]),
                           child: TextFormField(
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.text,
                             cursorColor: azul_logo,
                             decoration: InputDecoration(
                               icon: Icon(Icons.lock, color: azul_logo),
@@ -160,7 +161,7 @@ class RegisterW extends State<Register> {
                         Container(
                           decoration: BoxDecoration(color: Colors.grey[100]),
                           child: TextFormField(
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.text,
                             cursorColor: azul_logo,
                             decoration: InputDecoration(
                               icon: Icon(
@@ -182,7 +183,7 @@ class RegisterW extends State<Register> {
                             keyboardType: TextInputType.emailAddress,
                             cursorColor: azul_logo,
                             decoration: InputDecoration(
-                              icon: Icon(Icons.email, color: correct_mail ? azul_logo : Colors.red[600]),
+                              icon: Icon(Icons.email, color: correctMail ? azul_logo : Colors.red[600]),
                               border: InputBorder.none,
                               hintText: "Email",
                             ),
@@ -196,7 +197,7 @@ class RegisterW extends State<Register> {
                         Container(
                           decoration: BoxDecoration(color: Colors.grey[100]),
                           child: TextFormField(
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.streetAddress,
                             cursorColor: azul_logo,
                             decoration: InputDecoration(
                               icon: Icon(Icons.location_on, color: azul_logo),
@@ -215,7 +216,6 @@ class RegisterW extends State<Register> {
                               .paddingOnly(top: 16, bottom: 16)
                               .onTap(
                             () {
-                              //enviar la info a la base de datos
                               if(pwd == pwd2){
                                 correct = true;
                                 setState(() {});
@@ -225,26 +225,36 @@ class RegisterW extends State<Register> {
                                 setState(() {});
                                 toast("Las contraseñas no coinciden", bgColor: toast_color);
                               }
-                              if(mail.validateEmail()){
-                                correct_mail=true;
+                              if(user.contains('/')) {
+                                wrongName= true;
+                                setState(() {});
+                                toast("El carácter '/' no está permitido", bgColor: toast_color);
+                              }
+                              else {
+                                wrongName= false;
                                 setState(() {});
                               }
-                              else{
-                                correct_mail=false;
+                              if(mail.validateEmail()){
+                                correctMail=true;
+                                setState(() {});
+                              }
+                              if(mail.isNotEmpty & !mail.validateEmail()){
+                                correctMail=false;
                                 setState(() {});
                                 toast("Introduce un email válido", bgColor: toast_color);
                               }
                               if(user.isNotEmpty & name.isNotEmpty & pwd.isNotEmpty & pwd2.isNotEmpty  & mail.isNotEmpty & city.isNotEmpty){
-                                if(correct & correct_mail){
-                                registerUser(user, name, mail, city, pwd)
-                                    .then((answer) {
-                                Navigator.pushNamed(context, "login");
-                                },
+                                if(correct & correctMail){
+                                  //enviar la info a la base de datos
+                                  registerUser(user, name, mail, city, pwd)
+                                       .then((answer){
+                                  Navigator.pushNamed(context, "login");
+                                  },
                                 );
                               }
                             }
                               else{
-                                toast("Rellena los campos", bgColor: toast_color);
+                                toast("Rellena todos los campos", bgColor: toast_color);
                             }
                           },
                         ),
