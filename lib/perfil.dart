@@ -308,25 +308,6 @@ class PerfilState extends State<Perfil> {
           ],
         ).paddingAll(16),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        //backgroundColor: Colors.grey[200],
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Buscar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Perfil',
-          ),
-        ],
-        currentIndex: 2,
-        selectedItemColor: azul_logo,
-      ),
       floatingActionButton: FloatingActionButton(
         heroTag: '1',
         elevation: 5,

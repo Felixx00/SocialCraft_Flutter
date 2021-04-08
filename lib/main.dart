@@ -4,6 +4,7 @@ import 'perfil2.dart';
 import 'login.dart';
 import 'register.dart';
 import 'perfil.dart';
+import 'barraNavegacion.dart';
 import 'forgotPassword.dart';
 import 'editar.dart';
 import 'password.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(routes: <String, WidgetBuilder>{
       'login': (BuildContext context) => Login(),
       'register': (BuildContext context) => Register(),
+      'barra': (BuildContext context) => barra(),
       'perfil': (BuildContext context) => Perfil(),
       'perfil2': (BuildContext context) => Perfil2(),
       'forgotPassword': (BuildContext context) => ForgotPassword(),

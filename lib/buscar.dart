@@ -99,30 +99,7 @@ class SearchW extends State<Search> {
                     )
                 ],
             ),
-          ),bottomNavigationBar: BottomNavigationBar(
-          //backgroundColor: Colors.grey[200],
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: Colors.black38),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Buscar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shop, color: Colors.black38),
-              label: 'Tienda',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle, color: Colors.black38),
-              label: 'Perfil',
-            ),
-          ],
-          currentIndex: 1,
-          selectedItemColor: azul_logo,
-          //onTap:  Navigator.pushNamed(context, "settings");,
-        ),
+          )
         ),
 
       debugShowCheckedModeBanner: false,

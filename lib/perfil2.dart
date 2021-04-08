@@ -248,37 +248,7 @@ class Perfil2State extends State<Perfil2> {
         ).paddingAll(16),
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        //backgroundColor: Colors.grey[200],
-        currentIndex: _selectedIndex,
-        onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
 
-        items: const <BottomNavigationBarItem>[
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.black38),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.black38),
-            label: 'Buscar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shop, color: Colors.black38),
-            label: 'Tienda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Perfil',
-          ),
-        ],
-        selectedItemColor: azul_logo,
-       // body:_pages.elementAt(_selectedIndex),
-      ),
 
       floatingActionButton: FloatingActionButton(
         heroTag: '1',
