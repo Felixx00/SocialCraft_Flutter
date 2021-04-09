@@ -170,7 +170,7 @@ class LoginState extends State<Login> {
                                   key: 'jwt', value: respuesta.data['token']);
                               print(respuesta.data['token']);
                               finish(context);
-                              Navigator.pushNamed(context, "perfil");
+                              Navigator.pushNamed(context, "barra");
                             }
                           });
                         }
