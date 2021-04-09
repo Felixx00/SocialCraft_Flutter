@@ -29,56 +29,57 @@ class PostState extends State<Post> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: appBarWidget("", color: Colors.white, elevation: 0, actions: [
-          IconButton(
-              icon: Icon(Icons.local_grocery_store_outlined),
-              color: azul_logo,
-              onPressed: () {}),
-        ]),
-        persistentFooterButtons: [
-          Container(
-            width: context.width(),
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            ),
-          )
-        ],
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: azul_logo),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: Icon(Icons.arrow_back).onTap(() {
+            finish(context);
+          }),
+        ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Titulo Post", style: boldTextStyle(size: 32)),
               8.height,
+              Text("Hola hola hola hola como estas.",
+                  style: secondaryTextStyle(size: 16)),
+              16.height,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Categoria", style: secondaryTextStyle()),
-                      2.height,
-                      Text("Manualidades", style: boldTextStyle()),
+                      Row(children: [
+                        Icon(Icons.brightness_5, color: azul_logo, size: 18),
+                        16.width,
+                        Text("Categoria", style: secondaryTextStyle())
+                      ]),
                       16.height,
-                      Text("Dificultad", style: secondaryTextStyle()),
-                      2.height,
-                      Text("Facil", style: boldTextStyle()),
+                      Row(children: [
+                        Icon(Icons.brightness_5, color: azul_logo, size: 18),
+                        16.width,
+                        Text("DIficultad", style: secondaryTextStyle())
+                      ]),
                       16.height,
-                      Text("Duracion", style: secondaryTextStyle()),
-                      2.height,
-                      Text("30min", style: boldTextStyle()),
+                      Row(children: [
+                        Icon(Icons.brightness_5, color: azul_logo, size: 18),
+                        16.width,
+                        Text("Duracion", style: secondaryTextStyle())
+                      ]),
+                      16.height,
                     ],
                   ),
                   24.width,
-                  Image.network('https://picsum.photos/250?image=9'),
+                  SizedBox(
+                    width: 200,
+                    height: 100,
+                    child: Image.network('https://picsum.photos/250?image=9'),
+                  )
                 ],
-              ),
-              32.height,
-              Text("Descripcion", style: boldTextStyle(size: 20)),
-              8.height,
-              Text(
-                "Hola hola hola hola como estas. ",
-                style: secondaryTextStyle(),
               ),
               32.height,
               /*
