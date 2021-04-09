@@ -27,6 +27,55 @@ class PostState extends State<Post> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                leading: Icon(Icons.arrow_back).onTap(() {
+                  finish(context);
+                }),
+                title: Text(
+                  "Titulo Post",
+                  style: TextStyle(fontFamily: comfortaa),
+                ),
+                expandedHeight: 320,
+                flexibleSpace: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                              'https://picsum.photos/250?image=9')),
+                    ),
+                    child: Container(
+                      color: Colors.black.withOpacity(.5),
+                    )),
+                pinned: true,
+                bottom: TabBar(
+                  indicatorWeight: 4,
+                  labelColor: Colors.white,
+                  tabs: <Widget>[
+                    Tab(
+                        child: Text("Ingredientes",
+                            style: TextStyle(fontSize: 18))),
+                    Tab(child: Text("Pasos", style: TextStyle(fontSize: 18))),
+                  ],
+                ),
+              )
+            ];
+          },
+          body: TabBarView(children: <Widget>[Text("hola"), Text("pantalla2")]),
+        ),
+      ),
+    );
+  }
+}
+
+/*
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -138,3 +187,4 @@ class PostState extends State<Post> {
     );
   }
 }
+*/
