@@ -128,7 +128,7 @@ class Perfil2State extends State<Perfil2> {
         leading: Icon(Icons.arrow_back).onTap(() {
           Navigator.pop(context);
         }),
-        title: Text(user, style: boldTextStyle(size: 20,color: Colors.white)),
+        title: Text(userName, style: boldTextStyle(size: 20,color: Colors.white)),
         automaticallyImplyLeading: false,
         backgroundColor: azul_logo,
         actions: <Widget>[
@@ -209,7 +209,7 @@ class Perfil2State extends State<Perfil2> {
                 ElevatedButton.icon(
                   label: Text(unfollow ? 'Seguir Perfil' : 'Dejar de seguir'),
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(100, 40),
+                    minimumSize: Size(150, 40),
                     //primary: Colors.lightBlueAccent[200],
                     primary: unfollow? Color.fromRGBO(68, 102, 216, 1.0) : Colors.red,
                     onPrimary: Colors.white,
@@ -248,22 +248,6 @@ class Perfil2State extends State<Perfil2> {
         ).paddingAll(16),
       ),
 
-
-
-      floatingActionButton: FloatingActionButton(
-        heroTag: '1',
-        elevation: 5,
-        onPressed: () {
-          posts = posts + 1;
-          toast('post');
-          setState(() {});
-        },
-        backgroundColor: azul_logo,
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
     );
   }
 }

@@ -36,17 +36,7 @@ class SearchW extends State<Search> {
         title: 'Welcome to Flutter',
         home: Scaffold(
           backgroundColor: Colors.white,
-            appBar: AppBar(
-              iconTheme: IconThemeData(color: azul_logo),
-              backgroundColor: Colors.white,
-              //appStore.cardColor,
-              //iconTheme: IconThemeData(color: appStore.isDarkModeOn ? appBarBackgroundColor : scaffoldColorDark),
-              elevation: 0,
-              leading: Icon(Icons.arrow_back).onTap(() {
-                Navigator.pushNamed(context, "perfil2");
-              }),
-              title: Text('Buscador', style: boldTextStyle(size: 30,color: azul_logo)),
-            ),
+
           body: SingleChildScrollView(
             child: Column(
                 children: <Widget>[
@@ -64,7 +54,7 @@ class SearchW extends State<Search> {
                         busqueda = texto;
                       },
                     ).paddingLeft(10),
-                  ).cornerRadiusWithClipRRect(12).paddingOnly(top: 30, left:30, right: 30),
+                  ).cornerRadiusWithClipRRect(12).paddingOnly(top: 70, left:20, right: 20),
 
                     Container(
                       child:Row(
