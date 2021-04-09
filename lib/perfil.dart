@@ -1,18 +1,19 @@
 import 'dart:convert';
-
 import 'dart:io';
+
+
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:socialcraft/utils/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'buscar.dart';
+
 
 class Perfil extends StatefulWidget {
   static String tag = '/EGProfileScreen';
@@ -25,6 +26,13 @@ String user = "";
 String userName = "";
 String about = "";
 String token = "";
+int posts = 0;
+String nPosts = "";
+int follow = 0;
+String nFollow = "";
+int followers = 0;
+String nFollowers = "";
+bool unfollow= true;
 var linkfoto = "";
 
 class PerfilState extends State<Perfil> {
@@ -116,9 +124,10 @@ class PerfilState extends State<Perfil> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(socialcraft_logo_letras_blanco,
-            width: 140, height: 140),
-        // child: Image.asset(insignia, width: 90, height: 90),
+        leading: Icon(Icons.arrow_back).onTap(() {
+          Navigator.pop(context);
+        }),
+        title: Text(userName, style: boldTextStyle(size: 20,color: Colors.white)),
         automaticallyImplyLeading: false,
         backgroundColor: azul_logo,
         actions: <Widget>[
@@ -136,174 +145,177 @@ class PerfilState extends State<Perfil> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             16.height,
-            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              Stack(
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    /*child: Image.network(
-                      link_foto.toString(),
-                      fit: BoxFit.scaleDown,
-                      errorBuilder: (BuildContext context, Object exception,
-                          StackTrace stackTrace) {
-                        return Text(link_foto.toString());
-                      },
-                    ),*/
-
-                    backgroundImage: NetworkImage(
-                      linkfoto,
-                    ),
-                    onBackgroundImageError: (_, __) {
-                      setState(() {
-                        //this._isError = true;
-                      });
-                    },
-                    backgroundColor: azul_logo,
+            Stack(
+              children:[
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    child: Image.asset(trophy, width: 40, height: 40),
                   ),
-                  /*Image.network(
-                    linkfoto,
-                    width: 100,
-                    height: 100,
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace stackTrace) {
-                      return Text('Your error widget...');
-                    },
-                  ).cornerRadiusWithClipRRect(60),*/
-                  Positioned(
-                    bottom: 0,
-                    right: 5,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.lightBlueAccent[100],
-                      radius: 15,
-                      child: Icon(Icons.camera_alt_rounded,
-                          size: 20, color: azul_logo),
-                    ).onTap(() async {
-                      //ImagePicker().getImage(source: ImageSource.gallery);
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext bc) {
-                            return Container(
-                              child: new Wrap(
-                                children: <Widget>[
-                                  new ListTile(
-                                      leading: new Icon(
-                                          Icons.add_a_photo_rounded,
-                                          color: azul_logo),
-                                      title: new Text('Editar foto de perfil'),
-                                      onTap: () async {
-                                        var foto = await ImagePicker().getImage(
-                                            source: ImageSource.gallery);
-                                        Navigator.pop(context);
-                                        print(foto);
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child:Stack(
+                    children: [
+                      CircleAvatar(
+                        radius: 70,
+                        backgroundImage: NetworkImage(
+                          linkfoto,
+                        ),
+                        onBackgroundImageError: (_, __) {
+                          setState(() {
+                            //this._isError = true;
+                          });
+                        },
+                        backgroundColor: azul_logo,
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 5,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.lightBlueAccent[100],
+                          radius: 15,
+                          child: Icon(Icons.camera_alt_rounded,
+                              size: 20, color: azul_logo),
+                        ).onTap(() async {
+                          //ImagePicker().getImage(source: ImageSource.gallery);
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext bc) {
+                                return Container(
+                                  child: new Wrap(
+                                    children: <Widget>[
+                                      new ListTile(
+                                          leading: new Icon(
+                                              Icons.add_a_photo_rounded,
+                                              color: azul_logo),
+                                          title: new Text('Editar foto de perfil'),
+                                          onTap: () async {
+                                            var foto = await ImagePicker().getImage(
+                                                source: ImageSource.gallery);
+                                            Navigator.pop(context);
+                                            print(foto);
 
-                                        if (foto != null) {
+                                            if (foto != null) {
+                                              final _firebaseStorage =
+                                                  FirebaseStorage.instance;
+                                              var file = File(foto.path);
+                                              var snapshot = await _firebaseStorage
+                                                  .ref()
+                                                  .child(userName + '/image')
+                                                  .putFile(file);
+
+                                              //print(foto.path);
+                                            } else {
+                                              print('No image selected.');
+                                            }
+
+                                            init();
+                                            setState(() {});
+                                          }),
+                                      new ListTile(
+                                        leading: new Icon(
+                                          Icons.delete,
+                                          color: Colors.redAccent,
+                                        ),
+                                        title: new Text('Eliminar foto de perfil'),
+                                        onTap: () async {
+                                          Navigator.pop(context);
                                           final _firebaseStorage =
                                               FirebaseStorage.instance;
-                                          var file = File(foto.path);
                                           var snapshot = await _firebaseStorage
                                               .ref()
                                               .child(userName + '/image')
-                                              .putFile(file);
-
-                                          //print(foto.path);
-                                        } else {
-                                          print('No image selected.');
-                                        }
-
-                                        init();
-                                        setState(() {});
-                                      }),
-                                  new ListTile(
-                                    leading: new Icon(
-                                      Icons.delete,
-                                      color: Colors.redAccent,
-                                    ),
-                                    title: new Text('Eliminar foto de perfil'),
-                                    onTap: () async {
-                                      Navigator.pop(context);
-                                      final _firebaseStorage =
-                                          FirebaseStorage.instance;
-                                      var snapshot = await _firebaseStorage
-                                          .ref()
-                                          .child(userName + '/image')
-                                          .delete();
-                                      init();
-                                      setState(() {});
-                                    },
+                                              .delete();
+                                          init();
+                                          setState(() {});
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            );
-                          });
-                    }),
+                                );
+                              });
+                        }),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              Column(
-                children: [
-                  Text(
-                    "64",
-                    style: boldTextStyle(size: 16, color: black),
-                  ),
-                  Text("Posts", style: boldTextStyle(size: 12, color: black))
-                ],
-              ),
-              Column(
-                children: [
-                  Text("124", style: boldTextStyle(size: 16, color: black)),
-                  Text("Seguidores",
-                      style: boldTextStyle(size: 12, color: black))
-                ],
-              ),
-              Column(
-                children: [
-                  Text("212", style: boldTextStyle(size: 16, color: black)),
-                  Text("Seguidos", style: boldTextStyle(size: 12, color: black))
-                ],
-              ),
-            ]),
-            12.height,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Text(user, style: boldTextStyle(size: 20)).paddingLeft(12),
-                    2.height,
-                    Text(about, style: secondaryTextStyle(size: 14))
-                        .paddingLeft(12),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Image.asset(trophy, width: 90, height: 90),
-                  ],
                 ),
               ],
             ),
-            10.height,
-            ElevatedButton.icon(
-              label: Text('Editar Perfil'),
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(180, 30),
-                //primary: Colors.lightBlueAccent[200],
-                primary: Color.fromRGBO(68, 102, 216, 1.0),
-                onPrimary: Colors.white,
-                onSurface: Colors.grey,
+            15.height,
+            Column(
+              children: [
+                Text(user, style: boldTextStyle(size: 20)).paddingLeft(12),
+                2.height,
+                Text(about, style: secondaryTextStyle(size: 14))
+                    .paddingLeft(12),
+              ],
+            ),
+            15.height,
+
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+              Stack(
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        nFollow= follow.toString(),
+                        style: boldTextStyle(size: 16, color: black),
+                        semanticsLabel: "nFollow",
+                      ).paddingLeft(92),
+                      Text("Seguidores",
+                          style: boldTextStyle(size: 12, color: black)).paddingLeft(92)
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        nFollowers= followers.toString(),
+                        style: boldTextStyle(size: 16, color: black),
+                        semanticsLabel: "nFollowers",
+                      ).paddingRight(92),
+                      Text("Seguidos", style: boldTextStyle(size: 12, color: black)).paddingRight(92)
+                    ],
+                  ),
+                ],
               ),
-              icon: Icon(Icons.person_outline_sharp, size: 18),
-              onPressed: () {
-                Navigator.pushNamed(context, "editar");
-                setState(() {});
-              },
-            ).center(),
+              ElevatedButton.icon(
+                label: Text('Editar Perfil'),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(150, 40),
+                  //primary: Colors.lightBlueAccent[200],
+                  primary: Color.fromRGBO(68, 102, 216, 1.0),
+                  onPrimary: Colors.white,
+                  onSurface: Colors.grey,
+                ),
+                icon: Icon(Icons.person_outline_sharp, size: 18),
+                onPressed: () {
+                  Navigator.pushNamed(context, "editar");
+                  setState(() {});
+                },
+              ),
+            ]),
+            10.height,
             Divider(
               height: 30,
               thickness: 3,
               color: Colors.grey[650],
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child:Column(
+                children: [
+                  Text(
+                    nPosts= posts.toString(),
+                    style: boldTextStyle(size: 16, color: black),
+                    semanticsLabel: "nPosts",
+                  ),
+                  Text("Posts", style: boldTextStyle(size: 12, color: black))
+                ],
+              ),
             ),
           ],
         ).paddingAll(16),

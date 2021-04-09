@@ -161,7 +161,7 @@ class EditarState extends State<Editar> {
                       //finish(context);
                       //setState(() {});
                       finish(context);
-                      Navigator.pushNamed(context, 'perfil');
+                      Navigator.pushNamed(context, 'barra');
                     }
                   });
                 },
@@ -198,7 +198,7 @@ class EditarState extends State<Editar> {
                   //Navigator.pushNamed(context, 'perfil');
                   if (foto != null) {
                     finish(context);
-                    Navigator.pushNamed(context, 'perfil');
+                    Navigator.pushNamed(context, 'barra');
                     final _firebaseStorage = FirebaseStorage.instance;
                     var file = File(foto.path);
                     var snapshot = await _firebaseStorage

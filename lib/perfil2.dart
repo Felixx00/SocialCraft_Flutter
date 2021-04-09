@@ -140,12 +140,17 @@ class Perfil2State extends State<Perfil2> {
           children: [
             16.height,
             Stack(
-              children: [
-                    Column(
-                      children: [
-                        Image.asset(insignia, width: 90, height: 90),
-                      ],
-                      ),
+              children:[
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    child: Image.asset(trophy, width: 40, height: 40),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child:Stack(
+                    children: [
                 CircleAvatar(
                   radius: 70,
                   /*child: Image.network(
@@ -167,6 +172,9 @@ class Perfil2State extends State<Perfil2> {
                   },
                   backgroundColor: azul_logo,
                 ),
+              ],
+            ),
+        ),
               ],
             ),
             15.height,
