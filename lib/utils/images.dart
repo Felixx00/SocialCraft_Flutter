@@ -6,3 +6,4 @@ const socialcraft_logo_letras_blanco =
     'images/socialcraft_logo_letras_blanco.png';
 const insignia = 'images/insignia.png';
 const key = 'images/key2.png';
+const trophy = 'images/trophy.png';

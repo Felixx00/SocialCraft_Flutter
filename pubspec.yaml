@@ -70,6 +70,7 @@ flutter:
     - images/insignia.png
     - images/key2.png
     - images/socialcraft_logo_letras_blanco.png
+    - images/trophy.png
 
   fonts:
     - family: Comfortaa

@@ -279,7 +279,7 @@ class PerfilState extends State<Perfil> {
                 ),
                 Column(
                   children: [
-                    Image.asset(insignia, width: 90, height: 90),
+                    Image.asset(trophy, width: 90, height: 90),
                   ],
                 ),
               ],
