@@ -30,6 +30,7 @@ dependencies:
   dotted_border: ^1.0.7
   smart_select: ^4.3.2
   flutter_time_picker_spinner: ^1.0.6+1
+  google_fonts: ^2.0.0
   
   flutter:
     sdk: flutter
@@ -50,7 +51,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.7.4
+  flutter_launcher_icons: ^0.9.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -74,11 +75,6 @@ flutter:
     - images/socialcraft_logo_letras_blanco.png
     - images/trophy.png
 
-  fonts:
-    - family: Comfortaa
-      fonts:
-        - asset: fonts/Comfortaa-Bold.ttf
-        - asset: fonts/Comfortaa-Regular.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

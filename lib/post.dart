@@ -40,10 +40,7 @@ class PostState extends State<Post> {
                 leading: Icon(Icons.arrow_back).onTap(() {
                   finish(context);
                 }),
-                title: Text(
-                  "Titulo Post",
-                  style: TextStyle(fontFamily: comfortaa),
-                ),
+                title: Text("Titulo Post"),
                 expandedHeight: 320,
                 flexibleSpace: Container(
                     decoration: BoxDecoration(
