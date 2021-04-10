@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:socialcraft/editar.dart';
-import 'package:socialcraft/prueba.dart';
+//import 'package:socialcraft/prueba.dart';
 import 'post.dart';
 import 'package:socialcraft/register.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'perfil.dart';
 import 'perfil2.dart';
 import 'buscar.dart';
-import 'prueba.dart';
+//import 'prueba.dart';
 
 class barra extends StatefulWidget {
   static String tag = '/EGNavigationScreen';
