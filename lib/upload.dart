@@ -7,6 +7,7 @@ import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:smart_select/smart_select.dart';
 
 class Upload extends StatefulWidget {
   static String tag = '/settings';
@@ -46,8 +47,8 @@ class UploadState extends State<Upload> {
                 borderType: BorderType.RRect,
                 radius: Radius.circular(12),
                 padding: EdgeInsets.all(6),
-                dashPattern: [6, 3],
-                strokeWidth: 2,
+                dashPattern: [8, 8],
+                strokeWidth: 3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                   child: Container(
@@ -95,16 +96,60 @@ class UploadState extends State<Upload> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'ELIGE DIFICULTAD',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ).paddingOnly(left: 30),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
                   'TIEMPO ESTIMADO',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ).paddingOnly(left: 30),
+              ),
+              SmartSelect<String>.single(
+                modalConfig: S2ModalConfig(
+                  type: S2ModalType.popupDialog,
+                  style: S2ModalStyle(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                modalHeaderStyle: S2ModalHeaderStyle(
+                    backgroundColor: azul_logo,
+                    textStyle: TextStyle(color: white)),
+                title: 'Dificultad',
+                value: value1,
+                choiceItems: options,
+                onChange: (state) => setState(() => value1 = state.value),
+              ),
+              SmartSelect<String>.single(
+                modalConfig: S2ModalConfig(
+                  type: S2ModalType.popupDialog,
+                  style: S2ModalStyle(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                modalHeaderStyle: S2ModalHeaderStyle(
+                    backgroundColor: azul_logo,
+                    textStyle: TextStyle(color: white)),
+                title: 'Categoria',
+                value: value1,
+                choiceItems: options,
+                onChange: (state) => setState(() => value1 = state.value),
+              ),
+              SmartSelect<int>.multiple(
+                modalConfig: S2ModalConfig(
+                  type: S2ModalType.popupDialog,
+                  style: S2ModalStyle(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                modalHeaderStyle: S2ModalHeaderStyle(
+                    backgroundColor: azul_logo,
+                    textStyle: TextStyle(color: white)),
+                title: 'Materiales',
+                value: value3,
+                choiceItems: frameworks,
+                onChange: (state) => setState(() => value3 = state.value),
               ),
             ],
           ),
@@ -113,3 +158,17 @@ class UploadState extends State<Upload> {
     );
   }
 }
+
+String value1 = 'flutter';
+List<S2Choice<String>> options = [
+  S2Choice<String>(value: 'a', title: 'Fácil'),
+  S2Choice<String>(value: 'b', title: 'Intermedio'),
+  S2Choice<String>(value: 'c', title: 'Difícil'),
+];
+
+List<int> value3 = [2];
+List<S2Choice<int>> frameworks = [
+  S2Choice<int>(value: 1, title: 'Papel'),
+  S2Choice<int>(value: 2, title: 'Piedra'),
+  S2Choice<int>(value: 3, title: 'Tijeras'),
+];
