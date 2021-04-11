@@ -7,6 +7,41 @@ import 'package:socialcraft/utils/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
 
+List categories = [
+  {
+    "id" : 1,
+    "name": "Covid-19"
+  },
+  {
+    "id" : 2,
+    "name": "Ceramica"
+  },
+  {
+    "id" : 3,
+    "name": "Jardineria"
+  },
+  {
+    "id" : 4,
+    "name": "Paseo de Canela"
+  },
+  {
+    "id" : 5,
+    "name": "Carpinteria"
+  },
+  {
+    "id" : 6,
+    "name": "Vidreo"
+  },
+  {
+    "id" : 7,
+    "name": "LifeHacks"
+  },
+  {
+    "id" : 8,
+    "name": "Plastelina"
+  },
+];
+
 void main() => runApp(Search());
 FocusNode nameNode;
 
@@ -32,11 +67,18 @@ class SearchW extends State<Search> {
   String busqueda = "";
   @override
   Widget build(BuildContext context) {
+    Widget getCategories(){
+      List categoriaItems = [
+        "Covid-19",
+        "Origami",
+        "Cermaica",
+        "Reposteria",
+        "Sacar a Canela a paseo",
+      ];
+      }
     return MaterialApp(
-        title: 'Welcome to Flutter',
         home: Scaffold(
           backgroundColor: Colors.white,
-
           body: SingleChildScrollView(
             child: Column(
                 children: <Widget>[
@@ -55,38 +97,32 @@ class SearchW extends State<Search> {
                       },
                     ).paddingLeft(10),
                   ).cornerRadiusWithClipRRect(12).paddingOnly(top: 70, left:20, right: 20),
-
-                    Container(
-                      child:Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.view_headline_sharp,
-                              color: azul_logo,
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(children: List.generate(categories.length,(index){
+                      return Padding(
+                        padding: const EdgeInsets.only(right:1,
+                        bottom:1),
+                        child: Column(
+                          children:  <Widget>[
+                            Container(
+                                margin: const EdgeInsets.all(15),
+                                padding: const EdgeInsets.all(3.0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 3.0
+                                  ),
+                                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                                ),
+                                child: Text(categories[index]["name"],style: TextStyle(
+                                  color: black,
+                                ))
                             ),
-                            onPressed: () {
-                            },
-                          ).paddingLeft(30),
-
-                        IconButton(
-                          icon: const Icon(
-                            Icons.person,
-                            color: azul_logo,
-                          ),
-                          onPressed: () {
-                          },
+                          ],
                         ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.add_to_photos,
-                              color: azul_logo,
-                            ),
-                            onPressed: () {
-                            },
-                          ),
-                      ],
-                      )
-                    )
+                      );
+                    })),
+                  )
                 ],
             ),
           )
