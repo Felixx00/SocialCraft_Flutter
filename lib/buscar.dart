@@ -14,32 +14,52 @@ List categories = [
   },
   {
     "id" : 2,
-    "name": "Ceramica"
+    "name": "Patchwork"
   },
   {
     "id" : 3,
-    "name": "Jardineria"
+    "name": "Scrapbooking"
   },
   {
     "id" : 4,
-    "name": "Paseo de Canela"
+    "name": "Pintura"
   },
   {
     "id" : 5,
-    "name": "Carpinteria"
+    "name": "Escultura"
   },
   {
     "id" : 6,
-    "name": "Vidreo"
+    "name": "Bisutería"
   },
   {
     "id" : 7,
-    "name": "LifeHacks"
+    "name": "Mercería"
   },
   {
     "id" : 8,
-    "name": "Plastelina"
+    "name": "Papelería"
   },
+  {
+    "id" : 8,
+    "name": "Papelería"
+  },
+  {
+    "id" : 8,
+    "name": "Muñequería y peluches"
+  },
+  {
+    "id" : 8,
+    "name": "Madera y cartón"
+  },
+  {
+    "id" : 8,
+    "name": "Decoupage"
+  },
+  {
+    "id" : 8,
+    "name": "Goma eva y fofuchas"
+  }
 ];
 
 void main() => runApp(Search());
@@ -97,6 +117,37 @@ class SearchW extends State<Search> {
                       },
                     ).paddingLeft(10),
                   ).cornerRadiusWithClipRRect(12).paddingOnly(top: 70, left:20, right: 20),
+                  Container(
+                      child:Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.view_headline_sharp,
+                              color: azul_logo,
+                            ),
+                            onPressed: () {
+                            },
+                          ).paddingLeft(10),
+
+                          IconButton(
+                            icon: const Icon(
+                              Icons.person,
+                              color: azul_logo,
+                            ),
+                            onPressed: () {
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.add_to_photos,
+                              color: azul_logo,
+                            ),
+                            onPressed: () {
+                            },
+                          ),
+                        ],
+                      )
+                  ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(children: List.generate(categories.length,(index){
@@ -110,7 +161,8 @@ class SearchW extends State<Search> {
                                 padding: const EdgeInsets.all(3.0),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      width: 3.0
+                                      width: 1.0,
+                                      color: azul_logo
                                   ),
                                   borderRadius: BorderRadius.all(Radius.circular(30)),
                                 ),
