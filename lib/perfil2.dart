@@ -126,7 +126,7 @@ class Perfil2State extends State<Perfil2> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.arrow_back).onTap(() {
-          Navigator.pop(context);
+          Navigator.pushNamed(context, "barra");
         }),
         title: Text(userName, style: boldTextStyle(size: 20,color: Colors.white)),
         automaticallyImplyLeading: false,
@@ -217,9 +217,9 @@ class Perfil2State extends State<Perfil2> {
                 ElevatedButton.icon(
                   label: Text(unfollow ? 'Seguir Perfil' : 'Dejar de seguir'),
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(150, 40),
+                    minimumSize: Size(170, 40),
                     //primary: Colors.lightBlueAccent[200],
-                    primary: unfollow? Color.fromRGBO(68, 102, 216, 1.0) : Colors.red,
+                    primary: unfollow? Color.fromRGBO(68, 102, 216, 1.0) : Colors.redAccent[200],
                     onPrimary: Colors.white,
                     onSurface: Colors.grey,
                   ),
