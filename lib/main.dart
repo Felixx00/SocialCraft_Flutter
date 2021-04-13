@@ -12,6 +12,7 @@ import 'settings.dart';
 import 'transition.dart';
 import 'post.dart';
 import 'upload.dart';
+import 'materiales.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
           'transition': (BuildContext context) => Transition(),
           'post': (BuildContext context) => Post(),
           'upload': (BuildContext context) => Upload(),
+          'materiales': (BuildContext context) => Materiales(),
         },
         debugShowCheckedModeBanner: false,
         home: Transition(),

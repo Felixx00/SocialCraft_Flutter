@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:socialcraft/materiales.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/widgets.dart';
@@ -10,14 +9,14 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:smart_select/smart_select.dart';
 
-class Upload extends StatefulWidget {
-  static String tag = '/upload';
+class Materiales extends StatefulWidget {
+  static String tag = '/materiales';
 
   @override
-  UploadState createState() => UploadState();
+  MaterialesState createState() => MaterialesState();
 }
 
-class UploadState extends State<Upload> {
+class MaterialesState extends State<Materiales> {
   @override
   void initState() {
     super.initState();
@@ -30,8 +29,6 @@ class UploadState extends State<Upload> {
   void setState(fn) {
     if (mounted) super.setState(fn);
   }
-
-  List<String> result = ['Tiempooo', 'a', 'b'];
 
   @override
   Widget build(BuildContext context) {
@@ -101,65 +98,9 @@ class UploadState extends State<Upload> {
                   .cornerRadiusWithClipRRect(12)
                   .paddingOnly(top: 30, left: 30, right: 30),
               10.height,
-              SmartSelect<String>.single(
-                modalConfig: S2ModalConfig(
-                  type: S2ModalType.popupDialog,
-                  style: S2ModalStyle(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                modalHeaderStyle: S2ModalHeaderStyle(
-                    backgroundColor: azul_logo,
-                    textStyle: TextStyle(color: white)),
-                title: 'Dificultad',
-                value: value1,
-                choiceItems: options,
-                onChange: (state) => setState(() => value1 = state.value),
-              ),
-              SmartSelect<String>.single(
-                modalConfig: S2ModalConfig(
-                  type: S2ModalType.fullPage,
-                ),
-                modalHeaderStyle: S2ModalHeaderStyle(
-                    backgroundColor: azul_logo,
-                    textStyle: TextStyle(color: white)),
-                title: 'Categoria',
-                value: value2,
-                choiceItems: categorias,
-                onChange: (state) => setState(() => value2 = state.value),
-              ),
-              SmartSelect<int>.multiple(
-                  modalConfig: S2ModalConfig(
-                    type: S2ModalType.fullPage,
-                  ),
-                  //choiceLayout: S2ChoiceLayout.list,
-                  modalHeaderStyle: S2ModalHeaderStyle(
-                      backgroundColor: azul_logo,
-                      textStyle: TextStyle(color: white)),
-                  title: 'Materiales',
-                  value: value3,
-                  choiceItems: frameworks,
-                  onChange: (state) => setState(() => value3 = state.value),
-                  tileBuilder: (context, state) {
-                    return S2Tile.fromState(
-                      state,
-                      trailing: const Icon(Icons.arrow_drop_down),
-                      isTwoLine: true,
-                    );
-                  }),
-              TextButton(
-                onPressed: () async {
-                  result = await Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Materiales()));
-                  setState(() {});
-                },
-                child: Text('Tiempooo'),
-              ),
               ElevatedButton(
                 onPressed: () {
-                  print(result);
+                  Navigator.pop(context, a);
                 },
                 child: Text(
                   'Submit',
@@ -175,7 +116,7 @@ class UploadState extends State<Upload> {
                     borderRadius: new BorderRadius.circular(50.0),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -184,27 +125,4 @@ class UploadState extends State<Upload> {
   }
 }
 
-String value1 = 'flutter';
-List<S2Choice<String>> options = [
-  S2Choice<String>(value: 'a', title: 'Fácil'),
-  S2Choice<String>(value: 'b', title: 'Intermedio'),
-  S2Choice<String>(value: 'c', title: 'Difícil'),
-];
-
-String value2 = '0';
-List<S2Choice<String>> categorias = [
-  S2Choice<String>(value: 'a', title: 'Origami'),
-  S2Choice<String>(value: 'b', title: 'Lifehack'),
-  S2Choice<String>(value: 'c', title: 'Téxtil'),
-  S2Choice<String>(value: 'd', title: 'Jardineria'),
-  S2Choice<String>(value: 'e', title: 'Bricolaje'),
-  S2Choice<String>(value: 'f', title: 'Electrónica'),
-  S2Choice<String>(value: 'g', title: 'Pintura'),
-];
-
-List<int> value3 = [2];
-List<S2Choice<int>> frameworks = [
-  S2Choice<int>(value: 1, title: 'Papel'),
-  S2Choice<int>(value: 2, title: 'Piedra'),
-  S2Choice<int>(value: 3, title: 'Tijeras'),
-];
+List<String> a = ['1', '2', '3'];
