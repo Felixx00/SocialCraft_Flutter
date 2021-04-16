@@ -7,6 +7,61 @@ import 'package:socialcraft/utils/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
 
+List categories = [
+  {
+    "id" : 1,
+    "name": "Covid-19"
+  },
+  {
+    "id" : 2,
+    "name": "Patchwork"
+  },
+  {
+    "id" : 3,
+    "name": "Scrapbooking"
+  },
+  {
+    "id" : 4,
+    "name": "Pintura"
+  },
+  {
+    "id" : 5,
+    "name": "Escultura"
+  },
+  {
+    "id" : 6,
+    "name": "Bisutería"
+  },
+  {
+    "id" : 7,
+    "name": "Mercería"
+  },
+  {
+    "id" : 8,
+    "name": "Papelería"
+  },
+  {
+    "id" : 8,
+    "name": "Papelería"
+  },
+  {
+    "id" : 8,
+    "name": "Muñequería y peluches"
+  },
+  {
+    "id" : 8,
+    "name": "Madera y cartón"
+  },
+  {
+    "id" : 8,
+    "name": "Decoupage"
+  },
+  {
+    "id" : 8,
+    "name": "Goma eva y fofuchas"
+  }
+];
+
 void main() => runApp(Search());
 FocusNode nameNode;
 
@@ -32,11 +87,18 @@ class SearchW extends State<Search> {
   String busqueda = "";
   @override
   Widget build(BuildContext context) {
+    Widget getCategories(){
+      List categoriaItems = [
+        "Covid-19",
+        "Origami",
+        "Cermaica",
+        "Reposteria",
+        "Sacar a Canela a paseo",
+      ];
+      }
     return MaterialApp(
-        title: 'Welcome to Flutter',
         home: Scaffold(
           backgroundColor: Colors.white,
-
           body: SingleChildScrollView(
             child: Column(
                 children: <Widget>[
@@ -55,8 +117,7 @@ class SearchW extends State<Search> {
                       },
                     ).paddingLeft(10),
                   ).cornerRadiusWithClipRRect(12).paddingOnly(top: 70, left:20, right: 20),
-
-                    Container(
+                  Container(
                       child:Row(
                         children: [
                           IconButton(
@@ -66,16 +127,16 @@ class SearchW extends State<Search> {
                             ),
                             onPressed: () {
                             },
-                          ).paddingLeft(30),
+                          ).paddingLeft(10),
 
-                        IconButton(
-                          icon: const Icon(
-                            Icons.person,
-                            color: azul_logo,
+                          IconButton(
+                            icon: const Icon(
+                              Icons.person,
+                              color: azul_logo,
+                            ),
+                            onPressed: () {
+                            },
                           ),
-                          onPressed: () {
-                          },
-                        ),
                           IconButton(
                             icon: const Icon(
                               Icons.add_to_photos,
@@ -84,9 +145,36 @@ class SearchW extends State<Search> {
                             onPressed: () {
                             },
                           ),
-                      ],
+                        ],
                       )
-                    )
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(children: List.generate(categories.length,(index){
+                      return Padding(
+                        padding: const EdgeInsets.only(right:1,
+                        bottom:1),
+                        child: Column(
+                          children:  <Widget>[
+                            Container(
+                                margin: const EdgeInsets.all(15),
+                                padding: const EdgeInsets.all(3.0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 1.0,
+                                      color: azul_logo
+                                  ),
+                                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                                ),
+                                child: Text(categories[index]["name"],style: TextStyle(
+                                  color: black,
+                                ))
+                            ),
+                          ],
+                        ),
+                      );
+                    })),
+                  )
                 ],
             ),
           )
