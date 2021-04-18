@@ -96,7 +96,9 @@ class SearchW extends State<Search> {
         "Sacar a Canela a paseo",
       ];
       }
-    return MaterialApp(
+
+
+      return MaterialApp(
         home: Scaffold(
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
@@ -118,35 +120,37 @@ class SearchW extends State<Search> {
                     ).paddingLeft(10),
                   ).cornerRadiusWithClipRRect(12).paddingOnly(top: 70, left:20, right: 20),
                   Container(
-                      child:Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.view_headline_sharp,
-                              color: azul_logo,
+                    child: DefaultTabController(
+                      length: 3,
+                      child: Column(
+                          children: <Widget> [
+                            new TabBar(
+                                tabs:[
+                                  Tab(icon: const Icon(
+                                    Icons.view_headline_sharp,
+                                    color: azul_logo,
+                                  )),
+                                  Tab(icon: const Icon(
+                                    Icons.person,
+                                    color: azul_logo,
+                                  )),
+                                  Tab(icon: const Icon(
+                                    Icons.add_to_photos,
+                                    color: azul_logo,
+                                  ))
+                                ]
                             ),
-                            onPressed: () {
-                            },
-                          ).paddingLeft(10),
+                            /*new TabBarView(
+                                children: <Widget>[
+                                  Icon(Icons.directions_car,color: azul_logo,),
+                                  Icon(Icons.directions_transit,color: azul_logo,),
+                                  Icon(Icons.directions_bike,color: azul_logo,),
 
-                          IconButton(
-                            icon: const Icon(
-                              Icons.person,
-                              color: azul_logo,
-                            ),
-                            onPressed: () {
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.add_to_photos,
-                              color: azul_logo,
-                            ),
-                            onPressed: () {
-                            },
-                          ),
-                        ],
+                                ]
+                            )*/
+                          ]
                       )
+                    )
                   ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
