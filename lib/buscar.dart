@@ -6,61 +6,8 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
+import 'lista_categorias.dart';
 
-List categories = [
-  {
-    "id" : 1,
-    "name": "Covid-19"
-  },
-  {
-    "id" : 2,
-    "name": "Patchwork"
-  },
-  {
-    "id" : 3,
-    "name": "Scrapbooking"
-  },
-  {
-    "id" : 4,
-    "name": "Pintura"
-  },
-  {
-    "id" : 5,
-    "name": "Escultura"
-  },
-  {
-    "id" : 6,
-    "name": "Bisutería"
-  },
-  {
-    "id" : 7,
-    "name": "Mercería"
-  },
-  {
-    "id" : 8,
-    "name": "Papelería"
-  },
-  {
-    "id" : 8,
-    "name": "Papelería"
-  },
-  {
-    "id" : 8,
-    "name": "Muñequería y peluches"
-  },
-  {
-    "id" : 8,
-    "name": "Madera y cartón"
-  },
-  {
-    "id" : 8,
-    "name": "Decoupage"
-  },
-  {
-    "id" : 8,
-    "name": "Goma eva y fofuchas"
-  }
-];
 
 void main() => runApp(Search());
 FocusNode nameNode;
@@ -127,19 +74,20 @@ class SearchW extends State<Search> {
 
 
                     bottom: TabBar(
-                      labelColor: Colors.green,
+                      indicatorColor: Colors.grey[300],
+                      indicatorSize: TabBarIndicatorSize.label,
                       tabs: <Widget>[
-                        Tab(icon: const Icon(
+                        Tab(icon: Icon(
                           Icons.view_headline_sharp,
-                          color: Colors.white,
+                          color: Colors.grey[300],
                         )),
-                        Tab(icon: const Icon(
+                        Tab(icon: Icon(
                           Icons.person,
-                          color: Colors.white,
+                          color: Colors.grey[300],
                         )),
-                        Tab(icon: const Icon(
+                        Tab(icon: Icon(
                           Icons.add_to_photos,
-                          color: Colors.white,
+                          color: Colors.grey[300],
                         ))
                       ]
                     ),
