@@ -1,42 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/fonts.dart';
+import 'dart:async';
+import 'dart:convert';
+
 List categories = [
   {
     "id" : 1,
-    "name": "Covid-19"
+    "name": "Covid-19",
+    "follow": false
   },
   {
     "id" : 2,
-    "name": "Patchwork"
+    "name": "Patchwork",
+    "follow": false
   },
   {
     "id" : 3,
-    "name": "Scrapbooking"
+    "name": "Scrapbooking",
+    "follow": false
   },
   {
     "id" : 4,
-    "name": "Pintura"
+    "name": "Pintura",
+    "follow": false
   },
   {
     "id" : 5,
-    "name": "Escultura"
+    "name": "Escultura",
+    "follow": false
   },
   {
     "id" : 6,
-    "name": "Bisutería"
+    "name": "Bisutería",
+    "follow": false
   },
   {
     "id" : 7,
-    "name": "Mercería"
+    "name": "Mercería",
+    "follow": false
   },
   {
     "id" : 8,
-    "name": "Papelería"
+    "name": "Papelería",
+    "follow": false
   },
   {
     "id" : 9,
-    "name": "Decoupage"
+    "name": "Decoupage",
+    "follow": false
   }
 ];
 
@@ -52,23 +64,29 @@ class ListaCategorias extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget> [
-              Container(
-                margin: const EdgeInsets.all(15),
-                padding: const EdgeInsets.all(3.0),
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  border: Border.all(
-                    width:3.0,
-                    color:azul_logo
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                ),
-                child: Text(
-                    categories[index]["name"],
+              ListTile(
+                title: Text(categories[index]["name"],
                     style: TextStyle(
-                      color:black,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold))
+                        color:black,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold)),
+                leading: CircleAvatar(
+                  child: Text(categories[index]["name"][0]),
+                ),
+                trailing: ElevatedButton.icon(
+                  label: Text(categories[index]["follow"] ? 'Follow': 'Unfollow'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(50,40),
+                    primary: categories[index]["follow"] ? Color.fromRGBO(68,102,216,1.0) : Colors.redAccent[200],
+                    onPrimary: Colors.white,
+                    onSurface: Colors.grey,
+                  ),
+                  icon: Icon(categories[index]["follow"] ? Icons.person_add : Icons.person_add_disabled, size: 18),
+                  onPressed: () {
+                    categories[index]["follow"] =!categories[index]["follow"];
+                    //setState((){});
+                  },
+                )
               ),
             ],
           ));}
