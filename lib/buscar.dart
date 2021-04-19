@@ -97,94 +97,67 @@ class SearchW extends State<Search> {
       ];
       }
 
-
-      return MaterialApp(
-        home: Scaffold(
-          backgroundColor: Colors.white,
-          body: SingleChildScrollView(
-            child: Column(
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(color: Colors.grey[300]),
-                    child: TextFormField(
-                      keyboardType: TextInputType.name,
-                      cursorColor: azul_logo,
-                      decoration: InputDecoration(
-                        icon: Icon(Icons.search, color: azul_logo),
-                        border: InputBorder.none,
-                        hintText: "Busca",
-                      ),
-                      onChanged: (texto) {
-                        busqueda = texto;
-                      },
-                    ).paddingLeft(10),
-                  ).cornerRadiusWithClipRRect(12).paddingOnly(top: 70, left:20, right: 20),
-                  Container(
-                    child: DefaultTabController(
-                      length: 3,
-                      child: Column(
-                          children: <Widget> [
-                            new TabBar(
-                                tabs:[
-                                  Tab(icon: const Icon(
-                                    Icons.view_headline_sharp,
-                                    color: azul_logo,
-                                  )),
-                                  Tab(icon: const Icon(
-                                    Icons.person,
-                                    color: azul_logo,
-                                  )),
-                                  Tab(icon: const Icon(
-                                    Icons.add_to_photos,
-                                    color: azul_logo,
-                                  ))
-                                ]
-                            ),
-                            /*new TabBarView(
-                                children: <Widget>[
-                                  Icon(Icons.directions_car,color: azul_logo,),
-                                  Icon(Icons.directions_transit,color: azul_logo,),
-                                  Icon(Icons.directions_bike,color: azul_logo,),
-
-                                ]
-                            )*/
-                          ]
-                      )
-                    )
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(children: List.generate(categories.length,(index){
-                      return Padding(
-                        padding: const EdgeInsets.only(right:1,
-                        bottom:1),
-                        child: Column(
-                          children:  <Widget>[
-                            Container(
-                                margin: const EdgeInsets.all(15),
-                                padding: const EdgeInsets.all(3.0),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 1.0,
-                                      color: azul_logo
-                                  ),
-                                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                                ),
-                                child: Text(categories[index]["name"],style: TextStyle(
-                                  color: black,
-                                ))
-                            ),
-                          ],
+      return Scaffold(
+        body: DefaultTabController(
+            length: 3,
+            child: NestedScrollView(
+                headerSliverBuilder: (BuildContext context, bool innerBoxIsScroll) {
+                  return [
+                  SliverAppBar(
+                    pinned: true,
+                    floating: true,
+                    snap:true,
+                    expandedHeight: 160.0,
+                   backgroundColor: azul_logo,
+                    flexibleSpace: Container(
+                      decoration: BoxDecoration(color: Colors.grey[300]),
+                      child: TextFormField(
+                        keyboardType: TextInputType.name,
+                        cursorColor: azul_logo,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.search, color: azul_logo),
+                          border: InputBorder.none,
+                          hintText: "Buscar",
                         ),
-                      );
-                    })),
-                  )
-                ],
-            ),
-          )
-        ),
+                        onChanged: (texto){
+                          busqueda = texto;
+                        },
+                      ).paddingLeft(10),
+                  ).cornerRadiusWithClipRRect(12).paddingOnly(top:70, left:20, right: 20),
 
-      debugShowCheckedModeBanner: false,
+
+                    bottom: TabBar(
+                      labelColor: Colors.green,
+                      tabs: <Widget>[
+                        Tab(icon: const Icon(
+                          Icons.view_headline_sharp,
+                          color: Colors.white,
+                        )),
+                        Tab(icon: const Icon(
+                          Icons.person,
+                          color: Colors.white,
+                        )),
+                        Tab(icon: const Icon(
+                          Icons.add_to_photos,
+                          color: Colors.white,
+                        ))
+                      ]
+                    ),
+                  )
+                  ];
+                },
+                body: TabBarView(
+                    children: <Widget>[
+                      Icon(Icons.directions_car,color: azul_logo,),
+                      Icon(Icons.directions_transit,color: azul_logo,),
+                      ListaCategorias(),
+
+                    ]
+                )
+            )
+
+        )
     );
+
   }
 }
