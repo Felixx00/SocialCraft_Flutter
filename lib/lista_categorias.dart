@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/buscar.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -52,7 +53,28 @@ List categories = [
   }
 ];
 
-class ListaCategorias extends StatelessWidget {
+void main() => runApp(Categoriaas());
+FocusNode nameNode;
+
+class Categoriaas extends StatefulWidget {
+  @override
+  ListaCategorias createState() => ListaCategorias();
+}
+
+class ListaCategorias extends  State<Search>{
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  init() async {
+
+  }
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
   @override
   Widget build(BuildContext context){
     return SingleChildScrollView(

@@ -8,8 +8,55 @@ import 'package:socialcraft/utils/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
 import 'lista_categorias.dart';
+import 'lista_perfil.dart';
 
-
+List categories = [
+  {
+    "id" : 1,
+    "name": "Covid-19",
+    "follow": false
+  },
+  {
+    "id" : 2,
+    "name": "Patchwork",
+    "follow": false
+  },
+  {
+    "id" : 3,
+    "name": "Scrapbooking",
+    "follow": false
+  },
+  {
+    "id" : 4,
+    "name": "Pintura",
+    "follow": false
+  },
+  {
+    "id" : 5,
+    "name": "Escultura",
+    "follow": false
+  },
+  {
+    "id" : 6,
+    "name": "Bisutería",
+    "follow": false
+  },
+  {
+    "id" : 7,
+    "name": "Mercería",
+    "follow": false
+  },
+  {
+    "id" : 8,
+    "name": "Papelería",
+    "follow": false
+  },
+  {
+    "id" : 9,
+    "name": "Decoupage",
+    "follow": false
+  }
+];
 void main() => runApp(Search());
 FocusNode nameNode;
 
@@ -92,7 +139,20 @@ class SearchW extends State<Search> {
                           hintText: "Buscar",
                         ),
                         onChanged: (texto){
+                          print("el usuario es: ");
+                          print(users);
                           busqueda = texto;
+                          if(busqueda.length >= 3){
+                            listSearchUser(busqueda).then((respuesta) async {
+                              users = respuesta.data as List;
+                              setState(() {});
+                            } );
+                            for(var i = 0; i< users.length; ++i){
+                              nombre = users[i].nombre;
+                              rutaFoto = users[i].rutaFoto;
+                              followed = users[i].followed;
+                            }
+                          }
                         },
                       ).paddingLeft(10),
                   ).cornerRadiusWithClipRRect(12).paddingOnly(top:70, left:20, right: 20),
@@ -120,11 +180,108 @@ class SearchW extends State<Search> {
                   ];
                 },
                 body: TabBarView(
-                    children: <Widget>[
-                      Icon(Icons.directions_car,color: azul_logo,),
-                      Icon(Icons.directions_transit,color: azul_logo,),
-                      ListaCategorias(),
+                    children: <Widget> [
+                        Column(
+                          children: <Widget>[
+                            SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(children: List.generate(3,(index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 1,
+                                      bottom: 1),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(children: <Widget>[
+                                        Container(
+                                          height: 30.0,
+                                          width: 40.0,
+                                          decoration: new BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: new DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image: new NetworkImage(
+                                                    "https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg")),
+                                          ),
+                                        ).paddingOnly(top: 10,
+                                            bottom: 10,
+                                            left: 20,
+                                            right: 20),
+                                        SizedBox(
+                                          width: 10.0,
+                                        ),
+                                        Text(
+                                          "Taquito González",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(unfollow
+                                              ? Icons.person_add
+                                              : Icons.person_add_disabled,
+                                              size: 18,
+                                              color: unfollow
+                                                  ? azul_logo
+                                                  : Colors.red[600]),
+                                          onPressed: () {
+                                            unfollow = !unfollow;
+                                            setState(() {});
+                                          },
+                                        )
+                                      ]),
+                                    ],
+                                  ),
+                                );
+                              }
+                              ),
+                              ),
+                              ),
+                          ]
+                        ),
+                          Icon(Icons.directions_transit,color: azul_logo,),
+                          Column(
+                            children: <Widget>[
+                              SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(children: List.generate(categories.length, (index){
+                                return Padding(
+                                    padding: const EdgeInsets.only(right:1,
+                                        bottom:1),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget> [
+                                        ListTile(
+                                            title: Text(categories[index]["name"],
+                                                style: TextStyle(
+                                                    color:black,
+                                                    fontSize: 15.0,
+                                                    fontWeight: FontWeight.bold)),
+                                            leading: CircleAvatar(
+                                              child: Text(categories[index]["name"][0]),
+                                            ),
+                                            trailing: ElevatedButton.icon(
+                                              label: Text(categories[index]["follow"] ? 'Follow': 'Unfollow'),
+                                              style: ElevatedButton.styleFrom(
+                                                minimumSize: Size(50,40),
+                                                primary: categories[index]["follow"] ? Color.fromRGBO(68,102,216,1.0) : Colors.redAccent[200],
+                                                onPrimary: Colors.white,
+                                                onSurface: Colors.grey,
+                                              ),
+                                              icon: Icon(categories[index]["follow"] ? Icons.person_add : Icons.person_add_disabled, size: 18),
+                                              onPressed: () {
+                                                categories[index]["follow"] =!categories[index]["follow"];
+                                                //setState((){});
+                                              },
+                                            )
+                                        ),
+                                      ],
+                                    ));
+                              }
+                              )
+                              )
 
+                          )
+                        ]
+                      )
                     ]
                 )
             )
