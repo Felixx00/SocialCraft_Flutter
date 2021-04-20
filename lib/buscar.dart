@@ -8,7 +8,6 @@ import 'package:socialcraft/utils/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
 import 'lista_categorias.dart';
-import 'lista_perfil.dart';
 
 List categories = [
   {
@@ -57,6 +56,26 @@ List categories = [
     "follow": false
   }
 ];
+List users = [
+{
+  "id" : 1,
+"nombre" : "Taquito Gonzalez",
+"rutaFoto": "https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2018/08/fotos-perfil-whatsapp_16.jpg",
+"follow": true
+},
+  {
+    "id" : 2,
+    "nombre" : "Aaron",
+    "rutaFoto": "https://www.mundodeportivo.com/r/GODO/MD/p5/MasQueDeporte/Imagenes/2018/10/24/Recortada/img_femartinez_20181010-125104_imagenes_md_otras_fuentes_captura-kcOG-U452531892714hYG-980x554@MundoDeportivo-Web.JPG",
+    "follow": false
+  },
+  {
+    "id" : 3,
+    "nombre" : "Botton",
+    "rutaFoto": "https://www.satelitemusical.net/sitebuilder/images/billie-eilish-sm-galeria-296x452.jpg",
+    "follow": false
+  },
+];
 void main() => runApp(Search());
 FocusNode nameNode;
 
@@ -97,7 +116,7 @@ class SearchW extends State<Search> {
 
   String busqueda = "";
   bool one = true;
-  var users=[];
+  //var users=[];
   int user;
   String nombre= "";
   String rutaFoto = "";
@@ -125,8 +144,8 @@ class SearchW extends State<Search> {
                   SliverAppBar(
                     pinned: true,
                     floating: true,
-                    snap:true,
-                    expandedHeight: 160.0,
+                    snap:false,
+                    expandedHeight: 150.0,
                    backgroundColor: azul_logo,
                     flexibleSpace: Container(
                       decoration: BoxDecoration(color: Colors.grey[300]),
@@ -147,15 +166,11 @@ class SearchW extends State<Search> {
                               users = respuesta.data as List;
                               setState(() {});
                             } );
-                            for(var i = 0; i< users.length; ++i){
-                              nombre = users[i].nombre;
-                              rutaFoto = users[i].rutaFoto;
-                              followed = users[i].followed;
-                            }
+
                           }
                         },
                       ).paddingLeft(10),
-                  ).cornerRadiusWithClipRRect(12).paddingOnly(top:70, left:20, right: 20),
+                  ).cornerRadiusWithClipRRect(12).paddingOnly(top:70, left:20, right: 20, bottom:50),
 
 
                     bottom: TabBar(
@@ -185,49 +200,52 @@ class SearchW extends State<Search> {
                           children: <Widget>[
                             SingleChildScrollView(
                               scrollDirection: Axis.vertical,
-                              child: Column(children: List.generate(3,(index) {
+                              child: Column(children: List.generate(users.length,(index) {
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 1,
                                       bottom: 1),
                                   child: Column(
                                     children: <Widget>[
-                                      Row(children: <Widget>[
-                                        Container(
-                                          height: 30.0,
-                                          width: 40.0,
+                                      ListTile(
+                                        leading: Container(
+                                          height: 50.0,
+                                          width: 50.0,
                                           decoration: new BoxDecoration(
                                             shape: BoxShape.circle,
                                             image: new DecorationImage(
                                                 fit: BoxFit.fill,
                                                 image: new NetworkImage(
-                                                    "https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg")),
+                                                    users[index]["rutaFoto"])),
                                           ),
-                                        ).paddingOnly(top: 10,
-                                            bottom: 10,
-                                            left: 20,
-                                            right: 20),
-                                        SizedBox(
-                                          width: 10.0,
+                                        ).paddingOnly(top: 5, bottom: 5),
+
+                                        title: TextButton(
+                                            child:Text(
+                                              nombre = users[index]["nombre"],
+                                              semanticsLabel: "nombre",
+
+                                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                            ),
+                                          onPressed: () {
+                                            Navigator.pushNamed(context, "perfil2");
+                                          }
                                         ),
-                                        Text(
-                                          "Taquito González",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        IconButton(
-                                          icon: Icon(unfollow
+                                        trailing: IconButton(
+
+                                          icon: Icon(users[index]["follow"]
                                               ? Icons.person_add
                                               : Icons.person_add_disabled,
                                               size: 18,
-                                              color: unfollow
+                                              color: users[index]["follow"]
                                                   ? azul_logo
                                                   : Colors.red[600]),
                                           onPressed: () {
-                                            unfollow = !unfollow;
+                                            users[index]["follow"] = !users[index]["follow"];
                                             setState(() {});
                                           },
                                         )
-                                      ]),
+
+                                      ),
                                     ],
                                   ),
                                 );
@@ -269,7 +287,7 @@ class SearchW extends State<Search> {
                                               icon: Icon(categories[index]["follow"] ? Icons.person_add : Icons.person_add_disabled, size: 18),
                                               onPressed: () {
                                                 categories[index]["follow"] =!categories[index]["follow"];
-                                                //setState((){});
+                                                setState((){});
                                               },
                                             )
                                         ),

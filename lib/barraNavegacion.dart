@@ -7,7 +7,6 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'perfil.dart';
 import 'perfil2.dart';
 import 'buscar.dart';
-//import 'prueba.dart';
 
 class barra extends StatefulWidget {
   static String tag = '/EGNavigationScreen';
@@ -19,7 +18,7 @@ class barra extends StatefulWidget {
 /// This is the private State class that goes with MyStatefulWidget.
 class barraState extends State<barra> {
   var _selectedIndex = 0;
-  var _pages = [Perfil(), Search(), Post(), Perfil2()];
+  var _pages = [Perfil(), Search(), Post(), Perfil()];
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
