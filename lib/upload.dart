@@ -9,6 +9,7 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:smart_select/smart_select.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class Upload extends StatefulWidget {
   static String tag = '/upload';
@@ -130,33 +131,37 @@ class UploadState extends State<Upload> {
                 choiceItems: categorias,
                 onChange: (state) => setState(() => value2 = state.value),
               ),
-              SmartSelect<int>.multiple(
-                  modalConfig: S2ModalConfig(
-                    type: S2ModalType.fullPage,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Card(
+                    child: TextButton(
+                      onPressed: () async {
+                        result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Materiales()));
+                        setState(() {});
+                      },
+                      child: Text('Materiales'),
+                    ),
                   ),
-                  //choiceLayout: S2ChoiceLayout.list,
-                  modalHeaderStyle: S2ModalHeaderStyle(
-                      backgroundColor: azul_logo,
-                      textStyle: TextStyle(color: white)),
-                  title: 'Materiales',
-                  value: value3,
-                  choiceItems: frameworks,
-                  onChange: (state) => setState(() => value3 = state.value),
-                  tileBuilder: (context, state) {
-                    return S2Tile.fromState(
-                      state,
-                      trailing: const Icon(Icons.arrow_drop_down),
-                      isTwoLine: true,
-                    );
-                  }),
-              TextButton(
-                onPressed: () async {
-                  result = await Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Materiales()));
-                  setState(() {});
-                },
-                child: Text('Tiempooo'),
+                  Card(
+                    child: TextButton(
+                      onPressed: () async {
+                        NumberPicker(
+                          value: current,
+                          minValue: 0,
+                          maxValue: 100,
+                          onChanged: (value) => setState(() => current = value),
+                        );
+                      },
+                      child: Text('Duración'),
+                    ),
+                  )
+                ],
               ),
+              25.height,
               ElevatedButton(
                 onPressed: () {
                   print(result);
@@ -183,6 +188,8 @@ class UploadState extends State<Upload> {
     );
   }
 }
+
+var current = 1;
 
 String value1 = 'flutter';
 List<S2Choice<String>> options = [
