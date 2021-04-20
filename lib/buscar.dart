@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/resp.dart';
@@ -24,14 +25,38 @@ class SearchW extends State<Search> {
     init();
   }
 
-  init() async {}
+  init() async {
+
+  }
 
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
   }
+  Future<Resp> listSearchUser(String busqueda) async {
+    var map = new Map<String, dynamic>();
+    map['userName'] = busqueda;
+    map['limit'] = 500;
+    map['offset'] = 0;
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', 'searchUser'),
+    );
+    if (response.statusCode == 200) {
+      return Resp.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
 
   String busqueda = "";
+  bool one = true;
+  var users=[];
+  int user;
+  String nombre= "";
+  String rutaFoto = "";
+  bool followed;
+  List infoBusqueda = [];
+  bool unfollow= true;
   @override
   Widget build(BuildContext context) {
     Widget getCategories(){
