@@ -9,11 +9,11 @@ class PostDesc extends StatelessWidget {
       padding: EdgeInsets.only(top: 20, left: 20, right: 20),
       children: <Widget>[
         Text("holaa",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
         10.height,
         Text(
-          "hola hola hola hola como estas?",
-          style: TextStyle(fontSize: 16),
+          "hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola como estas",
+          style: TextStyle(fontSize: 20),
         ),
         20.height,
         Row(
@@ -23,27 +23,27 @@ class PostDesc extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(children: [
-                  Icon(Icons.brightness_5, color: azul_logo, size: 18),
+                  Icon(Icons.auto_awesome_mosaic, color: azul_logo, size: 20),
                   16.width,
-                  Text("Categoria", style: secondaryTextStyle())
+                  Text("Categoria:", style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [
-                  Icon(Icons.brightness_5, color: azul_logo, size: 18),
+                  Icon(Icons.bar_chart_rounded, color: azul_logo, size: 20),
                   16.width,
-                  Text("DIficultad", style: secondaryTextStyle())
+                  Text("DIficultad:", style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [
-                  Icon(Icons.brightness_5, color: azul_logo, size: 18),
+                  Icon(Icons.av_timer, color: azul_logo, size: 20),
                   16.width,
-                  Text("Duracion", style: secondaryTextStyle())
+                  Text("Duracion:", style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [
-                  Icon(Icons.brightness_5, color: azul_logo, size: 18),
+                  Icon(Icons.design_services, color: azul_logo, size: 20),
                   16.width,
-                  Text("Materiales", style: secondaryTextStyle())
+                  Text("Materiales:", style: secondaryTextStyle())
                 ]),
               ],
             ),

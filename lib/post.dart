@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'post_pasos.dart';
 import 'package:socialcraft/utils/widgets.dart';
@@ -40,7 +41,8 @@ class PostState extends State<Post> {
                 leading: Icon(Icons.arrow_back).onTap(() {
                   finish(context);
                 }),
-                title: Text("Titulo Post"),
+                title: Text("Titulo Post",
+                    style: GoogleFonts.comfortaa(fontSize: 25)),
                 expandedHeight: 320,
                 flexibleSpace: Container(
                     decoration: BoxDecoration(
@@ -59,11 +61,19 @@ class PostState extends State<Post> {
                   tabs: <Widget>[
                     Tab(
                         child: Text("Descripción",
-                            style: TextStyle(fontSize: 18))),
-                    Tab(child: Text("Pasos", style: TextStyle(fontSize: 18))),
+                            style: GoogleFonts.comfortaa(
+                                fontSize: 20, fontWeight: FontWeight.bold))),
+                    Tab(
+                        child: Text("Pasos",
+                            style: GoogleFonts.comfortaa(
+                                fontSize: 20, fontWeight: FontWeight.bold))),
                   ],
                 ),
                 actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {},
+                  ),
                   IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () {},
