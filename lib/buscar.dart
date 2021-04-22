@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/perfil2.dart';
 import 'package:socialcraft/resp.dart';
@@ -80,7 +81,7 @@ class Search extends StatefulWidget {
   SearchW createState() => SearchW();
 }
 class SearchW extends State<Search> {
-  int _idUser = 0;
+  String _idUser = "";
   @override
   void initState() {
     super.initState();
@@ -88,7 +89,6 @@ class SearchW extends State<Search> {
   }
 
   init() async {
-
   }
 
   @override
@@ -254,14 +254,14 @@ class SearchW extends State<Search> {
                                                 style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                                               ),
                                               onPressed: () {
-                                                //_idUser = users[index]["id"];
-                                                /*Navigator.push(
+                                                _idUser = users[index]["id"];
+                                                Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context) => Perfil2(/*_idUser*/),
+                                                    builder: (context) => Perfil2(_idUser),
                                                   ),
-                                                );*/
-                                                Navigator.pushNamed(context, "perfil2");
+                                                );
+                                                //Navigator.pushNamed(context, "perfil2");
                                               }
                                           ),
                                         leading: Container(

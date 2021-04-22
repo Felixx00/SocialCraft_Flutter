@@ -16,6 +16,10 @@ import 'buscar.dart';
 
 class Perfil2 extends StatefulWidget {
   static String tag = '/EGProfileScreen';
+  final String idUsuario;
+  //const Perfil2 ({ Key key, this.idUsuario }): super(key: key);
+
+  Perfil2(this.idUsuario);
 
   @override
   Perfil2State createState() => Perfil2State();
@@ -33,25 +37,23 @@ int followers = 0;
 String nFollowers = "";
 bool unfollow= true;
 var linkfoto = "";
-int _selectedIndex = 0;
 
 class Perfil2State extends State<Perfil2> {
-  final _pages = [SearchW()];
+  //TextEditingController _controller;
+  //String idUsuario = (text: widget.idUsuario);
   @override
   void initState() {
+    //String idUsuario = TextEditingController(text: widget.idUsuario);
     super.initState();
     init();
-
     setState(() {});
-
-    //init();
   }
 
   init() async {
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
     //print(token);
-    username().then((respuesta) async {
+    usernameId().then((respuesta) async {
       //print(respuesta.data['name']);
       user = respuesta.data['name'];
       if (respuesta.data['about'] == null) {
@@ -80,17 +82,44 @@ class Perfil2State extends State<Perfil2> {
       'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLnNvY2lhbGNyYWZ0LmNsdWIiLCJpYXQiOjE2MTY2NjY0MjMsInVzZXJJZCI6IjEyIn0.zSfDG1InrzwC9dQWwYbinGyqW27DzpNNnr9bHZw_AvhfKFDPLXeR4Gf6JNw9FhsrmyzyRg0Z5TtngROGglRee8fAIUBAndnNCj10RR6R-TWs71SkZa_3-NKK4Y8LWtNBTJbjgOx_9IGRyL7TmAyliHNBnA7WRImwmF9gLbH0ay-s64VY7y70BW3ez0iasaJrzDTEGJqOcdhWo7eq-3F1fgSOTtW2TGfT-6zOCA7klSPwHdiddrdhmRS5nrXme3tZ-Hb34Lhy7He-Bgg10PFPxS2J7CtVTNR_heUxzXw3TSObtcSqYTiHRmVoJfP4UaDmbWTa7A96-TpjnnZZwj3kYg';
       */
 
-  Future<Resp> username() async {
-    final response = await http.get(
-      Uri.https('api.socialcraft.club', 'users/getMyProfile'),
+  Future<Resp> usernameId() async {
+    var map = new Map<String, dynamic>();
+    map['userId'] = widget.idUsuario;
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', 'users/getProfile'),
+      body: map,
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
     );
     if (response.statusCode == 200) {
       print(response.body);
+      return Resp.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+  Future<Resp> seguirUser(int id) async {
+    var map = new Map<String, dynamic>();
+    map['id'] = id;
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', 'followUser'),
+      body: map,
+    );
+    if (response.statusCode == 200) {
+      return Resp.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+  Future<Resp> dejarSeguirUser(int id) async {
+    var map = new Map<String, dynamic>();
+    map['id'] = id;
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', 'unfollowUser'),
+      body: map,
+    );
+    if (response.statusCode == 200) {
       return Resp.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
@@ -119,14 +148,16 @@ class Perfil2State extends State<Perfil2> {
     //linkfoto = (await ref.getDownloadURL()).toString();
     print(linkfoto);
     //var url = await ref.getDownloadURL();
+    int id;
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.idUsuario);
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.arrow_back).onTap(() {
-          Navigator.pushNamed(context, "barra");
+          Navigator.pop(context);
         }),
         title: Text(userName, style: boldTextStyle(size: 20,color: Colors.white)),
         automaticallyImplyLeading: false,
@@ -135,6 +166,7 @@ class Perfil2State extends State<Perfil2> {
         ],
       ),
       body: SingleChildScrollView(
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -226,8 +258,14 @@ class Perfil2State extends State<Perfil2> {
                   icon: Icon(unfollow? Icons.person_add : Icons.person_add_disabled, size: 18),
                   onPressed: () {
                     unfollow = !unfollow;
-                    if(unfollow){follow = follow - 1;}
-                    else{follow = follow + 1;}
+                    if(unfollow){
+                      dejarSeguirUser(0);
+                      follow = follow - 1;
+                    }
+                    else{
+                      seguirUser(0);
+                      follow = follow + 1;
+                    }
                     setState(() {});
                   },
                 ),

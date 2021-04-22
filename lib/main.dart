@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           'register': (BuildContext context) => Register(),
           'barra': (BuildContext context) => barra(),
           'perfil': (BuildContext context) => Perfil(),
-          'perfil2': (BuildContext context) => Perfil2(),
+          //'perfil2': (BuildContext context) => Perfil2(),
           'forgotPassword': (BuildContext context) => ForgotPassword(),
           'editar': (BuildContext context) => Editar(),
           'search': (BuildContext context) => Search(),
