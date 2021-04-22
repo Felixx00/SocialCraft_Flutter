@@ -26,7 +26,7 @@ class Resp {
       return Resp(
         success: json['success'],
         ecode: json['ecode'],
-        list: json['list'],
+        list: json['data'],
       );
     } else {
       return Resp(
