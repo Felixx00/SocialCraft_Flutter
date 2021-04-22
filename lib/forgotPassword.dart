@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/resp.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/widgets.dart';
+import 'package:http/http.dart' as http;
 
 class ForgotPassword extends StatefulWidget {
   static String tag = '/forgotPassword';
@@ -25,6 +29,20 @@ class ForgotPasswordState extends State<ForgotPassword> {
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
+  }
+
+  Future<Resp> recoverPassword(String mail) async {
+    var map = new Map<String, dynamic>();
+    map['email'] = mail;
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', 'recoverPassword'),
+      body: map,
+    );
+    if (response.statusCode == 200) {
+      return Resp.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
   }
 
   @override
@@ -82,8 +100,14 @@ class ForgotPasswordState extends State<ForgotPassword> {
               CommonButton("Enviar").onTap(() {
                 if (mail.validateEmail()) {
                   correct_mail = true;
-                  finish(context);
-                  toast("Email enviado correctamente", bgColor: toast_color);
+                  recoverPassword(mail).then((respuesta) async {
+                    if (respuesta.success == false) {
+                    } else {
+                      finish(context);
+                      toast("Email enviado correctamente",
+                          bgColor: toast_color);
+                    }
+                  });
                 } else {
                   correct_mail = false;
                   setState(() {});
