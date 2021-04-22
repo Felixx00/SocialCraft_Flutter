@@ -2,8 +2,9 @@ class Resp {
   final bool success;
   final String ecode;
   final Map<String, dynamic> data;
+  final List <dynamic> list;
 
-  Resp({this.success, this.ecode, this.data});
+  Resp({this.success, this.ecode, this.data, this.list});
 
   factory Resp.fromJson(Map<String, dynamic> json) {
     if (json['success'] == true) {
@@ -17,6 +18,21 @@ class Resp {
         success: json['success'],
         ecode: json['ecode'],
         data: null,
+      );
+    }
+  }
+  factory Resp.fromJson2(Map<String, dynamic> json) {
+    if (json['success'] == true) {
+      return Resp(
+        success: json['success'],
+        ecode: json['ecode'],
+        list: json['list'],
+      );
+    } else {
+      return Resp(
+        success: json['success'],
+        ecode: json['ecode'],
+        list: null,
       );
     }
   }
