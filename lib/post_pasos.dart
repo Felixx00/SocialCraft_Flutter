@@ -9,47 +9,34 @@ class PostPasos extends StatelessWidget {
       padding: EdgeInsets.only(top: 20, left: 20, right: 20),
       children: <Widget>[
         Text("holaa",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
         10.height,
         Text(
-          "hola hola hola hola como estas?",
-          style: TextStyle(fontSize: 16),
+          "hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola como estas",
+          style: TextStyle(fontSize: 20),
         ),
         20.height,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(children: [
-                  Icon(Icons.brightness_5, color: azul_logo, size: 18),
-                  16.width,
-                  Text("Categoria", style: secondaryTextStyle())
-                ]),
-                16.height,
-                Row(children: [
-                  Icon(Icons.brightness_5, color: azul_logo, size: 18),
-                  16.width,
-                  Text("DIficultad", style: secondaryTextStyle())
-                ]),
-                16.height,
-                Row(children: [
-                  Icon(Icons.brightness_5, color: azul_logo, size: 18),
-                  16.width,
-                  Text("Duracion", style: secondaryTextStyle())
-                ]),
-                16.height,
-                Row(children: [
-                  Icon(Icons.brightness_5, color: azul_logo, size: 18),
-                  16.width,
-                  Text("Materiales", style: secondaryTextStyle())
-                ]),
-              ],
-            ),
-            15.height,
-          ],
+        Text(
+          "Pasos",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
+        SizedBox(height: 15),
+        Column(
+          children: List.generate(
+            2,
+            (int index) {
+              final pasoText = "holaaa";
+              return ListTile(
+                leading: Text("${index + 1}",
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: azul_logo,
+                        fontWeight: FontWeight.bold)),
+                title: Text(pasoText),
+              );
+            },
+          ),
+        )
       ],
     );
   }

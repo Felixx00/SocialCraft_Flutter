@@ -25,19 +25,19 @@ class PostDesc extends StatelessWidget {
                 Row(children: [
                   Icon(Icons.auto_awesome_mosaic, color: azul_logo, size: 20),
                   16.width,
-                  Text("Categoria:", style: secondaryTextStyle())
+                  Text("Categoria: Origami", style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [
                   Icon(Icons.bar_chart_rounded, color: azul_logo, size: 20),
                   16.width,
-                  Text("DIficultad:", style: secondaryTextStyle())
+                  Text("DIficultad: Fácil", style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [
                   Icon(Icons.av_timer, color: azul_logo, size: 20),
                   16.width,
-                  Text("Duracion:", style: secondaryTextStyle())
+                  Text("Duracion: 30'", style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [

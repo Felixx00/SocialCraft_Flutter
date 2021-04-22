@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'buscar.dart';
+import 'editpost.dart';
 import 'perfil2.dart';
 import 'login.dart';
 import 'register.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
           'post': (BuildContext context) => Post(),
           'upload': (BuildContext context) => Upload(),
           'materiales': (BuildContext context) => Materiales(),
+          'editPost': (BuildContext context) => EditPost(),
         },
         debugShowCheckedModeBanner: false,
         home: Transition(),

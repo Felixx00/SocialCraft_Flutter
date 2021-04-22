@@ -35,11 +35,11 @@ class ForgotPasswordState extends State<ForgotPassword> {
     var map = new Map<String, dynamic>();
     map['email'] = mail;
     final response = await http.post(
-      Uri.https('api.socialcraft.club', 'recoverPassword'),
+      Uri.https('api.socialcraft.club', '/users/recoverPassword'),
       body: map,
     );
     if (response.statusCode == 200) {
-      return Resp.fromJson(jsonDecode(response.body));
+      return Resp.fromJson2(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -71,7 +71,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                       "Porfavor introduce tu email a continuación \ny te enviaremos el código de recuperación.",
                       style: TextStyle(color: Color(0xFF757575), fontSize: 16),
                       textAlign: TextAlign.center,
-                    ).paddingTop(18.0),
+                    ).paddingTop(20.0),
                     Container(
                       decoration: BoxDecoration(color: Colors.grey[100]),
                       child: TextFormField(

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'post_pasos.dart';
@@ -15,6 +18,10 @@ class Post extends StatefulWidget {
   PostState createState() => PostState();
 }
 
+String token = "";
+String tutId = "";
+String titulo = "";
+
 class PostState extends State<Post> {
   @override
   void initState() {
@@ -22,11 +29,37 @@ class PostState extends State<Post> {
     init();
   }
 
-  init() async {}
+  init() async {
+    final storage2 = new FlutterSecureStorage();
+    token = await storage2.read(key: 'jwt');
+    post(tutId).then((respuesta) async {
+      setState(() {});
+    });
+    setState(() {});
+  }
 
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
+  }
+
+  Future<Resp> post(String tutId) async {
+    var map = new Map<String, dynamic>();
+    map['tutId'] = tutId;
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', '/tutorials/getTutorial'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
   }
 
   @override
@@ -76,7 +109,9 @@ class PostState extends State<Post> {
                   ),
                   IconButton(
                     icon: Icon(Icons.edit),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'editPost');
+                    },
                   )
                 ],
               )
