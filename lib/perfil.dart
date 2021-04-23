@@ -13,6 +13,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'buscar.dart';
+import 'post.dart';
 
 class Perfil extends StatefulWidget {
   static String tag = '/EGProfileScreen';
@@ -354,7 +355,7 @@ class PerfilState extends State<Perfil> {
               children: List.generate(
                 nPosts.toInt(),
                 (int index) {
-                  final pasoText = "holaaa";
+                  //final pasoText = "holaaa";
                   return ElevatedButton(
                     child: Text("${index + 1}",
                         style: TextStyle(
@@ -365,7 +366,12 @@ class PerfilState extends State<Perfil> {
                       primary: azul_logo,
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, 'post');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Post(posts[index]['id']),
+                        ),
+                      );
                     },
                   ).paddingOnly(top: 5, bottom: 5);
                 },

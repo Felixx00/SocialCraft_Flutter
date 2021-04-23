@@ -68,6 +68,8 @@ class TiendaState extends State<Tienda> {
                         child: Image.asset(socialcraft_logo_letras,
                             width: 300, height: 100),
                       ).cornerRadiusWithClipRRect(16).paddingTop(1),
+                      Text("Próximamente",
+                          style: TextStyle(color: azul_logo, fontSize: 25))
                     ],
                   ),
                 ),

@@ -14,12 +14,14 @@ import 'package:http/http.dart' as http;
 import 'post_desc.dart';
 
 class Post extends StatefulWidget {
+  final String idPost;
+  Post(this.idPost);
   @override
   PostState createState() => PostState();
 }
 
 String token = "";
-String tutId = "1";
+String tutId = "";
 String titulo = "";
 
 class PostState extends State<Post> {
@@ -30,6 +32,7 @@ class PostState extends State<Post> {
   }
 
   init() async {
+    tutId = widget.idPost;
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
     post(tutId).then((respuesta) async {
