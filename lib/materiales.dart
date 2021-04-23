@@ -30,13 +30,22 @@ class MaterialesState extends State<Materiales> {
     if (mounted) super.setState(fn);
   }
 
+/*
+  void addItemToList() {
+    setState(() {
+      a.insert(0, nameController.text);
+      msgCount.insert(0, 0);
+    });
+  }
+  */
+  String material = "";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Materiales Usados'),
+          title: const Text('Materiales'),
           backgroundColor: azul_logo,
           leading: Icon(Icons.arrow_back).onTap(() {
             Navigator.pop(context);
@@ -52,6 +61,69 @@ class MaterialesState extends State<Materiales> {
                 'Añade los materiales necesarios: ',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ).paddingLeft(15),
+              20.height,
+              Row(
+                children: [
+                  Container(
+                    width: 270,
+                    decoration: BoxDecoration(color: Colors.grey[100]),
+                    child: TextFormField(
+                      cursorColor: azul_logo,
+                      autofocus: false,
+                      textInputAction: TextInputAction.next,
+                      style: secondaryTextStyle(color: Colors.black),
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Escribe el material...",
+                        hintStyle: secondaryTextStyle(size: 16),
+                      ),
+                      onChanged: (newValue) {
+                        material = newValue;
+                        setState(() {});
+                      },
+                    ).paddingOnly(left: 8, top: 2),
+                  ).cornerRadiusWithClipRRect(12).paddingLeft(15),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      icon: const Icon(Icons.add),
+                      tooltip: 'x',
+                      onPressed: () {
+                        if (a.length < 15 && material.length > 0) {
+                          if (!a.contains(material)) {
+                            a.insert(0, material);
+                            setState(() {});
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    tooltip: 'y',
+                    onPressed: () {
+                      a.clear();
+                      setState(() {});
+                    },
+                  ),
+                ],
+              ),
+              10.height,
+              Divider(
+                height: 20,
+                thickness: 3,
+                indent: 20,
+                endIndent: 20,
+              ),
+              20.height,
+              Column(
+                children: <Widget>[
+                  for (var item in a)
+                    CommonButton(item)
+                        .paddingOnly(left: 20, right: 20, top: 5, bottom: 5),
+                ],
+              ),
             ],
           ),
         ),
@@ -60,4 +132,4 @@ class MaterialesState extends State<Materiales> {
   }
 }
 
-List<String> a = ['1', '2', '3'];
+List<String> a = [];
