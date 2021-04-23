@@ -9,7 +9,6 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:smart_select/smart_select.dart';
-import 'package:avatars/avatars.dart';
 
 class Upload extends StatefulWidget {
   static String tag = '/upload';
@@ -235,10 +234,10 @@ class UploadState extends State<Upload> {
                 choiceItems: tiempos,
                 onChange: (state) => setState(() => value4 = state.value),
               ),
-              25.height,
+              20.height,
               ElevatedButton(
                 onPressed: () {
-                  print(result);
+                  Navigator.pushNamed(context, 'subirpasos');
                 },
                 child: Text(
                   'Submit',
