@@ -19,7 +19,7 @@ class Post extends StatefulWidget {
 }
 
 String token = "";
-String tutId = "";
+String tutId = "1";
 String titulo = "";
 
 class PostState extends State<Post> {
@@ -48,6 +48,7 @@ class PostState extends State<Post> {
     map['tutId'] = tutId;
     final response = await http.get(
       Uri.https('api.socialcraft.club', '/tutorials/getTutorial'),
+      //body: map,
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
@@ -13,7 +13,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'buscar.dart';
-
 
 class Perfil extends StatefulWidget {
   static String tag = '/EGProfileScreen';
@@ -26,24 +25,21 @@ String user = "";
 String userName = "";
 String about = "";
 String token = "";
-int posts = 0;
 String nPosts = "";
 int follow = 0;
 String nFollow = "";
 int followers = 0;
 String nFollowers = "";
-bool unfollow= true;
+bool unfollow = true;
 var linkfoto = "";
+List<dynamic> posts;
 
 class PerfilState extends State<Perfil> {
   @override
-  void initState() {
+  initState() {
     super.initState();
     init();
-
     setState(() {});
-
-    //init();
   }
 
   init() async {
@@ -62,6 +58,10 @@ class PerfilState extends State<Perfil> {
 
       await Firebase.initializeApp();
       await getImage();
+      setState(() {});
+    });
+    getMyTutorials().then((respuesta) async {
+      posts = respuesta.list;
       setState(() {});
     });
     //await FirebaseAuth.instance.signInAnonymously();
@@ -96,6 +96,25 @@ class PerfilState extends State<Perfil> {
     }
   }
 
+  Future<Resp> getMyTutorials() async {
+    var map = new Map<String, dynamic>();
+    map['limit'] = "10";
+    map['offset'] = "0";
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', '/tutorials/getMyTutorials'),
+      body: map,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
   Future getImage() async {
     //FirebaseStorage storage = FirebaseStorage.instance;
     /*var ref = FirebaseStorage.instance
@@ -122,12 +141,17 @@ class PerfilState extends State<Perfil> {
 
   @override
   Widget build(BuildContext context) {
+    double cardWidth = context.width() / 2;
+    double cardHeight = context.height() / 4;
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back).onTap(() {
-          Navigator.pop(context);
-        }),
-        title: Text(userName, style: boldTextStyle(size: 20,color: Colors.white)),
+        title: Text(userName,
+            style: GoogleFonts.comfortaa(
+                textStyle: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+              fontWeight: FontWeight.w800,
+            ))),
         automaticallyImplyLeading: false,
         backgroundColor: azul_logo,
         actions: <Widget>[
@@ -149,7 +173,7 @@ class PerfilState extends State<Perfil> {
           children: [
             16.height,
             Stack(
-              children:[
+              children: [
                 Align(
                   alignment: Alignment.topRight,
                   child: Container(
@@ -158,7 +182,7 @@ class PerfilState extends State<Perfil> {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child:Stack(
+                  child: Stack(
                     children: [
                       CircleAvatar(
                         radius: 70,
@@ -192,10 +216,13 @@ class PerfilState extends State<Perfil> {
                                           leading: new Icon(
                                               Icons.add_a_photo_rounded,
                                               color: azul_logo),
-                                          title: new Text('Editar foto de perfil'),
+                                          title:
+                                              new Text('Editar foto de perfil'),
                                           onTap: () async {
-                                            var foto = await ImagePicker().getImage(
-                                                source: ImageSource.gallery);
+                                            var foto = await ImagePicker()
+                                                .getImage(
+                                                    source:
+                                                        ImageSource.gallery);
                                             Navigator.pop(context);
                                             print(foto);
 
@@ -203,10 +230,12 @@ class PerfilState extends State<Perfil> {
                                               final _firebaseStorage =
                                                   FirebaseStorage.instance;
                                               var file = File(foto.path);
-                                              var snapshot = await _firebaseStorage
-                                                  .ref()
-                                                  .child(userName + '/image')
-                                                  .putFile(file);
+                                              var snapshot =
+                                                  await _firebaseStorage
+                                                      .ref()
+                                                      .child(
+                                                          userName + '/image')
+                                                      .putFile(file);
 
                                               //print(foto.path);
                                             } else {
@@ -221,7 +250,8 @@ class PerfilState extends State<Perfil> {
                                           Icons.delete,
                                           color: Colors.redAccent,
                                         ),
-                                        title: new Text('Eliminar foto de perfil'),
+                                        title:
+                                            new Text('Eliminar foto de perfil'),
                                         onTap: () async {
                                           Navigator.pop(context);
                                           final _firebaseStorage =
@@ -255,29 +285,31 @@ class PerfilState extends State<Perfil> {
               ],
             ),
             15.height,
-
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               Stack(
                 children: [
                   Column(
                     children: [
                       Text(
-                        nFollow= follow.toString(),
+                        nFollow = follow.toString(),
                         style: boldTextStyle(size: 16, color: black),
                         semanticsLabel: "nFollow",
                       ).paddingLeft(92),
                       Text("Seguidores",
-                          style: boldTextStyle(size: 12, color: black)).paddingLeft(92)
+                              style: boldTextStyle(size: 12, color: black))
+                          .paddingLeft(92)
                     ],
                   ),
                   Column(
                     children: [
                       Text(
-                        nFollowers= followers.toString(),
+                        nFollowers = followers.toString(),
                         style: boldTextStyle(size: 16, color: black),
                         semanticsLabel: "nFollowers",
                       ).paddingRight(92),
-                      Text("Seguidos", style: boldTextStyle(size: 12, color: black)).paddingRight(92)
+                      Text("Seguidos",
+                              style: boldTextStyle(size: 12, color: black))
+                          .paddingRight(92)
                     ],
                   ),
                 ],
@@ -306,10 +338,11 @@ class PerfilState extends State<Perfil> {
             ),
             Align(
               alignment: Alignment.centerLeft,
-              child:Column(
+              child: Column(
                 children: [
                   Text(
-                    nPosts= posts.toString(),
+                    nPosts = "1",
+                    //nPosts = posts.length.toString(),
                     style: boldTextStyle(size: 16, color: black),
                     semanticsLabel: "nPosts",
                   ),
@@ -317,6 +350,27 @@ class PerfilState extends State<Perfil> {
                 ],
               ),
             ),
+            Column(
+              children: List.generate(
+                nPosts.toInt(),
+                (int index) {
+                  final pasoText = "holaaa";
+                  return ElevatedButton(
+                    child: Text("${index + 1}",
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold)),
+                    style: ElevatedButton.styleFrom(
+                      primary: azul_logo,
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'post');
+                    },
+                  ).paddingOnly(top: 5, bottom: 5);
+                },
+              ),
+            )
           ],
         ).paddingAll(16),
       ),
