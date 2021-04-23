@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:socialcraft/editar.dart';
+import 'package:socialcraft/tienda.dart';
 //import 'package:socialcraft/prueba.dart';
+import 'home.dart';
 import 'post.dart';
 import 'package:socialcraft/register.dart';
 import 'package:socialcraft/utils/fonts.dart';
@@ -18,7 +20,7 @@ class barra extends StatefulWidget {
 /// This is the private State class that goes with MyStatefulWidget.
 class barraState extends State<barra> {
   var _selectedIndex = 0;
-  var _pages = [Perfil(), Search(), Post(), Perfil()];
+  var _pages = [Home(), Search(), Tienda(), Perfil()];
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 

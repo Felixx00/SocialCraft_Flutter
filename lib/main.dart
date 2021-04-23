@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:socialcraft/tienda.dart';
 import 'buscar.dart';
 import 'editpost.dart';
+import 'home.dart';
 import 'perfil2.dart';
 import 'login.dart';
 import 'register.dart';
@@ -40,6 +42,8 @@ class MyApp extends StatelessWidget {
           'upload': (BuildContext context) => Upload(),
           'materiales': (BuildContext context) => Materiales(),
           'editPost': (BuildContext context) => EditPost(),
+          'home': (BuildContext context) => Home(),
+          'tienda': (BuildContext context) => Tienda(),
         },
         debugShowCheckedModeBanner: false,
         home: Transition(),
