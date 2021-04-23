@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'editpost.dart';
 import 'post_pasos.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/images.dart';
@@ -35,7 +36,7 @@ class PostState extends State<Post> {
     tutId = widget.idPost;
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
-    post(tutId).then((respuesta) async {
+    post().then((respuesta) async {
       setState(() {});
     });
     setState(() {});
@@ -46,7 +47,7 @@ class PostState extends State<Post> {
     if (mounted) super.setState(fn);
   }
 
-  Future<Resp> post(String tutId) async {
+  Future<Resp> post() async {
     var map = new Map<String, dynamic>();
     map['tutId'] = tutId;
     final response = await http.get(
@@ -114,7 +115,12 @@ class PostState extends State<Post> {
                   IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () {
-                      Navigator.pushNamed(context, 'editPost');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditPost(tutId),
+                        ),
+                      );
                     },
                   )
                 ],

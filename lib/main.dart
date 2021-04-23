@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           //'post': (BuildContext context) => Post(),
           'upload': (BuildContext context) => Upload(),
           'materiales': (BuildContext context) => Materiales(),
-          'editPost': (BuildContext context) => EditPost(),
+          //'editPost': (BuildContext context) => EditPost(),
           'home': (BuildContext context) => Home(),
           'tienda': (BuildContext context) => Tienda(),
           'subirpasos': (BuildContext context) => SubirPasos(),

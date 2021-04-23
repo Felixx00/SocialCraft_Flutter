@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/materiales.dart';
 import 'package:socialcraft/utils/widgets.dart';
@@ -10,10 +13,14 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:smart_select/smart_select.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:http/http.dart' as http;
+
+import 'resp.dart';
 
 class EditPost extends StatefulWidget {
   static String tag = '/upload';
-
+  final String idPost;
+  EditPost(this.idPost);
   @override
   EditPostState createState() => EditPostState();
 }
@@ -25,7 +32,14 @@ class EditPostState extends State<EditPost> {
     init();
   }
 
-  init() async {}
+  String token = '';
+  String tutId = '';
+
+  init() async {
+    final storage = new FlutterSecureStorage();
+    token = await storage.read(key: 'jwt');
+    tutId = widget.idPost;
+  }
 
   @override
   void setState(fn) {
@@ -35,13 +49,65 @@ class EditPostState extends State<EditPost> {
   List<String> result = ['Tiempooo', 'a', 'b'];
   bool correct = true;
 
+  String titulo = '';
+  String subtitulo = '';
+  String rutaFoto = '';
+  String video = '';
+  String dificultad = '';
+  String materiales = '';
+  String duracion = '';
+  String descripcion = '';
+  String categoria = '';
+
+  Future<Resp> cambios() async {
+    var map = new Map<String, dynamic>();
+    map['tutId'] = tutId;
+    if (titulo != '') {
+      map['titulo'] = titulo;
+    }
+    if (descripcion != '') {
+      map['descripcion'] = descripcion;
+    }
+    if (rutaFoto != '') {
+      map['rutaFoto'] = rutaFoto;
+    }
+    if (video != '') {
+      map['video'] = video;
+    }
+    if (dificultad != '') {
+      map['dificultad'] = dificultad;
+    }
+    if (materiales != '') {
+      map['materiales'] = materiales;
+    }
+    if (duracion != '') {
+      map['duracion'] = duracion;
+    }
+    if (categoria != '') {
+      map['categoria'] = categoria;
+    }
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', '/tutorials/editTutorial'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      body: map,
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.modificar(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Upload'),
+          title: const Text('Editar post'),
           backgroundColor: azul_logo,
           leading: Icon(Icons.arrow_back).onTap(() {
             Navigator.pop(context);
@@ -102,6 +168,9 @@ class EditPostState extends State<EditPost> {
                 child: TextFormField(
                   keyboardType: TextInputType.name,
                   cursorColor: azul_logo,
+                  onChanged: (newValue) {
+                    titulo = newValue;
+                  },
                   decoration: InputDecoration(
                     //icon: Icon(Icons.search, color: azul_logo),
                     border: InputBorder.none,
@@ -116,6 +185,9 @@ class EditPostState extends State<EditPost> {
                 child: TextFormField(
                   keyboardType: TextInputType.name,
                   cursorColor: azul_logo,
+                  onChanged: (newValue) {
+                    descripcion = newValue;
+                  },
                   maxLines: 4,
                   decoration: InputDecoration(
                     //icon: Icon(Icons.search, color: azul_logo),
@@ -238,10 +310,17 @@ class EditPostState extends State<EditPost> {
               20.height,
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'subirpasos');
+                  cambios().then((respuesta) {
+                    if (respuesta.success == false) {
+                      print("Algun Parametro Incorrecto");
+                    } else {
+                      finish(context);
+                      Navigator.pushNamed(context, 'post');
+                    }
+                  });
                 },
                 child: Text(
-                  'Submit',
+                  'Editar',
                   style: TextStyle(fontSize: 20),
                 ),
                 style: ElevatedButton.styleFrom(
