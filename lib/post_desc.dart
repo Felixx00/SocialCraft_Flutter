@@ -23,15 +23,15 @@ class PostDesc extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(children: [
-                  Icon(Icons.auto_awesome_mosaic, color: azul_logo, size: 20),
-                  16.width,
-                  Text("Categoria: Origami", style: secondaryTextStyle())
-                ]),
-                16.height,
-                Row(children: [
                   Icon(Icons.bar_chart_rounded, color: azul_logo, size: 20),
                   16.width,
                   Text("DIficultad: Fácil", style: secondaryTextStyle())
+                ]),
+                16.height,
+                Row(children: [
+                  Icon(Icons.grid_view, color: azul_logo, size: 20),
+                  16.width,
+                  Text("Categoria: Origami", style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [
@@ -41,7 +41,7 @@ class PostDesc extends StatelessWidget {
                 ]),
                 16.height,
                 Row(children: [
-                  Icon(Icons.design_services, color: azul_logo, size: 20),
+                  Icon(Icons.brush_rounded, color: azul_logo, size: 20),
                   16.width,
                   Text("Materiales:", style: secondaryTextStyle())
                 ]),

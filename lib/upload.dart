@@ -132,7 +132,7 @@ class UploadState extends State<Upload> {
                 tileBuilder: (context, state) {
                   return S2Tile(
                     title: state.titleWidget,
-                    leading: Icon(Icons.bar_chart_outlined),
+                    leading: Icon(Icons.bar_chart_rounded),
                     value: state.valueDisplay,
                     onTap: state.showModal,
                     isLoading: false,
@@ -179,7 +179,7 @@ class UploadState extends State<Upload> {
                 tileBuilder: (context, state) {
                   return S2Tile(
                     title: state.titleWidget,
-                    leading: Icon(Icons.timelapse),
+                    leading: Icon(Icons.av_timer),
                     value: state.valueDisplay,
                     onTap: state.showModal,
                     isLoading: false,

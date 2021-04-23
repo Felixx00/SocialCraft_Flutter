@@ -33,6 +33,7 @@ class EditPostState extends State<EditPost> {
   }
 
   List<String> result = ['Tiempooo', 'a', 'b'];
+  bool correct = true;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class EditPostState extends State<EditPost> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Editar'),
+          title: const Text('Upload'),
           backgroundColor: azul_logo,
           leading: Icon(Icons.arrow_back).onTap(() {
             Navigator.pop(context);
@@ -51,25 +52,51 @@ class EditPostState extends State<EditPost> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              20.height,
-              DottedBorder(
-                borderType: BorderType.RRect,
-                radius: Radius.circular(12),
-                padding: EdgeInsets.all(6),
-                dashPattern: [8, 8],
-                strokeWidth: 3,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                  child: Container(
-                    child: Icon(
-                      Icons.add_a_photo_rounded,
-                      color: azul_logo,
-                      size: 75.0,
-                      semanticLabel: 'Text to announce in accessibility modes',
-                    ).paddingAll(20),
+              30.height,
+              Stack(
+                children: [
+                  DottedBorder(
+                    borderType: BorderType.RRect,
+                    radius: Radius.circular(12),
+                    padding: EdgeInsets.all(6),
+                    dashPattern: [8, 8],
+                    strokeWidth: 3,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      child: Container(
+                        child: Icon(
+                          Icons.add_a_photo_rounded,
+                          color: azul_logo,
+                          size: 75.0,
+                          semanticLabel:
+                              'Text to announce in accessibility modes',
+                        ).paddingAll(20),
+                      ),
+                    ),
                   ),
-                ),
+                  Positioned(
+                    bottom: -20,
+                    right: -30,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(), primary: azul_logo),
+                      child: Container(
+                        alignment: AlignmentDirectional.bottomEnd,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Icon(
+                          correct ? Icons.check : Icons.close,
+                          color: correct ? Colors.green : Colors.red,
+                          size: 24.0,
+                          semanticLabel: 'A',
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+                clipBehavior: Clip.none,
               ),
+              5.height,
               Container(
                 decoration: BoxDecoration(color: Colors.grey[300]),
                 child: TextFormField(
@@ -103,6 +130,15 @@ class EditPostState extends State<EditPost> {
                   .paddingOnly(top: 30, left: 30, right: 30),
               10.height,
               SmartSelect<String>.single(
+                tileBuilder: (context, state) {
+                  return S2Tile(
+                    title: state.titleWidget,
+                    leading: Icon(Icons.bar_chart_rounded),
+                    value: state.valueDisplay,
+                    onTap: state.showModal,
+                    isLoading: false,
+                  );
+                },
                 modalConfig: S2ModalConfig(
                   type: S2ModalType.popupDialog,
                   style: S2ModalStyle(
@@ -120,6 +156,15 @@ class EditPostState extends State<EditPost> {
                 onChange: (state) => setState(() => value1 = state.value),
               ),
               SmartSelect<String>.single(
+                tileBuilder: (context, state) {
+                  return S2Tile(
+                    title: state.titleWidget,
+                    leading: Icon(Icons.grid_view),
+                    value: state.valueDisplay,
+                    onTap: state.showModal,
+                    isLoading: false,
+                  );
+                },
                 modalConfig: S2ModalConfig(
                   type: S2ModalType.fullPage,
                 ),
@@ -131,40 +176,69 @@ class EditPostState extends State<EditPost> {
                 choiceItems: categorias,
                 onChange: (state) => setState(() => value2 = state.value),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Card(
-                    child: TextButton(
-                      onPressed: () async {
-                        result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Materiales()));
-                        setState(() {});
-                      },
-                      child: Text('Materiales'),
+              SmartSelect<String>.single(
+                tileBuilder: (context, state) {
+                  return S2Tile(
+                    title: state.titleWidget,
+                    leading: Icon(Icons.av_timer),
+                    value: state.valueDisplay,
+                    onTap: state.showModal,
+                    isLoading: false,
+                  );
+                },
+                modalConfig: S2ModalConfig(
+                  type: S2ModalType.popupDialog,
+                  style: S2ModalStyle(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  Card(
-                    child: TextButton(
-                      onPressed: () async {
-                        NumberPicker(
-                          value: current,
-                          minValue: 0,
-                          maxValue: 100,
-                          onChanged: (value) => setState(() => current = value),
-                        );
-                      },
-                      child: Text('Duración'),
-                    ),
-                  )
-                ],
+                ),
+                modalHeaderStyle: S2ModalHeaderStyle(
+                    backgroundColor: azul_logo,
+                    textStyle: TextStyle(color: white)),
+                title: 'Duración',
+                value: value4,
+                choiceItems: tiempos,
+                onChange: (state) => setState(() => value4 = state.value),
               ),
-              25.height,
+              SmartSelect<String>.single(
+                tileBuilder: (context, state) {
+                  return S2Tile(
+                    title: state.titleWidget,
+                    leading: Icon(Icons.brush_rounded),
+                    value: state.valueDisplay,
+                    hideValue: true,
+                    onTap: () async {
+                      result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Materiales()));
+                      setState(() {});
+                    },
+                    isLoading: false,
+                  );
+                },
+                modalConfig: S2ModalConfig(
+                  type: S2ModalType.popupDialog,
+                  style: S2ModalStyle(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                modalHeaderStyle: S2ModalHeaderStyle(
+                    backgroundColor: azul_logo,
+                    textStyle: TextStyle(color: white)),
+                title: 'Materiales',
+                value: value4,
+                choiceItems: tiempos,
+                onChange: (state) => setState(() => value4 = state.value),
+              ),
+              20.height,
               ElevatedButton(
                 onPressed: () {
-                  print(result);
+                  Navigator.pushNamed(context, 'subirpasos');
                 },
                 child: Text(
                   'Submit',
@@ -180,7 +254,7 @@ class EditPostState extends State<EditPost> {
                     borderRadius: new BorderRadius.circular(50.0),
                   ),
                 ),
-              )
+              ).paddingOnly(bottom: 10),
             ],
           ),
         ),
@@ -214,4 +288,16 @@ List<S2Choice<int>> frameworks = [
   S2Choice<int>(value: 1, title: 'Papel'),
   S2Choice<int>(value: 2, title: 'Piedra'),
   S2Choice<int>(value: 3, title: 'Tijeras'),
+];
+
+String value4 = 'flutter';
+List<S2Choice<String>> tiempos = [
+  S2Choice<String>(value: 'a', title: '<10 min.'),
+  S2Choice<String>(value: 'b', title: '10 min.'),
+  S2Choice<String>(value: 'c', title: '20 min.'),
+  S2Choice<String>(value: 'd', title: '30 min.'),
+  S2Choice<String>(value: 'e', title: '40 min.'),
+  S2Choice<String>(value: 'f', title: '50 min.'),
+  S2Choice<String>(value: 'g', title: '60 min.'),
+  S2Choice<String>(value: 'h', title: '>60 min.'),
 ];
