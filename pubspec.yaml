@@ -31,6 +31,7 @@ dependencies:
   smart_select: ^4.3.2
   google_fonts: ^2.0.0
   numberpicker: ^2.1.1
+  avatars: ^2.0.0
   
   flutter:
     sdk: flutter
