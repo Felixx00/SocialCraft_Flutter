@@ -16,6 +16,7 @@ import 'transition.dart';
 import 'post.dart';
 import 'upload.dart';
 import 'materiales.dart';
+import 'subir_pasos.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           'editPost': (BuildContext context) => EditPost(),
           'home': (BuildContext context) => Home(),
           'tienda': (BuildContext context) => Tienda(),
+          'subirpasos': (BuildContext context) => SubirPasos(),
         },
         debugShowCheckedModeBanner: false,
         home: Transition(),
