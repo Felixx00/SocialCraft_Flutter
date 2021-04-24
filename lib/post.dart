@@ -36,9 +36,9 @@ class PostState extends State<Post> {
     tutId = widget.idPost;
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
-    post().then((respuesta) async {
+    /*post().then((respuesta) async {
       setState(() {});
-    });
+    });*/
     setState(() {});
   }
 
@@ -56,6 +56,24 @@ class PostState extends State<Post> {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
+  Future<Resp> deletePost() async {
+    var map = new Map<String, dynamic>();
+    map['tutId'] = tutId;
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', '/tutorials/deleteTutorial'),
+      body: map,
+      headers: {
         'Authorization': 'Bearer $token',
       },
     );
@@ -110,7 +128,9 @@ class PostState extends State<Post> {
                 actions: <Widget>[
                   IconButton(
                     icon: Icon(Icons.delete),
-                    onPressed: () {},
+                    onPressed: () {
+                      showAlertDialog(context);
+                    },
                   ),
                   IconButton(
                     icon: Icon(Icons.edit),
@@ -130,6 +150,37 @@ class PostState extends State<Post> {
           body: TabBarView(children: <Widget>[PostDesc(), PostPasos()]),
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    Widget cancelButton = TextButton(
+        child: Text("Sí"),
+        onPressed: () async {
+          deletePost().then((respuesta) async {
+            Navigator.pushNamed(context, "perfil");
+          });
+        });
+    Widget continueButton = TextButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      content: Text("¿Estas seguro que deseas eliminar el tutorial?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
