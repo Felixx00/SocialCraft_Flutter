@@ -13,6 +13,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'buscar.dart';
+import 'home.dart';
 import 'post.dart';
 
 class Perfil extends StatefulWidget {
@@ -43,6 +44,8 @@ class PerfilState extends State<Perfil> {
     setState(() {});
   }
 
+  bool loading = true;
+
   init() async {
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
@@ -63,7 +66,6 @@ class PerfilState extends State<Perfil> {
     });
     getMyTutorials().then((respuesta) async {
       posts = respuesta.list;
-      setState(() {});
     });
     //await FirebaseAuth.instance.signInAnonymously();
 
