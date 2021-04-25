@@ -17,7 +17,6 @@ import 'buscar.dart';
 class Perfil2 extends StatefulWidget {
   static String tag = '/EGProfileScreen';
   final String idUsuario;
-  //const Perfil2 ({ Key key, this.idUsuario }): super(key: key);
 
   Perfil2(this.idUsuario);
 
@@ -39,11 +38,8 @@ bool unfollow= true;
 var linkfoto = "";
 
 class Perfil2State extends State<Perfil2> {
-  //TextEditingController _controller;
-  //String idUsuario = (text: widget.idUsuario);
   @override
   void initState() {
-    //String idUsuario = TextEditingController(text: widget.idUsuario);
     super.initState();
     init();
     setState(() {});
@@ -52,9 +48,7 @@ class Perfil2State extends State<Perfil2> {
   init() async {
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
-    //print(token);
     usernameId().then((respuesta) async {
-      //print(respuesta.data['name']);
       user = respuesta.data['name'];
       if (respuesta.data['about'] == null) {
         about = "SocialCraft!";
@@ -67,8 +61,6 @@ class Perfil2State extends State<Perfil2> {
       await getImage();
       setState(() {});
     });
-    //await FirebaseAuth.instance.signInAnonymously();
-
     setState(() {});
   }
 
@@ -76,11 +68,6 @@ class Perfil2State extends State<Perfil2> {
   void setState(fn) {
     if (mounted) super.setState(fn);
   }
-
-/*
-  String token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLnNvY2lhbGNyYWZ0LmNsdWIiLCJpYXQiOjE2MTY2NjY0MjMsInVzZXJJZCI6IjEyIn0.zSfDG1InrzwC9dQWwYbinGyqW27DzpNNnr9bHZw_AvhfKFDPLXeR4Gf6JNw9FhsrmyzyRg0Z5TtngROGglRee8fAIUBAndnNCj10RR6R-TWs71SkZa_3-NKK4Y8LWtNBTJbjgOx_9IGRyL7TmAyliHNBnA7WRImwmF9gLbH0ay-s64VY7y70BW3ez0iasaJrzDTEGJqOcdhWo7eq-3F1fgSOTtW2TGfT-6zOCA7klSPwHdiddrdhmRS5nrXme3tZ-Hb34Lhy7He-Bgg10PFPxS2J7CtVTNR_heUxzXw3TSObtcSqYTiHRmVoJfP4UaDmbWTa7A96-TpjnnZZwj3kYg';
-      */
 
   Future<Resp> usernameId() async {
     var map = new Map<String, dynamic>();
@@ -99,39 +86,44 @@ class Perfil2State extends State<Perfil2> {
       throw Exception('Failed to load response');
     }
   }
-  Future<Resp> seguirUser(int id) async {
+  Future<Resp> followUser(String id) async {
     var map = new Map<String, dynamic>();
-    map['id'] = id;
+    map['userId'] = id;
     final response = await http.post(
-      Uri.https('api.socialcraft.club', 'followUser'),
+      Uri.https('api.socialcraft.club', '/users/followUser'),
       body: map,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
     );
+    print(response.statusCode);
     if (response.statusCode == 200) {
-      return Resp.fromJson(jsonDecode(response.body));
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
   }
-  Future<Resp> dejarSeguirUser(int id) async {
+  Future<Resp> unfollowUser(String id) async {
     var map = new Map<String, dynamic>();
-    map['id'] = id;
+    map['userId'] = id;
     final response = await http.post(
-      Uri.https('api.socialcraft.club', 'unfollowUser'),
-      body: map,
+      Uri.https('api.socialcraft.club', '/users/unfollowUser'),
+      body:map,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
     );
+    print(response.statusCode);
     if (response.statusCode == 200) {
-      return Resp.fromJson(jsonDecode(response.body));
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
   }
 
   Future getImage() async {
-    //FirebaseStorage storage = FirebaseStorage.instance;
-    /*var ref = FirebaseStorage.instance
-        .ref()
-        .child('Usuario_Default/default-user-image.png');*/
-
     var r = FirebaseStorage.instance.ref(userName + '/image');
     try {
       await r.getDownloadURL();
@@ -143,12 +135,7 @@ class Perfil2State extends State<Perfil2> {
           .child('Usuario_Default/default-user-image.png');
       linkfoto = (await ref.getDownloadURL()).toString();
     }
-
-    //link_foto = ref;
-    //linkfoto = (await ref.getDownloadURL()).toString();
     print(linkfoto);
-    //var url = await ref.getDownloadURL();
-    int id;
   }
 
   @override
@@ -185,21 +172,11 @@ class Perfil2State extends State<Perfil2> {
                     children: [
                 CircleAvatar(
                   radius: 70,
-                  /*child: Image.network(
-                      link_foto.toString(),
-                      fit: BoxFit.scaleDown,
-                      errorBuilder: (BuildContext context, Object exception,
-                          StackTrace stackTrace) {
-                        return Text(link_foto.toString());
-                      },
-                    ),*/
-
                   backgroundImage: NetworkImage(
                     linkfoto,
                   ),
                   onBackgroundImageError: (_, __) {
                     setState(() {
-                      //this._isError = true;
                     });
                   },
                   backgroundColor: azul_logo,
@@ -259,17 +236,20 @@ class Perfil2State extends State<Perfil2> {
                   onPressed: () {
                     unfollow = !unfollow;
                     if(unfollow){
-                      dejarSeguirUser(0);
-                      follow = follow - 1;
+                      unfollowUser(widget.idUsuario).then((response) async {
+                        follow = follow - 1;
+                        setState(() {});
+                      });
                     }
                     else{
-                      seguirUser(0);
-                      follow = follow + 1;
+                      followUser(widget.idUsuario).then((response) async {
+                        follow = follow + 1;
+                        setState(() {});
+                      });
                     }
                     setState(() {});
                   },
                 ),
-
             ]),
             10.height,
             Divider(
@@ -293,7 +273,6 @@ class Perfil2State extends State<Perfil2> {
           ],
         ).paddingAll(16),
       ),
-
     );
   }
 }

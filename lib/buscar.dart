@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/perfil2.dart';
 import 'package:socialcraft/resp.dart';
@@ -80,6 +81,7 @@ class Search extends StatefulWidget {
   @override
   SearchW createState() => SearchW();
 }
+String token = '';
 class SearchW extends State<Search> {
   String _idUser = "";
   @override
@@ -89,18 +91,20 @@ class SearchW extends State<Search> {
   }
 
   init() async {
+    final storage2 = new FlutterSecureStorage();
+    token = await storage2.read(key: 'jwt');
+    await listCategories().then((response) async {
+      categories = response.list;
+    });
   }
 
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
   }
-  String token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLnNvY2lhbGNyYWZ0LmNsdWIiLCJpYXQiOjE2MTY2NjY0MjMsInVzZXJJZCI6IjEyIn0.zSfDG1InrzwC9dQWwYbinGyqW27DzpNNnr9bHZw_AvhfKFDPLXeR4Gf6JNw9FhsrmyzyRg0Z5TtngROGglRee8fAIUBAndnNCj10RR6R-TWs71SkZa_3-NKK4Y8LWtNBTJbjgOx_9IGRyL7TmAyliHNBnA7WRImwmF9gLbH0ay-s64VY7y70BW3ez0iasaJrzDTEGJqOcdhWo7eq-3F1fgSOTtW2TGfT-6zOCA7klSPwHdiddrdhmRS5nrXme3tZ-Hb34Lhy7He-Bgg10PFPxS2J7CtVTNR_heUxzXw3TSObtcSqYTiHRmVoJfP4UaDmbWTa7A96-TpjnnZZwj3kYg';
+
 
   Future<Resp> listSearchUser(String busqueda) async {
-    var limit = 500;
-    var offset = 0;
     var map = new Map<String, dynamic>();
     map['username'] = busqueda;
     map['limit'] = '500';
@@ -135,6 +139,42 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
+  Future<Resp> followUser(String id) async {
+    var map = new Map<String, dynamic>();
+    map['userId'] = id;
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', '/users/followUser'),
+      body: map,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+    Future<Resp> unfollowUser(String id) async {
+      var map = new Map<String, dynamic>();
+      map['userId'] = id;
+      final response = await http.post(
+        Uri.https('api.socialcraft.club', '/users/unfollowUser'),
+        body:map,
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
 
   String busqueda = "";
   bool one = true;
@@ -148,10 +188,7 @@ class SearchW extends State<Search> {
   bool unfollow= true;
   @override
   Widget build(BuildContext context) {
-    listCategories().then((response) async {
-      categories = response.list;
-    });
-    Widget getCategories(){
+    /*Widget getCategories(){
       List categoriaItems = [
         "Covid-19",
         "Origami",
@@ -159,7 +196,7 @@ class SearchW extends State<Search> {
         "Reposteria",
         "Sacar a Canela a paseo",
       ];
-      }
+      }*/
       return Scaffold(
         body: DefaultTabController(
             length: 3,
@@ -208,7 +245,6 @@ class SearchW extends State<Search> {
                         },
                       ).paddingLeft(10),
                   ).cornerRadiusWithClipRRect(12).paddingOnly(top:70, left:20, right: 20, bottom:50),
-
 
                     bottom: TabBar(
                       indicatorColor: Colors.grey[300],
@@ -261,7 +297,6 @@ class SearchW extends State<Search> {
                                                     builder: (context) => Perfil2(_idUser),
                                                   ),
                                                 );
-                                                //Navigator.pushNamed(context, "perfil2");
                                               }
                                           ),
                                         leading: Container(
@@ -275,7 +310,6 @@ class SearchW extends State<Search> {
                                                     busqueda.length < 3? socialcraft_logo: rutaFoto)),
                                           ),
                                         ).paddingOnly(top: 5, bottom: 5),
-
                                         trailing: IconButton(
                                           icon: busqueda.length <3? Icon(Icons.person_add, color: white,): Icon(users[index]["followed"]
                                               ? Icons.person_add_disabled
@@ -285,11 +319,20 @@ class SearchW extends State<Search> {
                                                   ? Colors.red[600]
                                                   : azul_logo),
                                           onPressed: () {
-                                            users[index]["follow"] = !users[index]["followed"];
-                                            setState(() {});
+                                            if(users[index]["followed"] == false) {
+                                              followUser(users[index]["id"]).then((response) async {
+                                                users[index]["followed"] = !users[index]["followed"];
+                                                setState(() {});
+                                              });
+                                            }
+                                            else {
+                                              unfollowUser(users[index]["id"]).then((response) async {
+                                                users[index]["followed"] = !users[index]["followed"];
+                                                setState(() {});
+                                              });
+                                            }
                                           },
                                         )
-
                                       ),
                                     ],
                                   ),
@@ -298,16 +341,13 @@ class SearchW extends State<Search> {
                               ),
                               ),
                               ),
-                          ]
+                          ],
                         ),
                   ),
-
-                          Icon(Icons.directions_transit,color: azul_logo,),
-
-
+                  Icon(Icons.directions_transit, color: azul_logo),
                   SingleChildScrollView(
                       child:Column(
-                            children: <Widget>[
+                            /*children: <Widget>[
                               SingleChildScrollView(
                                 scrollDirection: Axis.vertical,
                                 child: Column(children: List.generate(categories.length, (index){
@@ -327,20 +367,20 @@ class SearchW extends State<Search> {
                                             leading: CircleAvatar(
                                               child: Text(categories[index]["nombre"][0]),
                                             ),
-                                            /*trailing: ElevatedButton.icon(
-                                              label: Text(categories[index]["follow"] ? 'Follow': 'Unfollow'),
+                                            trailing: ElevatedButton.icon(
+                                              label: Text(categories[index]["followed"] ? 'Follow': 'Unfollow'),
                                               style: ElevatedButton.styleFrom(
                                                 minimumSize: Size(50,40),
-                                                primary: categories[index]["follow"] ? Color.fromRGBO(68,102,216,1.0) : Colors.redAccent[200],
+                                                primary: categories[index]["followed"] ? Color.fromRGBO(68,102,216,1.0) : Colors.redAccent[200],
                                                 onPrimary: Colors.white,
                                                 onSurface: Colors.grey,
                                               ),
-                                              icon: Icon(categories[index]["follow"] ? Icons.person_add : Icons.person_add_disabled, size: 18),
+                                              icon: Icon(categories[index]["followed"] ? Icons.person_add : Icons.person_add_disabled, size: 18),
                                               onPressed: () {
-                                                categories[index]["follow"] =!categories[index]["follow"];
+                                                categories[index]["followed"] =!categories[index]["followed"];
                                                 setState((){});
                                               },
-                                            )*/
+                                            )
                                         ),
                                       ],
                                     ));
@@ -349,11 +389,11 @@ class SearchW extends State<Search> {
                               )
 
                           )
-                        ]
+                        ]*/
                       )
                   )]
               )
-          )
+          ),
 
       )
   );
