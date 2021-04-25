@@ -24,6 +24,17 @@ class Post extends StatefulWidget {
 String token = "";
 String tutId = "";
 String titulo = "";
+String subtitulo = "";
+String rutaFoto = "";
+String video = "";
+String dificultad = "";
+String materiales = "";
+String duracion = "";
+String usuario = "";
+String rate = "";
+String categorias = "";
+String pasos = "";
+String comments = "";
 
 class PostState extends State<Post> {
   @override
@@ -37,6 +48,7 @@ class PostState extends State<Post> {
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
     /*post().then((respuesta) async {
+      titulo = respuesta.data['titulo'];
       setState(() {});
     });*/
     setState(() {});
@@ -51,11 +63,8 @@ class PostState extends State<Post> {
     var map = new Map<String, dynamic>();
     map['tutId'] = tutId;
     final response = await http.get(
-      Uri.https('api.socialcraft.club', '/tutorials/getTutorial'),
-      //body: map,
+      Uri.https('api.socialcraft.club', '/tutorials/getTutorial', map),
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
     );
@@ -79,7 +88,7 @@ class PostState extends State<Post> {
     );
     if (response.statusCode == 200) {
       print(response.body);
-      return Resp.fromJson(jsonDecode(response.body));
+      return Resp.fromJson2(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -158,6 +167,7 @@ class PostState extends State<Post> {
         child: Text("Sí"),
         onPressed: () async {
           deletePost().then((respuesta) async {
+            toast("Tutorial eliminado correctamente", bgColor: toast_color);
             Navigator.pushNamed(context, "perfil");
           });
         });
