@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/materiales.dart';
+import 'package:socialcraft/subir_pasos.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/widgets.dart';
@@ -31,8 +32,12 @@ class UploadState extends State<Upload> {
     if (mounted) super.setState(fn);
   }
 
-  List<String> result = ['Tiempooo', 'a', 'b'];
+  String result = "placeholder";
   bool correct = true;
+  String titulo = "";
+  String desc = "";
+
+  var map = Map<String, dynamic>();
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +111,11 @@ class UploadState extends State<Upload> {
                     border: InputBorder.none,
                     hintText: "Título ...",
                   ),
+                  onChanged: (newValue) {
+                    titulo = newValue;
+                    correct = true;
+                    setState(() {});
+                  },
                 ).paddingLeft(10),
               )
                   .cornerRadiusWithClipRRect(12)
@@ -123,6 +133,11 @@ class UploadState extends State<Upload> {
                         vertical: 15.0, horizontal: 10.0),
                     hintText: "Añade una descripción ...",
                   ),
+                  onChanged: (newValue) {
+                    desc = newValue;
+                    correct = true;
+                    setState(() {});
+                  },
                 ).paddingLeft(10),
               )
                   .cornerRadiusWithClipRRect(12)
@@ -237,10 +252,26 @@ class UploadState extends State<Upload> {
               20.height,
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'subirpasos');
+                  map['titulo'] = titulo;
+                  map['subtitulo'] = desc;
+                  map['rutaFoto'] = 'placeholder';
+                  map['dificultad'] = value1;
+                  map['materiales'] = result;
+                  map['categoria'] = value2;
+                  map['duracion'] = value4;
+                  map['descripcion'] = desc;
+                  print(map);
+                  print(result);
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SubirPasos(map),
+                    ),
+                  );
                 },
                 child: Text(
-                  'Submit',
+                  'Continuar',
                   style: TextStyle(fontSize: 20),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -266,20 +297,21 @@ var current = 1;
 
 String value1 = 'flutter';
 List<S2Choice<String>> options = [
-  S2Choice<String>(value: 'a', title: 'Fácil'),
-  S2Choice<String>(value: 'b', title: 'Intermedio'),
-  S2Choice<String>(value: 'c', title: 'Difícil'),
+  S2Choice<String>(value: '1', title: 'Fácil'),
+  S2Choice<String>(value: '2', title: 'Intermedio'),
+  S2Choice<String>(value: '3', title: 'Difícil'),
 ];
 
-String value2 = '0';
+String value2 = 'Indeterminada';
 List<S2Choice<String>> categorias = [
-  S2Choice<String>(value: 'a', title: 'Origami'),
-  S2Choice<String>(value: 'b', title: 'Lifehack'),
-  S2Choice<String>(value: 'c', title: 'Téxtil'),
-  S2Choice<String>(value: 'd', title: 'Jardineria'),
-  S2Choice<String>(value: 'e', title: 'Bricolaje'),
-  S2Choice<String>(value: 'f', title: 'Electrónica'),
-  S2Choice<String>(value: 'g', title: 'Pintura'),
+  S2Choice<String>(value: 'Reciclable', title: 'Reciclable'),
+  S2Choice<String>(value: 'Papel', title: 'Papel'),
+  S2Choice<String>(value: 'Porcelana', title: 'Porcelana'),
+  S2Choice<String>(value: 'Joyas', title: 'Joyas'),
+  S2Choice<String>(value: 'Jabones', title: 'Jabones'),
+  S2Choice<String>(value: 'Lana', title: 'Lana'),
+  S2Choice<String>(value: 'Madera', title: 'Madera'),
+  S2Choice<String>(value: 'Foam', title: 'Foam'),
 ];
 
 List<int> value3 = [2];
@@ -289,14 +321,14 @@ List<S2Choice<int>> frameworks = [
   S2Choice<int>(value: 3, title: 'Tijeras'),
 ];
 
-String value4 = 'flutter';
+String value4 = 'tiempo indefinido';
 List<S2Choice<String>> tiempos = [
-  S2Choice<String>(value: 'a', title: '<10 min.'),
-  S2Choice<String>(value: 'b', title: '10 min.'),
-  S2Choice<String>(value: 'c', title: '20 min.'),
-  S2Choice<String>(value: 'd', title: '30 min.'),
-  S2Choice<String>(value: 'e', title: '40 min.'),
-  S2Choice<String>(value: 'f', title: '50 min.'),
-  S2Choice<String>(value: 'g', title: '60 min.'),
-  S2Choice<String>(value: 'h', title: '>60 min.'),
+  S2Choice<String>(value: '-10', title: '<10 min.'),
+  S2Choice<String>(value: '10', title: '10 min.'),
+  S2Choice<String>(value: '20', title: '20 min.'),
+  S2Choice<String>(value: '30', title: '30 min.'),
+  S2Choice<String>(value: '40', title: '40 min.'),
+  S2Choice<String>(value: '50', title: '50 min.'),
+  S2Choice<String>(value: '60', title: '60 min.'),
+  S2Choice<String>(value: '+60', title: '>60 min.'),
 ];

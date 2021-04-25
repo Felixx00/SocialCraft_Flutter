@@ -48,7 +48,7 @@ class MaterialesState extends State<Materiales> {
           title: const Text('Materiales'),
           backgroundColor: azul_logo,
           leading: Icon(Icons.arrow_back).onTap(() {
-            Navigator.pop(context);
+            Navigator.pop(context, b);
             //finish(context);
             //Navigator
           }),
@@ -92,6 +92,7 @@ class MaterialesState extends State<Materiales> {
                       onPressed: () {
                         if (a.length < 15 && material.length > 0) {
                           if (!a.contains(material)) {
+                            b += material + " ";
                             a.insert(0, material);
                             setState(() {});
                           }
@@ -133,3 +134,4 @@ class MaterialesState extends State<Materiales> {
 }
 
 List<String> a = [];
+String b = "";

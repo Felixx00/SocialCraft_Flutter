@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/materiales.dart';
 import 'package:socialcraft/utils/widgets.dart';
@@ -11,10 +14,13 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:smart_select/smart_select.dart';
 import 'package:im_stepper/main.dart';
 import 'package:im_stepper/stepper.dart';
+import 'package:socialcraft/resp.dart';
+import 'package:http/http.dart' as http;
 
 class SubirPasos extends StatefulWidget {
   static String tag = '/upload';
-
+  var map = Map<String, dynamic>();
+  SubirPasos(this.map);
   @override
   SubirPasosState createState() => SubirPasosState();
 }
@@ -26,7 +32,15 @@ class SubirPasosState extends State<SubirPasos> {
     init();
   }
 
-  init() async {}
+  var map2 = Map<String, dynamic>();
+  String token = "";
+
+  init() async {
+    map2 = widget.map;
+    final storage2 = new FlutterSecureStorage();
+    token = await storage2.read(key: 'jwt');
+    print(map2);
+  }
 
   @override
   void setState(fn) {
@@ -36,33 +50,73 @@ class SubirPasosState extends State<SubirPasos> {
   int activeStep = 0; // Initial step set to 5.
 
   int upperBound = 6;
+  List<int> numb = [1];
+  List<String> textos = ["", "", "", "", "", "", "", "", "", ""];
+
+  Future<Resp> subirTuto() async {
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', 'tutorials/uploadTutorial'),
+      body: map2,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson3(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text('Steps'),
-          backgroundColor: azul_logo,
-          leading: Icon(Icons.arrow_back).onTap(() {
-            Navigator.pop(context);
-            //finish(context);
-            //Navigator
-          }),
-        ),
-        body: Padding(
+        child: Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text('Editar Perfil'),
+        backgroundColor: azul_logo,
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: OutlinedButton.icon(
+              label:
+                  Text('Subir', style: primaryTextStyle(color: Colors.white)),
+              style: OutlinedButton.styleFrom(
+                primary: Colors.white,
+                side: BorderSide(color: Colors.white, width: 1.5),
+              ),
+              icon: Icon(Icons.cloud_upload_outlined),
+              onPressed: () {
+                subirTuto().then((respuesta) async {
+                  if (respuesta.success == false) {
+                    setState(() {});
+                    toast("Incorrecto bro", bgColor: toast_color);
+                  } else {
+                    /*
+                    final storage = new FlutterSecureStorage();
+                    await storage.write(
+                        key: 'jwt', value: respuesta.data['token']);
+                    print(respuesta.data['token']);
+                    finish(context);
+                    Navigator.pushNamed(context, "barra");
+                    */
+                    print(respuesta.success);
+                  }
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               NumberStepper(
-                numbers: [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                ],
+                numbers: numb,
 
                 // activeStep property set to activeStep variable defined above.
                 activeStep: activeStep,
@@ -75,13 +129,7 @@ class SubirPasosState extends State<SubirPasos> {
                 },
               ),
               header(),
-              Expanded(
-                child: FittedBox(
-                  child: Center(
-                    child: Text((activeStep + 1).toString()),
-                  ),
-                ),
-              ),
+              Text((activeStep + 1).toString()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [],
@@ -90,42 +138,27 @@ class SubirPasosState extends State<SubirPasos> {
           ),
         ),
       ),
-    );
-  }
-
-  /// Returns the next button.
-  Widget nextButton() {
-    return ElevatedButton(
-      onPressed: () {
-        // Increment activeStep, when the next button is tapped. However, check for upper bound.
-        if (activeStep < upperBound) {
-          setState(() {
-            activeStep++;
-          });
-        }
-      },
-      child: Text('Next'),
-    );
-  }
-
-  /// Returns the previous button.
-  Widget previousButton() {
-    return ElevatedButton(
-      onPressed: () {
-        // Decrement activeStep, when the previous button is tapped. However, check for lower bound i.e., must be greater than 0.
-        if (activeStep > 0) {
-          setState(() {
-            activeStep--;
-          });
-        }
-      },
-      child: Text('Prev'),
-    );
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          if (numb.length < 10) {
+            activeStep = numb.length;
+            numb.add(numb.length + 1);
+            setState(() {});
+          }
+        },
+        label: Text(
+          'Step',
+          style: TextStyle(fontSize: 18),
+        ),
+        icon: Icon(Icons.add),
+        backgroundColor: azul_logo,
+      ),
+    ));
   }
 
   /// Returns the header wrapping the header text.
   Widget header() {
-    return Container(
+    /* return Container(
       decoration: BoxDecoration(
         color: Colors.orange,
         borderRadius: BorderRadius.circular(5),
@@ -144,7 +177,19 @@ class SubirPasosState extends State<SubirPasos> {
           ),
         ],
       ),
-    );
+    );*/
+    return Container(
+      decoration: BoxDecoration(color: Colors.grey[300]),
+      child: TextFormField(
+        keyboardType: TextInputType.name,
+        cursorColor: azul_logo,
+        decoration: InputDecoration(
+          //icon: Icon(Icons.search, color: azul_logo),
+          border: InputBorder.none,
+          hintText: 'Step ' + (activeStep + 1).toString(),
+        ),
+      ).paddingLeft(10),
+    ).cornerRadiusWithClipRRect(12).paddingOnly(top: 30, left: 30, right: 30);
   }
 
   // Returns the header text based on the activeStep.
@@ -173,42 +218,3 @@ class SubirPasosState extends State<SubirPasos> {
     }
   }
 }
-
-var current = 1;
-
-String value1 = 'flutter';
-List<S2Choice<String>> options = [
-  S2Choice<String>(value: 'a', title: 'Fácil'),
-  S2Choice<String>(value: 'b', title: 'Intermedio'),
-  S2Choice<String>(value: 'c', title: 'Difícil'),
-];
-
-String value2 = '0';
-List<S2Choice<String>> categorias = [
-  S2Choice<String>(value: 'a', title: 'Origami'),
-  S2Choice<String>(value: 'b', title: 'Lifehack'),
-  S2Choice<String>(value: 'c', title: 'Téxtil'),
-  S2Choice<String>(value: 'd', title: 'Jardineria'),
-  S2Choice<String>(value: 'e', title: 'Bricolaje'),
-  S2Choice<String>(value: 'f', title: 'Electrónica'),
-  S2Choice<String>(value: 'g', title: 'Pintura'),
-];
-
-List<int> value3 = [2];
-List<S2Choice<int>> frameworks = [
-  S2Choice<int>(value: 1, title: 'Papel'),
-  S2Choice<int>(value: 2, title: 'Piedra'),
-  S2Choice<int>(value: 3, title: 'Tijeras'),
-];
-
-String value4 = 'flutter';
-List<S2Choice<String>> tiempos = [
-  S2Choice<String>(value: 'a', title: '<10 min.'),
-  S2Choice<String>(value: 'b', title: '10 min.'),
-  S2Choice<String>(value: 'c', title: '20 min.'),
-  S2Choice<String>(value: 'd', title: '30 min.'),
-  S2Choice<String>(value: 'e', title: '40 min.'),
-  S2Choice<String>(value: 'f', title: '50 min.'),
-  S2Choice<String>(value: 'g', title: '60 min.'),
-  S2Choice<String>(value: 'h', title: '>60 min.'),
-];
