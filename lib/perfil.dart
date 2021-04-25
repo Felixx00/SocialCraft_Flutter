@@ -342,8 +342,8 @@ class PerfilState extends State<Perfil> {
               child: Column(
                 children: [
                   Text(
-                    nPosts = "1",
-                    //nPosts = posts.length.toString(),
+                    //nPosts = "1",
+                    nPosts = posts.length.toString(),
                     style: boldTextStyle(size: 16, color: black),
                     semanticsLabel: "nPosts",
                   ),
