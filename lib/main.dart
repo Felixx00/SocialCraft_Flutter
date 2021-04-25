@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           //'editPost': (BuildContext context) => EditPost(),
           'home': (BuildContext context) => Home(),
           'tienda': (BuildContext context) => Tienda(),
-          'subirpasos': (BuildContext context) => SubirPasos(),
+          //'subirpasos': (BuildContext context) => SubirPasos(),
         },
         debugShowCheckedModeBanner: false,
         home: Transition(),
