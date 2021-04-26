@@ -10,6 +10,7 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:smart_select/smart_select.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Upload extends StatefulWidget {
   static String tag = '/upload';
@@ -33,9 +34,10 @@ class UploadState extends State<Upload> {
   }
 
   String result = "placeholder";
-  bool correct = true;
+  bool correct = false;
   String titulo = "";
   String desc = "";
+  var foto;
 
   var map = Map<String, dynamic>();
 
@@ -67,14 +69,26 @@ class UploadState extends State<Upload> {
                     strokeWidth: 3,
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(12)),
-                      child: Container(
-                        child: Icon(
-                          Icons.add_a_photo_rounded,
-                          color: azul_logo,
-                          size: 75.0,
-                          semanticLabel:
-                              'Text to announce in accessibility modes',
-                        ).paddingAll(20),
+                      child: GestureDetector(
+                        onTap: () async {
+                          foto = await ImagePicker()
+                              .getImage(source: ImageSource.gallery);
+                          //Navigator.pop(context);
+                          print(foto);
+                          if (foto != null) {
+                            correct = true;
+                          }
+                          setState(() {});
+                        },
+                        child: Container(
+                          child: Icon(
+                            Icons.add_a_photo_rounded,
+                            color: azul_logo,
+                            size: 75.0,
+                            semanticLabel:
+                                'Text to announce in accessibility modes',
+                          ).paddingAll(20),
+                        ),
                       ),
                     ),
                   ),
@@ -254,7 +268,7 @@ class UploadState extends State<Upload> {
                 onPressed: () {
                   map['titulo'] = titulo;
                   map['subtitulo'] = desc;
-                  map['rutaFoto'] = 'placeholder';
+                  map['rutaFoto'] = foto;
                   map['dificultad'] = value1;
                   map['materiales'] = result;
                   map['categoria'] = value2;
