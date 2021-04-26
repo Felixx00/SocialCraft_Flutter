@@ -198,8 +198,8 @@ class PostState extends State<Post> {
             ];
           },
           body: TabBarView(children: <Widget>[
-            PostDesc(
-                titulo, descripcion, rate, dificultad, categoria, materiales),
+            PostDesc(titulo, descripcion, rate, dificultad, categoria,
+                materiales, duracion),
             PostPasos(titulo, descripcion, pasos)
           ]),
         ),

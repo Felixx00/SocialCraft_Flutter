@@ -9,8 +9,9 @@ class PostDesc extends StatelessWidget {
   final String dificultad;
   final String categoria;
   final String materiales;
+  final String duracion;
   PostDesc(this.titulo, this.descripcion, this.rate, this.dificultad,
-      this.categoria, this.materiales);
+      this.categoria, this.materiales, this.duracion);
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -53,13 +54,13 @@ class PostDesc extends StatelessWidget {
                 Row(children: [
                   Icon(Icons.grid_view, color: azul_logo, size: 25),
                   16.width,
-                  Text("Categoria: HACERLO", style: secondaryTextStyle())
+                  Text("Categoria: " + categoria, style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [
                   Icon(Icons.av_timer, color: azul_logo, size: 25),
                   16.width,
-                  Text("Duracion: HACERLO", style: secondaryTextStyle())
+                  Text("Duración: " + duracion, style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [
