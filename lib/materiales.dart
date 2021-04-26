@@ -105,6 +105,7 @@ class MaterialesState extends State<Materiales> {
                     tooltip: 'y',
                     onPressed: () {
                       a.clear();
+                      b = "";
                       setState(() {});
                     },
                   ),
