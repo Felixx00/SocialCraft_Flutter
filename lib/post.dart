@@ -78,11 +78,11 @@ class PostState extends State<Post> {
         .ref()
         .child('Usuario_Default/default-user-image.png');*/
 
-    var r = FirebaseStorage.instance.ref("Posts/" + "29" + '/principal');
+    var r = FirebaseStorage.instance.ref("Posts/" + tutId + '/principal');
     try {
       await r.getDownloadURL();
       var ref =
-          FirebaseStorage.instance.ref().child("Posts/" + "29" + '/principal');
+          FirebaseStorage.instance.ref().child("Posts/" + tutId + '/principal');
       linkfoto = (await ref.getDownloadURL()).toString();
     } catch (err) {
       var ref = FirebaseStorage.instance

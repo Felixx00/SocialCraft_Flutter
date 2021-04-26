@@ -47,7 +47,7 @@ class EditPostState extends State<EditPost> {
     if (mounted) super.setState(fn);
   }
 
-  String result = "placeholder";
+  String result = "";
   bool correct = true;
   var foto;
 
