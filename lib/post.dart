@@ -24,7 +24,7 @@ class Post extends StatefulWidget {
 String token = "";
 String tutId = "";
 String titulo = "";
-String subtitulo = "";
+String descripcion = "";
 String rutaFoto = "";
 String video = "";
 String dificultad = "";
@@ -32,9 +32,9 @@ String materiales = "";
 String duracion = "";
 String usuario = "";
 String rate = "";
-String categorias = "";
-String pasos = "";
-String comments = "";
+String categoria = "";
+List<dynamic> pasos = [];
+List<dynamic> comments = [];
 
 class PostState extends State<Post> {
   @override
@@ -47,10 +47,24 @@ class PostState extends State<Post> {
     tutId = widget.idPost;
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
-    /*post().then((respuesta) async {
+    post().then((respuesta) async {
       titulo = respuesta.data['titulo'];
+      descripcion = respuesta.data['descripcion'];
+      rutaFoto = respuesta.data['rutaFoto'];
+      video = respuesta.data['video'];
+      dificultad = respuesta.data['dificultad'];
+      materiales = respuesta.data['materiales'];
+      duracion = respuesta.data['duracion'];
+      usuario = respuesta.data['usuario'];
+      rate = respuesta.data['rate'];
+      //categoria = respuesta.data['categorias'];
+      pasos = respuesta.data['pasos'];
+      comments = respuesta.data['comments'];
+      if (dificultad == "1") dificultad = "Fácil";
+      if (dificultad == "2") dificultad = "Intermedio";
+      if (dificultad == "3") dificultad = "Difícil";
       setState(() {});
-    });*/
+    });
     setState(() {});
   }
 
@@ -61,7 +75,7 @@ class PostState extends State<Post> {
 
   Future<Resp> post() async {
     var map = new Map<String, dynamic>();
-    map['tutId'] = tutId;
+    map['tutid'] = tutId;
     final response = await http.get(
       Uri.https('api.socialcraft.club', '/tutorials/getTutorial', map),
       headers: {
@@ -106,8 +120,7 @@ class PostState extends State<Post> {
                 leading: Icon(Icons.arrow_back).onTap(() {
                   finish(context);
                 }),
-                title: Text("Titulo Post",
-                    style: GoogleFonts.comfortaa(fontSize: 25)),
+                title: Text(titulo, style: GoogleFonts.comfortaa(fontSize: 25)),
                 expandedHeight: 320,
                 flexibleSpace: Container(
                     decoration: BoxDecoration(
@@ -156,7 +169,11 @@ class PostState extends State<Post> {
               )
             ];
           },
-          body: TabBarView(children: <Widget>[PostDesc(), PostPasos()]),
+          body: TabBarView(children: <Widget>[
+            PostDesc(
+                titulo, descripcion, rate, dificultad, categoria, materiales),
+            PostPasos(titulo, descripcion)
+          ]),
         ),
       ),
     );
@@ -168,7 +185,9 @@ class PostState extends State<Post> {
         onPressed: () async {
           deletePost().then((respuesta) async {
             toast("Tutorial eliminado correctamente", bgColor: toast_color);
-            Navigator.pushNamed(context, "perfil");
+            //Navigator.pushNamed(context, "barra");
+            Navigator.pop(context);
+            Navigator.pop(context);
           });
         });
     Widget continueButton = TextButton(

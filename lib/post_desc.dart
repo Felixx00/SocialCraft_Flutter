@@ -3,19 +3,34 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/fonts.dart';
 
 class PostDesc extends StatelessWidget {
+  final String titulo;
+  final String descripcion;
+  final String rate;
+  final String dificultad;
+  final String categoria;
+  final String materiales;
+  PostDesc(this.titulo, this.descripcion, this.rate, this.dificultad,
+      this.categoria, this.materiales);
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.only(top: 20, left: 20, right: 20),
       children: <Widget>[
-        Text("holaa",
+        Text(titulo,
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-        10.height,
+        20.height,
         Text(
-          "hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola hola como estas",
+          descripcion,
           style: TextStyle(fontSize: 20),
         ),
-        20.height,
+        10.height,
+        Divider(
+          height: 20,
+          thickness: 3,
+          indent: 20,
+          endIndent: 20,
+        ),
+        10.height,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -23,51 +38,37 @@ class PostDesc extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(children: [
-                  Icon(Icons.bar_chart_rounded, color: azul_logo, size: 20),
+                  Icon(Icons.star_outlined, color: azul_logo, size: 25),
                   16.width,
-                  Text("DIficultad: Fácil", style: secondaryTextStyle())
+                  Text("Valoración: " + rate + "/5",
+                      style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [
-                  Icon(Icons.grid_view, color: azul_logo, size: 20),
+                  Icon(Icons.bar_chart_rounded, color: azul_logo, size: 25),
                   16.width,
-                  Text("Categoria: Origami", style: secondaryTextStyle())
+                  Text("Dificultad: " + dificultad, style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [
-                  Icon(Icons.av_timer, color: azul_logo, size: 20),
+                  Icon(Icons.grid_view, color: azul_logo, size: 25),
                   16.width,
-                  Text("Duracion: 30'", style: secondaryTextStyle())
+                  Text("Categoria: HACERLO", style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [
-                  Icon(Icons.brush_rounded, color: azul_logo, size: 20),
+                  Icon(Icons.av_timer, color: azul_logo, size: 25),
                   16.width,
-                  Text("Materiales:", style: secondaryTextStyle())
+                  Text("Duracion: HACERLO", style: secondaryTextStyle())
+                ]),
+                16.height,
+                Row(children: [
+                  Icon(Icons.brush_rounded, color: azul_logo, size: 25),
+                  16.width,
+                  Text("Materiales: " + materiales, style: secondaryTextStyle())
                 ]),
               ],
             ),
-            15.height,
-            /*
-            Column(
-              children: List.generate(
-                1,
-                (int index) {
-                  return ListTile(
-                    leading: Container(
-                      height: 15,
-                      width: 15,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    title: Text("hola"),
-                  );
-                },
-              ),
-            ),
-            */
           ],
         ),
       ],
