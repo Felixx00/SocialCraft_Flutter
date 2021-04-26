@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/materiales.dart';
 import 'package:socialcraft/utils/widgets.dart';
@@ -46,11 +47,11 @@ class EditPostState extends State<EditPost> {
     if (mounted) super.setState(fn);
   }
 
-  List<String> result = ['Tiempooo', 'a', 'b'];
+  String result = "placeholder";
   bool correct = true;
+  var foto;
 
   String titulo = '';
-  String subtitulo = '';
   String rutaFoto = '';
   String video = '';
   String dificultad = '';
@@ -129,14 +130,26 @@ class EditPostState extends State<EditPost> {
                     strokeWidth: 3,
                     child: ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(12)),
-                      child: Container(
-                        child: Icon(
-                          Icons.add_a_photo_rounded,
-                          color: azul_logo,
-                          size: 75.0,
-                          semanticLabel:
-                              'Text to announce in accessibility modes',
-                        ).paddingAll(20),
+                      child: GestureDetector(
+                        onTap: () async {
+                          foto = await ImagePicker()
+                              .getImage(source: ImageSource.gallery);
+                          //Navigator.pop(context);
+                          print(foto);
+                          if (foto != null) {
+                            correct = true;
+                          }
+                          setState(() {});
+                        },
+                        child: Container(
+                          child: Icon(
+                            Icons.add_a_photo_rounded,
+                            color: azul_logo,
+                            size: 75.0,
+                            semanticLabel:
+                                'Text to announce in accessibility modes',
+                          ).paddingAll(20),
+                        ),
                       ),
                     ),
                   ),
@@ -310,6 +323,11 @@ class EditPostState extends State<EditPost> {
               20.height,
               ElevatedButton(
                 onPressed: () {
+                  dificultad = value1;
+                  categoria = value2;
+                  materiales = result;
+                  duracion = value4;
+                  print(materiales);
                   cambios().then((respuesta) {
                     if (respuesta.success == false) {
                       print("Algun Parametro Incorrecto");
@@ -344,39 +362,40 @@ class EditPostState extends State<EditPost> {
 
 var current = 1;
 
-String value1 = 'flutter';
+String value1 = '';
 List<S2Choice<String>> options = [
-  S2Choice<String>(value: 'a', title: 'Fácil'),
-  S2Choice<String>(value: 'b', title: 'Intermedio'),
-  S2Choice<String>(value: 'c', title: 'Difícil'),
+  S2Choice<String>(value: '1', title: 'Fácil'),
+  S2Choice<String>(value: '2', title: 'Intermedio'),
+  S2Choice<String>(value: '3', title: 'Difícil'),
 ];
 
-String value2 = '0';
+String value2 = '';
 List<S2Choice<String>> categorias = [
-  S2Choice<String>(value: 'a', title: 'Origami'),
-  S2Choice<String>(value: 'b', title: 'Lifehack'),
-  S2Choice<String>(value: 'c', title: 'Téxtil'),
-  S2Choice<String>(value: 'd', title: 'Jardineria'),
-  S2Choice<String>(value: 'e', title: 'Bricolaje'),
-  S2Choice<String>(value: 'f', title: 'Electrónica'),
-  S2Choice<String>(value: 'g', title: 'Pintura'),
+  S2Choice<String>(value: 'Reciclable', title: 'Reciclable'),
+  S2Choice<String>(value: 'Papel', title: 'Papel'),
+  S2Choice<String>(value: 'Porcelana', title: 'Porcelana'),
+  S2Choice<String>(value: 'Joyas', title: 'Joyas'),
+  S2Choice<String>(value: 'Jabones', title: 'Jabones'),
+  S2Choice<String>(value: 'Lana', title: 'Lana'),
+  S2Choice<String>(value: 'Madera', title: 'Madera'),
+  S2Choice<String>(value: 'Foam', title: 'Foam'),
 ];
 
-List<int> value3 = [2];
+List<int> value3 = [];
 List<S2Choice<int>> frameworks = [
   S2Choice<int>(value: 1, title: 'Papel'),
   S2Choice<int>(value: 2, title: 'Piedra'),
   S2Choice<int>(value: 3, title: 'Tijeras'),
 ];
 
-String value4 = 'flutter';
+String value4 = '';
 List<S2Choice<String>> tiempos = [
-  S2Choice<String>(value: 'a', title: '<10 min.'),
-  S2Choice<String>(value: 'b', title: '10 min.'),
-  S2Choice<String>(value: 'c', title: '20 min.'),
-  S2Choice<String>(value: 'd', title: '30 min.'),
-  S2Choice<String>(value: 'e', title: '40 min.'),
-  S2Choice<String>(value: 'f', title: '50 min.'),
-  S2Choice<String>(value: 'g', title: '60 min.'),
-  S2Choice<String>(value: 'h', title: '>60 min.'),
+  S2Choice<String>(value: '-10', title: '<10 min.'),
+  S2Choice<String>(value: '10', title: '10 min.'),
+  S2Choice<String>(value: '20', title: '20 min.'),
+  S2Choice<String>(value: '30', title: '30 min.'),
+  S2Choice<String>(value: '40', title: '40 min.'),
+  S2Choice<String>(value: '50', title: '50 min.'),
+  S2Choice<String>(value: '60', title: '60 min.'),
+  S2Choice<String>(value: '+60', title: '>60 min.'),
 ];

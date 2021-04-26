@@ -5,7 +5,8 @@ import 'package:socialcraft/utils/fonts.dart';
 class PostPasos extends StatelessWidget {
   final String titulo;
   final String descripcion;
-  PostPasos(this.titulo, this.descripcion);
+  final List<dynamic> pasos;
+  PostPasos(this.titulo, this.descripcion, this.pasos);
   @override
   Widget build(BuildContext context) {
     return ListView(

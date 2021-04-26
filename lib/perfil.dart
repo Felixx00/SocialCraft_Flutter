@@ -66,6 +66,7 @@ class PerfilState extends State<Perfil> {
     });
     getMyTutorials().then((respuesta) async {
       posts = respuesta.list;
+      setState(() {});
     });
     //await FirebaseAuth.instance.signInAnonymously();
 
@@ -101,7 +102,7 @@ class PerfilState extends State<Perfil> {
 
   Future<Resp> getMyTutorials() async {
     var map = new Map<String, dynamic>();
-    map['limit'] = "10";
+    map['limit'] = "100";
     map['offset'] = "0";
     final response = await http.post(
       Uri.https('api.socialcraft.club', '/tutorials/getMyTutorials'),
@@ -367,13 +368,14 @@ class PerfilState extends State<Perfil> {
                     style: ElevatedButton.styleFrom(
                       primary: azul_logo,
                     ),
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => Post(posts[index]['id']),
                         ),
                       );
+                      init();
                     },
                   ).paddingOnly(top: 5, bottom: 5);
                 },

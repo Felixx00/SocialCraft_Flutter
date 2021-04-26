@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,6 +37,7 @@ String rate = "";
 String categoria = "";
 List<dynamic> pasos = [];
 List<dynamic> comments = [];
+var linkfoto = "";
 
 class PostState extends State<Post> {
   @override
@@ -50,7 +53,6 @@ class PostState extends State<Post> {
     post().then((respuesta) async {
       titulo = respuesta.data['titulo'];
       descripcion = respuesta.data['descripcion'];
-      rutaFoto = respuesta.data['rutaFoto'];
       video = respuesta.data['video'];
       dificultad = respuesta.data['dificultad'];
       materiales = respuesta.data['materiales'];
@@ -63,9 +65,36 @@ class PostState extends State<Post> {
       if (dificultad == "1") dificultad = "Fácil";
       if (dificultad == "2") dificultad = "Intermedio";
       if (dificultad == "3") dificultad = "Difícil";
+      await Firebase.initializeApp();
+      await getImage();
       setState(() {});
     });
     setState(() {});
+  }
+
+  Future getImage() async {
+    //FirebaseStorage storage = FirebaseStorage.instance;
+    /*var ref = FirebaseStorage.instance
+        .ref()
+        .child('Usuario_Default/default-user-image.png');*/
+
+    var r = FirebaseStorage.instance.ref("Posts/" + "29" + '/principal');
+    try {
+      await r.getDownloadURL();
+      var ref =
+          FirebaseStorage.instance.ref().child("Posts/" + "29" + '/principal');
+      linkfoto = (await ref.getDownloadURL()).toString();
+    } catch (err) {
+      var ref = FirebaseStorage.instance
+          .ref()
+          .child('Usuario_Default/default-user-image.png');
+      linkfoto = (await ref.getDownloadURL()).toString();
+    }
+
+    //link_foto = ref;
+    //linkfoto = (await ref.getDownloadURL()).toString();
+    print(linkfoto);
+    //var url = await ref.getDownloadURL();
   }
 
   @override
@@ -125,9 +154,7 @@ class PostState extends State<Post> {
                 flexibleSpace: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                              'https://picsum.photos/250?image=9')),
+                          fit: BoxFit.cover, image: NetworkImage(linkfoto)),
                     ),
                     child: Container(
                       color: Colors.black.withOpacity(.5),
@@ -173,7 +200,7 @@ class PostState extends State<Post> {
           body: TabBarView(children: <Widget>[
             PostDesc(
                 titulo, descripcion, rate, dificultad, categoria, materiales),
-            PostPasos(titulo, descripcion)
+            PostPasos(titulo, descripcion, pasos)
           ]),
         ),
       ),
