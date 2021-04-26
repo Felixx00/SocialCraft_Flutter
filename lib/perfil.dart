@@ -34,7 +34,7 @@ int followers = 0;
 String nFollowers = "";
 bool unfollow = true;
 var linkfoto = "";
-List<dynamic> posts;
+List<dynamic> posts = [];
 
 class PerfilState extends State<Perfil> {
   @override
