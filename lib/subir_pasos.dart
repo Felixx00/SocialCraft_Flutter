@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -16,6 +17,10 @@ import 'package:im_stepper/main.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SubirPasos extends StatefulWidget {
   static String tag = '/upload';
@@ -34,9 +39,12 @@ class SubirPasosState extends State<SubirPasos> {
 
   var map2 = Map<String, dynamic>();
   String token = "";
+  var objeto_foto;
 
   init() async {
     map2 = widget.map;
+    objeto_foto = map2['rutaFoto'];
+    map2['rutaFoto'] = 'placeholder';
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
     print(map2);
@@ -48,10 +56,13 @@ class SubirPasosState extends State<SubirPasos> {
   }
 
   int activeStep = 0; // Initial step set to 5.
+  final controller = TextEditingController(text: "");
+  final controller2 = TextEditingController(text: "");
 
   int upperBound = 6;
   List<int> numb = [1];
   List<String> textos = ["", "", "", "", "", "", "", "", "", ""];
+  List<String> descripciones = ["", "", "", "", "", "", "", "", "", ""];
 
   Future<Resp> subirTuto() async {
     final response = await http.post(
@@ -66,6 +77,27 @@ class SubirPasosState extends State<SubirPasos> {
       return Resp.fromJson3(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
+    }
+  }
+
+  void subirfoto(int x) async {
+    var foto = objeto_foto;
+    Navigator.pop(context);
+    print(foto);
+
+    if (foto != null) {
+      final _firebaseStorage = FirebaseStorage.instance;
+      var file = File(foto.path);
+      print(x);
+      print('aaaaa');
+      var snapshot = await _firebaseStorage
+          .ref()
+          .child('Posts/' + x.toString() + '/principal')
+          .putFile(file);
+
+      //print(foto.path);
+    } else {
+      print('No image selected.');
     }
   }
 
@@ -88,21 +120,17 @@ class SubirPasosState extends State<SubirPasos> {
                 side: BorderSide(color: Colors.white, width: 1.5),
               ),
               icon: Icon(Icons.cloud_upload_outlined),
-              onPressed: () {
-                subirTuto().then((respuesta) async {
+              onPressed: () async {
+                await subirTuto().then((respuesta) async {
                   if (respuesta.success == false) {
                     setState(() {});
-                    toast("Incorrecto bro", bgColor: toast_color);
+                    toast("Incorrecto", bgColor: toast_color);
                   } else {
-                    /*
-                    final storage = new FlutterSecureStorage();
-                    await storage.write(
-                        key: 'jwt', value: respuesta.data['token']);
-                    print(respuesta.data['token']);
-                    finish(context);
-                    Navigator.pushNamed(context, "barra");
-                    */
                     print(respuesta.success);
+                    print(respuesta.id);
+                    subirfoto(respuesta.id);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, 'barra', (Route<dynamic> route) => false);
                   }
                 });
               },
@@ -125,11 +153,14 @@ class SubirPasosState extends State<SubirPasos> {
                 onStepReached: (index) {
                   setState(() {
                     activeStep = index;
+                    controller.text = textos[activeStep];
+                    controller2.text = descripciones[activeStep];
                   });
                 },
               ),
+              30.height,
               header(),
-              Text((activeStep + 1).toString()),
+              //Text((activeStep + 1).toString()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [],
@@ -141,6 +172,8 @@ class SubirPasosState extends State<SubirPasos> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           if (numb.length < 10) {
+            controller.text = "";
+            controller2.text = "";
             activeStep = numb.length;
             numb.add(numb.length + 1);
             setState(() {});
@@ -158,38 +191,49 @@ class SubirPasosState extends State<SubirPasos> {
 
   /// Returns the header wrapping the header text.
   Widget header() {
-    /* return Container(
-      decoration: BoxDecoration(
-        color: Colors.orange,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              headerText(),
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-              ),
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(color: Colors.grey[300]),
+          child: TextFormField(
+            controller: controller,
+            keyboardType: TextInputType.name,
+            cursorColor: azul_logo,
+            decoration: InputDecoration(
+              //icon: Icon(Icons.search, color: azul_logo),
+              border: InputBorder.none,
+              hintText: 'Step ' + (activeStep + 1).toString(),
             ),
-          ),
-        ],
-      ),
-    );*/
-    return Container(
-      decoration: BoxDecoration(color: Colors.grey[300]),
-      child: TextFormField(
-        keyboardType: TextInputType.name,
-        cursorColor: azul_logo,
-        decoration: InputDecoration(
-          //icon: Icon(Icons.search, color: azul_logo),
-          border: InputBorder.none,
-          hintText: 'Step ' + (activeStep + 1).toString(),
-        ),
-      ).paddingLeft(10),
-    ).cornerRadiusWithClipRRect(12).paddingOnly(top: 30, left: 30, right: 30);
+            onChanged: (newValue) {
+              textos[activeStep] = newValue;
+            },
+          ).paddingLeft(10),
+        )
+            .cornerRadiusWithClipRRect(12)
+            .paddingOnly(top: 30, left: 30, right: 30),
+        Container(
+          decoration: BoxDecoration(color: Colors.grey[300]),
+          child: TextFormField(
+            controller: controller2,
+            keyboardType: TextInputType.name,
+            cursorColor: azul_logo,
+            maxLines: 6,
+            decoration: InputDecoration(
+              //icon: Icon(Icons.search, color: azul_logo),
+              border: InputBorder.none,
+              contentPadding:
+                  new EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+              hintText: "Añade una descripción ...",
+            ),
+            onChanged: (newValue) {
+              descripciones[activeStep] = newValue;
+            },
+          ).paddingLeft(10),
+        )
+            .cornerRadiusWithClipRRect(12)
+            .paddingOnly(top: 30, left: 30, right: 30),
+      ],
+    );
   }
 
   // Returns the header text based on the activeStep.
