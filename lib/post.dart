@@ -156,13 +156,14 @@ class PostState extends State<Post> {
                   ),
                   IconButton(
                     icon: Icon(Icons.edit),
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => EditPost(tutId),
                         ),
                       );
+                      init();
                     },
                   )
                 ],
