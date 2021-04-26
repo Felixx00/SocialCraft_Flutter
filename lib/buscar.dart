@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,72 +9,14 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/perfil2.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:socialcraft/utils/fonts.dart';
-import 'package:socialcraft/utils/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
-import 'lista_categorias.dart';
 
-/*List categories = [
-  {
-    "id" : 1,
-    "name": "Covid-19",
-    "follow": false
-  },
-  {
-    "id" : 2,
-    "name": "Patchwork",
-    "follow": false
-  },
-  {
-    "id" : 3,
-    "name": "Scrapbooking",
-    "follow": false
-  },
-  {
-    "id" : 4,
-    "name": "Pintura",
-    "follow": false
-  },
-  {
-    "id" : 5,
-    "name": "Escultura",
-    "follow": false
-  },
-  {
-    "id" : 6,
-    "name": "Bisutería",
-    "follow": false
-  },
-  {
-    "id" : 7,
-    "name": "Mercería",
-    "follow": false
-  },
-  {
-    "id" : 8,
-    "name": "Papelería",
-    "follow": false
-  },
-  {
-    "id" : 9,
-    "name": "Decoupage",
-    "follow": false
-  }
-];*/
-var myself;
-List categories= [];
-List userss = [
-{
-  "id" : 0,
-"nombre" : "",
-"rutaFoto": socialcraft_logo,
-"followed": false
-},
-];
-class IdUsuario{
+
+/*class IdUsuario{
   int idUsuario;
   IdUsuario(this.idUsuario);
-}
+}*/
 
 void main() => runApp(Search());
 FocusNode nameNode;
@@ -81,7 +25,32 @@ class Search extends StatefulWidget {
   @override
   SearchW createState() => SearchW();
 }
+
+String userName;
 String token = '';
+String busqueda = "";
+var linkFoto = "";
+bool one = true;
+var users=[];
+var usersL=[];
+int user;
+String nombre= "";
+String rutaFoto = "https://icons555.com/images/icons-gray/image_icon_user_4_pic_512x512.png";
+bool followed= true;
+List infoBusqueda = [];
+bool unfollow= true;
+var myself;
+List categories= [];
+List userss = [
+  {
+    "id" : 0,
+    "nombre" : "",
+    "rutaFoto": socialcraft_logo,
+    "followed": false
+  },
+];
+
+
 class SearchW extends State<Search> {
   String _idUser = "";
   @override
@@ -101,6 +70,8 @@ class SearchW extends State<Search> {
       setState(() {});
       print(myself);
     });
+    await Firebase.initializeApp();
+
 
   }
 
@@ -108,6 +79,19 @@ class SearchW extends State<Search> {
   void setState(fn) {
     if (mounted) super.setState(fn);
   }
+  /*Future getImage(String userName) async {
+    var r = FirebaseStorage.instance.ref(userName + '/image');
+    try {
+      await r.getDownloadURL();
+      var ref = FirebaseStorage.instance.ref().child(userName + '/image');
+      linkfoto = (await ref.getDownloadURL()).toString();
+    } catch (err) {
+      var ref = FirebaseStorage.instance
+          .ref()
+          .child('Usuario_Default/default-user-image.png');
+      linkfoto = (await ref.getDownloadURL()).toString();
+    }
+  }*/
 
   Future<Resp> Myself() async {
     final response = await http.get(
@@ -232,16 +216,7 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
-  String busqueda = "";
-  bool one = true;
-  var users=[];
-  var usersL=[];
-  int user;
-  String nombre= "";
-  String rutaFoto = "https://icons555.com/images/icons-gray/image_icon_user_4_pic_512x512.png";
-  bool followed= true;
-  List infoBusqueda = [];
-  bool unfollow= true;
+
   @override
   Widget build(BuildContext context) {
 
@@ -350,8 +325,10 @@ class SearchW extends State<Search> {
                                         leading: Container(
                                           height: 50.0,
                                           width: 50.0,
+
                                           decoration: new BoxDecoration(
                                             shape: BoxShape.circle,
+                                            //getImage(users[index]["username"]),
                                             image: new DecorationImage(
                                                 fit: BoxFit.fill,
                                                 image: new NetworkImage(
@@ -360,7 +337,6 @@ class SearchW extends State<Search> {
                                         ).paddingOnly(top: 5, bottom: 5),
 
                                         trailing:
-
                                         (myself == users[index]["username"])
                                           ? IconButton(icon:Icon(Icons.more_vert),
                                             onPressed: () {

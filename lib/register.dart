@@ -47,7 +47,7 @@ class RegisterW extends State<Register> {
     );
     print(response.statusCode);
     if (response.statusCode == 200) {
-      return Resp.fromJson(jsonDecode(response.body));
+      return Resp.fromJson2(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -217,6 +217,24 @@ class RegisterW extends State<Register> {
                               .paddingOnly(top: 16, bottom: 16)
                               .onTap(
                             () {
+                              if(user.length < 3 || user.contains('/')){
+                                wrongName= true;
+                                setState(() {});
+                                if(user.length < 3) {
+                                  toast(
+                                      "El carácter '/' no está permitido",
+                                          bgColor: toast_color);
+                                }
+                                else {
+                                  toast(
+                                      "El nombre de usuario debe tener mínimo 3 carácteres",
+                                      bgColor: toast_color);
+                                }
+                              }
+                              else{
+                                wrongName= false;
+                                setState(() {});
+                              }
                               if(pwd == pwd2){
                                 correct = true;
                                 setState(() {});
@@ -225,15 +243,6 @@ class RegisterW extends State<Register> {
                                 correct = false;
                                 setState(() {});
                                 toast("Las contraseñas no coinciden", bgColor: toast_color);
-                              }
-                              if(user.contains('/')) {
-                                wrongName= true;
-                                setState(() {});
-                                toast("El carácter '/' no está permitido", bgColor: toast_color);
-                              }
-                              else {
-                                wrongName= false;
-                                setState(() {});
                               }
                               if(mail.validateEmail()){
                                 correctMail=true;
@@ -245,7 +254,7 @@ class RegisterW extends State<Register> {
                                 toast("Introduce un email válido", bgColor: toast_color);
                               }
                               if(user.isNotEmpty & name.isNotEmpty & pwd.isNotEmpty & pwd2.isNotEmpty  & mail.isNotEmpty & city.isNotEmpty){
-                                if(correct & correctMail){
+                                if(correct & correctMail & (user.length >= 3)){
                                   //enviar la info a la base de datos
                                   registerUser(user, name, mail, city, pwd)
                                        .then((answer){
