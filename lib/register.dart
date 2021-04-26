@@ -45,6 +45,7 @@ class RegisterW extends State<Register> {
       Uri.https('api.socialcraft.club', 'register'),
       body: map,
     );
+    print(response.statusCode);
     if (response.statusCode == 200) {
       return Resp.fromJson(jsonDecode(response.body));
     } else {

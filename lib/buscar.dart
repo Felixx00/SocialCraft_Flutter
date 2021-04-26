@@ -59,7 +59,7 @@ import 'lista_categorias.dart';
     "follow": false
   }
 ];*/
-
+var myself;
 List categories= [];
 List userss = [
 {
@@ -93,9 +93,15 @@ class SearchW extends State<Search> {
   init() async {
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
-    await listCategories().then((response) async {
+    listCategories().then((response) async {
       categories = response.list;
     });
+    Myself().then((response) async {
+      myself = response.data['username'];
+      setState(() {});
+      print(myself);
+    });
+
   }
 
   @override
@@ -103,7 +109,22 @@ class SearchW extends State<Search> {
     if (mounted) super.setState(fn);
   }
 
-
+  Future<Resp> Myself() async {
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', 'users/getMyProfile'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
   Future<Resp> listSearchUser(String busqueda) async {
     var map = new Map<String, dynamic>();
     map['username'] = busqueda;
@@ -175,7 +196,42 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
-
+  Future<Resp> followCategory(String idCat) async {
+    var map = new Map<String, dynamic>();
+    map['catId'] = idCat;
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', '/tutorials/followCategory'),
+      body: map,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+  Future<Resp> unfollowCategory(String idCat) async {
+    var map = new Map<String, dynamic>();
+    map['catId'] = idCat;
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', '/tutorials/unfollowCategory'),
+      body:map,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
   String busqueda = "";
   bool one = true;
   var users=[];
@@ -188,15 +244,7 @@ class SearchW extends State<Search> {
   bool unfollow= true;
   @override
   Widget build(BuildContext context) {
-    /*Widget getCategories(){
-      List categoriaItems = [
-        "Covid-19",
-        "Origami",
-        "Cermaica",
-        "Reposteria",
-        "Sacar a Canela a paseo",
-      ];
-      }*/
+
       return Scaffold(
         body: DefaultTabController(
             length: 3,
@@ -310,7 +358,16 @@ class SearchW extends State<Search> {
                                                     busqueda.length < 3? socialcraft_logo: rutaFoto)),
                                           ),
                                         ).paddingOnly(top: 5, bottom: 5),
-                                        trailing: IconButton(
+
+                                        trailing:
+
+                                        (myself == users[index]["username"])
+                                          ? IconButton(icon:Icon(Icons.more_vert),
+                                            onPressed: () {
+                                              Navigator.pushNamed(context, "settings");
+                                            },
+                                          )
+                                            :IconButton(
                                           icon: busqueda.length <3? Icon(Icons.person_add, color: white,): Icon(users[index]["followed"]
                                               ? Icons.person_add_disabled
                                               : Icons.person_add,
@@ -347,7 +404,7 @@ class SearchW extends State<Search> {
                   Icon(Icons.directions_transit, color: azul_logo),
                   SingleChildScrollView(
                       child:Column(
-                            /*children: <Widget>[
+                            children: <Widget>[
                               SingleChildScrollView(
                                 scrollDirection: Axis.vertical,
                                 child: Column(children: List.generate(categories.length, (index){
@@ -368,17 +425,27 @@ class SearchW extends State<Search> {
                                               child: Text(categories[index]["nombre"][0]),
                                             ),
                                             trailing: ElevatedButton.icon(
-                                              label: Text(categories[index]["followed"] ? 'Follow': 'Unfollow'),
+                                              label: Text(categories[index]["seguido"] ? 'Follow': 'Unfollow'),
                                               style: ElevatedButton.styleFrom(
                                                 minimumSize: Size(50,40),
-                                                primary: categories[index]["followed"] ? Color.fromRGBO(68,102,216,1.0) : Colors.redAccent[200],
+                                                primary: categories[index]["seguido"] ? Color.fromRGBO(68,102,216,1.0) : Colors.redAccent[200],
                                                 onPrimary: Colors.white,
                                                 onSurface: Colors.grey,
                                               ),
-                                              icon: Icon(categories[index]["followed"] ? Icons.person_add : Icons.person_add_disabled, size: 18),
+                                              icon: Icon(categories[index]["seguido"] ? Icons.person_add : Icons.person_add_disabled, size: 18),
                                               onPressed: () {
-                                                categories[index]["followed"] =!categories[index]["followed"];
-                                                setState((){});
+                                                if(categories[index]["seguido"] == false) {
+                                                  followCategory(categories[index]["id"]).then((response) async {
+                                                    categories[index]["seguido"] = !categories[index]["seguido"];
+                                                    setState(() {});
+                                                  });
+                                                }
+                                                else {
+                                                  unfollowCategory(categories[index]["id"]).then((response) async {
+                                                    categories[index]["seguido"] = !categories[index]["seguido"];
+                                                    setState(() {});
+                                                  });
+                                                }
                                               },
                                             )
                                         ),
@@ -389,7 +456,7 @@ class SearchW extends State<Search> {
                               )
 
                           )
-                        ]*/
+                        ]
                       )
                   )]
               )
