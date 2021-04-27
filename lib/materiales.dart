@@ -30,6 +30,7 @@ class MaterialesState extends State<Materiales> {
     if (mounted) super.setState(fn);
   }
 
+  final controller = TextEditingController(text: "");
 /*
   void addItemToList() {
     setState(() {
@@ -68,6 +69,7 @@ class MaterialesState extends State<Materiales> {
                     width: 270,
                     decoration: BoxDecoration(color: Colors.grey[100]),
                     child: TextFormField(
+                      controller: controller,
                       cursorColor: azul_logo,
                       autofocus: false,
                       textInputAction: TextInputAction.next,
@@ -92,6 +94,7 @@ class MaterialesState extends State<Materiales> {
                       onPressed: () {
                         if (a.length < 15 && material.length > 0) {
                           if (!a.contains(material)) {
+                            controller.clear();
                             b += material + " ";
                             a.insert(0, material);
                             setState(() {});
