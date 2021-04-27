@@ -59,7 +59,7 @@ class PostState extends State<Post> {
       duracion = respuesta.data['duracion'];
       usuario = respuesta.data['usuario'];
       rate = respuesta.data['rate'];
-      //categoria = respuesta.data['categorias'];
+      categoria = respuesta.data['catName'];
       pasos = respuesta.data['pasos'];
       comments = respuesta.data['comments'];
       if (dificultad == "1") dificultad = "Fácil";

@@ -60,13 +60,16 @@ class PostDesc extends StatelessWidget {
                 Row(children: [
                   Icon(Icons.av_timer, color: azul_logo, size: 25),
                   16.width,
-                  Text("Duración: " + duracion, style: secondaryTextStyle())
+                  Text("Duración: " + duracion + "min",
+                      style: secondaryTextStyle())
                 ]),
                 16.height,
                 Row(children: [
                   Icon(Icons.brush_rounded, color: azul_logo, size: 25),
                   16.width,
-                  Text("Materiales: " + materiales, style: secondaryTextStyle())
+                  Text("Materiales: " + materiales,
+                      style: TextStyle(fontSize: 14)),
+                  //style: secondaryTextStyle()),
                 ]),
               ],
             ),
