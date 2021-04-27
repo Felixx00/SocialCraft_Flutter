@@ -127,7 +127,6 @@ class UploadState extends State<Upload> {
                   ),
                   onChanged: (newValue) {
                     titulo = newValue;
-                    correct = true;
                     setState(() {});
                   },
                 ).paddingLeft(10),
