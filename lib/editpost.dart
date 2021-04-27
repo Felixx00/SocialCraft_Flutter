@@ -390,12 +390,12 @@ List<S2Choice<int>> frameworks = [
 
 String value4 = '';
 List<S2Choice<String>> tiempos = [
-  S2Choice<String>(value: '-10', title: '<10 min.'),
+  S2Choice<String>(value: '<10', title: '<10 min.'),
   S2Choice<String>(value: '10', title: '10 min.'),
   S2Choice<String>(value: '20', title: '20 min.'),
   S2Choice<String>(value: '30', title: '30 min.'),
   S2Choice<String>(value: '40', title: '40 min.'),
   S2Choice<String>(value: '50', title: '50 min.'),
   S2Choice<String>(value: '60', title: '60 min.'),
-  S2Choice<String>(value: '+60', title: '>60 min.'),
+  S2Choice<String>(value: '>60', title: '>60 min.'),
 ];
