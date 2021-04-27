@@ -36,7 +36,7 @@ class PostPasos extends StatelessWidget {
           children: List.generate(
             pasos.length,
             (int index) {
-              final pasoText = pasos[index].text;
+              final pasoText = pasos[index]['Texto'];
               return ListTile(
                 leading: Text("${index + 1}",
                     style: TextStyle(
