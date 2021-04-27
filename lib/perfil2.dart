@@ -28,11 +28,11 @@ String user = "";
 String userName = "";
 String about = "";
 String token = "";
-int posts = 0;
+String posts = '0';
 String nPosts = "";
-int follow = 0;
+String follow = '0';
 String nFollow = "";
-int followers = 0;
+String followers = '0';
 String nFollowers = "";
 bool unfollow= true;
 var linkfoto = "";
@@ -56,6 +56,9 @@ class Perfil2State extends State<Perfil2> {
         about = respuesta.data['about'];
       }
       userName = respuesta.data['username'];
+      follow= respuesta.data['seguidos'];
+      followers = respuesta.data['seguidores'];
+      unfollow = respuesta.data['followed'];
 
       await Firebase.initializeApp();
       await getImage();
@@ -203,7 +206,7 @@ class Perfil2State extends State<Perfil2> {
               Column(
                 children: [
                   Text(
-                    nFollow= follow.toString(),
+                    nFollow= followers,
                     style: boldTextStyle(size: 16, color: black),
                     semanticsLabel: "nFollow",
                   ).paddingLeft(92),
@@ -214,7 +217,7 @@ class Perfil2State extends State<Perfil2> {
               Column(
                 children: [
                   Text(
-                    nFollowers= followers.toString(),
+                    nFollowers= follow,
                     style: boldTextStyle(size: 16, color: black),
                     semanticsLabel: "nFollowers",
                   ).paddingRight(92),
@@ -224,27 +227,27 @@ class Perfil2State extends State<Perfil2> {
           ],
               ),
                 ElevatedButton.icon(
-                  label: Text(unfollow ? 'Seguir Perfil' : 'Dejar de seguir'),
+                  label: Text(unfollow ? 'Dejar de seguir': 'Seguir Perfil'),
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(170, 40),
                     //primary: Colors.lightBlueAccent[200],
-                    primary: unfollow? Color.fromRGBO(68, 102, 216, 1.0) : Colors.redAccent[200],
+                    primary: unfollow?  Colors.redAccent[200] : Color.fromRGBO(68, 102, 216, 1.0),
                     onPrimary: Colors.white,
                     onSurface: Colors.grey,
                   ),
-                  icon: Icon(unfollow? Icons.person_add : Icons.person_add_disabled, size: 18),
+                  icon: Icon(unfollow? Icons.person_add_disabled: Icons.person_add , size: 18) ,
                   onPressed: () {
                     unfollow = !unfollow;
                     if(unfollow){
-                      unfollowUser(widget.idUsuario).then((response) async {
-                        follow = follow - 1;
+                      followUser(widget.idUsuario).then((response) async {
                         setState(() {});
+                        init();
                       });
                     }
                     else{
-                      followUser(widget.idUsuario).then((response) async {
-                        follow = follow + 1;
+                      unfollowUser(widget.idUsuario).then((response) async {
                         setState(() {});
+                        init();
                       });
                     }
                     setState(() {});

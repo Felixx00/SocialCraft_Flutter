@@ -45,6 +45,7 @@ List userss = [
   {
     "id" : 0,
     "nombre" : "",
+    "username" : "",
     "rutaFoto": socialcraft_logo,
     "followed": false
   },
@@ -79,7 +80,12 @@ class SearchW extends State<Search> {
   void setState(fn) {
     if (mounted) super.setState(fn);
   }
-  /*Future getImage(String userName) async {
+  Imagenes(String userName){
+    if(users != null || userName != ""){
+      getImage(userName);
+    }
+  }
+  Future getImage(String userName) async {
     var r = FirebaseStorage.instance.ref(userName + '/image');
     try {
       await r.getDownloadURL();
@@ -91,7 +97,7 @@ class SearchW extends State<Search> {
           .child('Usuario_Default/default-user-image.png');
       linkfoto = (await ref.getDownloadURL()).toString();
     }
-  }*/
+  }
 
   Future<Resp> Myself() async {
     final response = await http.get(
@@ -109,6 +115,7 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
+
   Future<Resp> listSearchUser(String busqueda) async {
     var map = new Map<String, dynamic>();
     map['username'] = busqueda;
@@ -129,6 +136,7 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
+
   Future<Resp> listCategories() async {
     final response = await http.get(
       Uri.https('api.socialcraft.club', '/tutorials/getCategories'),
@@ -144,6 +152,7 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
+
   Future<Resp> followUser(String id) async {
     var map = new Map<String, dynamic>();
     map['userId'] = id;
@@ -162,7 +171,8 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
-    Future<Resp> unfollowUser(String id) async {
+
+  Future<Resp> unfollowUser(String id) async {
       var map = new Map<String, dynamic>();
       map['userId'] = id;
       final response = await http.post(
@@ -180,6 +190,7 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
+
   Future<Resp> followCategory(String idCat) async {
     var map = new Map<String, dynamic>();
     map['catId'] = idCat;
@@ -198,6 +209,7 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
+
   Future<Resp> unfollowCategory(String idCat) async {
     var map = new Map<String, dynamic>();
     map['catId'] = idCat;
@@ -219,7 +231,6 @@ class SearchW extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-
       return Scaffold(
         body: DefaultTabController(
             length: 3,
@@ -243,25 +254,19 @@ class SearchW extends State<Search> {
                           hintText: "Buscar",
                         ),
                         onChanged: (texto){
-                          //print("el usuario es: ");
-                          //print(users);
                           busqueda = texto;
                           if(busqueda.length >= 3 ){
-                            //users= userss;
                             listSearchUser(busqueda).then((response) async {
                              usersL = response.list;
-                             //userss.addAll(usersL);
                              users = usersL;
                              setState(() {});
                              print(users.length);
                               if(response.list == null || users.length == null){
-                                //users = userss;
                               }
-                              //print(users);
                             }
                            );
                           }
-                          else if (busqueda.length < 3 /*|| users.length == null*/)
+                          else if (busqueda.length < 3)
                             users= userss;
                           print(users.length);
                           setState(() {});
@@ -300,6 +305,7 @@ class SearchW extends State<Search> {
                             SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Column(children: List.generate(users.length,(index) {
+                                //if (users.length != null || users[index]["username"] != null) Imagenes(users[index]["username"]);
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 1,
                                       bottom: 1),
@@ -313,26 +319,32 @@ class SearchW extends State<Search> {
                                                 style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                                               ),
                                               onPressed: () {
-                                                _idUser = users[index]["id"];
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) => Perfil2(_idUser),
-                                                  ),
-                                                );
+                                                if(myself == users[index]["username"]){
+                                                  Navigator.pushNamed(context, "perfil");
+                                                }
+                                                else{
+                                                  _idUser = users[index]["id"];
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => Perfil2(_idUser),
+                                                    ),
+                                                  ).then((value) => setState(() {}));
+
+                                                }
+
                                               }
                                           ),
                                         leading: Container(
                                           height: 50.0,
                                           width: 50.0,
-
                                           decoration: new BoxDecoration(
                                             shape: BoxShape.circle,
-                                            //getImage(users[index]["username"]),
+                                            //Imagenes(users[index]["username"]),
                                             image: new DecorationImage(
                                                 fit: BoxFit.fill,
                                                 image: new NetworkImage(
-                                                    busqueda.length < 3? socialcraft_logo: rutaFoto)),
+                                                    rutaFoto)),
                                           ),
                                         ).paddingOnly(top: 5, bottom: 5),
 
@@ -340,7 +352,7 @@ class SearchW extends State<Search> {
                                         (myself == users[index]["username"])
                                           ? IconButton(icon:Icon(Icons.more_vert),
                                             onPressed: () {
-                                              Navigator.pushNamed(context, "settings");
+                                              Navigator.pushNamed(context, "editar");
                                             },
                                           )
                                             :IconButton(
