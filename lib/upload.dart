@@ -148,7 +148,6 @@ class UploadState extends State<Upload> {
                   ),
                   onChanged: (newValue) {
                     desc = newValue;
-                    correct = true;
                     setState(() {});
                   },
                 ).paddingLeft(10),
