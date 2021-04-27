@@ -34,16 +34,16 @@ class PostPasos extends StatelessWidget {
         SizedBox(height: 15),
         Column(
           children: List.generate(
-            2,
+            pasos.length,
             (int index) {
-              final pasoText = "holaaa";
+              final pasoText = pasos[index].text;
               return ListTile(
                 leading: Text("${index + 1}",
                     style: TextStyle(
                         fontSize: 25,
                         color: azul_logo,
                         fontWeight: FontWeight.bold)),
-                title: Text(pasoText),
+                title: Text(pasoText, style: TextStyle(fontSize: 16)),
               );
             },
           ),

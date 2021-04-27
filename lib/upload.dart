@@ -26,7 +26,12 @@ class UploadState extends State<Upload> {
     init();
   }
 
-  init() async {}
+  init() async {
+    value1 = "";
+    value2 = "";
+    result = "";
+    value4 = "";
+  }
 
   @override
   void setState(fn) {

@@ -40,6 +40,10 @@ class EditPostState extends State<EditPost> {
     final storage = new FlutterSecureStorage();
     token = await storage.read(key: 'jwt');
     tutId = widget.idPost;
+    value1 = "";
+    value2 = "";
+    result = "";
+    value4 = "";
   }
 
   @override

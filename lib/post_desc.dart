@@ -39,37 +39,48 @@ class PostDesc extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(children: [
-                  Icon(Icons.star_outlined, color: azul_logo, size: 25),
+                  Icon(Icons.star_outlined, color: azul_logo, size: 30),
                   16.width,
-                  Text("Valoración: " + rate + "/5",
-                      style: secondaryTextStyle())
+                  Text(
+                    "Valoración: " + rate + "/5",
+                    style: TextStyle(fontSize: 16),
+                  )
                 ]),
                 16.height,
                 Row(children: [
-                  Icon(Icons.bar_chart_rounded, color: azul_logo, size: 25),
+                  Icon(Icons.bar_chart_rounded, color: azul_logo, size: 30),
                   16.width,
-                  Text("Dificultad: " + dificultad, style: secondaryTextStyle())
+                  Text(
+                    "Dificultad: " + dificultad,
+                    style: TextStyle(fontSize: 16),
+                  )
                 ]),
                 16.height,
                 Row(children: [
-                  Icon(Icons.grid_view, color: azul_logo, size: 25),
+                  Icon(Icons.grid_view, color: azul_logo, size: 30),
                   16.width,
-                  Text("Categoria: " + categoria, style: secondaryTextStyle())
+                  Text(
+                    "Categoria: " + categoria,
+                    style: TextStyle(fontSize: 16),
+                  )
                 ]),
                 16.height,
                 Row(children: [
-                  Icon(Icons.av_timer, color: azul_logo, size: 25),
+                  Icon(Icons.av_timer, color: azul_logo, size: 30),
                   16.width,
-                  Text("Duración: " + duracion + "min",
-                      style: secondaryTextStyle())
+                  Text(
+                    "Duración: " + duracion + "min",
+                    style: TextStyle(fontSize: 16),
+                  )
                 ]),
                 16.height,
                 Row(children: [
-                  Icon(Icons.brush_rounded, color: azul_logo, size: 25),
+                  Icon(Icons.brush_rounded, color: azul_logo, size: 30),
                   16.width,
-                  Text("Materiales: " + materiales,
-                      style: TextStyle(fontSize: 14)),
-                  //style: secondaryTextStyle()),
+                  Text(
+                    "Materiales: " + materiales,
+                    style: TextStyle(fontSize: 16),
+                  )
                 ]),
               ],
             ),
