@@ -80,6 +80,24 @@ class SubirPasosState extends State<SubirPasos> {
     }
   }
 
+  void subirPasos(int id) async {
+    var map3 = new Map<String, dynamic>();
+    map3['IdTutorial'] = id.toString();
+    map3['Text'] = descripciones[0];
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', 'tutorials/uploadStep'),
+      body: map3,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
   void subirfoto(int x) async {
     var foto = objeto_foto;
     Navigator.pop(context);
@@ -128,6 +146,7 @@ class SubirPasosState extends State<SubirPasos> {
                   } else {
                     print(respuesta.success);
                     print(respuesta.id);
+                    subirPasos(respuesta.id);
                     subirfoto(respuesta.id);
                     Navigator.pushNamedAndRemoveUntil(
                         context, 'barra', (Route<dynamic> route) => false);
@@ -171,6 +190,7 @@ class SubirPasosState extends State<SubirPasos> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          print(descripciones);
           if (numb.length < 10) {
             controller.text = "";
             controller2.text = "";
@@ -193,6 +213,7 @@ class SubirPasosState extends State<SubirPasos> {
   Widget header() {
     return Column(
       children: [
+        /*
         Container(
           decoration: BoxDecoration(color: Colors.grey[300]),
           child: TextFormField(
@@ -210,14 +231,14 @@ class SubirPasosState extends State<SubirPasos> {
           ).paddingLeft(10),
         )
             .cornerRadiusWithClipRRect(12)
-            .paddingOnly(top: 30, left: 30, right: 30),
+            .paddingOnly(top: 30, left: 30, right: 30),*/
         Container(
           decoration: BoxDecoration(color: Colors.grey[300]),
           child: TextFormField(
             controller: controller2,
             keyboardType: TextInputType.name,
             cursorColor: azul_logo,
-            maxLines: 6,
+            maxLines: 10,
             decoration: InputDecoration(
               //icon: Icon(Icons.search, color: azul_logo),
               border: InputBorder.none,
