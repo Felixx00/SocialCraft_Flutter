@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,6 +37,7 @@ class EditPostState extends State<EditPost> {
 
   String token = '';
   String tutId = '';
+  bool nova_foto = false;
 
   init() async {
     final storage = new FlutterSecureStorage();
@@ -106,6 +109,23 @@ class EditPostState extends State<EditPost> {
     }
   }
 
+  void cambiofoto() async {
+    if (foto != null) {
+      final _firebaseStorage = FirebaseStorage.instance;
+      var file = File(foto.path);
+
+      print('aaaaa');
+      var snapshot = await _firebaseStorage
+          .ref()
+          .child('Posts/' + tutId.toString() + '/principal')
+          .putFile(file);
+
+      //print(foto.path);
+    } else {
+      print('No image selected.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -142,6 +162,7 @@ class EditPostState extends State<EditPost> {
                           print(foto);
                           if (foto != null) {
                             correct = true;
+                            nova_foto = true;
                           }
                           setState(() {});
                         },
@@ -332,10 +353,14 @@ class EditPostState extends State<EditPost> {
                   materiales = result;
                   duracion = value4;
                   print(materiales);
-                  cambios().then((respuesta) {
+                  cambios().then((respuesta) async {
                     if (respuesta.success == false) {
                       print("Algun Parametro Incorrecto");
                     } else {
+                      if (nova_foto) {
+                        nova_foto = false;
+                        cambiofoto();
+                      }
                       finish(context);
                       Navigator.pushNamed(context, 'post');
                     }
