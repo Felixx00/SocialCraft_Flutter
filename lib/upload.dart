@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/materiales.dart';
+import 'dart:convert';
+import 'package:socialcraft/resp.dart';
 import 'package:socialcraft/subir_pasos.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/fonts.dart';
@@ -11,6 +13,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:smart_select/smart_select.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Upload extends StatefulWidget {
   static String tag = '/upload';
@@ -31,6 +35,24 @@ class UploadState extends State<Upload> {
     value2 = "";
     result = "";
     value4 = "";
+    final storage2 = new FlutterSecureStorage();
+    token = await storage2.read(key: 'jwt');
+    await getcategorias().then((respuesta) async {
+      if (respuesta.success == false) {
+        toast("Datos incorrectos", bgColor: toast_color);
+      } else {
+        print(respuesta.list.length);
+        for (int i = 0; i < respuesta.list.length; ++i) {
+          categorias.add(
+            S2Choice<String>(
+                value: respuesta.list[i]['nombre'],
+                title: respuesta.list[i]['nombre']),
+          );
+        }
+        //print(respuesta.data['token']);
+
+      }
+    });
   }
 
   @override
@@ -38,6 +60,22 @@ class UploadState extends State<Upload> {
     if (mounted) super.setState(fn);
   }
 
+  Future<Resp> getcategorias() async {
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', 'tutorials/getCategories'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
+  String token = "";
   String result = "placeholder";
   bool correct = false;
   String titulo = "";
@@ -320,7 +358,9 @@ List<S2Choice<String>> options = [
 ];
 
 String value2 = 'Indeterminada';
+
 List<S2Choice<String>> categorias = [
+  /*
   S2Choice<String>(value: 'Reciclable', title: 'Reciclable'),
   S2Choice<String>(value: 'Papel', title: 'Papel'),
   S2Choice<String>(value: 'Porcelana', title: 'Porcelana'),
@@ -328,7 +368,7 @@ List<S2Choice<String>> categorias = [
   S2Choice<String>(value: 'Jabones', title: 'Jabones'),
   S2Choice<String>(value: 'Lana', title: 'Lana'),
   S2Choice<String>(value: 'Madera', title: 'Madera'),
-  S2Choice<String>(value: 'Foam', title: 'Foam'),
+  S2Choice<String>(value: 'Foam', title: 'Foam'),*/
 ];
 
 List<int> value3 = [2];
