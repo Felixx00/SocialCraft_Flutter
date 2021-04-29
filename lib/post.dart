@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/post_comentarios.dart';
 import 'editpost.dart';
 import 'post_pasos.dart';
 import 'package:socialcraft/utils/widgets.dart';
@@ -73,11 +74,6 @@ class PostState extends State<Post> {
   }
 
   Future getImage() async {
-    //FirebaseStorage storage = FirebaseStorage.instance;
-    /*var ref = FirebaseStorage.instance
-        .ref()
-        .child('Usuario_Default/default-user-image.png');*/
-
     var r = FirebaseStorage.instance.ref("Posts/" + tutId + '/principal');
     try {
       await r.getDownloadURL();
@@ -90,11 +86,7 @@ class PostState extends State<Post> {
           .child('Usuario_Default/default-user-image.png');
       linkfoto = (await ref.getDownloadURL()).toString();
     }
-
-    //link_foto = ref;
-    //linkfoto = (await ref.getDownloadURL()).toString();
     print(linkfoto);
-    //var url = await ref.getDownloadURL();
   }
 
   @override
@@ -141,7 +133,7 @@ class PostState extends State<Post> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 2,
+        length: 3,
         child: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
@@ -167,11 +159,15 @@ class PostState extends State<Post> {
                     Tab(
                         child: Text("Descripción",
                             style: GoogleFonts.comfortaa(
-                                fontSize: 20, fontWeight: FontWeight.bold))),
+                                fontSize: 15, fontWeight: FontWeight.bold))),
                     Tab(
                         child: Text("Pasos",
                             style: GoogleFonts.comfortaa(
-                                fontSize: 20, fontWeight: FontWeight.bold))),
+                                fontSize: 15, fontWeight: FontWeight.bold))),
+                    Tab(
+                        child: Text("Comentarios",
+                            style: GoogleFonts.comfortaa(
+                                fontSize: 15, fontWeight: FontWeight.bold))),
                   ],
                 ),
                 actions: <Widget>[
@@ -200,7 +196,8 @@ class PostState extends State<Post> {
           body: TabBarView(children: <Widget>[
             PostDesc(titulo, descripcion, rate, dificultad, categoria,
                 materiales, duracion),
-            PostPasos(titulo, descripcion, pasos)
+            PostPasos(titulo, descripcion, pasos),
+            PostComentarios(titulo)
           ]),
         ),
       ),
