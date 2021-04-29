@@ -77,10 +77,13 @@ class PostDesc extends StatelessWidget {
                 Row(children: [
                   Icon(Icons.brush_rounded, color: azul_logo, size: 30),
                   16.width,
-                  Text(
-                    "Materiales: " + materiales,
-                    style: TextStyle(fontSize: 16),
-                  )
+                  Container(
+                    width: MediaQuery.of(context).size.width / 1.5,
+                    child: Text(
+                      "Materiales: " + materiales,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
                 ]),
               ],
             ),
