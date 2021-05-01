@@ -18,6 +18,7 @@ import 'upload.dart';
 import 'materiales.dart';
 import 'subir_pasos.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'subir_comentario.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: <String, WidgetBuilder>{
+          'subir_comentario': (BuildContext context) => SubirComentario(),
           'login': (BuildContext context) => Login(),
           'register': (BuildContext context) => Register(),
           'barra': (BuildContext context) => barra(),
