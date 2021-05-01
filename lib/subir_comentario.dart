@@ -13,9 +13,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 class SubirComentario extends StatefulWidget {
   @override
   SubirComentarioState createState() => SubirComentarioState();
+
 }
 
 class SubirComentarioState extends State<SubirComentario> {
+  String comentario_text = "";
+  double points = 0;
   @override
   void initState() {
     super.initState();
@@ -63,7 +66,8 @@ class SubirComentarioState extends State<SubirComentario> {
               Icons.add_comment
             ),
             onPressed: () async{
-
+              print(points);
+              print(comentario_text);
               //fer el push comments
               //canviar el navigator perq torni al post_comments
               Navigator.pushNamedAndRemoveUntil(
@@ -95,7 +99,8 @@ class SubirComentarioState extends State<SubirComentario> {
                 color: Colors.amber,
               ),
               onRatingUpdate: (rating){
-                print(rating);
+                points = rating;
+                //print(rating);
               }
             ),
             Text('Comentario:',style: GoogleFonts.comfortaa(
@@ -103,9 +108,28 @@ class SubirComentarioState extends State<SubirComentario> {
                   color: azul_logo,
                   fontSize: 20,
                   //fontWeight: FontWeight.w800
-                )
-            )
+                ))
             ),
+            Container(
+              decoration: BoxDecoration(color: Colors.grey[100]),
+              child: TextFormField(
+                cursorColor: azul_logo,
+                autofocus: false,
+                textInputAction: TextInputAction.done,
+                style: secondaryTextStyle(color: Colors.black),
+                onChanged: (newValue) {
+                  comentario_text = newValue;
+                },
+                keyboardType: TextInputType.text,
+                maxLines: 8,
+                //maxLength: 1000,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Exprese su opinión aquí",
+                  hintStyle: secondaryTextStyle(size: 16),
+                ),
+              ).paddingOnly(left: 8, top:2)
+            ).cornerRadiusWithClipRRect(12),
           ]
         )
       )
