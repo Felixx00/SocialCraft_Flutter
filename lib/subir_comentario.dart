@@ -5,8 +5,10 @@ import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/resp.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class SubirComentario extends StatefulWidget {
   @override
@@ -14,12 +16,6 @@ class SubirComentario extends StatefulWidget {
 }
 
 class SubirComentarioState extends State<SubirComentario> {
-  bool showPassword = false;
-  FocusNode emailNode = FocusNode();
-  FocusNode passwordNode = FocusNode();
-  String user = "";
-  String pass = "";
-  bool correct = true;
   @override
   void initState() {
     super.initState();
@@ -33,51 +29,86 @@ class SubirComentarioState extends State<SubirComentario> {
     if (mounted) super.setState(fn);
   }
 
-  Future<Resp> loginUser(String user, String pass) async {
-    var map = new Map<String, dynamic>();
-    map['user'] = user;
-    map['pass'] = pass;
-    final response = await http.post(
-      Uri.https('api.socialcraft.club', 'login'),
-      body: map,
-    );
-    if (response.statusCode == 200) {
-      return Resp.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load response');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                Container(
-                  child: Column(
-                    children: [
-                      Container(
-                        child: Image.asset(socialcraft_logo,
-                            width: 100, height: 100),
-                      ).cornerRadiusWithClipRRect(16).paddingTop(50),
-                      Container(
-                        child: Image.asset(socialcraft_logo_letras,
-                            width: 300, height: 100),
-                      ).cornerRadiusWithClipRRect(16).paddingTop(1),
-                      Text("Próximamente",
-                          style: TextStyle(color: azul_logo, fontSize: 25))
-                    ],
-                  ),
-                ),
-              ],
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        leading: Icon(Icons.arrow_back).onTap((){
+          finish(context);
+      }),
+        title: Text("Añadir Comentario",
+        style: GoogleFonts.comfortaa(
+          textStyle: TextStyle(
+            fontSize: 15,
+            color: Colors.white,
+            fontWeight: FontWeight.w800,
+          )
+        )),
+        actions: <Widget>[
+          OutlinedButton.icon(
+            label:
+                Text('Subir', style: GoogleFonts.comfortaa(
+                  textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w800
+                  )
+                )
           ),
-        ).paddingOnly(top: 200, left: 16, right: 16),
+            style: OutlinedButton.styleFrom(
+              primary: Colors.white,
+              side:BorderSide(color: Colors.white, width: 0.5),
+            ),
+            icon: const Icon(
+              Icons.add_comment
+            ),
+            onPressed: () async{
+
+              //fer el push comments
+              //canviar el navigator perq torni al post_comments
+              Navigator.pushNamedAndRemoveUntil(
+                  context, 'barra', (Route<dynamic> route) => false);
+            }
+          )
+
+        ],
+        backgroundColor: azul_logo,
       ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Text('Valoración:',style: GoogleFonts.comfortaa(
+                textStyle: TextStyle(
+                    color: azul_logo,
+                    fontSize: 20,
+                    //fontWeight: FontWeight.w800
+                )
+            )
+            ),
+            RatingBar.builder(
+              itemCount: 5,
+              initialRating:0,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemBuilder: (context, _)=> Icon(
+                Icons.star,
+                color: Colors.amber,
+              ),
+              onRatingUpdate: (rating){
+                print(rating);
+              }
+            ),
+            Text('Comentario:',style: GoogleFonts.comfortaa(
+                textStyle: TextStyle(
+                  color: azul_logo,
+                  fontSize: 20,
+                  //fontWeight: FontWeight.w800
+                )
+            )
+            ),
+          ]
+        )
+      )
     );
   }
 }
