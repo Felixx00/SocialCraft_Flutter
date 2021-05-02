@@ -39,7 +39,7 @@ class UploadState extends State<Upload> {
     token = await storage2.read(key: 'jwt');
     await getcategorias().then((respuesta) async {
       if (respuesta.success == false) {
-        toast("Datos incorrectos", bgColor: toast_color);
+        toast("Error al cargar", bgColor: toast_color);
       } else {
         print(respuesta.list.length);
         for (int i = 0; i < respuesta.list.length; ++i) {

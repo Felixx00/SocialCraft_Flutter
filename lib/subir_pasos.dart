@@ -80,10 +80,10 @@ class SubirPasosState extends State<SubirPasos> {
     }
   }
 
-  void subirPasos(int id) async {
+  void subirPasos(int id, int numeropaso) async {
     var map3 = new Map<String, dynamic>();
     map3['IdTutorial'] = id.toString();
-    map3['Text'] = descripciones[0];
+    map3['Text'] = descripciones[numeropaso];
     final response = await http.post(
       Uri.https('api.socialcraft.club', 'tutorials/uploadStep'),
       body: map3,
@@ -146,7 +146,9 @@ class SubirPasosState extends State<SubirPasos> {
                   } else {
                     print(respuesta.success);
                     print(respuesta.id);
-                    subirPasos(respuesta.id);
+                    subirPasos(respuesta.id, 0);
+                    subirPasos(respuesta.id, 1);
+                    subirPasos(respuesta.id, 2);
                     subirfoto(respuesta.id);
                     Navigator.pushNamedAndRemoveUntil(
                         context, 'barra', (Route<dynamic> route) => false);
