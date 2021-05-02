@@ -95,7 +95,11 @@ class MaterialesState extends State<Materiales> {
                         if (a.length < 15 && material.length > 0) {
                           if (!a.contains(material)) {
                             controller.clear();
-                            b += material + " ";
+                            if (b == "") {
+                              b += material;
+                            } else {
+                              b += ", " + material;
+                            }
                             a.insert(0, material);
                             setState(() {});
                           }
