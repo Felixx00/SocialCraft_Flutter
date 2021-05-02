@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/images.dart';
@@ -19,6 +21,59 @@ class SubirComentario extends StatefulWidget {
 class SubirComentarioState extends State<SubirComentario> {
   String comentario_text = "";
   double points = 0;
+  File imageFile;
+
+  _openGallery(BuildContext context) async{
+    final picture  = await ImagePicker().getImage(source: ImageSource.gallery);
+    setState((){
+      if (picture != null){
+        imageFile = File(picture.path);
+      }
+      else {
+      }
+    });
+    Navigator.of(context).pop();
+  }
+
+  _openCamara(BuildContext context)async{
+    final picture  = await ImagePicker().getImage(source: ImageSource.camera);
+    setState((){
+      if (picture != null){
+        imageFile = File(picture.path);
+      }
+      else {
+      }
+    });
+    Navigator.of(context).pop();
+  }
+  Future<void> _showChoiceDialog(BuildContext context) {
+    return showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text("Selecionar",),
+        content: SingleChildScrollView(
+          child:ListBody(
+            children: <Widget>[
+              GestureDetector(
+                child: Text("Galeria"),
+                onTap: (){
+                  _openGallery(context);
+                }
+              ),
+              Padding(padding: EdgeInsets.all(8.0)),
+              GestureDetector(
+                  child: Text("Cámara"),
+                  onTap: (){
+                    _openCamara(context);
+                  }
+              ),
+            ]
+          )
+
+        ),
+      );
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -68,6 +123,7 @@ class SubirComentarioState extends State<SubirComentario> {
             onPressed: () async{
               print(points);
               print(comentario_text);
+              print(imageFile);
               //fer el push comments
               //canviar el navigator perq torni al post_comments
               Navigator.pushNamedAndRemoveUntil(
@@ -78,8 +134,9 @@ class SubirComentarioState extends State<SubirComentario> {
         ],
         backgroundColor: azul_logo,
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text('Valoración:',style: GoogleFonts.comfortaa(
                 textStyle: TextStyle(
@@ -130,6 +187,13 @@ class SubirComentarioState extends State<SubirComentario> {
                 ),
               ).paddingOnly(left: 8, top:2)
             ).cornerRadiusWithClipRRect(12),
+            imageFile == null ? Text('No image selected.'): Image.file(imageFile),
+            RaisedButton(
+              onPressed:(){
+                _showChoiceDialog(context);
+              },child:Text("Select Image"),
+            )
+
           ]
         )
       )
