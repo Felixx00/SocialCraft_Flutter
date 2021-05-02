@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/fonts.dart';
+import 'package:socialcraft/utils/widgets.dart';
+//import 'package:flutter/subir_comentario.dart';
 
 class PostComentarios extends StatelessWidget {
   final String titulo;
@@ -19,6 +22,12 @@ class PostComentarios extends StatelessWidget {
           indent: 20,
           endIndent: 20,
         ),
+        IconButton(
+          icon: Icon(Icons.add_comment),
+          onPressed: () {
+            Navigator.pushNamed(context, "subir_comentario");
+          },
+        )
       ],
     );
   }
