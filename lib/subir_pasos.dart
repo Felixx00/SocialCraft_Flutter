@@ -55,11 +55,11 @@ class SubirPasosState extends State<SubirPasos> {
     if (mounted) super.setState(fn);
   }
 
-  int activeStep = 0; // Initial step set to 5.
+  int activeStep = 0;
   final controller = TextEditingController(text: "");
   final controller2 = TextEditingController(text: "");
 
-  int upperBound = 6;
+  int upperBound = 1;
   List<int> numb = [1];
   List<String> textos = ["", "", "", "", "", "", "", "", "", ""];
   List<String> descripciones = ["", "", "", "", "", "", "", "", "", ""];
@@ -80,7 +80,7 @@ class SubirPasosState extends State<SubirPasos> {
     }
   }
 
-  void subirPasos(int id, int numeropaso) async {
+  Future<Resp> subirPasos(int id, int numeropaso) async {
     var map3 = new Map<String, dynamic>();
     map3['IdTutorial'] = id.toString();
     map3['Text'] = descripciones[numeropaso];
@@ -93,6 +93,7 @@ class SubirPasosState extends State<SubirPasos> {
     );
     if (response.statusCode == 200) {
       print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -146,9 +147,10 @@ class SubirPasosState extends State<SubirPasos> {
                   } else {
                     print(respuesta.success);
                     print(respuesta.id);
-                    subirPasos(respuesta.id, 0);
-                    subirPasos(respuesta.id, 1);
-                    subirPasos(respuesta.id, 2);
+                    for (int i = 0; i < upperBound; i++) {
+                      await subirPasos(respuesta.id, i);
+                    }
+
                     subirfoto(respuesta.id);
                     Navigator.pushNamedAndRemoveUntil(
                         context, 'barra', (Route<dynamic> route) => false);
@@ -194,6 +196,7 @@ class SubirPasosState extends State<SubirPasos> {
         onPressed: () {
           print(descripciones);
           if (numb.length < 10) {
+            upperBound += 1;
             controller.text = "";
             controller2.text = "";
             activeStep = numb.length;
