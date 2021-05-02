@@ -10,10 +10,13 @@ class PostDesc extends StatelessWidget {
   final String categoria;
   final String materiales;
   final String duracion;
+  bool correct = false;
+
   PostDesc(this.titulo, this.descripcion, this.rate, this.dificultad,
       this.categoria, this.materiales, this.duracion);
   @override
   Widget build(BuildContext context) {
+    if (rate != "0") correct = true;
     return ListView(
       padding: EdgeInsets.only(top: 20, left: 20, right: 20),
       children: <Widget>[
@@ -42,7 +45,7 @@ class PostDesc extends StatelessWidget {
                   Icon(Icons.star_outlined, color: azul_logo, size: 30),
                   16.width,
                   Text(
-                    "Valoración: " + rate + "/5",
+                    correct ? "Valoración: " + rate + "/5" : "Valoración: -",
                     style: TextStyle(fontSize: 16),
                   )
                 ]),

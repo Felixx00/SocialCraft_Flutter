@@ -354,7 +354,7 @@ class PerfilState extends State<Perfil> {
                 ],
               ),
             ),
-            Column(
+            /*Column(
               children: List.generate(
                 nPosts.toInt(),
                 (int index) {
@@ -380,6 +380,26 @@ class PerfilState extends State<Perfil> {
                   ).paddingOnly(top: 5, bottom: 5);
                 },
               ),
+            ) */
+            Column(
+              children: List.generate(
+                //nPosts.toInt(),
+                1,
+                (int index) {
+                  return GridView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: posts.length,
+                    padding: EdgeInsets.all(16),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                        childAspectRatio: cardWidth / cardHeight),
+                    itemBuilder: (context, index) => Product(index),
+                  );
+                },
+              ),
             )
           ],
         ).paddingAll(16),
@@ -394,6 +414,53 @@ class PerfilState extends State<Perfil> {
         child: Icon(
           Icons.add,
           color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+class Product extends StatelessWidget {
+  final int pos;
+
+  Product(this.pos);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Post(posts[pos]['id']).launch(context);
+      },
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Hero(
+              tag: Image.network('https://picsum.photos/250?image=9'),
+              child: ClipRRect(
+                borderRadius: new BorderRadius.circular(12.0),
+                child: Image.network(
+                  'https://picsum.photos/250?image=9',
+                  height: context.height() / 6,
+                  fit: BoxFit.cover,
+                  width: MediaQuery.of(context).size.width,
+                ),
+              ),
+            ),
+            SizedBox(height: 4),
+            Padding(
+              padding: const EdgeInsets.only(left: 4, right: 4),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(posts[pos]['titulo'],
+                      style: primaryTextStyle(color: Colors.black)),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
