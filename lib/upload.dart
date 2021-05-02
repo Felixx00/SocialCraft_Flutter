@@ -238,8 +238,10 @@ class UploadState extends State<Upload> {
                   type: S2ModalType.fullPage,
                 ),
                 modalHeaderStyle: S2ModalHeaderStyle(
-                    backgroundColor: azul_logo,
-                    textStyle: TextStyle(color: white)),
+                  backgroundColor: azul_logo,
+                  textStyle: TextStyle(color: white),
+                  iconTheme: IconThemeData(color: white),
+                ),
                 title: 'Categoria',
                 value: value2,
                 choiceItems: categorias,
