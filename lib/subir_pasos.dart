@@ -140,22 +140,30 @@ class SubirPasosState extends State<SubirPasos> {
               ),
               icon: Icon(Icons.cloud_upload_outlined),
               onPressed: () async {
-                await subirTuto().then((respuesta) async {
-                  if (respuesta.success == false) {
-                    setState(() {});
-                    toast("Incorrecto", bgColor: toast_color);
-                  } else {
-                    print(respuesta.success);
-                    print(respuesta.id);
-                    for (int i = 0; i < upperBound; i++) {
-                      await subirPasos(respuesta.id, i);
-                    }
-
-                    subirfoto(respuesta.id);
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, 'barra', (Route<dynamic> route) => false);
+                bool vacio = false;
+                for (int i = 0; i < upperBound && !vacio; ++i) {
+                  if (descripciones[i] == "") {
+                    vacio = true;
+                    toast("Existe Step Vacío", bgColor: toast_color);
                   }
-                });
+                }
+                if (!vacio) {
+                  await subirTuto().then((respuesta) async {
+                    if (respuesta.success == false) {
+                      setState(() {});
+                      toast("Incorrecto", bgColor: toast_color);
+                    } else {
+                      print(respuesta.id);
+                      for (int i = 0; i < upperBound; i++) {
+                        await subirPasos(respuesta.id, i);
+                      }
+
+                      subirfoto(respuesta.id);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, 'barra', (Route<dynamic> route) => false);
+                    }
+                  });
+                }
               },
             ),
           ),

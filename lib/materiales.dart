@@ -50,6 +50,8 @@ class MaterialesState extends State<Materiales> {
           backgroundColor: azul_logo,
           leading: Icon(Icons.arrow_back).onTap(() {
             Navigator.pop(context, b);
+            a.clear();
+            b = "";
             //finish(context);
             //Navigator
           }),

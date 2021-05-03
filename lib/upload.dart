@@ -161,6 +161,7 @@ class UploadState extends State<Upload> {
               Container(
                 decoration: BoxDecoration(color: Colors.grey[300]),
                 child: TextFormField(
+                  //maxLength: 20,
                   keyboardType: TextInputType.name,
                   cursorColor: azul_logo,
                   decoration: InputDecoration(
@@ -309,23 +310,33 @@ class UploadState extends State<Upload> {
               20.height,
               ElevatedButton(
                 onPressed: () {
-                  map['titulo'] = titulo;
-                  map['subtitulo'] = desc;
-                  map['rutaFoto'] = foto;
-                  map['dificultad'] = value1;
-                  map['materiales'] = result;
-                  map['categoria'] = value2;
-                  map['duracion'] = value4;
-                  map['descripcion'] = desc;
-                  print(map);
-                  print(result);
+                  if (titulo != "" &&
+                      desc != "" &&
+                      value1 != "" &&
+                      value2 != "" &&
+                      value4 != "" &&
+                      result != "" &&
+                      foto != null) {
+                    map['titulo'] = titulo;
+                    map['subtitulo'] = desc;
+                    map['rutaFoto'] = foto;
+                    map['dificultad'] = value1;
+                    map['materiales'] = result;
+                    map['categoria'] = value2;
+                    map['duracion'] = value4;
+                    map['descripcion'] = desc;
+                    print(map);
+                    print(result);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SubirPasos(map),
-                    ),
-                  );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SubirPasos(map),
+                      ),
+                    );
+                  } else {
+                    toast("Rellena todos los parámetros", bgColor: toast_color);
+                  }
                 },
                 child: Text(
                   'Continuar',
@@ -380,7 +391,7 @@ List<S2Choice<int>> frameworks = [
   S2Choice<int>(value: 3, title: 'Tijeras'),
 ];
 
-String value4 = 'tiempo indefinido';
+String value4 = 'indef';
 List<S2Choice<String>> tiempos = [
   S2Choice<String>(value: '<10', title: '<10 min.'),
   S2Choice<String>(value: '10', title: '10 min.'),
