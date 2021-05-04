@@ -20,9 +20,6 @@ class PostDesc extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.only(top: 20, left: 20, right: 20),
       children: <Widget>[
-        Text(titulo,
-            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-        20.height,
         Text(
           descripcion,
           style: TextStyle(fontSize: 20),

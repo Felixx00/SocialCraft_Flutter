@@ -34,6 +34,7 @@ int followers = 0;
 String nFollowers = "";
 bool unfollow = true;
 var linkfoto = "";
+var linkfotoPost = "";
 List<dynamic> posts = [];
 
 class PerfilState extends State<Perfil> {
@@ -62,6 +63,7 @@ class PerfilState extends State<Perfil> {
 
       await Firebase.initializeApp();
       await getImage();
+      await getImagePost();
       setState(() {});
     });
     getMyTutorials().then((respuesta) async {
@@ -120,11 +122,6 @@ class PerfilState extends State<Perfil> {
   }
 
   Future getImage() async {
-    //FirebaseStorage storage = FirebaseStorage.instance;
-    /*var ref = FirebaseStorage.instance
-        .ref()
-        .child('Usuario_Default/default-user-image.png');*/
-
     var r = FirebaseStorage.instance.ref(userName + '/image');
     try {
       await r.getDownloadURL();
@@ -136,11 +133,23 @@ class PerfilState extends State<Perfil> {
           .child('Usuario_Default/default-user-image.png');
       linkfoto = (await ref.getDownloadURL()).toString();
     }
-
-    //link_foto = ref;
-    //linkfoto = (await ref.getDownloadURL()).toString();
     print(linkfoto);
-    //var url = await ref.getDownloadURL();
+  }
+
+  Future getImagePost() async {
+    var r = FirebaseStorage.instance.ref("Posts/" + tutId + '/principal');
+    try {
+      await r.getDownloadURL();
+      var ref =
+          FirebaseStorage.instance.ref().child("Posts/" + tutId + '/principal');
+      linkfotoPost = (await ref.getDownloadURL()).toString();
+    } catch (err) {
+      var ref = FirebaseStorage.instance
+          .ref()
+          .child('Usuario_Default/default-user-image.png');
+      linkfotoPost = (await ref.getDownloadURL()).toString();
+    }
+    print(linkfotoPost);
   }
 
   @override
@@ -322,7 +331,6 @@ class PerfilState extends State<Perfil> {
                 label: Text('Editar Perfil'),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(150, 40),
-                  //primary: Colors.lightBlueAccent[200],
                   primary: Color.fromRGBO(68, 102, 216, 1.0),
                   onPrimary: Colors.white,
                   onSurface: Colors.grey,

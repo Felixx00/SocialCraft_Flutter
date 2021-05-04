@@ -12,21 +12,6 @@ class PostPasos extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.only(top: 20, left: 20, right: 20),
       children: <Widget>[
-        Text(titulo,
-            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-        20.height,
-        Text(
-          descripcion,
-          style: TextStyle(fontSize: 20),
-        ),
-        10.height,
-        Divider(
-          height: 20,
-          thickness: 3,
-          indent: 20,
-          endIndent: 20,
-        ),
-        10.height,
         Text(
           "Pasos",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
