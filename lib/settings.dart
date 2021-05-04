@@ -55,7 +55,14 @@ class SettingsState extends State<Settings> {
                       showAlertDialog(context);
                     },
                   )).paddingTop(10),
-              10.height,
+              20.height,
+              Divider(
+                height: 20,
+                thickness: 2,
+                indent: 20,
+                endIndent: 20,
+                color: Colors.black38,
+              ),
               Align(
                   alignment: Alignment.center,
                   child: ElevatedButton.icon(

@@ -63,6 +63,18 @@ class SubirPasosState extends State<SubirPasos> {
   List<int> numb = [1];
   List<String> textos = ["", "", "", "", "", "", "", "", "", ""];
   List<String> descripciones = ["", "", "", "", "", "", "", "", "", ""];
+  List<PickedFile> imagenes = [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ];
 
   Future<Resp> subirTuto() async {
     final response = await http.post(
@@ -120,6 +132,23 @@ class SubirPasosState extends State<SubirPasos> {
     }
   }
 
+  void subirfotopaso(int x, int idpaso) async {
+    if (imagenes[idpaso - 1] != null) {
+      final _firebaseStorage = FirebaseStorage.instance;
+      var file = File(imagenes[idpaso - 1].path);
+      print(x);
+      print('aaaaa');
+      var snapshot = await _firebaseStorage
+          .ref()
+          .child('Posts/' + x.toString() + '/paso' + idpaso.toString())
+          .putFile(file);
+
+      //print(foto.path);
+    } else {
+      print('No image selected.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -156,6 +185,7 @@ class SubirPasosState extends State<SubirPasos> {
                       print(respuesta.id);
                       for (int i = 0; i < upperBound; i++) {
                         await subirPasos(respuesta.id, i);
+                        subirfotopaso(respuesta.id, (i + 1));
                       }
 
                       subirfoto(respuesta.id);
@@ -196,6 +226,28 @@ class SubirPasosState extends State<SubirPasos> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [],
               ),
+              20.height,
+              ElevatedButton(
+                child: Text('Selecciona Imagen o Video'),
+                style: ElevatedButton.styleFrom(
+                  //minimumSize: Size(150, 40),
+                  //primary: Colors.lightBlueAccent[200],
+                  primary: azul_logo,
+                  onPrimary: Colors.white,
+                  onSurface: Colors.grey,
+                ),
+                onPressed: () async {
+                  imagenes[activeStep] =
+                      await ImagePicker().getImage(source: ImageSource.gallery);
+                  print(imagenes);
+                },
+              ),
+              16.height,
+              IconButton(
+                  icon: Icon(Icons.delete),
+                  iconSize: 35,
+                  color: Colors.redAccent[200],
+                  onPressed: () {}),
             ],
           ),
         ),
