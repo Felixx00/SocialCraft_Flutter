@@ -297,8 +297,15 @@ class SearchW extends State<Search> {
   @override
   Widget build(BuildContext context) {
       return Scaffold(
-        body: DefaultTabController(
-            length: 3,
+          body: GestureDetector(
+            onTap: (){
+              final FocusScopeNode focus = FocusScope.of(context);
+              if(!focus.hasPrimaryFocus && focus.hasFocus){
+                FocusManager.instance.primaryFocus.unfocus();
+              }
+            },
+            child: DefaultTabController(
+              length: 3,
             child: NestedScrollView(
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScroll) {
                   return [
@@ -676,6 +683,7 @@ class SearchW extends State<Search> {
                     ]
               )
           ),
+      ),
       )
   );
 
