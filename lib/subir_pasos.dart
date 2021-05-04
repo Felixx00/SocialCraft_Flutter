@@ -247,7 +247,9 @@ class SubirPasosState extends State<SubirPasos> {
                   icon: Icon(Icons.delete),
                   iconSize: 35,
                   color: Colors.redAccent[200],
-                  onPressed: () {}),
+                  onPressed: () {
+                    imagenes[activeStep] = null;
+                  }),
             ],
           ),
         ),
