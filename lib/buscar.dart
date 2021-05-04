@@ -13,12 +13,6 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
 
-
-/*class IdUsuario{
-  int idUsuario;
-  IdUsuario(this.idUsuario);
-}*/
-
 void main() => runApp(Search());
 FocusNode nameNode;
 
@@ -137,6 +131,7 @@ class SearchW extends State<Search> {
       },
     );
     print(response.statusCode);
+    print("usuario");
     if (response.statusCode == 200) {
       print(response.body);
       return Resp.fromJson2(jsonDecode(response.body));
@@ -157,9 +152,10 @@ class SearchW extends State<Search> {
       },
     );
     print(response.statusCode);
+    print("titulo");
     if (response.statusCode == 200) {
       print(response.body);
-      return Resp.fromJson2(jsonDecode(response.body));
+      return Resp.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -177,9 +173,10 @@ class SearchW extends State<Search> {
       },
     );
     print(response.statusCode);
+    print("duracion");
     if (response.statusCode == 200) {
       print(response.body);
-      return Resp.fromJson2(jsonDecode(response.body));
+      return Resp.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -197,9 +194,10 @@ class SearchW extends State<Search> {
       },
     );
     print(response.statusCode);
+    print("diff");
     if (response.statusCode == 200) {
       print(response.body);
-      return Resp.fromJson2(jsonDecode(response.body));
+      return Resp.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -322,8 +320,9 @@ class SearchW extends State<Search> {
                         ),
                         onChanged: (texto) {
                           busqueda = texto;
+                          print(value1);
                           if (busqueda.length >= 3) {
-                            if (value1 == "Título") {
+                            if (value1 == '1') {
                               listSearchTitle(busqueda).then((response) async {
                                 tutorials = response.list;
                                 //tutorials = usersL;
@@ -333,7 +332,7 @@ class SearchW extends State<Search> {
                                     tutorials.length == null) {}
                               });
                             }
-                            else if (value1 == "Duración") {
+                            else if (value1 == '2') {
                               listSearchDuration(busqueda).then((response) async {
                                 tutorials = response.list;
                                 //users = usersL;
@@ -343,7 +342,7 @@ class SearchW extends State<Search> {
                                     tutorials.length == null) {}
                               });
                             }
-                            else if (value1 == "Dificultad") {
+                            else if (value1 == '3') {
                               listSearchDifficulty(busqueda).then((response) async {
                                 tutorials = response.list;
                                 //users = usersL;
@@ -376,6 +375,9 @@ class SearchW extends State<Search> {
                     bottom: TabBar(
                       indicatorColor: Colors.grey[300],
                       indicatorSize: TabBarIndicatorSize.label,
+                      onTap: (index) {
+                        value1 = "flutter";
+                      },
                       tabs: <Widget>[
                         Tab(icon: Icon(
                           Icons.video_library_rounded,
@@ -392,7 +394,9 @@ class SearchW extends State<Search> {
                           color: Colors.grey[300],
                             ),
                            )
-                      ]
+
+                      ],
+
                     ),
                   )
                   ];
@@ -427,7 +431,7 @@ class SearchW extends State<Search> {
                                         modalHeaderStyle: S2ModalHeaderStyle(
                                             backgroundColor: azul_logo,
                                             textStyle: TextStyle(color: white)),
-                                        title: 'Filtra videos',
+                                        title: 'Filtra tutoriales',
                                         value: value1,
                                         choiceItems: options,
                                         onChange: (state) => setState(() => value1 = state.value),
@@ -556,7 +560,6 @@ class SearchW extends State<Search> {
                                                   ).then((value) => setState(() {}));
 
                                                 }
-
                                               }
                                           ),
                                         leading: Container(
