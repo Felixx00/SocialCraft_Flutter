@@ -22,13 +22,25 @@ class PostPasos extends StatelessWidget {
             pasos.length,
             (int index) {
               final pasoText = pasos[index]['Texto'];
-              return ListTile(
-                leading: Text("${index + 1}",
-                    style: TextStyle(
-                        fontSize: 25,
-                        color: azul_logo,
-                        fontWeight: FontWeight.bold)),
-                title: Text(pasoText, style: TextStyle(fontSize: 16)),
+              return Column(
+                children: [
+                  ListTile(
+                    leading: Text("${index + 1}",
+                        style: TextStyle(
+                            fontSize: 25,
+                            color: azul_logo,
+                            fontWeight: FontWeight.bold)),
+                    title: Image.network('https://picsum.photos/250?image=9'),
+                    subtitle: Text(pasoText,
+                        style: TextStyle(fontSize: 16, color: Colors.black)),
+                  ),
+                  Divider(
+                    height: 20,
+                    thickness: 3,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                ],
               );
             },
           ),

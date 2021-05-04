@@ -395,6 +395,7 @@ class PerfilState extends State<Perfil> {
                 1,
                 (int index) {
                   return GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     itemCount: posts.length,
                     padding: EdgeInsets.all(16),
