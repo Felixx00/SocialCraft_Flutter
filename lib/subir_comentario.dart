@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -126,8 +127,7 @@ class SubirComentarioState extends State<SubirComentario> {
               print(imageFile);
               //fer el push comments
               //canviar el navigator perq torni al post_comments
-              Navigator.pushNamedAndRemoveUntil(
-                  context, 'barra', (Route<dynamic> route) => false);
+              Navigator.of(context).pop();
             }
           )
 
@@ -138,6 +138,7 @@ class SubirComentarioState extends State<SubirComentario> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            20.height,
             Text('Valoración:',style: GoogleFonts.comfortaa(
                 textStyle: TextStyle(
                     color: azul_logo,
@@ -146,6 +147,7 @@ class SubirComentarioState extends State<SubirComentario> {
                 )
             )
             ),
+            5.height,
             RatingBar.builder(
               itemCount: 5,
               initialRating:0,
@@ -160,6 +162,7 @@ class SubirComentarioState extends State<SubirComentario> {
                 //print(rating);
               }
             ),
+            10.height,
             Text('Comentario:',style: GoogleFonts.comfortaa(
                 textStyle: TextStyle(
                   color: azul_logo,
@@ -167,6 +170,7 @@ class SubirComentarioState extends State<SubirComentario> {
                   //fontWeight: FontWeight.w800
                 ))
             ),
+            5.height,
             Container(
               decoration: BoxDecoration(color: Colors.grey[100]),
               child: TextFormField(
@@ -185,13 +189,46 @@ class SubirComentarioState extends State<SubirComentario> {
                   hintText: "Exprese su opinión aquí",
                   hintStyle: secondaryTextStyle(size: 16),
                 ),
-              ).paddingOnly(left: 8, top:2)
-            ).cornerRadiusWithClipRRect(12),
-            imageFile == null ? Text('No image selected.'): Image.file(imageFile),
+              ).paddingLeft(8)
+            ).cornerRadiusWithClipRRect(12).paddingOnly(top:10, bottom:10),
+            10.height,
+            imageFile == null ? DottedBorder(
+                borderType: BorderType.RRect,
+                radius: Radius.circular(12),
+                padding: EdgeInsets.all(6),
+                dashPattern: [8, 8],
+                strokeWidth: 3,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    child: Container(
+                      child: Icon(
+                        Icons.add_a_photo_rounded,
+                        color: azul_logo,
+                        size:75.0,
+                      ).paddingAll(20),
+                    ),
+                    )
+                )
+            :
+            DottedBorder(
+                borderType: BorderType.RRect,
+                radius: Radius.circular(12),
+                padding: EdgeInsets.all(6),
+                dashPattern: [8, 8],
+                strokeWidth: 3,
+                color: azul_logo,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  child: Image.file(imageFile, width:200, height: 200,),
+
+                )
+            ),
+            5.height,
             RaisedButton(
+              color:azul_logo,
               onPressed:(){
                 _showChoiceDialog(context);
-              },child:Text("Select Image"),
+              },child:Text("Select Image", style: TextStyle(color:Colors.white)),
             )
 
           ]
