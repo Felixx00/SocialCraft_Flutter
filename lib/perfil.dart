@@ -172,8 +172,16 @@ class PerfilState extends State<Perfil> {
                 Align(
                   alignment: Alignment.topRight,
                   child: Container(
-                    child: Image.asset(trophy, width: 40, height: 40),
-                  ),
+                      child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, 'logros');
+                    },
+                    child: Image.asset(
+                      trophy,
+                      width: 40,
+                      height: 40,
+                    ),
+                  )),
                 ),
                 Align(
                   alignment: Alignment.center,
