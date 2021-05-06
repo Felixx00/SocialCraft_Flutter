@@ -38,7 +38,6 @@ String rate = "";
 String categoria = "";
 List<dynamic> pasos = [];
 List<dynamic> comments = [];
-var linkfoto = "";
 
 class PostState extends State<Post> {
   @override
@@ -63,30 +62,13 @@ class PostState extends State<Post> {
       categoria = respuesta.data['catName'];
       pasos = respuesta.data['pasos'];
       comments = respuesta.data['comments'];
+      rutaFoto = respuesta.data['rutaFoto'];
       if (dificultad == "1") dificultad = "Fácil";
       if (dificultad == "2") dificultad = "Intermedio";
       if (dificultad == "3") dificultad = "Difícil";
-      await Firebase.initializeApp();
-      await getImage();
       setState(() {});
     });
     setState(() {});
-  }
-
-  Future getImage() async {
-    var r = FirebaseStorage.instance.ref("Posts/" + tutId + '/principal');
-    try {
-      await r.getDownloadURL();
-      var ref =
-          FirebaseStorage.instance.ref().child("Posts/" + tutId + '/principal');
-      linkfoto = (await ref.getDownloadURL()).toString();
-    } catch (err) {
-      var ref = FirebaseStorage.instance
-          .ref()
-          .child('Usuario_Default/default-user-image.png');
-      linkfoto = (await ref.getDownloadURL()).toString();
-    }
-    print(linkfoto);
   }
 
   @override
@@ -146,7 +128,7 @@ class PostState extends State<Post> {
                 flexibleSpace: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          fit: BoxFit.cover, image: NetworkImage(linkfoto)),
+                          fit: BoxFit.cover, image: NetworkImage(rutaFoto)),
                     ),
                     child: Container(
                       color: Colors.black.withOpacity(.5),
@@ -196,7 +178,7 @@ class PostState extends State<Post> {
           body: TabBarView(children: <Widget>[
             PostDesc(titulo, descripcion, rate, dificultad, categoria,
                 materiales, duracion),
-            PostPasos(titulo, descripcion, pasos),
+            PostPasos(titulo, descripcion, pasos, tutId),
             PostComentarios(titulo)
           ]),
         ),

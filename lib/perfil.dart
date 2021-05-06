@@ -34,7 +34,6 @@ int followers = 0;
 String nFollowers = "";
 bool unfollow = true;
 var linkfoto = "";
-var linkfotoPost = "";
 List<dynamic> posts = [];
 
 class PerfilState extends State<Perfil> {
@@ -63,7 +62,6 @@ class PerfilState extends State<Perfil> {
 
       await Firebase.initializeApp();
       await getImage();
-      await getImagePost();
       setState(() {});
     });
     getMyTutorials().then((respuesta) async {
@@ -134,22 +132,6 @@ class PerfilState extends State<Perfil> {
       linkfoto = (await ref.getDownloadURL()).toString();
     }
     print(linkfoto);
-  }
-
-  Future getImagePost() async {
-    var r = FirebaseStorage.instance.ref("Posts/" + tutId + '/principal');
-    try {
-      await r.getDownloadURL();
-      var ref =
-          FirebaseStorage.instance.ref().child("Posts/" + tutId + '/principal');
-      linkfotoPost = (await ref.getDownloadURL()).toString();
-    } catch (err) {
-      var ref = FirebaseStorage.instance
-          .ref()
-          .child('Usuario_Default/default-user-image.png');
-      linkfotoPost = (await ref.getDownloadURL()).toString();
-    }
-    print(linkfotoPost);
   }
 
   @override
@@ -362,33 +344,6 @@ class PerfilState extends State<Perfil> {
                 ],
               ),
             ),
-            /*Column(
-              children: List.generate(
-                nPosts.toInt(),
-                (int index) {
-                  //final pasoText = "holaaa";
-                  return ElevatedButton(
-                    child: Text("${index + 1}",
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
-                    style: ElevatedButton.styleFrom(
-                      primary: azul_logo,
-                    ),
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Post(posts[index]['id']),
-                        ),
-                      );
-                      init();
-                    },
-                  ).paddingOnly(top: 5, bottom: 5);
-                },
-              ),
-            ) */
             Column(
               children: List.generate(
                 //nPosts.toInt(),
@@ -446,11 +401,11 @@ class Product extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Hero(
-              tag: Image.network('https://picsum.photos/250?image=9'),
+              tag: Image.network(posts[pos]['fotoRuta']),
               child: ClipRRect(
                 borderRadius: new BorderRadius.circular(12.0),
                 child: Image.network(
-                  'https://picsum.photos/250?image=9',
+                  posts[pos]['fotoRuta'],
                   height: context.height() / 6,
                   fit: BoxFit.cover,
                   width: MediaQuery.of(context).size.width,

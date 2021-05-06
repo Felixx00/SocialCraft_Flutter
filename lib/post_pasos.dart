@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/fonts.dart';
@@ -6,7 +8,27 @@ class PostPasos extends StatelessWidget {
   final String titulo;
   final String descripcion;
   final List<dynamic> pasos;
-  PostPasos(this.titulo, this.descripcion, this.pasos);
+  final String tutId;
+  var linkfoto = "";
+
+  PostPasos(this.titulo, this.descripcion, this.pasos, this.tutId);
+
+  Future getImage() async {
+    var r = FirebaseStorage.instance.ref('Posts/' + tutId + '/paso1');
+    try {
+      await r.getDownloadURL();
+      var ref =
+          FirebaseStorage.instance.ref().child('Posts/' + tutId + '/paso1');
+      linkfoto = (await ref.getDownloadURL()).toString();
+    } catch (err) {
+      var ref = FirebaseStorage.instance
+          .ref()
+          .child('Usuario_Default/default-user-image.png');
+      linkfoto = (await ref.getDownloadURL()).toString();
+    }
+    print(linkfoto);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
