@@ -122,12 +122,17 @@ class SubirComentarioState extends State<SubirComentario> {
               Icons.add_comment
             ),
             onPressed: () async{
-              print(points);
-              print(comentario_text);
-              print(imageFile);
-              //fer el push comments
-              //canviar el navigator perq torni al post_comments
-              Navigator.of(context).pop();
+              if (points == 0) {
+                toast("Rellene la puntuación", bgColor: toast_color);
+              }
+              else{
+                print(points);
+                print(comentario_text);
+                print(imageFile);
+                //fer el push comments
+                //canviar el navigator perq torni al post_comments
+                Navigator.of(context).pop();
+                }
             }
           )
 
@@ -197,6 +202,7 @@ class SubirComentarioState extends State<SubirComentario> {
                 radius: Radius.circular(12),
                 padding: EdgeInsets.all(6),
                 dashPattern: [8, 8],
+                color: azul_logo,
                 strokeWidth: 3,
                 child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -204,7 +210,7 @@ class SubirComentarioState extends State<SubirComentario> {
                       child: Icon(
                         Icons.add_a_photo_rounded,
                         color: azul_logo,
-                        size:75.0,
+                        size:160.0,
                       ).paddingAll(20),
                     ),
                     )
