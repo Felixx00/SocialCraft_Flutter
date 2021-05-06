@@ -44,6 +44,7 @@ class SubirPasosState extends State<SubirPasos> {
   init() async {
     map2 = widget.map;
     objeto_foto = map2['rutaFoto'];
+    mapfoto['rutaFoto'] = "";
     map2['rutaFoto'] = 'placeholder';
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
@@ -75,6 +76,8 @@ class SubirPasosState extends State<SubirPasos> {
     null,
     null
   ];
+
+  var mapfoto = Map<String, dynamic>();
 
   Future<Resp> subirTuto() async {
     final response = await http.post(
@@ -126,9 +129,33 @@ class SubirPasosState extends State<SubirPasos> {
           .child('Posts/' + x.toString() + '/principal')
           .putFile(file);
 
+      var ref = FirebaseStorage.instance
+          .ref()
+          .child("Posts/" + x.toString() + '/principal');
+      mapfoto['rutaFoto'] = (await ref.getDownloadURL()).toString();
+      print('eeee' + mapfoto['rutaFoto']);
+      mapfoto['tutId'] = x.toString();
+      cambios();
+
       //print(foto.path);
     } else {
       print('No image selected.');
+    }
+  }
+
+  Future<Resp> cambios() async {
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', '/tutorials/editTutorial'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+      body: mapfoto,
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.modificar(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
     }
   }
 
@@ -189,6 +216,7 @@ class SubirPasosState extends State<SubirPasos> {
                       }
 
                       subirfoto(respuesta.id);
+                      print(mapfoto);
                       Navigator.pushNamedAndRemoveUntil(
                           context, 'barra', (Route<dynamic> route) => false);
                     }
