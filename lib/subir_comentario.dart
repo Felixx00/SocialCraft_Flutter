@@ -15,6 +15,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class SubirComentario extends StatefulWidget {
   @override
+  final String tutId;
+  SubirComentario(this.tutId);
   SubirComentarioState createState() => SubirComentarioState();
 
 }
