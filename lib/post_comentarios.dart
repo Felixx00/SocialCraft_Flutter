@@ -25,6 +25,16 @@ List comentarios = [
     "fotografia": "",
     "datahora": "16/09/21",
     "idUsuario": 3,
+  },
+  {
+    "id" : 3,
+    "username": "usuario2",
+    "foroPerfil": "",
+    "valoracion": "2",
+    "texto": "",
+    "fotografia": "",
+    "datahora": "16/09/21",
+    "idUsuario": 5,
   }
 ];
 
