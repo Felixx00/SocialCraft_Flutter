@@ -98,6 +98,7 @@ class SubirPasosState extends State<SubirPasos> {
   Future<Resp> subirPasos(int id, int numeropaso) async {
     var map3 = new Map<String, dynamic>();
     map3['IdTutorial'] = id.toString();
+    map3['NumPaso'] = numeropaso;
     map3['Text'] = descripciones[numeropaso];
     final response = await http.post(
       Uri.https('api.socialcraft.club', 'tutorials/uploadStep'),
@@ -211,7 +212,7 @@ class SubirPasosState extends State<SubirPasos> {
                     } else {
                       print(respuesta.id);
                       for (int i = 0; i < upperBound; i++) {
-                        await subirPasos(respuesta.id, i);
+                        subirPasos(respuesta.id, i);
                         subirfotopaso(respuesta.id, (i + 1));
                       }
 
