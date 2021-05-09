@@ -50,7 +50,7 @@ class PostComentarios extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: RefreshIndicator(
+      /*body: RefreshIndicator(
         //onRefresh: ()=> X,
         child: ListView(
           physics: BouncingScrollPhysics(
@@ -62,15 +62,15 @@ class PostComentarios extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(height: 5),
-                Column(
+                /*Column(
                   //children: comentarios.isEmpty,
 
-                )
+                )*/
               ],
             )
           ],
         ),
-      ),
+      ),*/
       floatingActionButton: FloatingActionButton(
         heroTag: '1',
         elevation: 5,

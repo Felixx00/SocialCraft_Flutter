@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: <String, WidgetBuilder>{
-          'subir_comentario': (BuildContext context) => SubirComentario(),
+          //'subir_comentario': (BuildContext context) => SubirComentario(),
           'login': (BuildContext context) => Login(),
           'register': (BuildContext context) => Register(),
           'barra': (BuildContext context) => barra(),

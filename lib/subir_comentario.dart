@@ -17,7 +17,7 @@ class SubirComentario extends StatefulWidget {
   @override
   final String tutId;
   SubirComentario(this.tutId);
-  SubirComentarioState createState() => SubirComentarioState();
+  SubirComentarioState createState() => SubirComentarioState(tutId);
 
 }
 
@@ -25,6 +25,13 @@ class SubirComentarioState extends State<SubirComentario> {
   String comentario_text = "";
   double points = 0;
   File imageFile;
+  final String tutId;
+  SubirComentarioState(this.tutId);
+  String token = "";
+
+  init()async{
+
+  }
 
   _openGallery(BuildContext context) async{
     final picture  = await ImagePicker().getImage(source: ImageSource.gallery);
@@ -131,6 +138,8 @@ class SubirComentarioState extends State<SubirComentario> {
                 print(points);
                 print(comentario_text);
                 print(imageFile);
+                print("el següent es el ID del tutorial");
+                print(tutId);
                 //fer el push comments
                 //canviar el navigator perq torni al post_comments
                 Navigator.of(context).pop();
