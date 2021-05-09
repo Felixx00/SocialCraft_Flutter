@@ -144,9 +144,8 @@ class SearchW extends State<Search> {
     map['title'] = busqueda;
     map['limit'] = '500';
     map['offset'] = '0';
-    final response = await http.post(
-      Uri.https('api.socialcraft.club', '/tutorials/searchTitle'),
-      body:map,
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', '/tutorials/searchTitle', map),
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -155,7 +154,7 @@ class SearchW extends State<Search> {
     print("titulo");
     if (response.statusCode == 200) {
       print(response.body);
-      return Resp.fromJson(jsonDecode(response.body));
+      return Resp.fromJson2(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -165,9 +164,8 @@ class SearchW extends State<Search> {
     map['duration'] = busqueda;
     map['limit'] = '500';
     map['offset'] = '0';
-    final response = await http.post(
-      Uri.https('api.socialcraft.club', '/tutorials/searchDuration'),
-      body:map,
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', '/tutorials/searchDuration', map),
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -176,7 +174,7 @@ class SearchW extends State<Search> {
     print("duracion");
     if (response.statusCode == 200) {
       print(response.body);
-      return Resp.fromJson(jsonDecode(response.body));
+      return Resp.fromJson2(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -186,9 +184,8 @@ class SearchW extends State<Search> {
     map['diff'] = busqueda;
     map['limit'] = '500';
     map['offset'] = '0';
-    final response = await http.post(
-      Uri.https('api.socialcraft.club', '/tutorials/searchDifficulty'),
-      body:map,
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', '/tutorials/searchDifficulty', map),
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -197,7 +194,7 @@ class SearchW extends State<Search> {
     print("diff");
     if (response.statusCode == 200) {
       print(response.body);
-      return Resp.fromJson(jsonDecode(response.body));
+      return Resp.fromJson2(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -238,15 +235,15 @@ class SearchW extends State<Search> {
   }
 
   Future<Resp> unfollowUser(String id) async {
-      var map = new Map<String, dynamic>();
-      map['userId'] = id;
-      final response = await http.post(
-        Uri.https('api.socialcraft.club', '/users/unfollowUser'),
-        body:map,
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      );
+    var map = new Map<String, dynamic>();
+    map['userId'] = id;
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', '/users/unfollowUser'),
+      body:map,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
     print(response.statusCode);
     if (response.statusCode == 200) {
       print(response.body);
@@ -296,279 +293,320 @@ class SearchW extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-          body: GestureDetector(
-            onTap: (){
-              final FocusScopeNode focus = FocusScope.of(context);
-              if(!focus.hasPrimaryFocus && focus.hasFocus){
-                FocusManager.instance.primaryFocus.unfocus();
-              }
-            },
-            child: DefaultTabController(
-              length: 3,
+    return Scaffold(
+        body: GestureDetector(
+          onTap: (){
+            final FocusScopeNode focus = FocusScope.of(context);
+            if(!focus.hasPrimaryFocus && focus.hasFocus){
+              FocusManager.instance.primaryFocus.unfocus();
+            }
+          },
+          child: DefaultTabController(
+            length: 3,
             child: NestedScrollView(
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScroll) {
                   return [
-                  SliverAppBar(
-                    pinned: true,
-                    floating: true,
-                    snap:false,
-                    expandedHeight: 150.0,
-                   backgroundColor: azul_logo,
-                    flexibleSpace: Container(
-                      decoration: BoxDecoration(color: Colors.grey[300]),
-                      child: TextFormField(
-                        keyboardType: TextInputType.name,
-                        cursorColor: azul_logo,
-                        decoration: InputDecoration(
-                          icon: Icon(Icons.search, color: azul_logo),
-                          border: InputBorder.none,
-                          hintText: "Buscar",
-                        ),
-                        onChanged: (texto) {
-                          busqueda = texto;
-                          print(value1);
-                          if (busqueda.length >= 3) {
-                            if (value1 == '1') {
-                              listSearchTitle(busqueda).then((response) async {
-                                tutorials = response.list;
-                                //tutorials = usersL;
-                                setState(() {});
-                                print(tutorials.length);
-                                if (response.list == null ||
-                                    tutorials.length == null) {}
+                    SliverAppBar(
+                      pinned: true,
+                      floating: true,
+                      snap:false,
+                      expandedHeight: 150.0,
+                      backgroundColor: azul_logo,
+                      flexibleSpace: Container(
+                        decoration: BoxDecoration(color: Colors.grey[300]),
+                        child: TextFormField(
+                          keyboardType: TextInputType.name,
+                          cursorColor: azul_logo,
+                          decoration: InputDecoration(
+                            icon: Icon(Icons.search, color: azul_logo),
+                            border: InputBorder.none,
+                            hintText: "Buscar",
+                          ),
+                          onTap: (){
+                            setState(() {
+                              users.clear();
+                              tutorials.clear();
+                            });
+                          },
+                          onChanged: (texto) {
+                            if(texto.length == 0){
+                              setState(() {
+                                users.clear();
+                                tutorials.clear();
                               });
                             }
-                            else if (value1 == '2') {
-                              listSearchDuration(busqueda).then((response) async {
-                                tutorials = response.list;
-                                //users = usersL;
-                                setState(() {});
-                                print(tutorials.length);
-                                if (response.list == null ||
-                                    tutorials.length == null) {}
-                              });
-                            }
-                            else if (value1 == '3') {
-                              listSearchDifficulty(busqueda).then((response) async {
-                                tutorials = response.list;
-                                //users = usersL;
-                                setState(() {});
-                                print(tutorials.length);
-                                if (response.list == null ||
-                                    tutorials.length == null) {}
-                              });
-                            }
-                            else {
-                              listSearchUser(busqueda).then((response) async {
-                                usersL = response.list;
-                                users = usersL;
-                                setState(() {});
-                                print(users.length);
-                                if (response.list == null ||
-                                    users.length == null) {}
+                            busqueda = texto;
+                            print(value1);
+                            if(busqueda.length > 0 && busqueda.length <= 3) {
+                              if (value1 == '1') {
+                                listSearchTitle(busqueda).then((response) async {
+                                  tutorials = response.list;
+                                  //tutorials = usersL;
+                                  setState(() {});
+                                  print(tutorials.length);
+                                });
                               }
-                              );
+                              else if (value1 == '2') {
+                                listSearchDuration(busqueda).then((
+                                    response) async {
+                                  tutorials = response.list;
+                                  //users = usersL;
+                                  setState(() {});
+                                  print(tutorials.length);
+                                });
+                              }
+                              else if (value1 == '3') {
+                                listSearchDifficulty(busqueda).then((
+                                    response) async {
+                                  tutorials = response.list;
+                                  //users = usersL;
+                                  setState(() {});
+                                  print(tutorials.length);
+                                });
+                              }
                             }
-                          }
-                          else {
-                            users = userss;
-                            print(users.length);
-                            setState(() {});
-                          };
+                            if (busqueda.length >= 3) {
+                              if (value1 == '1') {
+                                listSearchTitle(busqueda).then((response) async {
+                                  tutorials = response.list;
+                                  //tutorials = usersL;
+                                  setState(() {});
+                                  print(tutorials.length);
+                                });
+                              }
+                              else if (value1 == '2') {
+                                listSearchDuration(busqueda).then((response) async {
+                                  tutorials = response.list;
+                                  //users = usersL;
+                                  setState(() {});
+                                  print(tutorials.length);
+                                });
+                              }
+                              else if (value1 == '3') {
+                                listSearchDifficulty(busqueda).then((response) async {
+                                  tutorials = response.list;
+                                  //users = usersL;
+                                  setState(() {});
+                                  print(tutorials.length);
+                                });
+                              }
+                              else {
+                                listSearchUser(busqueda).then((response) async {
+                                  usersL = response.list;
+                                  users = usersL;
+                                  setState(() {});
+                                  print(users.length);
+                                }
+                                );
+                              }
+                            }
+                          },
+                        ).paddingLeft(10),
+                      ).cornerRadiusWithClipRRect(12).paddingOnly(top:70, left:20, right: 20, bottom:50),
+                      bottom: TabBar(
+                        indicatorColor: Colors.grey[300],
+                        indicatorSize: TabBarIndicatorSize.label,
+                        onTap: (index) {
+                          value1 = "flutter";
                         },
-                      ).paddingLeft(10),
-                  ).cornerRadiusWithClipRRect(12).paddingOnly(top:70, left:20, right: 20, bottom:50),
-                    bottom: TabBar(
-                      indicatorColor: Colors.grey[300],
-                      indicatorSize: TabBarIndicatorSize.label,
-                      onTap: (index) {
-                        value1 = "flutter";
-                      },
-                      tabs: <Widget>[
-                        Tab(icon: Icon(
-                          Icons.video_library_rounded,
-                          //Icons.view_headline_sharp,
-                          color: Colors.grey[300],
-                        )),
-                        Tab(icon: Icon(
-                          Icons.person,
-                          color: Colors.grey[300],
-                        )),
-                        Tab(
+                        tabs: <Widget>[
+                          Tab(icon: Icon(
+                            Icons.video_library_rounded,
+                            //Icons.view_headline_sharp,
+                            color: Colors.grey[300],
+                          )),
+                          Tab(icon: Icon(
+                            Icons.person,
+                            color: Colors.grey[300],
+                          )),
+                          Tab(
                             icon: Icon(
-                          Icons.add_to_photos,
-                          color: Colors.grey[300],
+                              Icons.add_to_photos,
+                              color: Colors.grey[300],
                             ),
-                           )
-
-                      ],
-
-                    ),
-                  )
+                          )
+                        ],
+                      ),
+                    )
                   ];
                 },
                 body: TabBarView(
                     children: <Widget>[
-                      SingleChildScrollView(
-                        child:Column(
-                          children: <Widget>[
-                          SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child:Column(
+                      Container(
+                        child: Column(
+                          children: [
+                            SmartSelect<String>.single(
+                              tileBuilder: (context, state) {
+                                return S2Tile(
+                                  title: state.titleWidget,
+                                  leading: Icon(Icons.filter_alt),
+                                  value: state.valueDisplay,
+                                  onTap: state.showModal,
+                                  isLoading: false,
+                                );
+                              },
+                              modalConfig: S2ModalConfig(
+                                type: S2ModalType.popupDialog,
+                                style: S2ModalStyle(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              modalHeaderStyle: S2ModalHeaderStyle(
+                                  backgroundColor: azul_logo,
+                                  textStyle: TextStyle(color: white)),
+                              title: 'Filtra tutoriales',
+                              value: value1,
+                              choiceItems: options,
+                              onChange: (state) => setState(() => value1 = state.value),
+                            ),
+                            Divider(
+                              height: 10,
+                              thickness: 3,
+                              color: Colors.grey[650],
+                            ),
+                            Container(
+                                child: tutorials.length == 0
+                                  ? Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SmartSelect<String>.single(
-                                        tileBuilder: (context, state) {
-                                          return S2Tile(
-                                            title: state.titleWidget,
-                                            leading: Icon(Icons.filter_alt),
-                                            value: state.valueDisplay,
-                                            onTap: state.showModal,
-                                            isLoading: false,
-                                          );
-                                        },
-                                        modalConfig: S2ModalConfig(
-                                          type: S2ModalType.popupDialog,
-                                          style: S2ModalStyle(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(10),
-                                            ),
-                                          ),
-                                        ),
-                                        modalHeaderStyle: S2ModalHeaderStyle(
-                                            backgroundColor: azul_logo,
-                                            textStyle: TextStyle(color: white)),
-                                        title: 'Filtra tutoriales',
-                                        value: value1,
-                                        choiceItems: options,
-                                        onChange: (state) => setState(() => value1 = state.value),
-                                     ),
-                                    Divider(
-                                      height: 10,
-                                      thickness: 3,
-                                      color: Colors.grey[650],
-                                    ),
-                                    Column(
-                                      children: <Widget>[
-                                        SingleChildScrollView(
-                                          scrollDirection: Axis.vertical,
-                                          child: Column(children: List.generate(tutorials.length,(index) {
-                                            //if (users.length != null || users[index]["username"] != null) Imagenes(users[index]["username"]);
-                                            return Padding(
-                                              padding: const EdgeInsets.only(right: 1,
-                                                  bottom: 1),
-                                              child: Column(
-                                                children: <Widget>[
-                                                  ListTile(
-                                                      title: TextButton(
-                                                          child:Text(
-                                                            nombre = tutorials[index]["titulo"],
-                                                            semanticsLabel: "titulo",
-                                                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                                          ),
-                                                          onPressed: () {
-                                                              /*_idUser = users[index]["id"];
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder: (context) => Perfil2(_idUser),
-                                                                ),
-                                                              ).then((value) => setState(() {}));*/
-                                                            }
-                                                      ),
-                                                      leading: Container(
-                                                        height: 50.0,
-                                                        width: 50.0,
-                                                        decoration: new BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          //Imagenes(users[index]["username"]),
-                                                          image: new DecorationImage(
-                                                              fit: BoxFit.fill,
-                                                              image: new NetworkImage(
-                                                                  rutaFoto)),
-                                                        ),
-                                                      ).paddingOnly(top: 5, bottom: 5),
-
-                                                      /*trailing:
-                                                      (myself == users[index]["username"])
-                                                          ? IconButton(icon:Icon(Icons.more_vert),
-                                                        onPressed: () {
-                                                          Navigator.pushNamed(context, "editar");
-                                                        },
-                                                      )
-                                                          :IconButton(
-                                                        icon: busqueda.length <3? Icon(Icons.person_add, color: white,): Icon(users[index]["followed"]
-                                                            ? Icons.person_add_disabled
-                                                            : Icons.person_add,
-                                                            size: 18,
-                                                            color: users[index]["followed"]
-                                                                ? Colors.red[600]
-                                                                : azul_logo),
-                                                        onPressed: () {
-                                                          if(users[index]["followed"] == false) {
-                                                            followUser(users[index]["id"]).then((response) async {
-                                                              users[index]["followed"] = !users[index]["followed"];
-                                                              setState(() {});
-                                                            });
-                                                          }
-                                                          else {
-                                                            unfollowUser(users[index]["id"]).then((response) async {
-                                                              users[index]["followed"] = !users[index]["followed"];
-                                                              setState(() {});
-                                                            });
-                                                          }
-                                                        },
-                                                      )*/
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          }
-                                          ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                    Icon(Icons.search, size: 100,color: azul_logo,),
+                                    Text(
+                                      'Buscar tutoriales...',
+                                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
+                                    )
                                   ],
                                 ),
-                            ),
-              ],
-                      )),
-                      SingleChildScrollView(
-                        child:Column(
-                          children: <Widget>[
-                            SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: Column(children: List.generate(users.length,(index) {
-                                //if (users.length != null || users[index]["username"] != null) Imagenes(users[index]["username"]);
-                                return Padding(
+                              )
+                                    :ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                  itemCount: tutorials.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
                                   padding: const EdgeInsets.only(right: 1,
                                       bottom: 1),
                                   child: Column(
                                     children: <Widget>[
                                       ListTile(
-                                          title: TextButton(
-                                              child:Text(
-                                                nombre = users[index]["nombre"],
-                                                semanticsLabel: "nombre",
-                                                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                              ),
-                                              onPressed: () {
-                                                if(myself == users[index]["username"]){
-                                                  Navigator.pushNamed(context, "perfil");
-                                                }
-                                                else{
-                                                  _idUser = users[index]["id"];
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) => Perfil2(_idUser),
-                                                    ),
-                                                  ).then((value) => setState(() {}));
-
-                                                }
-                                              }
+                                        title: TextButton(
+                                            child:Text(
+                                              nombre = tutorials[index]["titulo"],
+                                              semanticsLabel: "titulo",
+                                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                            ),
+                                            onPressed: () {
+                                              /*_idUser = users[index]["id"];
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) => Perfil2(_idUser),
+                                                        ),
+                                                      ).then((value) => setState(() {}));*/
+                                            }
+                                        ),
+                                        leading: Container(
+                                          height: 50.0,
+                                          width: 50.0,
+                                          decoration: new BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            //Imagenes(users[index]["username"]),
+                                            image: new DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image: new NetworkImage(
+                                                    rutaFoto)),
                                           ),
+                                        ).paddingOnly(top: 5, bottom: 5),
+
+                                        /*trailing:
+                                              (myself == users[index]["username"])
+                                                  ? IconButton(icon:Icon(Icons.more_vert),
+                                                onPressed: () {
+                                                  Navigator.pushNamed(context, "editar");
+                                                },
+                                              )
+                                                  :IconButton(
+                                                icon: busqueda.length <3? Icon(Icons.person_add, color: white,): Icon(users[index]["followed"]
+                                                    ? Icons.person_add_disabled
+                                                    : Icons.person_add,
+                                                    size: 18,
+                                                    color: users[index]["followed"]
+                                                        ? Colors.red[600]
+                                                        : azul_logo),
+                                                onPressed: () {
+                                                  if(users[index]["followed"] == false) {
+                                                    followUser(users[index]["id"]).then((response) async {
+                                                      users[index]["followed"] = !users[index]["followed"];
+                                                      setState(() {});
+                                                    });
+                                                  }
+                                                  else {
+                                                    unfollowUser(users[index]["id"]).then((response) async {
+                                                      users[index]["followed"] = !users[index]["followed"];
+                                                      setState(() {});
+                                                    });
+                                                  }
+                                                },
+                                              )*/
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                              ),
+                              ),
+                                  ],
+                                ),
+                          ).center(),
+                      Container(
+                        child: users.length == 0
+                            ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.search, size: 100,color: azul_logo,),
+                              Text(
+                                'Buscar usuarios...',
+                                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
+                              )
+                            ],
+                          ),
+                        )
+                            :ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: users.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 1,
+                                    bottom: 1),
+                                child: Column(
+                                  children: <Widget>[
+                                    ListTile(
+                                        title: TextButton(
+                                            child:Text(
+                                              nombre = users[index]["nombre"],
+                                              semanticsLabel: "nombre",
+                                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                            ),
+                                            onPressed: () {
+                                              if(myself == users[index]["username"]){
+                                                Navigator.pushNamed(context, "perfil");
+                                              }
+                                              else{
+                                                _idUser = users[index]["id"];
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => Perfil2(_idUser),
+                                                  ),
+                                                ).then((value) => setState(() {}));
+
+                                              }
+                                            }
+                                        ),
                                         leading: Container(
                                           height: 50.0,
                                           width: 50.0,
@@ -584,11 +622,11 @@ class SearchW extends State<Search> {
 
                                         trailing:
                                         (myself == users[index]["username"])
-                                          ? IconButton(icon:Icon(Icons.more_vert),
-                                            onPressed: () {
-                                              Navigator.pushNamed(context, "editar");
-                                            },
-                                          )
+                                            ? IconButton(icon:Icon(Icons.more_vert),
+                                          onPressed: () {
+                                            Navigator.pushNamed(context, "editar");
+                                          },
+                                        )
                                             :IconButton(
                                           icon: busqueda.length <3? Icon(Icons.person_add, color: white,): Icon(users[index]["followed"]
                                               ? Icons.person_add_disabled
@@ -612,24 +650,32 @@ class SearchW extends State<Search> {
                                             }
                                           },
                                         )
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                              ),
-                              ),
-                              ),
-                          ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
                         ),
-                  ),
-                      SingleChildScrollView(
-                      child:Column(
-                            children: <Widget>[
-                              SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Column(children: List.generate(categories.length, (index){
-                                  print(categories.length);
+                      ),
+                      Container(
+                          child: categories.length == 0
+                              ? Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.search, size: 200,color: azul_logo,),
+                                Text(
+                                  'Buscar categories...',
+                                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
+                                )
+                              ],
+                            ),
+                          )
+                              : ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: categories.length,
+                              itemBuilder: (context, index) {
                                 return Padding(
                                     padding: const EdgeInsets.only(right:1,
                                         bottom:1),
@@ -672,20 +718,15 @@ class SearchW extends State<Search> {
                                         ),
                                       ],
                                     ));
-                              }
-                              )
-                              )
-
+                            }
                           )
-                        ]
                       )
-                  )
                     ]
-              )
+                )
+            ),
           ),
-      ),
-      )
-  );
+        )
+    );
 
-}
+  }
 }
