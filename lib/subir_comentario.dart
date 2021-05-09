@@ -12,6 +12,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class SubirComentario extends StatefulWidget {
   @override
@@ -30,7 +32,32 @@ class SubirComentarioState extends State<SubirComentario> {
   String token = "";
 
   init()async{
+    final storage2 = new FlutterSecureStorage();
+    token = await storage2.read(key: 'jwt');
+    await Firebase.initializeApp();
+  }
 
+  Future<Resp> subirComent() async {
+    var map = new Map<String,dynamic>();
+    map['tutId'] = tutId;
+    map['score'] = points.toString();
+    map['comment'] = comentario_text;
+    map['imagen'] = "";
+    final response = await http.post(
+      Uri.https('api.socialcraft.club','tutorials/commentTutorial'),
+      body: map,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    print(response.statusCode);
+    print(token);
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson3(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
   }
 
   _openGallery(BuildContext context) async{
@@ -90,7 +117,6 @@ class SubirComentarioState extends State<SubirComentario> {
     init();
   }
 
-  init() async {}
 
   @override
   void setState(fn) {
@@ -131,15 +157,23 @@ class SubirComentarioState extends State<SubirComentario> {
               Icons.add_comment
             ),
             onPressed: () async{
-              if (points == 0) {
-                toast("Rellene la puntuación", bgColor: toast_color);
+              if (points == 0 && comentario_text =="") {
+                toast("Campos obligatorios: Puntuación y Texto", bgColor: toast_color);
               }
               else{
-                print(points);
-                print(comentario_text);
-                print(imageFile);
-                print("el següent es el ID del tutorial");
-                print(tutId);
+                await subirComent().then((respuesta) async{
+                  if(respuesta.success == false){
+                    setState((){});
+                    toast("Incorrecto", bgColor: toast_color);
+                  } else {
+                    print(respuesta.id);
+                  }
+                });
+                //print(points);
+                //print(comentario_text);
+                //print(imageFile);
+                //print("el següent es el ID del tutorial");
+                //print(tutId);
                 //fer el push comments
                 //canviar el navigator perq torni al post_comments
                 Navigator.of(context).pop();
