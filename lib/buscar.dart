@@ -8,6 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:smart_select/smart_select.dart';
 import 'package:socialcraft/perfil2.dart';
+import 'package:socialcraft/post.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:http/http.dart' as http;
@@ -39,6 +40,7 @@ List infoBusqueda = [];
 bool unfollow= true;
 var myself;
 List categories= [];
+List fotoVideos= ['https://cursosvirtualesgratis.com/wp-content/uploads/2018/02/time-totorial.jpg','https://serviwebsi.com/wp-content/uploads/2019/03/tutorial.png','https://www.authot.com/wordpress.new/wp-content/uploads/2019/09/online-3412498_1920-720x480.jpg','https://como-funciona.com/wp-content/uploads/2019/01/c%C3%B3mo-funciona-un-tutorial.jpg','https://www.freepik.com/blog/app/uploads/2019/12/Cabecera-Tutorials_instagram-1.jpg'];
 List userss = [
   {
     "id" : 0,
@@ -59,6 +61,7 @@ List<S2Choice<String>> options = [
 class SearchW extends State<Search> {
   String _idUser = "";
   String _idCat = "";
+  String _idPost = "";
   @override
   void initState() {
     super.initState();
@@ -500,65 +503,36 @@ class SearchW extends State<Search> {
                                       child: Column(
                                         children: <Widget>[
                                           ListTile(
-                                            title: TextButton(
-                                                child:Text(
-                                                  nombre = tutorials[index]["titulo"],
-                                                  semanticsLabel: "titulo",
-                                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                                ),
-                                                onPressed: () {
-                                                  /*_idUser = users[index]["id"];
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) => Perfil2(_idUser),
-                                                        ),
-                                                      ).then((value) => setState(() {}));*/
-                                                }
-                                            ),
                                             leading: Container(
-                                              height: 50.0,
-                                              width: 50.0,
+                                              height: 300.0,
+                                              width: 120.0,
                                               decoration: new BoxDecoration(
-                                                shape: BoxShape.circle,
+                                                shape: BoxShape.rectangle,
                                                 //Imagenes(users[index]["username"]),
                                                 image: new DecorationImage(
                                                     fit: BoxFit.fill,
                                                     image: new NetworkImage(
-                                                        rutaFoto)),
+                                                        fotoVideos[index%5]/*rutaFoto*/)),
                                               ),
-                                            ).paddingOnly(top: 5, bottom: 5),
+                                            ),
+                                            title:
+                                                Text(
+                                                  nombre = tutorials[index]["titulo"],
+                                                  semanticsLabel: "titulo",
+                                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                                ),
 
-                                            /*trailing:
-                                              (myself == users[index]["username"])
-                                                  ? IconButton(icon:Icon(Icons.more_vert),
-                                                onPressed: () {
-                                                  Navigator.pushNamed(context, "editar");
-                                                },
-                                              )
-                                                  :IconButton(
-                                                icon: busqueda.length <3? Icon(Icons.person_add, color: white,): Icon(users[index]["followed"]
-                                                    ? Icons.person_add_disabled
-                                                    : Icons.person_add,
-                                                    size: 18,
-                                                    color: users[index]["followed"]
-                                                        ? Colors.red[600]
-                                                        : azul_logo),
-                                                onPressed: () {
-                                                  if(users[index]["followed"] == false) {
-                                                    followUser(users[index]["id"]).then((response) async {
-                                                      users[index]["followed"] = !users[index]["followed"];
-                                                      setState(() {});
-                                                    });
-                                                  }
-                                                  else {
-                                                    unfollowUser(users[index]["id"]).then((response) async {
-                                                      users[index]["followed"] = !users[index]["followed"];
-                                                      setState(() {});
-                                                    });
-                                                  }
-                                                },
-                                              )*/
+                                            subtitle:Text(tutorials[index]["creador"]),
+                                            trailing: Text(""),
+                                            onTap: (){
+                                              _idPost = tutorials[index]["id"];
+                                              Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                              builder: (context) => Post(_idPost),
+                                              ),
+                                              ).then((value) => setState(() {}));
+                                            },
                                           ),
                                         ],
                                       ),
@@ -568,7 +542,7 @@ class SearchW extends State<Search> {
                             ),
                           ],
                         ),
-                      ).center(),
+                      ),
                       Container(
                         child: users.length == 0
                             ? Center(
