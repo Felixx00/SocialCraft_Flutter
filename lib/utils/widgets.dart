@@ -47,6 +47,17 @@ Widget targetaTutorial(context, linkFoto, titulo, usuario, descripcion) {
                   fit: BoxFit.fill),
             ),
             SizedBox(height: 10),
+            Row(
+              children: [
+                Text(titulo,
+                        style: boldTextStyle(size: 20, color: textPrimaryColor))
+                    .paddingOnly(left: 16),
+                Text("@" + usuario,
+                        style: TextStyle(fontSize: 16, color: azul_logo))
+                    .paddingOnly(left: 16, right: 16, top: 5),
+              ],
+            ),
+            /*
             Padding(
               padding: EdgeInsets.only(left: 16, right: 16),
               child: Text(titulo,
@@ -57,13 +68,13 @@ Widget targetaTutorial(context, linkFoto, titulo, usuario, descripcion) {
               padding: EdgeInsets.only(left: 16, right: 16),
               child: Text(usuario,
                   style: TextStyle(fontSize: 16, color: azul_logo)),
-            ),
+            ), */
             SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.only(left: 16, right: 16),
               child: Text(descripcion,
                   style:
-                      secondaryTextStyle(size: 16, color: textSecondaryColor)),
+                      secondaryTextStyle(size: 16, color: textPrimaryColor)),
             ),
             SizedBox(height: 20),
           ],
