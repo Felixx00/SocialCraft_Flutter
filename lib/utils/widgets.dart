@@ -24,7 +24,7 @@ class CommonButton extends StatelessWidget {
   }
 }
 
-Widget targetaTutorial(context, linkFoto, titulo, descripcion, usuario) {
+Widget targetaTutorial(context, linkFoto, titulo, usuario, descripcion) {
   return Card(
     margin: EdgeInsets.all(16),
     color: Colors.white,
