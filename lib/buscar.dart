@@ -13,6 +13,8 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
 
+import 'home_category.dart';
+
 void main() => runApp(Search());
 FocusNode nameNode;
 
@@ -56,6 +58,7 @@ List<S2Choice<String>> options = [
 
 class SearchW extends State<Search> {
   String _idUser = "";
+  String _idCat = "";
   @override
   void initState() {
     super.initState();
@@ -321,6 +324,12 @@ class SearchW extends State<Search> {
                             icon: Icon(Icons.search, color: azul_logo),
                             border: InputBorder.none,
                             hintText: "Buscar",
+
+                            suffixIcon: IconButton(
+                                icon: Icon(Icons.filter_alt,color: Colors.grey[600] ),
+                                onPressed: () {
+
+                                }),
                           ),
                           onTap: (){
                             setState(() {
@@ -467,7 +476,7 @@ class SearchW extends State<Search> {
                               color: Colors.grey[650],
                             ),
                             Container(
-                                child: tutorials.length == 0
+                              child: tutorials.length == 0
                                   ? Center(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -480,47 +489,47 @@ class SearchW extends State<Search> {
                                   ],
                                 ),
                               )
-                                    :ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
+                                  :ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
                                   itemCount: tutorials.length,
                                   itemBuilder: (context, index) {
                                     return Padding(
-                                  padding: const EdgeInsets.only(right: 1,
-                                      bottom: 1),
-                                  child: Column(
-                                    children: <Widget>[
-                                      ListTile(
-                                        title: TextButton(
-                                            child:Text(
-                                              nombre = tutorials[index]["titulo"],
-                                              semanticsLabel: "titulo",
-                                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                            ),
-                                            onPressed: () {
-                                              /*_idUser = users[index]["id"];
+                                      padding: const EdgeInsets.only(right: 1,
+                                          bottom: 1),
+                                      child: Column(
+                                        children: <Widget>[
+                                          ListTile(
+                                            title: TextButton(
+                                                child:Text(
+                                                  nombre = tutorials[index]["titulo"],
+                                                  semanticsLabel: "titulo",
+                                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                                ),
+                                                onPressed: () {
+                                                  /*_idUser = users[index]["id"];
                                                       Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
                                                           builder: (context) => Perfil2(_idUser),
                                                         ),
                                                       ).then((value) => setState(() {}));*/
-                                            }
-                                        ),
-                                        leading: Container(
-                                          height: 50.0,
-                                          width: 50.0,
-                                          decoration: new BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            //Imagenes(users[index]["username"]),
-                                            image: new DecorationImage(
-                                                fit: BoxFit.fill,
-                                                image: new NetworkImage(
-                                                    rutaFoto)),
-                                          ),
-                                        ).paddingOnly(top: 5, bottom: 5),
+                                                }
+                                            ),
+                                            leading: Container(
+                                              height: 50.0,
+                                              width: 50.0,
+                                              decoration: new BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                //Imagenes(users[index]["username"]),
+                                                image: new DecorationImage(
+                                                    fit: BoxFit.fill,
+                                                    image: new NetworkImage(
+                                                        rutaFoto)),
+                                              ),
+                                            ).paddingOnly(top: 5, bottom: 5),
 
-                                        /*trailing:
+                                            /*trailing:
                                               (myself == users[index]["username"])
                                                   ? IconButton(icon:Icon(Icons.more_vert),
                                                 onPressed: () {
@@ -550,16 +559,16 @@ class SearchW extends State<Search> {
                                                   }
                                                 },
                                               )*/
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                );
-                              }
+                                    );
+                                  }
                               ),
-                              ),
-                                  ],
-                                ),
-                          ).center(),
+                            ),
+                          ],
+                        ),
+                      ).center(),
                       Container(
                         child: users.length == 0
                             ? Center(
@@ -683,11 +692,26 @@ class SearchW extends State<Search> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget> [
                                         ListTile(
-                                            title: Text(categories[index]["nombre"],
-                                                style: TextStyle(
-                                                    color:black,
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.bold)),
+                                            title: TextButton(
+                                                child: Text(
+                                                    categories[index]["nombre"],
+                                                    style: TextStyle(
+                                                        color:black,
+                                                        fontSize: 15.0,
+                                                        fontWeight: FontWeight.bold)),
+                                                onPressed: () {
+                                                  //categoria concreta
+                                                  _idCat = categories[index]["id"];
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HomeCategory(_idCat),
+                                                    ),
+                                                  ).then((value) =>
+                                                      setState(() {}));
+                                                }
+                                            ),
                                             leading: CircleAvatar(
                                               child: Text(categories[index]["nombre"][0]),
                                             ),
@@ -718,7 +742,7 @@ class SearchW extends State<Search> {
                                         ),
                                       ],
                                     ));
-                            }
+                              }
                           )
                       )
                     ]
