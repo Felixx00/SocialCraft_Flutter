@@ -24,7 +24,7 @@ class CommonButton extends StatelessWidget {
   }
 }
 
-Widget targetaTutorial(context, linkFoto, titulo, usuario, descripcion) {
+Widget targetaTutorial(context, linkFoto, titulo, usuario, rate, descripcion) {
   return Card(
     margin: EdgeInsets.all(16),
     color: Colors.white,
@@ -55,6 +55,11 @@ Widget targetaTutorial(context, linkFoto, titulo, usuario, descripcion) {
                 Text("@" + usuario,
                         style: TextStyle(fontSize: 16, color: azul_logo))
                     .paddingOnly(left: 16, right: 16, top: 5),
+                Text(
+                  rate,
+                  style: TextStyle(fontSize: 20, color: textPrimaryColor),
+                  textAlign: TextAlign.right,
+                ) //.paddingOnly(left: 16, right: 16),
               ],
             ),
             /*
@@ -73,8 +78,7 @@ Widget targetaTutorial(context, linkFoto, titulo, usuario, descripcion) {
             Padding(
               padding: EdgeInsets.only(left: 16, right: 16),
               child: Text(descripcion,
-                  style:
-                      secondaryTextStyle(size: 16, color: textPrimaryColor)),
+                  style: secondaryTextStyle(size: 16, color: textPrimaryColor)),
             ),
             SizedBox(height: 20),
           ],
