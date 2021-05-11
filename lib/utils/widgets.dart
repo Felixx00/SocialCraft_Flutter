@@ -23,3 +23,52 @@ class CommonButton extends StatelessWidget {
     ).cornerRadiusWithClipRRect(12);
   }
 }
+
+Widget targetaTutorial(context, linkFoto, titulo, descripcion, usuario) {
+  return Card(
+    margin: EdgeInsets.all(16),
+    color: Colors.white,
+    elevation: 2,
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16))),
+    child: InkWell(
+      borderRadius: BorderRadius.all(Radius.circular(16)),
+      onTap: () {},
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+              child: Image.network(linkFoto,
+                  height: 200,
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.fill),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.only(left: 16, right: 16),
+              child: Text(titulo,
+                  style: boldTextStyle(size: 20, color: textPrimaryColor)),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.only(left: 16, right: 16),
+              child: Text(usuario,
+                  style: TextStyle(fontSize: 16, color: azul_logo)),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.only(left: 16, right: 16),
+              child: Text(descripcion,
+                  style:
+                      secondaryTextStyle(size: 16, color: textSecondaryColor)),
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
+      ),
+    ),
+  );
+}
