@@ -116,6 +116,25 @@ class EditarState extends State<Editar> {
     }
   }
 
+  Future<Resp> editRuta() async {
+    var map = new Map<String, dynamic>();
+    var ref = FirebaseStorage.instance.ref().child(userName + '/image');
+    map['rutaFoto'] = (await ref.getDownloadURL()).toString();
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', '/users/editProfile'),
+      body: map,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
   Future<Resp> username() async {
     final response = await http.get(
       Uri.https('api.socialcraft.club', 'users/getMyProfile'),
@@ -201,10 +220,12 @@ class EditarState extends State<Editar> {
                     Navigator.pushNamed(context, 'barra');
                     final _firebaseStorage = FirebaseStorage.instance;
                     var file = File(foto.path);
-                    var snapshot = await _firebaseStorage
+                    await _firebaseStorage
                         .ref()
                         .child(userName + '/image')
                         .putFile(file);
+
+                    editRuta();
 
                     //print(foto.path);
                   } else {
