@@ -44,8 +44,8 @@ class SubirPasosState extends State<SubirPasos> {
   init() async {
     map2 = widget.map;
     objeto_foto = map2['rutaFoto'];
-    mapfoto['rutaFoto'] = "";
     map2['rutaFoto'] = 'placeholder';
+    mapfoto['rutaFoto'] = "";
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
     print(map2);
@@ -89,6 +89,7 @@ class SubirPasosState extends State<SubirPasos> {
     );
     if (response.statusCode == 200) {
       print(response.body);
+      print('tuto bien');
       return Resp.fromJson3(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
@@ -98,7 +99,7 @@ class SubirPasosState extends State<SubirPasos> {
   Future<Resp> subirPasos(int id, int numeropaso) async {
     var map3 = new Map<String, dynamic>();
     map3['IdTutorial'] = id.toString();
-    map3['NumPaso'] = numeropaso;
+    map3['NumPaso'] = numeropaso.toString();
     map3['Text'] = descripciones[numeropaso];
     final response = await http.post(
       Uri.https('api.socialcraft.club', 'tutorials/uploadStep'),
@@ -109,6 +110,7 @@ class SubirPasosState extends State<SubirPasos> {
     );
     if (response.statusCode == 200) {
       print(response.body);
+      subirfotopaso(id, (numeropaso + 1));
       return Resp.fromJson2(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
@@ -122,17 +124,17 @@ class SubirPasosState extends State<SubirPasos> {
 
     if (foto != null) {
       final _firebaseStorage = FirebaseStorage.instance;
-      var file = File(foto.path);
-      print(x);
+      var file = File(objeto_foto.path);
+      print('oooo');
+      print(file);
       print('aaaaa');
-      var snapshot = await _firebaseStorage
+      await _firebaseStorage
           .ref()
           .child('Posts/' + x.toString() + '/principal')
           .putFile(file);
 
-      var ref = FirebaseStorage.instance
-          .ref()
-          .child("Posts/" + x.toString() + '/principal');
+      var ref =
+          _firebaseStorage.ref().child("Posts/" + x.toString() + '/principal');
       mapfoto['rutaFoto'] = (await ref.getDownloadURL()).toString();
       print('eeee' + mapfoto['rutaFoto']);
       mapfoto['tutId'] = x.toString();
@@ -164,9 +166,9 @@ class SubirPasosState extends State<SubirPasos> {
     if (imagenes[idpaso - 1] != null) {
       final _firebaseStorage = FirebaseStorage.instance;
       var file = File(imagenes[idpaso - 1].path);
-      print(x);
-      print('aaaaa');
-      var snapshot = await _firebaseStorage
+      print(file);
+      print('aaaaaaaaaaaaaaa');
+      await _firebaseStorage
           .ref()
           .child('Posts/' + x.toString() + '/paso' + idpaso.toString())
           .putFile(file);
@@ -213,7 +215,7 @@ class SubirPasosState extends State<SubirPasos> {
                       print(respuesta.id);
                       for (int i = 0; i < upperBound; i++) {
                         subirPasos(respuesta.id, i);
-                        subirfotopaso(respuesta.id, (i + 1));
+                        //subirfotopaso(respuesta.id, (i + 1));
                       }
 
                       subirfoto(respuesta.id);
