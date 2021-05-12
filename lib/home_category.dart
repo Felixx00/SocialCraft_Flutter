@@ -14,6 +14,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'post.dart';
 
 class HomeCategory extends StatefulWidget {
   @override
@@ -28,19 +29,33 @@ class HomeCategoryState extends State<HomeCategory> {
   String token = '';
   List tutoriales = [];
 
+  @override
+  initState() {
+    super.initState();
+    init();
+    setState((){});
+  }
+
   init()async{
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
     getTutCategory().then((response) async{
       tutoriales = response.list;
       print(tutoriales);
+      setState((){});
     });
     await Firebase.initializeApp();
+    setState(() {});
   }
-  void initState() {
+
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+  /*void initState() {
     super.initState();
     init();
-  }
+  }*/
 
   Future<Resp> getTutCategory() async{
     var map = new Map<String,dynamic>();
@@ -69,18 +84,68 @@ class HomeCategoryState extends State<HomeCategory> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body:SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children:[
-            Column(
-              /*children: [
-                targetaTutorial(context, linkFoto, titulo, usuario, rate, descripcion)
-                ]*/
-            ),
-          ],
-        )
-      )
+      body:
+                ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: tutoriales.length,
+                  itemBuilder: (context, index){
+                    return Card(
+                      margin: EdgeInsets.all(16),
+                      color: Colors.white,
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                      ),
+                      child: InkWell(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        onTap: () {
+                          Post(tutoriales[index]['id']).launch(context);
+                        },
+                        child: Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget> [
+                              ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(16), topRight: Radius.circular(16)
+                                ),
+                                child: Image.network(tutoriales[index]['fotoRuta'],
+                                  height: 200,
+                                  width: MediaQuery.of(context).size.width,
+                                  fit: BoxFit.fill
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  Text(tutoriales[index]["titulo"],
+                                  style: boldTextStyle(size: 20, color: textPrimaryColor)).paddingOnly(left: 16),
+                                  Text(tutoriales[index]["creador"],
+                                  style: TextStyle(fontSize: 16, color: azul_logo)).paddingOnly(left: 16, right: 16, top: 5),
+                                  Text(
+                                    tutoriales[index]["rate"],
+                                    style: TextStyle(fontSize: 20, color: textPrimaryColor),
+                                    textAlign: TextAlign.right,
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Padding(
+                                padding: EdgeInsets.only(left: 16, right: 16),
+                                child: Text(tutoriales[index]["tagline"],
+                                style: secondaryTextStyle(size: 16, color: textPrimaryColor))
+                              ),
+                              SizedBox(height: 20),
+                            ]
+                          )
+                        )
+                      )
+                    );
+                  }
+
+
+                )
 
     );
     throw UnimplementedError();
