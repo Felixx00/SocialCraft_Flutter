@@ -478,7 +478,7 @@ class SearchW extends State<Search> {
                               thickness: 3,
                               color: Colors.grey[650],
                             ),
-                            Container(
+                            Expanded(
                               child: tutorials.length == 0
                                   ? Center(
                                 child: Column(
@@ -516,21 +516,21 @@ class SearchW extends State<Search> {
                                               ),
                                             ),
                                             title:
-                                                Text(
-                                                  nombre = tutorials[index]["titulo"],
-                                                  semanticsLabel: "titulo",
-                                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                                ),
+                                            Text(
+                                              nombre = tutorials[index]["titulo"],
+                                              semanticsLabel: "titulo",
+                                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                            ),
 
                                             subtitle:Text(tutorials[index]["creador"]),
                                             trailing: Text(""),
                                             onTap: (){
                                               _idPost = tutorials[index]["id"];
                                               Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                              builder: (context) => Post(_idPost),
-                                              ),
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => Post(_idPost),
+                                                ),
                                               ).then((value) => setState(() {}));
                                             },
                                           ),
