@@ -34,7 +34,7 @@ var usersL=[];
 var tutorials = [];
 int user;
 String nombre= "";
-String rutaFoto = "https://icons555.com/images/icons-gray/image_icon_user_4_pic_512x512.png";
+String rutaFoto = "https://www.labicok.com/wp-content/uploads/2020/06/default-user-image.png" ;
 bool followed= true;
 List infoBusqueda = [];
 bool unfollow= true;
@@ -510,9 +510,12 @@ class SearchW extends State<Search> {
                                                 shape: BoxShape.rectangle,
                                                 //Imagenes(users[index]["username"]),
                                                 image: new DecorationImage(
-                                                    fit: BoxFit.fill,
-                                                    image: new NetworkImage(
-                                                        fotoVideos[index%5]/*rutaFoto*/)),
+                                                  fit: BoxFit.fill,
+                                                  image: new NetworkImage(
+                                                      tutorials[index]["fotoRuta"] == null || tutorials[index]["fotoRuta"] == "placeholder"
+                                                          ? fotoVideos[index%5]
+                                                          :tutorials[index]["fotoRuta"] ),
+                                                ),
                                               ),
                                             ),
                                             title:
@@ -599,7 +602,9 @@ class SearchW extends State<Search> {
                                             image: new DecorationImage(
                                                 fit: BoxFit.fill,
                                                 image: new NetworkImage(
-                                                    rutaFoto)),
+                                                    users[index]["rutaFoto"]== null
+                                                        ? rutaFoto
+                                                        : users[index]["rutaFoto"])),
                                           ),
                                         ).paddingOnly(top: 5, bottom: 5),
 
