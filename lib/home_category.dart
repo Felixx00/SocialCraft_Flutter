@@ -33,6 +33,7 @@ class HomeCategoryState extends State<HomeCategory> {
     token = await storage2.read(key: 'jwt');
     getTutCategory().then((response) async{
       tutoriales = response.list;
+      print(tutoriales);
     });
     await Firebase.initializeApp();
   }
@@ -42,25 +43,20 @@ class HomeCategoryState extends State<HomeCategory> {
   }
 
   Future<Resp> getTutCategory() async{
-    var arr = new List(1);// creates an empty array of length 5
-    // assigning values to all the indices
-    arr[0] = catId;
     var map = new Map<String,dynamic>();
-    String s = "catId[0]";
-    print(token);
-    map[s] = catId;
+    map['catId'] = catId;
     map['limit'] = (100).toString();
     map['offset'] = (0).toString();
     print(Uri.https('api.socialcraft.club', '/tutorials/searchCategory', map));
     final response = await http.get(
       Uri.https('api.socialcraft.club', '/tutorials/searchCategory',map),
       headers: {
-        'Autorization': 'Bearer $token',
+        'Authorization': 'Bearer $token',
       },
     );
-    print([catId]);
     print(token);
     print(response.statusCode);
+
     if (response.statusCode == 200) {
       print(response.body);
       return Resp.fromJson2(jsonDecode(response.body));
@@ -78,9 +74,9 @@ class HomeCategoryState extends State<HomeCategory> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children:[
             Column(
-              children: [
-                Text(catId,style: boldTextStyle(size: 12, color: black)),
-              ]
+              /*children: [
+                targetaTutorial(context, linkFoto, titulo, usuario, rate, descripcion)
+                ]*/
             ),
           ],
         )
