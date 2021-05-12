@@ -119,6 +119,25 @@ class PerfilState extends State<Perfil> {
     }
   }
 
+  Future<Resp> editRuta() async {
+    var map = new Map<String, dynamic>();
+    var ref = FirebaseStorage.instance.ref().child(userName + '/image');
+    map['rutaFoto'] = (await ref.getDownloadURL()).toString();
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', '/users/editProfile'),
+      body: map,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
   Future getImage() async {
     var r = FirebaseStorage.instance.ref(userName + '/image');
     try {
@@ -233,13 +252,11 @@ class PerfilState extends State<Perfil> {
                                               final _firebaseStorage =
                                                   FirebaseStorage.instance;
                                               var file = File(foto.path);
-                                              var snapshot =
-                                                  await _firebaseStorage
-                                                      .ref()
-                                                      .child(
-                                                          userName + '/image')
-                                                      .putFile(file);
-
+                                              await _firebaseStorage
+                                                  .ref()
+                                                  .child(userName + '/image')
+                                                  .putFile(file);
+                                              editRuta();
                                               //print(foto.path);
                                             } else {
                                               print('No image selected.');
