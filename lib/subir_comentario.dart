@@ -186,7 +186,8 @@ class SubirComentarioState extends State<SubirComentario> {
                 toast("Campos obligatorios: Puntuación y Texto", bgColor: toast_color);
               }
               else{
-                if (imageFile != "") {
+                if (imageFile != null) {
+                  print("ENTASTE");
                   var now = DateTime.now();
                   String nows = now.toString();
                   final _firebaseStorage =
