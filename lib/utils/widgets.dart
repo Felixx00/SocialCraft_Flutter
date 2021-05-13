@@ -27,6 +27,8 @@ class CommonButton extends StatelessWidget {
 
 Widget targetaTutorial(
     context, linkFoto, titulo, usuario, rate, descripcion, post) {
+  bool correct = false;
+  if (rate != "0") correct = true;
   return Card(
     margin: EdgeInsets.all(16),
     color: Colors.white,
@@ -60,10 +62,11 @@ Widget targetaTutorial(
                         style: TextStyle(fontSize: 16, color: azul_logo))
                     .paddingOnly(left: 16, right: 16, top: 5),
                 Text(
-                  rate,
+                  correct ? rate + "/5" : "-",
                   style: TextStyle(fontSize: 20, color: textPrimaryColor),
                   textAlign: TextAlign.right,
-                ) //.paddingOnly(left: 16, right: 16),
+                ).paddingOnly(right: 1),
+                Icon(Icons.star_outlined, color: azul_logo, size: 22),
               ],
             ),
             /*

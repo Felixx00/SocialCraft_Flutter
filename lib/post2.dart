@@ -152,7 +152,7 @@ class PostState2 extends State<Post2> {
                                 fontSize: 15, fontWeight: FontWeight.bold))),
                   ],
                 ),
-                actions: <Widget>[
+                /*actions: <Widget>[
                   IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {
@@ -171,7 +171,7 @@ class PostState2 extends State<Post2> {
                       init();
                     },
                   )
-                ],
+                ],*/
               )
             ];
           },
