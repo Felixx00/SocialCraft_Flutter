@@ -53,7 +53,7 @@ List userss = [
   },
 ];
 
-String value1 = 'flutter';
+String value1 = '1';
 List<S2Choice<String>> options = [
   S2Choice<String>(value: '1', title: 'Título'),
   S2Choice<String>(value: '2', title: 'Duración'),
@@ -82,7 +82,7 @@ class SearchW extends State<Search> {
       print(myself);
     });
     await Firebase.initializeApp();
-    value1 = "";
+    value1 = "1";
 
   }
 
@@ -421,7 +421,8 @@ class SearchW extends State<Search> {
                         indicatorColor: Colors.grey[300],
                         indicatorSize: TabBarIndicatorSize.label,
                         onTap: (index) {
-                          value1 = "flutter";
+                          if(index == 1){value1 = "flutter";}
+                          else value1 = "1";
                         },
                         tabs: <Widget>[
                           Tab(icon: Icon(
