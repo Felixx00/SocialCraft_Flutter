@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/perfil.dart';
+import 'package:socialcraft/post.dart';
 import 'package:socialcraft/post2.dart';
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
@@ -99,8 +100,9 @@ class Perfil2State extends State<Perfil2> {
     map['userId'] = widget.idUsuario;
     map['limit'] = "100";
     map['offset'] = "0";
-    final response = await http.get(
-      Uri.https('api.socialcraft.club', '/tutorials/getUserTutorials', map),
+    final response = await http.post(
+      Uri.https('api.socialcraft.club', '/tutorials/getUserTutorials'),
+      body:map,
       headers: {
         'Authorization': 'Bearer $token',
       },
