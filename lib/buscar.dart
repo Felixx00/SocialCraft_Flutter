@@ -695,14 +695,14 @@ class SearchW extends State<Search> {
                                               child: Text(categories[index]["nombre"][0]),
                                             ),
                                             trailing: ElevatedButton.icon(
-                                              label: Text(categories[index]["seguido"] ? 'Follow': 'Unfollow'),
+                                              label: Text(categories[index]["seguido"] ? 'Unfollow' : 'Follow'),
                                               style: ElevatedButton.styleFrom(
                                                 minimumSize: Size(50,40),
-                                                primary: categories[index]["seguido"] ? Color.fromRGBO(68,102,216,1.0) : Colors.redAccent[200],
+                                                primary: categories[index]["seguido"] ?  Colors.redAccent[200] : Color.fromRGBO(68,102,216,1.0) ,
                                                 onPrimary: Colors.white,
                                                 onSurface: Colors.grey,
                                               ),
-                                              icon: Icon(categories[index]["seguido"] ? Icons.person_add : Icons.person_add_disabled, size: 18),
+                                              icon: Icon(categories[index]["seguido"] ?  Icons.person_add_disabled : Icons.person_add, size: 18),
                                               onPressed: () {
                                                 if(categories[index]["seguido"] == false) {
                                                   followCategory(categories[index]["id"]).then((response) async {
