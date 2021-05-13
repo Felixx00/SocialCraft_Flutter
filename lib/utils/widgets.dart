@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/post2.dart';
 import 'package:socialcraft/utils/fonts.dart';
 
 class CommonButton extends StatelessWidget {
@@ -24,7 +25,8 @@ class CommonButton extends StatelessWidget {
   }
 }
 
-Widget targetaTutorial(context, linkFoto, titulo, usuario, rate, descripcion) {
+Widget targetaTutorial(
+    context, linkFoto, titulo, usuario, rate, descripcion, post) {
   return Card(
     margin: EdgeInsets.all(16),
     color: Colors.white,
@@ -33,7 +35,9 @@ Widget targetaTutorial(context, linkFoto, titulo, usuario, rate, descripcion) {
         borderRadius: BorderRadius.all(Radius.circular(16))),
     child: InkWell(
       borderRadius: BorderRadius.all(Radius.circular(16)),
-      onTap: () {},
+      onTap: () {
+        Post2(post).launch(context);
+      },
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

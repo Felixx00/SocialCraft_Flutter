@@ -7,3 +7,4 @@ const socialcraft_logo_letras_blanco =
 const insignia = 'images/insignia.png';
 const key = 'images/key2.png';
 const trophy = 'images/trophy.png';
+const fondo = 'images/fondo.jpg';

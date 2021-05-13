@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/post.dart';
+import 'package:socialcraft/post2.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
@@ -13,36 +15,44 @@ class Home extends StatefulWidget {
   HomeState createState() => HomeState();
 }
 
+String token = "";
+List<dynamic> posts = [];
+
 class HomeState extends State<Home> {
-  bool showPassword = false;
-  FocusNode emailNode = FocusNode();
-  FocusNode passwordNode = FocusNode();
-  String user = "";
-  String pass = "";
-  bool correct = true;
   @override
   void initState() {
     super.initState();
     init();
   }
 
-  init() async {}
+  init() async {
+    final storage2 = new FlutterSecureStorage();
+    token = await storage2.read(key: 'jwt');
+
+    getTutorials().then((respuesta) async {
+      posts = respuesta.list;
+      setState(() {});
+    });
+  }
 
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
   }
 
-  Future<Resp> loginUser(String user, String pass) async {
+  Future<Resp> getTutorials() async {
     var map = new Map<String, dynamic>();
-    map['user'] = user;
-    map['pass'] = pass;
-    final response = await http.post(
-      Uri.https('api.socialcraft.club', 'login'),
-      body: map,
+    map['limit'] = "100";
+    map['offset'] = "0";
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', '/tutorials/getTutorials', map),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
     );
     if (response.statusCode == 200) {
-      return Resp.fromJson(jsonDecode(response.body));
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -53,30 +63,45 @@ class HomeState extends State<Home> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                Container(
-                  child: Column(
-                    children: [
-                      Container(
-                        child: Image.asset(socialcraft_logo,
-                            width: 100, height: 100),
-                      ).cornerRadiusWithClipRRect(16).paddingTop(50),
-                      Container(
-                        child: Image.asset(socialcraft_logo_letras,
-                            width: 300, height: 100),
-                      ).cornerRadiusWithClipRRect(16).paddingTop(1),
-                      Text("Próximamente",
-                          style: TextStyle(color: azul_logo, fontSize: 25))
-                    ],
-                  ),
-                ),
-              ],
+        appBar: AppBar(
+          title: Image.asset(socialcraft_logo_letras_blanco,
+              width: 100, height: 100),
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          backgroundColor: azul_logo,
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(fondo),
+              fit: BoxFit.cover,
             ),
           ),
-        ).paddingOnly(top: 200, left: 16, right: 16),
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: posts.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 1, bottom: 1),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: targetaTutorial(
+                          context,
+                          posts[index]["fotoRuta"],
+                          posts[index]["titulo"],
+                          posts[index]["creador"],
+                          posts[index]["rate"],
+                          posts[index]["subtitulo"],
+                          posts[index]['id']),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
