@@ -54,6 +54,7 @@ Widget targetaTutorial(
             ),
             SizedBox(height: 10),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(titulo,
                         style: boldTextStyle(size: 20, color: textPrimaryColor))
@@ -61,26 +62,16 @@ Widget targetaTutorial(
                 Text("@" + usuario,
                         style: TextStyle(fontSize: 16, color: azul_logo))
                     .paddingOnly(left: 16, right: 16, top: 5),
-                Text(
-                  correct ? rate + "/5" : "-",
-                  style: TextStyle(fontSize: 20, color: textPrimaryColor),
-                  textAlign: TextAlign.right,
-                ).paddingOnly(right: 1),
-                Icon(Icons.star_outlined, color: azul_logo, size: 22),
+                Container(
+                  child: Text(
+                    correct ? rate + "/5" : "-",
+                    style: TextStyle(fontSize: 20, color: textPrimaryColor),
+                  ).paddingOnly(left: 100),
+                ),
+                Icon(Icons.star_outlined, color: azul_logo, size: 22)
+                    .paddingOnly(right: 5),
               ],
             ),
-            /*
-            Padding(
-              padding: EdgeInsets.only(left: 16, right: 16),
-              child: Text(titulo,
-                  style: boldTextStyle(size: 20, color: textPrimaryColor)),
-            ),
-            SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.only(left: 16, right: 16),
-              child: Text(usuario,
-                  style: TextStyle(fontSize: 16, color: azul_logo)),
-            ), */
             SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.only(left: 16, right: 16),

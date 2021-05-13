@@ -9,10 +9,12 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:smart_select/smart_select.dart';
 import 'package:socialcraft/perfil2.dart';
 import 'package:socialcraft/post.dart';
+import 'package:socialcraft/post2.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
+import 'package:socialcraft/utils/widgets.dart';
 
 import 'home_category.dart';
 
@@ -503,7 +505,15 @@ class SearchW extends State<Search> {
                                       child: Column(
                                         children: <Widget>[
                                           ListTile(
-                                            leading: Container(
+                                            title: targetaTutorial(
+                                                context,
+                                                tutorials[index]["fotoRuta"] == null ? fotoVideos[index%5] : tutorials[index]["fotoRuta"],
+                                                tutorials[index]["titulo"],
+                                                tutorials[index]["creador"],
+                                                tutorials[index]["rate"],
+                                                tutorials[index]["tagline"],
+                                                tutorials[index]['id']),
+                                            /*leading: Container(
                                               height: 300.0,
                                               width: 120.0,
                                               decoration: new BoxDecoration(
@@ -526,13 +536,13 @@ class SearchW extends State<Search> {
                                             ),
 
                                             subtitle:Text(tutorials[index]["creador"]),
-                                            trailing: Text(""),
+                                            trailing: Text(""),*/
                                             onTap: (){
                                               _idPost = tutorials[index]["id"];
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => Post(_idPost),
+                                                  builder: (context) => Post2(_idPost),
                                                 ),
                                               ).then((value) => setState(() {}));
                                             },

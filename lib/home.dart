@@ -65,7 +65,7 @@ class HomeState extends State<Home> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Image.asset(socialcraft_logo_letras_blanco,
-              width: 100, height: 100),
+              width: 250, height: 250),
           centerTitle: true,
           automaticallyImplyLeading: false,
           backgroundColor: azul_logo,
