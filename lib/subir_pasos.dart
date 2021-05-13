@@ -56,6 +56,8 @@ class SubirPasosState extends State<SubirPasos> {
     if (mounted) super.setState(fn);
   }
 
+  String fotopasoeditar = "";
+
   int activeStep = 0;
   final controller = TextEditingController(text: "");
   final controller2 = TextEditingController(text: "");
@@ -97,10 +99,12 @@ class SubirPasosState extends State<SubirPasos> {
   }
 
   Future<Resp> subirPasos(int id, int numeropaso) async {
+    await subirfotopaso(id, (numeropaso + 1));
     var map3 = new Map<String, dynamic>();
     map3['IdTutorial'] = id.toString();
     map3['NumPaso'] = numeropaso.toString();
     map3['Text'] = descripciones[numeropaso];
+    map3['RutaFoto'] = fotopasoeditar;
     final response = await http.post(
       Uri.https('api.socialcraft.club', 'tutorials/uploadStep'),
       body: map3,
@@ -110,7 +114,7 @@ class SubirPasosState extends State<SubirPasos> {
     );
     if (response.statusCode == 200) {
       print(response.body);
-      subirfotopaso(id, (numeropaso + 1));
+
       return Resp.fromJson2(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
@@ -162,7 +166,7 @@ class SubirPasosState extends State<SubirPasos> {
     }
   }
 
-  void subirfotopaso(int x, int idpaso) async {
+  Future subirfotopaso(int x, int idpaso) async {
     if (imagenes[idpaso - 1] != null) {
       final _firebaseStorage = FirebaseStorage.instance;
       var file = File(imagenes[idpaso - 1].path);
@@ -172,7 +176,12 @@ class SubirPasosState extends State<SubirPasos> {
           .ref()
           .child('Posts/' + x.toString() + '/paso' + idpaso.toString())
           .putFile(file);
-
+      var ref = FirebaseStorage.instance
+          .ref()
+          .child('Posts/' + x.toString() + '/paso' + idpaso.toString());
+      fotopasoeditar = (await ref.getDownloadURL()).toString();
+      Future a;
+      return a;
       //print(foto.path);
     } else {
       print('No image selected.');
