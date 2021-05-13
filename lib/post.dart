@@ -195,6 +195,7 @@ class PostState extends State<Post> {
             //Navigator.pushNamed(context, "barra");
             Navigator.pop(context);
             Navigator.pop(context);
+            setState(() {});
           });
         });
     Widget continueButton = TextButton(

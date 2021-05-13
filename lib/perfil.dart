@@ -417,8 +417,9 @@ class Product extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Post(posts[pos]['id']).launch(context);
+      onTap: () async {
+        await Post(posts[pos]['id']).launch(context);
+        Perfil().launch(context);
       },
       child: Container(
         child: Column(
