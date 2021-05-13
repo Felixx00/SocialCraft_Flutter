@@ -1,66 +1,82 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/post.dart';
+import 'package:socialcraft/resp.dart';
+import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'subir_comentario.dart';
 
-List comentarios = [
-  {
-    "id" : 1,
-    "username": "usuario1",
-    "fotoPerfil": "https://cursosvirtualesgratis.com/wp-content/uploads/2018/02/time-totorial.jpg",
-    "valoracion": "3",
-    "texto": "muy buen tutorial",
-    "fotografia": "https://cursosvirtualesgratis.com/wp-content/uploads/2018/02/time-totorial.jpg",
-    "datahora": "16/08/23",
-    "idUsuario": 3,
-  },
-  {
-    "id" : 2,
-    "username": "usuario2",
-    "fotoPerfil": 'https://cursosvirtualesgratis.com/wp-content/uploads/2018/02/time-totorial.jpg',
-    "valoracion": "2",
-    "texto": "En la programación de computadoras, un comentario es una construcción del lenguaje de programación destinada a incrustar",
-    "fotografia": 'https://como-funciona.com/wp-content/uploads/2019/01/c%C3%B3mo-funciona-un-tutorial.jpg',
-    "datahora": "16/02/21",
-    "idUsuario": 3,
-  },
-  {
-    "id" : 4,
-    "username": "usuario2",
-    "fotoPerfil": 'https://cursosvirtualesgratis.com/wp-content/uploads/2018/02/time-totorial.jpg',
-    "valoracion": "2",
-    "texto": "",
-    "fotografia": "",
-    "datahora": "16/05/21",
-    "idUsuario": 5,
-  },
-  {
-    "id" : 5,
-    "username": "usuario2",
-    "fotoPerfil": 'https://cursosvirtualesgratis.com/wp-content/uploads/2018/02/time-totorial.jpg',
-    "valoracion": "2",
-    "texto": "",
-    "fotografia": 'https://como-funciona.com/wp-content/uploads/2019/01/c%C3%B3mo-funciona-un-tutorial.jpg',
-    "datahora": "16/05/21",
-    "idUsuario": 5,
-  },
-];
 
-
-class PostComentarios extends StatelessWidget {
+class PostComentarios extends StatefulWidget {
   final String tutId;
   PostComentarios(this.tutId);
 
   @override
+  PostComentariosState createState() => PostComentariosState();
+}
+
+String token = "";
+List<dynamic> comentarios = [];
+
+class PostComentariosState extends State<PostComentarios> {
+  @override
+  initState() {
+    super.initState();
+    init();
+    setState(() {});
+  }
+
+  init() async {
+    String idTut = widget.tutId;
+    final storage2 = new FlutterSecureStorage();
+    token = await storage2.read(key: 'jwt');
+
+    getComments(idTut).then((respuesta) async {
+      comentarios = respuesta.list;
+      setState(() {});
+    });
+    setState(() {});
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
+  Future<Resp> getComments(String tutId) async {
+    var map = new Map<String, dynamic>();
+    map['tutId'] = tutId;
+    map['limit'] = "100";
+    map['offset'] = "0";
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', '/tutorials/getComments', map),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    String idTut = widget.tutId;
+    print("                                                              ");
+    print(idTut);
+    print("                                                              ");
     return Scaffold(
         body: ListView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          itemCount: comentarios.length,
+          itemCount: comentarios.length == null ? 0:comentarios.length,
             itemBuilder: (context,i) => new Column(
               children: <Widget>[
                 Padding(
@@ -78,7 +94,7 @@ class PostComentarios extends StatelessWidget {
                             image: new DecorationImage(
                                 fit: BoxFit.fill,
                                 image: new NetworkImage(
-                                    comentarios[i]["fotoPerfil"])),
+                                    comentarios[i]['fotoPerfil'])),
                           ),
                         ),
                       ),
@@ -96,14 +112,14 @@ class PostComentarios extends StatelessWidget {
                                           child: RichText(
                                             text: TextSpan(children: [
                                               TextSpan(
-                                                text: comentarios[i]["username"],
+                                                text: comentarios[i]['username'],
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 17.0,
                                                   color: Colors.black),
                                               ),
                                               TextSpan(
-                                                text: " · ${comentarios[i]["datahora"]}",
+                                                text: " · ${comentarios[i]['datahora']}",
                                                 style: TextStyle(
                                                   fontSize: 16.0, color: Colors.grey))
                                             ]),
@@ -126,20 +142,20 @@ class PostComentarios extends StatelessWidget {
                                 child: Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      comentarios[i]["texto"],
+                                      comentarios[i]['texto'],
                                       style: TextStyle(fontSize: 15.0),
                                     )
                                 ),
                               ),
                               Container(
-                                height: comentarios[i]["fotografia"] != "" ? 300.0: 0.0,
+                                height: comentarios[i]['fotografia'] != "" ? 300.0: 0.0,
                                 width: 300.0,
                                 decoration: new BoxDecoration(
                                   shape: BoxShape.rectangle,
                                   image: new DecorationImage(
                                       fit: BoxFit.fill,
                                       image: new NetworkImage(
-                                          comentarios[i]["fotografia"])),
+                                          comentarios[i]['fotografia'])),
                                 ),
                               ).paddingOnly(top: 5, bottom: 5),
                             ],
@@ -158,7 +174,7 @@ class PostComentarios extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SubirComentario(tutId),
+              builder: (context) => SubirComentario(idTut),
             ),
           );
         },
