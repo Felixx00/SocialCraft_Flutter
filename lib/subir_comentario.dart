@@ -30,11 +30,20 @@ class SubirComentarioState extends State<SubirComentario> {
   final String tutId;
   SubirComentarioState(this.tutId);
   String token = "";
+  String userName ="";
+  String desc ="";
 
   init()async{
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
     await Firebase.initializeApp();
+    username().then((respuesta) async {
+      //print(respuesta.data['name']);
+      userName = respuesta.data['username'];
+
+      await Firebase.initializeApp();
+      setState(() {});
+    });
   }
 
   Future<Resp> subirComent() async {
@@ -42,7 +51,7 @@ class SubirComentarioState extends State<SubirComentario> {
     map['tutId'] = tutId;
     map['score'] = points.toString();
     map['comment'] = comentario_text;
-    map['imagen'] = "";
+    map['imagen'] = desc;
     final response = await http.post(
       Uri.https('api.socialcraft.club','tutorials/commentTutorial'),
       body: map,
@@ -55,6 +64,22 @@ class SubirComentarioState extends State<SubirComentario> {
     if (response.statusCode == 200) {
       print(response.body);
       return Resp.fromJson3(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+  Future<Resp> username() async {
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', 'users/getMyProfile'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -161,6 +186,20 @@ class SubirComentarioState extends State<SubirComentario> {
                 toast("Campos obligatorios: Puntuación y Texto", bgColor: toast_color);
               }
               else{
+                if (imageFile != "") {
+                  var now = DateTime.now();
+                  String nows = now.toString();
+                  final _firebaseStorage =
+                      FirebaseStorage.instance;
+                  await _firebaseStorage
+                      .ref()
+                      .child(
+                      'Posts/' + tutId + '/comments/' + userName + '_' + nows)
+                      .putFile(imageFile);
+                  var ref = FirebaseStorage.instance.ref().child(
+                      'Posts/' + tutId + '/comments/' + userName + '_' + nows);
+                  desc = (await ref.getDownloadURL()).toString();
+                }
                 await subirComent().then((respuesta) async{
                   if(respuesta.success == false){
                     setState((){});
