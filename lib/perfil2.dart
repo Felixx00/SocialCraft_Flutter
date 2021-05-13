@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/perfil.dart';
+import 'package:socialcraft/post2.dart';
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/resp.dart';
@@ -12,7 +13,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'buscar.dart';
-
 
 class Perfil2 extends StatefulWidget {
   static String tag = '/EGProfileScreen';
@@ -28,14 +28,14 @@ String user = "";
 String userName = "";
 String about = "";
 String token = "";
-String posts = '0';
 String nPosts = "";
 String follow = '0';
 String nFollow = "";
 String followers = '0';
 String nFollowers = "";
-bool unfollow= true;
+bool unfollow = true;
 var linkfoto = "";
+List<dynamic> posts = [];
 
 class Perfil2State extends State<Perfil2> {
   @override
@@ -56,12 +56,16 @@ class Perfil2State extends State<Perfil2> {
         about = respuesta.data['about'];
       }
       userName = respuesta.data['username'];
-      follow= respuesta.data['seguidos'];
+      follow = respuesta.data['seguidos'];
       followers = respuesta.data['seguidores'];
       unfollow = respuesta.data['followed'];
 
       await Firebase.initializeApp();
       await getImage();
+      setState(() {});
+    });
+    getUserTutorials().then((respuesta) async {
+      posts = respuesta.list;
       setState(() {});
     });
     setState(() {});
@@ -89,6 +93,26 @@ class Perfil2State extends State<Perfil2> {
       throw Exception('Failed to load response');
     }
   }
+
+  Future<Resp> getUserTutorials() async {
+    var map = new Map<String, dynamic>();
+    map['userId'] = widget.idUsuario;
+    map['limit'] = "100";
+    map['offset'] = "0";
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', '/tutorials/getUserTutorials', map),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
   Future<Resp> followUser(String id) async {
     var map = new Map<String, dynamic>();
     map['userId'] = id;
@@ -107,12 +131,13 @@ class Perfil2State extends State<Perfil2> {
       throw Exception('Failed to load response');
     }
   }
+
   Future<Resp> unfollowUser(String id) async {
     var map = new Map<String, dynamic>();
     map['userId'] = id;
     final response = await http.post(
       Uri.https('api.socialcraft.club', '/users/unfollowUser'),
-      body:map,
+      body: map,
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -143,26 +168,26 @@ class Perfil2State extends State<Perfil2> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.idUsuario);
+    double cardWidth = context.width() / 2;
+    double cardHeight = context.height() / 4;
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.arrow_back).onTap(() {
           Navigator.pop(context);
         }),
-        title: Text(userName, style: boldTextStyle(size: 20,color: Colors.white)),
+        title:
+            Text(userName, style: boldTextStyle(size: 20, color: Colors.white)),
         automaticallyImplyLeading: false,
         backgroundColor: azul_logo,
-        actions: <Widget>[
-        ],
+        actions: <Widget>[],
       ),
       body: SingleChildScrollView(
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             16.height,
             Stack(
-              children:[
+              children: [
                 Align(
                   alignment: Alignment.topRight,
                   child: Container(
@@ -171,22 +196,21 @@ class Perfil2State extends State<Perfil2> {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child:Stack(
+                  child: Stack(
                     children: [
-                CircleAvatar(
-                  radius: 70,
-                  backgroundImage: NetworkImage(
-                    linkfoto,
+                      CircleAvatar(
+                        radius: 70,
+                        backgroundImage: NetworkImage(
+                          linkfoto,
+                        ),
+                        onBackgroundImageError: (_, __) {
+                          setState(() {});
+                        },
+                        backgroundColor: azul_logo,
+                      ),
+                    ],
                   ),
-                  onBackgroundImageError: (_, __) {
-                    setState(() {
-                    });
-                  },
-                  backgroundColor: azul_logo,
                 ),
-              ],
-            ),
-        ),
               ],
             ),
             15.height,
@@ -199,60 +223,65 @@ class Perfil2State extends State<Perfil2> {
               ],
             ),
             15.height,
-
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               Stack(
-                  children: [
-              Column(
                 children: [
-                  Text(
-                    nFollow= followers,
-                    style: boldTextStyle(size: 16, color: black),
-                    semanticsLabel: "nFollow",
-                  ).paddingLeft(92),
-                  Text("Seguidores",
-                      style: boldTextStyle(size: 12, color: black)).paddingLeft(92)
-                ],
-              ),
-              Column(
-                children: [
-                  Text(
-                    nFollowers= follow,
-                    style: boldTextStyle(size: 16, color: black),
-                    semanticsLabel: "nFollowers",
-                  ).paddingRight(92),
-                  Text("Seguidos", style: boldTextStyle(size: 12, color: black)).paddingRight(92)
-                ],
-              ),
-          ],
-              ),
-                ElevatedButton.icon(
-                  label: Text(unfollow ? 'Dejar de seguir': 'Seguir Perfil'),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(170, 40),
-                    //primary: Colors.lightBlueAccent[200],
-                    primary: unfollow?  Colors.redAccent[200] : Color.fromRGBO(68, 102, 216, 1.0),
-                    onPrimary: Colors.white,
-                    onSurface: Colors.grey,
+                  Column(
+                    children: [
+                      Text(
+                        nFollow = followers,
+                        style: boldTextStyle(size: 16, color: black),
+                        semanticsLabel: "nFollow",
+                      ).paddingLeft(92),
+                      Text("Seguidores",
+                              style: boldTextStyle(size: 12, color: black))
+                          .paddingLeft(92)
+                    ],
                   ),
-                  icon: Icon(unfollow? Icons.person_add_disabled: Icons.person_add , size: 18) ,
-                  onPressed: () {
-                    unfollow = !unfollow;
-                    if(unfollow){
-                      followUser(widget.idUsuario).then((response) async {
-                        setState(() {});
-                        init();
-                      });
-                    }
-                    else{
-                      unfollowUser(widget.idUsuario).then((response) async {
-                        setState(() {});
-                        init();
-                      });
-                    }
-                    setState(() {});
-                  },
+                  Column(
+                    children: [
+                      Text(
+                        nFollowers = follow,
+                        style: boldTextStyle(size: 16, color: black),
+                        semanticsLabel: "nFollowers",
+                      ).paddingRight(92),
+                      Text("Seguidos",
+                              style: boldTextStyle(size: 12, color: black))
+                          .paddingRight(92)
+                    ],
+                  ),
+                ],
+              ),
+              ElevatedButton.icon(
+                label: Text(unfollow ? 'Dejar de seguir' : 'Seguir Perfil'),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(170, 40),
+                  //primary: Colors.lightBlueAccent[200],
+                  primary: unfollow
+                      ? Colors.redAccent[200]
+                      : Color.fromRGBO(68, 102, 216, 1.0),
+                  onPrimary: Colors.white,
+                  onSurface: Colors.grey,
                 ),
+                icon: Icon(
+                    unfollow ? Icons.person_add_disabled : Icons.person_add,
+                    size: 18),
+                onPressed: () {
+                  unfollow = !unfollow;
+                  if (unfollow) {
+                    followUser(widget.idUsuario).then((response) async {
+                      setState(() {});
+                      init();
+                    });
+                  } else {
+                    unfollowUser(widget.idUsuario).then((response) async {
+                      setState(() {});
+                      init();
+                    });
+                  }
+                  setState(() {});
+                },
+              ),
             ]),
             10.height,
             Divider(
@@ -260,21 +289,90 @@ class Perfil2State extends State<Perfil2> {
               thickness: 3,
               color: Colors.grey[650],
             ),
-           Align(
-             alignment: Alignment.centerLeft,
-           child:Column(
-              children: [
-                Text(
-                  nPosts= posts.toString(),
-                  style: boldTextStyle(size: 16, color: black),
-                  semanticsLabel: "nPosts",
-                ),
-                Text("Posts", style: boldTextStyle(size: 12, color: black))
-              ],
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                children: [
+                  Text(
+                    nPosts = posts.length.toString(),
+                    style: boldTextStyle(size: 16, color: black),
+                    semanticsLabel: "nPosts",
+                  ),
+                  Text("Posts", style: boldTextStyle(size: 12, color: black))
+                ],
+              ),
             ),
-           ),
+            Column(
+              children: List.generate(
+                //nPosts.toInt(),
+                1,
+                (int index) {
+                  return GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemCount: posts.length,
+                    padding: EdgeInsets.all(16),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                        childAspectRatio: cardWidth / cardHeight),
+                    itemBuilder: (context, index) => Product(index),
+                  );
+                },
+              ),
+            )
           ],
         ).paddingAll(16),
+      ),
+    );
+  }
+}
+
+class Product extends StatelessWidget {
+  final int pos;
+
+  Product(this.pos);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        await Post2(posts[pos]['id']).launch(context);
+        Perfil().launch(context);
+      },
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Hero(
+              tag: Image.network(posts[pos]['fotoRuta']),
+              child: ClipRRect(
+                borderRadius: new BorderRadius.circular(12.0),
+                child: Image.network(
+                  posts[pos]['fotoRuta'],
+                  height: context.height() / 6,
+                  fit: BoxFit.cover,
+                  width: MediaQuery.of(context).size.width,
+                ),
+              ),
+            ),
+            SizedBox(height: 4),
+            Padding(
+              padding: const EdgeInsets.only(left: 4, right: 4),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(posts[pos]['titulo'],
+                      style: primaryTextStyle(color: Colors.black)),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
