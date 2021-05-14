@@ -75,14 +75,18 @@ class PostComentariosState extends State<PostComentarios> {
     return Scaffold(
         body: RefreshIndicator(
           onRefresh: () => init(),
-          child: ListView.builder(
+          child: comentarios.length == 0 ? Container(
+            child: Center(
+                child: Text("No hay comentarios",
+                    style: TextStyle(fontSize: 20, color: textPrimaryColor)),
+            ),
+          ):ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             itemCount: comentarios.length,
               itemBuilder: (context,i) => new Column(
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(0.0),
+                  Card(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -120,12 +124,7 @@ class PostComentariosState extends State<PostComentarios> {
                                                     fontSize: 18.0,
                                                     color: Colors.black),
                                                 ),
-                                                /*TextSpan(
-                                                  text: " · ${comentarios[i]['datahora']}",
-                                                  style: TextStyle(
-                                                    fontSize: 14.0, color: Colors.grey))*/
                                               ]),
-                                              //overflow: TextOverflow.ellipsis,
                                             )),
                                             flex: 1,
                                             ),
@@ -181,7 +180,7 @@ class PostComentariosState extends State<PostComentarios> {
                                               color: Colors.grey)
                                       )
                                     ]),
-                                )
+                                ).paddingOnly(bottom: 10.0)
                                 ),],
                             ),
                         )
