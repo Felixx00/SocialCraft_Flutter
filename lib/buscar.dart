@@ -53,7 +53,7 @@ List userss = [
   },
 ];
 
-String value1 = 'flutter';
+String value1 = '1';
 List<S2Choice<String>> options = [
   S2Choice<String>(value: '1', title: 'Título'),
   S2Choice<String>(value: '2', title: 'Duración'),
@@ -64,6 +64,7 @@ class SearchW extends State<Search> {
   String _idUser = "";
   String _idCat = "";
   String _idPost = "";
+  var _controller = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -82,7 +83,7 @@ class SearchW extends State<Search> {
       print(myself);
     });
     await Firebase.initializeApp();
-    value1 = "";
+    value1 = "1";
 
   }
 
@@ -323,6 +324,7 @@ class SearchW extends State<Search> {
                       flexibleSpace: Container(
                         decoration: BoxDecoration(color: Colors.grey[300]),
                         child: TextFormField(
+                          controller: _controller,
                           keyboardType: TextInputType.name,
                           cursorColor: azul_logo,
                           decoration: InputDecoration(
@@ -421,7 +423,9 @@ class SearchW extends State<Search> {
                         indicatorColor: Colors.grey[300],
                         indicatorSize: TabBarIndicatorSize.label,
                         onTap: (index) {
-                          value1 = "flutter";
+                          _controller.clear();
+                          if(index == 1){value1 = "flutter";}
+                          else value1 = "1";
                         },
                         tabs: <Widget>[
                           Tab(icon: Icon(

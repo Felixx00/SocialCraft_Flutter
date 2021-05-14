@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/post2.dart';
 import 'package:socialcraft/utils/fonts.dart';
@@ -27,8 +29,8 @@ class CommonButton extends StatelessWidget {
 
 Widget targetaTutorial(
     context, linkFoto, titulo, usuario, rate, descripcion, post) {
-  bool correct = false;
-  if (rate != "0") correct = true;
+  bool correct = true;
+  if (rate == null) correct = false;
   return Card(
     margin: EdgeInsets.all(16),
     color: Colors.white,
@@ -59,25 +61,47 @@ Widget targetaTutorial(
                 Text(titulo,
                         style: boldTextStyle(size: 20, color: textPrimaryColor))
                     .paddingOnly(left: 16),
-                Text("@" + usuario,
-                        style: TextStyle(fontSize: 16, color: azul_logo))
-                    .paddingOnly(left: 16, right: 16, top: 5),
-                Container(
-                  child: Text(
-                    correct ? rate + "/5" : "-",
-                    style: TextStyle(fontSize: 20, color: textPrimaryColor),
-                  ).paddingOnly(left: 100),
-                ),
-                Icon(Icons.star_outlined, color: azul_logo, size: 22)
-                    .paddingOnly(right: 5),
+
+
+                //Icon(Icons.star_outlined, color: azul_logo, size: 22)
+                   // .paddingOnly(right: 5),
               ],
             ),
             SizedBox(height: 10),
-            Padding(
+            Row(
+              children: [
+                Text(usuario,
+                    style: TextStyle(fontSize: 16, color: Colors.grey[700]))
+                    .paddingOnly(left: 16, right: 16, top: 5),
+                Expanded(
+                  child: Center(
+                    child: Container(
+                          child:RatingBar.builder(
+                              itemCount: 5,
+                              initialRating: correct ? 0 : rate,
+                              allowHalfRating: true,
+                              itemSize: 20,
+                              itemBuilder: (context, _){
+                                return Icon(Icons.star, color: Colors.amber,);
+                              },
+                            onRatingUpdate: null,
+                            ignoreGestures: true,
+                          ).paddingOnly(right: 5)
+                        /*child: Text(
+                          correct ? rate + "/5" : "-",
+                          style: TextStyle(fontSize: 20, color: textPrimaryColor),
+                        ).paddingOnly(left: 100),*/
+                      ),
+                  ),
+                ),
+              ],
+
+            ),
+            /*Padding(
               padding: EdgeInsets.only(left: 16, right: 16),
               child: Text(descripcion,
                   style: secondaryTextStyle(size: 16, color: textPrimaryColor)),
-            ),
+            ),*/
             SizedBox(height: 20),
           ],
         ),

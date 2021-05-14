@@ -159,6 +159,9 @@ class PerfilState extends State<Perfil> {
     double cardHeight = context.height() / 4;
     return Scaffold(
       appBar: AppBar(
+        leading: Icon(Icons.arrow_back).onTap(() {
+          Navigator.pop(context);
+        }),
         title: Text(userName,
             style: GoogleFonts.comfortaa(
                 textStyle: TextStyle(
