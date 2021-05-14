@@ -28,9 +28,9 @@ String userName = "";
 String about = "";
 String token = "";
 String nPosts = "";
-int follow = 0;
+String follow = '0';
 String nFollow = "";
-int followers = 0;
+String followers = '0';
 String nFollowers = "";
 bool unfollow = true;
 var linkfoto = "";
@@ -59,6 +59,8 @@ class PerfilState extends State<Perfil> {
         about = respuesta.data['about'];
       }
       userName = respuesta.data['username'];
+      follow = respuesta.data['seguidos'];
+      followers = respuesta.data['seguidores'];
 
       await Firebase.initializeApp();
       await getImage();
@@ -314,7 +316,7 @@ class PerfilState extends State<Perfil> {
                   Column(
                     children: [
                       Text(
-                        nFollow = follow.toString(),
+                        nFollow = followers,
                         style: boldTextStyle(size: 16, color: black),
                         semanticsLabel: "nFollow",
                       ).paddingLeft(92),
@@ -326,7 +328,7 @@ class PerfilState extends State<Perfil> {
                   Column(
                     children: [
                       Text(
-                        nFollowers = followers.toString(),
+                        nFollowers = follow,
                         style: boldTextStyle(size: 16, color: black),
                         semanticsLabel: "nFollowers",
                       ).paddingRight(92),
