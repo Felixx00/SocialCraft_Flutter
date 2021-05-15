@@ -442,7 +442,7 @@ class Product extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 4),
+            SizedBox(height: 7),
             Padding(
               padding: const EdgeInsets.only(left: 4, right: 4),
               child: Row(

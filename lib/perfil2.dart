@@ -102,7 +102,7 @@ class Perfil2State extends State<Perfil2> {
     map['offset'] = "0";
     final response = await http.post(
       Uri.https('api.socialcraft.club', '/tutorials/getUserTutorials'),
-      body:map,
+      body: map,
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -361,7 +361,7 @@ class Product extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 4),
+            SizedBox(height: 7),
             Padding(
               padding: const EdgeInsets.only(left: 4, right: 4),
               child: Row(

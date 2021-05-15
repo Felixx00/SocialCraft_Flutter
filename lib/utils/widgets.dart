@@ -62,40 +62,41 @@ Widget targetaTutorial(
                         style: boldTextStyle(size: 20, color: textPrimaryColor))
                     .paddingOnly(left: 16),
 
-
                 //Icon(Icons.star_outlined, color: azul_logo, size: 22)
-                   // .paddingOnly(right: 5),
+                // .paddingOnly(right: 5),
               ],
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             Row(
               children: [
-                Text(usuario,
-                    style: TextStyle(fontSize: 16, color: Colors.grey[700]))
-                    .paddingOnly(left: 16, right: 16, top: 5),
+                Text("@" + usuario,
+                        style: TextStyle(fontSize: 16, color: Colors.grey[700]))
+                    .paddingOnly(left: 16, right: 16),
                 Expanded(
                   child: Center(
                     child: Container(
-                          child:RatingBar.builder(
-                              itemCount: 5,
-                              initialRating: correct ? 0 : rate,
-                              allowHalfRating: true,
-                              itemSize: 20,
-                              itemBuilder: (context, _){
-                                return Icon(Icons.star, color: Colors.amber,);
-                              },
-                            onRatingUpdate: null,
-                            ignoreGestures: true,
-                          ).paddingOnly(right: 5)
+                        child: RatingBar.builder(
+                      itemCount: 5,
+                      initialRating: correct ? 0 : rate,
+                      allowHalfRating: true,
+                      itemSize: 20,
+                      itemBuilder: (context, _) {
+                        return Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        );
+                      },
+                      onRatingUpdate: null,
+                      ignoreGestures: true,
+                    ).paddingOnly(right: 5)
                         /*child: Text(
                           correct ? rate + "/5" : "-",
                           style: TextStyle(fontSize: 20, color: textPrimaryColor),
                         ).paddingOnly(left: 100),*/
-                      ),
+                        ),
                   ),
                 ),
               ],
-
             ),
             /*Padding(
               padding: EdgeInsets.only(left: 16, right: 16),

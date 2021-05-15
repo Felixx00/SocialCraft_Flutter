@@ -5,6 +5,7 @@ import 'package:socialcraft/utils/fonts.dart';
 class PostDesc extends StatelessWidget {
   final String titulo;
   final String descripcion;
+  final String usuario;
   final String rate;
   final String dificultad;
   final String categoria;
@@ -12,8 +13,8 @@ class PostDesc extends StatelessWidget {
   final String duracion;
   bool correct = false;
 
-  PostDesc(this.titulo, this.descripcion, this.rate, this.dificultad,
-      this.categoria, this.materiales, this.duracion);
+  PostDesc(this.titulo, this.descripcion, this.usuario, this.rate,
+      this.dificultad, this.categoria, this.materiales, this.duracion);
   @override
   Widget build(BuildContext context) {
     if (rate != "0") correct = true;
@@ -38,6 +39,15 @@ class PostDesc extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(children: [
+                  Icon(Icons.account_circle, color: azul_logo, size: 30),
+                  16.width,
+                  Text(
+                    "Usuario: " + usuario,
+                    style: TextStyle(fontSize: 16),
+                  )
+                ]),
+                16.height,
                 Row(children: [
                   Icon(Icons.star_outlined, color: azul_logo, size: 30),
                   16.width,

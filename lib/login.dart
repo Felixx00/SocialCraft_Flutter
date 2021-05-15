@@ -195,7 +195,8 @@ class LoginState extends State<Login> {
                   child: createRichText(list: [
                     TextSpan(
                         text: "¿No estas registrado?",
-                        style: TextStyle(color: Color(0xFF757575))),
+                        style:
+                            TextStyle(color: Color(0xFF757575), fontSize: 16)),
                     TextSpan(
                         text: "  Crear cuenta",
                         style: boldTextStyle(color: azul_logo)),
