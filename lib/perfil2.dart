@@ -304,25 +304,28 @@ class Perfil2State extends State<Perfil2> {
                 ],
               ),
             ),
-            Column(
-              children: List.generate(
-                //nPosts.toInt(),
-                1,
-                (int index) {
-                  return GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    itemCount: posts.length,
-                    padding: EdgeInsets.all(16),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
-                        childAspectRatio: cardWidth / cardHeight),
-                    itemBuilder: (context, index) => Product(index),
-                  );
-                },
+            RefreshIndicator(
+              onRefresh: () => init(),
+              child: Column(
+                children: List.generate(
+                  //nPosts.toInt(),
+                  1,
+                  (int index) {
+                    return GridView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      itemCount: posts.length,
+                      padding: EdgeInsets.all(16),
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          childAspectRatio: cardWidth / cardHeight),
+                      itemBuilder: (context, index) => Product(index),
+                    );
+                  },
+                ),
               ),
             )
           ],

@@ -61,45 +61,48 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Image.asset(socialcraft_logo_letras_blanco,
-              width: 250, height: 250),
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          backgroundColor: azul_logo,
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(fondo),
-              fit: BoxFit.cover,
-            ),
+      child: RefreshIndicator(
+        onRefresh: () => init(),
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            title: Image.asset(socialcraft_logo_letras_blanco,
+                width: 250, height: 250),
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            backgroundColor: azul_logo,
           ),
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: posts.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(right: 1, bottom: 1),
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      title: targetaTutorial(
-                          context,
-                          posts[index]["fotoRuta"],
-                          posts[index]["titulo"],
-                          posts[index]["creador"],
-                          posts[index]["rate"],
-                          posts[index]["subtitulo"],
-                          posts[index]['id']),
-                    ),
-                  ],
-                ),
-              );
-            },
+          body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(fondo),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: posts.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 1, bottom: 1),
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: targetaTutorial(
+                            context,
+                            posts[index]["fotoRuta"],
+                            posts[index]["titulo"],
+                            posts[index]["creador"],
+                            posts[index]["rate"],
+                            posts[index]["subtitulo"],
+                            posts[index]['id']),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),

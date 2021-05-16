@@ -49,6 +49,10 @@ Widget targetaTutorial(
             ClipRRect(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+
+              //placeholder: AssetImage('assets/loading.gif'),
+              //image: NetworkImage(linkFoto),
+
               child: Image.network(linkFoto,
                   height: 200,
                   width: MediaQuery.of(context).size.width,
