@@ -22,15 +22,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
-class SubirPasos extends StatefulWidget {
+class editpasos extends StatefulWidget {
   static String tag = '/upload';
   var map = Map<String, dynamic>();
-  SubirPasos(this.map);
+  editpasos(this.map);
   @override
-  SubirPasosState createState() => SubirPasosState();
+  editpasosState createState() => editpasosState();
 }
 
-class SubirPasosState extends State<SubirPasos> {
+class editpasosState extends State<editpasos> {
   @override
   void initState() {
     super.initState();
@@ -194,7 +194,7 @@ class SubirPasosState extends State<SubirPasos> {
         child: Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Subir pasos'),
+        title: const Text('Editar pasos'),
         backgroundColor: azul_logo,
         actions: <Widget>[
           Padding(
@@ -268,7 +268,7 @@ class SubirPasosState extends State<SubirPasos> {
               ),
               20.height,
               ElevatedButton(
-                child: Text('Selecciona Imagen'),
+                child: Text('Selecciona Imagen o Video'),
                 style: ElevatedButton.styleFrom(
                   //minimumSize: Size(150, 40),
                   //primary: Colors.lightBlueAccent[200],

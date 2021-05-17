@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/editpasos.dart';
 import 'package:socialcraft/materiales.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/fonts.dart';
@@ -59,16 +60,15 @@ class EditPostState extends State<EditPost> {
   var foto;
 
   String titulo = '';
-  String rutaFoto = '';
   String video = '';
   String dificultad = '';
   String materiales = '';
   String duracion = '';
   String descripcion = '';
   String categoria = '';
+  var map = new Map<String, dynamic>();
 
   Future<Resp> cambios() async {
-    var map = new Map<String, dynamic>();
     map['tutId'] = tutId;
     if (titulo != '') {
       map['titulo'] = titulo;
@@ -76,8 +76,12 @@ class EditPostState extends State<EditPost> {
     if (descripcion != '') {
       map['descripcion'] = descripcion;
     }
-    if (rutaFoto != '') {
-      map['rutaFoto'] = rutaFoto;
+    if (nova_foto) {
+      final _firebaseStorage = FirebaseStorage.instance;
+      var ref = _firebaseStorage
+          .ref()
+          .child("Posts/" + tutId.toString() + '/principal');
+      map['rutaFoto'] = (await ref.getDownloadURL()).toString();
     }
     if (video != '') {
       map['video'] = video;
@@ -346,41 +350,69 @@ class EditPostState extends State<EditPost> {
                 onChange: (state) => setState(() => value4 = state.value),
               ),
               20.height,
-              ElevatedButton(
-                onPressed: () {
-                  dificultad = value1;
-                  categoria = value2;
-                  materiales = result;
-                  duracion = value4;
-                  print(materiales);
-                  cambios().then((respuesta) async {
-                    if (respuesta.success == false) {
-                      print("Algun Parametro Incorrecto");
-                    } else {
-                      if (nova_foto) {
-                        nova_foto = false;
-                        cambiofoto();
-                      }
-                      finish(context);
-                      Navigator.pushNamed(context, 'post');
-                    }
-                  });
-                },
-                child: Text(
-                  'Editar',
-                  style: TextStyle(fontSize: 20),
-                ),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(120, 50),
-                  //primary: Colors.lightBlueAccent[200],
-                  primary: Color.fromRGBO(68, 102, 216, 1.0),
-                  onPrimary: Colors.white,
-                  onSurface: Colors.grey,
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(50.0),
+              Stack(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      dificultad = value1;
+                      categoria = value2;
+                      materiales = result;
+                      duracion = value4;
+                      print(materiales);
+                      cambios().then((respuesta) async {
+                        if (respuesta.success == false) {
+                          print("Algun Parametro Incorrecto");
+                        } else {
+                          if (nova_foto) {
+                            nova_foto = false;
+                            cambiofoto();
+                          }
+                          finish(context);
+                          Navigator.pushNamed(context, 'post');
+                        }
+                      });
+                    },
+                    child: Text(
+                      'Editar',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(120, 50),
+                      //primary: Colors.lightBlueAccent[200],
+                      primary: Color.fromRGBO(68, 102, 216, 1.0),
+                      onPrimary: Colors.white,
+                      onSurface: Colors.grey,
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(50.0),
+                      ),
+                    ),
+                  ).paddingOnly(bottom: 10).center(),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => editpasos(map),
+                          ),
+                        );
+                      },
+                      child: Icon(Icons.arrow_forward_rounded),
+                      style: ElevatedButton.styleFrom(
+                        side: BorderSide(width: 2.0, color: azul_logo),
+                        minimumSize: Size(40, 40),
+                        primary: Colors.white,
+                        onPrimary: azul_logo,
+                        onSurface: Colors.grey,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(50.0),
+                        ),
+                      ),
+                    ).paddingOnly(bottom: 10, right: 50),
                   ),
-                ),
-              ).paddingOnly(bottom: 10),
+                ],
+              ),
             ],
           ),
         ),
