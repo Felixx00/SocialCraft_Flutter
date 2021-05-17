@@ -172,8 +172,7 @@ class HomeCategoryState extends State<HomeCategory> {
                                         children: [
                                           Text(tutoriales[index]["titulo"],
                                               style: boldTextStyle(size: 20, color: textPrimaryColor)).paddingOnly(left: 16),
-                                          Text("@" + tutoriales[index]["creador"],
-                                              style: TextStyle(fontSize: 16, color: azul_logo)).paddingOnly(left: 16, right: 16, top: 5),
+
                                           Container(
                                             child: Text(
                                               correct ? tutoriales[index]["rate"] + "/5":"-",
@@ -184,6 +183,9 @@ class HomeCategoryState extends State<HomeCategory> {
                                           Icon(Icons.star_outlined, color: azul_logo, size:22).paddingOnly(right: 5),
                                         ],
                                       ),
+
+                                      Text("@" + tutoriales[index]["creador"],
+                                          style: TextStyle(fontSize: 16, color: azul_logo)).paddingOnly(left: 16, right: 16, top: 5),
                                       SizedBox(height: 10),
                                       Padding(
                                           padding: EdgeInsets.only(left: 16, right: 16),
