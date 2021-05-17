@@ -173,19 +173,47 @@ class HomeCategoryState extends State<HomeCategory> {
                                           Text(tutoriales[index]["titulo"],
                                               style: boldTextStyle(size: 20, color: textPrimaryColor)).paddingOnly(left: 16),
 
-                                          Container(
+                                          /*Container(
                                             child: Text(
                                               correct ? tutoriales[index]["rate"] + "/5":"-",
                                               style: TextStyle(fontSize: 20, color: textPrimaryColor),
                                               textAlign: TextAlign.right,
                                             ).paddingOnly(left:100),
-                                          ),
-                                          Icon(Icons.star_outlined, color: azul_logo, size:22).paddingOnly(right: 5),
+                                          ),*/
+
                                         ],
                                       ),
-
-                                      Text("@" + tutoriales[index]["creador"],
-                                          style: TextStyle(fontSize: 16, color: azul_logo)).paddingOnly(left: 16, right: 16, top: 5),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        children: [
+                                          Text("@" + tutoriales[index]["creador"],
+                                              style: TextStyle(fontSize: 16, color: azul_logo)).paddingOnly(left: 16, right: 16, top: 5),
+                                          Expanded(
+                                            child: Center(
+                                              child: Container(
+                                                  child: RatingBar.builder(
+                                                    itemCount: 5,
+                                                    initialRating: correct ? tutoriales[index]["rate"] : 0,
+                                                    allowHalfRating: true,
+                                                    itemSize: 20,
+                                                    itemBuilder: (context, _) {
+                                                      return Icon(
+                                                        Icons.star,
+                                                        color: Colors.amber,
+                                                      );
+                                                    },
+                                                    onRatingUpdate: null,
+                                                    ignoreGestures: true,
+                                                  ).paddingOnly(right: 5)
+                                                /*child: Text(
+                          correct ? rate + "/5" : "-",
+                          style: TextStyle(fontSize: 20, color: textPrimaryColor),
+                        ).paddingOnly(left: 100),*/
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                       SizedBox(height: 10),
                                       Padding(
                                           padding: EdgeInsets.only(left: 16, right: 16),
