@@ -81,7 +81,7 @@ Widget targetaTutorial(
                     child: Container(
                         child: RatingBar.builder(
                       itemCount: 5,
-                      initialRating: correct ? 0 : rate,
+                      initialRating: double.parse(rate),
                       allowHalfRating: true,
                       itemSize: 20,
                       itemBuilder: (context, _) {

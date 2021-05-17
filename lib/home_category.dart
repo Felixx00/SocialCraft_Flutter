@@ -193,7 +193,7 @@ class HomeCategoryState extends State<HomeCategory> {
                                               child: Container(
                                                   child: RatingBar.builder(
                                                     itemCount: 5,
-                                                    initialRating: correct ? tutoriales[index]["rate"] : 0,
+                                                    initialRating: double.parse(tutoriales[index]["rate"]),
                                                     allowHalfRating: true,
                                                     itemSize: 20,
                                                     itemBuilder: (context, _) {
