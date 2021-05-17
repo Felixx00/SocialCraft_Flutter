@@ -170,7 +170,7 @@ class SearchW extends State<Search> {
   }
   Future<Resp> listSearchDuration(String busqueda) async {
     var map = new Map<String, dynamic>();
-    map['duration'] = busqueda;
+    map['duracion'] = busqueda;
     map['limit'] = '500';
     map['offset'] = '0';
     final response = await http.get(
@@ -372,13 +372,31 @@ class SearchW extends State<Search> {
                                 });
                               }
                               else if (value1 == '3') {
-                                listSearchDifficulty(busqueda).then((
-                                    response) async {
-                                  tutorials = response.list;
-                                  //users = usersL;
-                                  setState(() {});
-                                  print(tutorials.length);
-                                });
+                                if(busqueda == "facil" || busqueda == "1"){
+                                  listSearchDifficulty("1").then((
+                                      response) async {
+                                    tutorials = response.list;
+                                    //users = usersL;
+                                    setState(() {});
+                                  });
+                                }
+                                if(busqueda == "intermedio" || busqueda == "2"){
+                                  listSearchDifficulty("2").then((
+                                      response) async {
+                                    tutorials = response.list;
+                                    //users = usersL;
+                                    setState(() {});
+                                  });
+                                }
+                                if(busqueda == "dificil" || busqueda == "3"){
+                                  listSearchDifficulty("3").then((
+                                      response) async {
+                                    tutorials = response.list;
+                                    //users = usersL;
+                                    setState(() {});
+                                  });
+                                }
+                                else{}
                               }
                             }
                             if (busqueda.length >= 3) {
@@ -399,12 +417,31 @@ class SearchW extends State<Search> {
                                 });
                               }
                               else if (value1 == '3') {
-                                listSearchDifficulty(busqueda).then((response) async {
-                                  tutorials = response.list;
-                                  //users = usersL;
-                                  setState(() {});
-                                  print(tutorials.length);
-                                });
+                                if(busqueda == "facil" || busqueda == "1"){
+                                  listSearchDifficulty("1").then((
+                                      response) async {
+                                    tutorials = response.list;
+                                    //users = usersL;
+                                    setState(() {});
+                                  });
+                                }
+                                if(busqueda == "intermedio" || busqueda == "2"){
+                                  listSearchDifficulty("2").then((
+                                      response) async {
+                                    tutorials = response.list;
+                                    //users = usersL;
+                                    setState(() {});
+                                  });
+                                }
+                                if(busqueda == "dificil" || busqueda == "3"){
+                                  listSearchDifficulty("3").then((
+                                      response) async {
+                                    tutorials = response.list;
+                                    //users = usersL;
+                                    setState(() {});
+                                  });
+                                }
+                                  else{}
                               }
                               else {
                                 listSearchUser(busqueda).then((response) async {
