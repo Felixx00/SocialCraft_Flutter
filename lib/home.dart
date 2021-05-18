@@ -65,7 +65,7 @@ class HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    if (empty) {
+    /*if (empty) {
       return SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
@@ -92,7 +92,7 @@ class HomeState extends State<Home> {
           )),
         ),
       );
-    } else {
+    } else {*/
       return SafeArea(
         child: RefreshIndicator(
           onRefresh: () => init(),
@@ -140,6 +140,6 @@ class HomeState extends State<Home> {
           ),
         ),
       );
-    }
+    //}
   }
 }
