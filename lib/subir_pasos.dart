@@ -304,6 +304,8 @@ class SubirPasosState extends State<SubirPasos> {
             activeStep = numb.length;
             numb.add(numb.length + 1);
             setState(() {});
+          } else {
+            toast("Máximo 10 pasos", bgColor: toast_color);
           }
         },
         label: Text(
