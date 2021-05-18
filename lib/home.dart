@@ -17,6 +17,7 @@ class Home extends StatefulWidget {
 
 String token = "";
 List<dynamic> posts = [];
+bool empty = false;
 
 class HomeState extends State<Home> {
   @override
@@ -33,6 +34,10 @@ class HomeState extends State<Home> {
       posts = respuesta.list;
       setState(() {});
     });
+    if (posts.length == 0) {
+      empty = true;
+    }
+    setState(() {});
   }
 
   @override
@@ -60,9 +65,8 @@ class HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: RefreshIndicator(
-        onRefresh: () => init(),
+    if (empty) {
+      return SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -73,39 +77,69 @@ class HomeState extends State<Home> {
             backgroundColor: azul_logo,
           ),
           body: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(fondo),
-                fit: BoxFit.cover,
+              child: Column(
+            children: [
+              Text("Aún no sigues a nadie, dirígete a la pantalla de búsqueda para empezar a descubrir Crafts!",
+                      style: TextStyle(color: azul_logo, fontSize: 27),
+                      textAlign: TextAlign.center)
+                  .paddingOnly(top: 200, right: 30, left: 30, bottom: 30),
+              Icon(
+                Icons.search,
+                size: 200,
+                color: azul_logo,
               ),
+            ],
+          )),
+        ),
+      );
+    } else {
+      return SafeArea(
+        child: RefreshIndicator(
+          onRefresh: () => init(),
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              title: Image.asset(socialcraft_logo_letras_blanco,
+                  width: 250, height: 250),
+              centerTitle: true,
+              automaticallyImplyLeading: false,
+              backgroundColor: azul_logo,
             ),
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: posts.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(right: 1, bottom: 1),
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: targetaTutorial(
-                            context,
-                            posts[index]["fotoRuta"],
-                            posts[index]["titulo"],
-                            posts[index]["creador"],
-                            posts[index]["rate"],
-                            posts[index]["subtitulo"],
-                            posts[index]['id']),
-                      ),
-                    ],
-                  ),
-                );
-              },
+            body: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(fondo),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: posts.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 1, bottom: 1),
+                    child: Column(
+                      children: <Widget>[
+                        ListTile(
+                          title: targetaTutorial(
+                              context,
+                              posts[index]["fotoRuta"],
+                              posts[index]["titulo"],
+                              posts[index]["creador"],
+                              posts[index]["rate"],
+                              posts[index]["subtitulo"],
+                              posts[index]['id']),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

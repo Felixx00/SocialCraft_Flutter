@@ -121,7 +121,7 @@ class PostState2 extends State<Post2> {
             return [
               SliverAppBar(
                 leading: Icon(Icons.arrow_back).onTap(() {
-                  finish(context);
+                  Navigator.pop(context);
                 }),
                 title: Text(titulo, style: GoogleFonts.comfortaa(fontSize: 25)),
                 expandedHeight: 320,

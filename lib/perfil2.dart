@@ -345,7 +345,6 @@ class Product extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         await Post2(posts[pos]['id']).launch(context);
-        Perfil().launch(context);
       },
       child: Container(
         child: Column(
