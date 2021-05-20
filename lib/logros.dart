@@ -310,7 +310,7 @@ class LogrosState extends State<Logros> {
                                   elevation: 10,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
-                                  primary: azul_logo,
+                                  primary: Colors.grey[600],
                                   onPrimary: Colors.white,
                                   onSurface: Colors.grey,
                                 ),
@@ -325,6 +325,107 @@ class LogrosState extends State<Logros> {
                     ),
                   ),
                 ).center(),
+                30.height,
+                Stack(alignment: Alignment.topRight, children: [
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    elevation: 25,
+                    shadowColor: Colors.black,
+                    color: Colors.blue[100],
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width - 40,
+                      height: 200,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: azul_logo,
+                                  radius: 55,
+                                  child: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        'https://banner2.cleanpng.com/20180502/aiq/kisspng-computer-icons-check-mark-symbol-5aea6d79974689.2450967015253128896196.jpg'),
+                                    radius: 45,
+                                  ),
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Comenta',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        color: azul_logo,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    10.height,
+                                    Text(
+                                      'Haz 20 comentarios',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: azul_logo,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: new LinearPercentIndicator(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
+                                    animation: true,
+                                    lineHeight: 20.0,
+                                    animationDuration: 2000,
+                                    percent: 1.0,
+                                    center: Text("100.00%"),
+                                    linearStrokeCap: LinearStrokeCap.roundAll,
+                                    progressColor: Colors.green,
+                                  ),
+                                ),
+                                ElevatedButton.icon(
+                                  label: Text(
+                                    'Claimed',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    //minimumSize: Size(60, 45),
+                                    elevation: 10,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    primary: Colors.grey[600],
+                                    onPrimary: Colors.white,
+                                    onSurface: Colors.grey,
+                                  ),
+                                  icon: Icon(Icons.check, size: 20),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ).center(),
+                  Icon(
+                    Icons.info_outline_rounded,
+                    color: azul_logo,
+                    size: 24.0,
+                    semanticLabel: 'Text to announce in accessibility modes',
+                  ).paddingOnly(top: 10, right: 30),
+                ]),
                 30.height,
               ],
             ),
