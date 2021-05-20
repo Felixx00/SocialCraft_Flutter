@@ -7,6 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/post.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
+import 'package:socialcraft/settings.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'subir_comentario.dart';
@@ -87,104 +88,110 @@ class PostComentariosState extends State<PostComentarios> {
               itemBuilder: (context,i) => new Column(
                 children: <Widget>[
                   Card(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: new DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: new NetworkImage(
-                                      comentarios[i]['fotoPerfil'] == null ? rutaFoto:comentarios[i]['fotoPerfil'])),
+                    child: InkWell(
+                      splashColor: Colors.blue,
+                      onLongPress: (){
+                        showAlertDialog(context, comentarios[i]['id']);
+                      },
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: new DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: new NetworkImage(
+                                        comentarios[i]['fotoPerfil'] == null ? rutaFoto:comentarios[i]['fotoPerfil'])),
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget> [
-                                Padding(
-                                    padding: const EdgeInsets.only(top: 4.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Container(
-                                            child: RichText(
-                                              text: TextSpan(children: [
-                                                TextSpan(
-                                                  text: comentarios[i]['username'],
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 18.0,
-                                                    color: Colors.black),
-                                                ),
-                                              ]),
-                                            )),
-                                            flex: 1,
-                                            ),
-                                            Expanded(
-                                              child: Align(
-                                                alignment: Alignment(0.5,0.5),
-                                                child: RatingBar.builder(
-                                                  itemCount: 5,
-                                                  itemSize: 27,
-                                                  allowHalfRating: true,
-                                                  ignoreGestures: true,
-                                                  initialRating: double.parse(comentarios[i]['valoracion']),
-                                                  itemBuilder: (context,_){
-                                                    return Icon(Icons.star, color: Colors.amber);
-                                                  },
-                                                  onRatingUpdate: null,
+                          Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget> [
+                                  Padding(
+                                      padding: const EdgeInsets.only(top: 4.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Container(
+                                              child: RichText(
+                                                text: TextSpan(children: [
+                                                  TextSpan(
+                                                    text: comentarios[i]['username'],
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 18.0,
+                                                      color: Colors.black),
+                                                  ),
+                                                ]),
+                                              )),
+                                              flex: 1,
+                                              ),
+                                              Expanded(
+                                                child: Align(
+                                                  alignment: Alignment(0.5,0.5),
+                                                  child: RatingBar.builder(
+                                                    itemCount: 5,
+                                                    itemSize: 27,
+                                                    allowHalfRating: true,
+                                                    ignoreGestures: true,
+                                                    initialRating: double.parse(comentarios[i]['valoracion']),
+                                                    itemBuilder: (context,_){
+                                                      return Icon(Icons.star, color: Colors.amber);
+                                                    },
+                                                    onRatingUpdate: null,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                      ],
+                                        ],
+                                      ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                    child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          comentarios[i]['texto'],
+                                          style: TextStyle(fontSize: 15.0),
+                                        )
                                     ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                  child: Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        comentarios[i]['texto'],
-                                        style: TextStyle(fontSize: 15.0),
-                                      )
                                   ),
-                                ),
-                                comentarios[i]['fotografia'] == null ?
-                                Container() : Container(
-                                  height:  300.0,
-                                  width: 300.0,
-                                  decoration: new BoxDecoration(
-                                    shape: BoxShape.rectangle,
-                                    image: new DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: new NetworkImage(
-                                            comentarios[i]['fotografia'])),
-                                  ),
-                                ).paddingOnly(top: 5, bottom: 5),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: RichText(
-                                    text: TextSpan(children: [
-                                      TextSpan(
-                                          text: comentarios[i]['datahora'],
-                                          style: TextStyle(
-                                              fontSize: 12.5,
-                                              color: Colors.grey)
-                                      )
-                                    ]),
-                                ).paddingOnly(bottom: 10.0)
-                                ),],
-                            ),
-                        )
-                      ],
+                                  comentarios[i]['fotografia'] == null ?
+                                  Container() : Container(
+                                    height:  300.0,
+                                    width: 300.0,
+                                    decoration: new BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      image: new DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: new NetworkImage(
+                                              comentarios[i]['fotografia'])),
+                                    ),
+                                  ).paddingOnly(top: 5, bottom: 5),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: RichText(
+                                      text: TextSpan(children: [
+                                        TextSpan(
+                                            text: comentarios[i]['datahora'],
+                                            style: TextStyle(
+                                                fontSize: 12.5,
+                                                color: Colors.grey)
+                                        )
+                                      ]),
+                                  ).paddingOnly(bottom: 10.0)
+                                  ),],
+                              ),
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -209,5 +216,59 @@ class PostComentariosState extends State<PostComentarios> {
         ),
       ),
     );
+  }
+}
+
+showAlertDialog(BuildContext context, String id) {
+  Widget cancelButton = TextButton(
+    child: Text("Sí"),
+    onPressed: () async {
+      final storage = new FlutterSecureStorage();
+      String token = await storage.read(key: 'jwt');
+      deleteCommentTutorial(id).then((respuesta) async {
+        if(respuesta.ecode == "ERR_TUT_COMMENTNOMIO"){
+          toast("El comentario no es tuyo", bgColor: toast_color);
+        }
+      });
+      Navigator.pop(context);
+    },
+  );
+  Widget continueButton = TextButton(
+    child: Text("No"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    content: Text("¿Quieres eliminar el comentario?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+Future<Resp> deleteCommentTutorial(String id) async {
+  var map = new Map<String, dynamic>();
+  map['commentId'] = id;
+  final response = await http.post(
+    Uri.https('api.socialcraft.club', '/tutorials/deleteCommentTutorial', map),
+    body: map,
+    headers: {
+      'Authorization': 'Bearer $token',
+    },
+  );
+  if (response.statusCode == 200) {
+    print(response.body);
+    return Resp.fromJson2(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to load response');
   }
 }
