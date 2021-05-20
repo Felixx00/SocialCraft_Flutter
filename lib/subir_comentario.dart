@@ -182,7 +182,7 @@ class SubirComentarioState extends State<SubirComentario> {
               Icons.add_comment
             ),
             onPressed: () async{
-              if (points == 0 && comentario_text =="") {
+              if (points == 0 || comentario_text =="") {
                 toast("Campos obligatorios: Puntuación y Texto", bgColor: toast_color);
               }
               else{
