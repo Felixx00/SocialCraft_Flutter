@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:socialcraft/tienda.dart';
 import 'buscar.dart';
 import 'editpost.dart';
@@ -21,6 +22,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'subir_comentario.dart';
 import 'post_comentarios.dart';
 import 'logros.dart';
+import 'package:socialcraft/l10n/l10n.dart';
+import 'package:socialcraft/provider/locale_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'l10n/l10n.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,35 +34,46 @@ void main() {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        routes: <String, WidgetBuilder>{
-          //'subir_comentario': (BuildContext context) => SubirComentario(),
-          'login': (BuildContext context) => Login(),
-          'register': (BuildContext context) => Register(),
-          'barra': (BuildContext context) => barra(),
-          'perfil': (BuildContext context) => Perfil(),
-          //'perfil2': (BuildContext context) => Perfil2(),
-          'forgotPassword': (BuildContext context) => ForgotPassword(),
-          'editar': (BuildContext context) => Editar(),
-          'search': (BuildContext context) => Search(),
-          'password': (BuildContext context) => Password(),
-          'settings': (BuildContext context) => Settings(),
-          'transition': (BuildContext context) => Transition(),
-          //'post': (BuildContext context) => Post(),
-          'upload': (BuildContext context) => Upload(),
-          'materiales': (BuildContext context) => Materiales(),
-          //'editPost': (BuildContext context) => EditPost(),
-          'home': (BuildContext context) => Home(),
-          'tienda': (BuildContext context) => Tienda(),
-          //'subirpasos': (BuildContext context) => SubirPasos(),
-          //'post_comentarios': (BuildContext context) => PostComentarios(),
-          'logros': (BuildContext context) => Logros(),
-        },
-        debugShowCheckedModeBanner: false,
-        home: Transition(),
-        theme: ThemeData(
-          textTheme: GoogleFonts.comfortaaTextTheme(),
-        ));
-  }
+  Widget build(BuildContext context)  => ChangeNotifierProvider(
+      create: (context) => LocaleProvider(),
+      builder: (context, child){
+          final provider = Provider.of<LocaleProvider>(context);
+          return MaterialApp(
+              supportedLocales: L10n.all,
+              locale: provider.localee,
+              localizationsDelegates: [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              routes: <String, WidgetBuilder>{
+                //'subir_comentario': (BuildContext context) => SubirComentario(),
+                'login': (BuildContext context) => Login(),
+                'register': (BuildContext context) => Register(),
+                'barra': (BuildContext context) => barra(),
+                'perfil': (BuildContext context) => Perfil(),
+                //'perfil2': (BuildContext context) => Perfil2(),
+                'forgotPassword': (BuildContext context) => ForgotPassword(),
+                'editar': (BuildContext context) => Editar(),
+                'search': (BuildContext context) => Search(),
+                'password': (BuildContext context) => Password(),
+                'settings': (BuildContext context) => Settings(),
+                'transition': (BuildContext context) => Transition(),
+                //'post': (BuildContext context) => Post(),
+                'upload': (BuildContext context) => Upload(),
+                'materiales': (BuildContext context) => Materiales(),
+                //'editPost': (BuildContext context) => EditPost(),
+                'home': (BuildContext context) => Home(),
+                'tienda': (BuildContext context) => Tienda(),
+                //'subirpasos': (BuildContext context) => SubirPasos(),
+                //'post_comentarios': (BuildContext context) => PostComentarios(),
+                'logros': (BuildContext context) => Logros(),
+              },
+              debugShowCheckedModeBanner: false,
+              home: Transition(),
+              theme: ThemeData(
+                textTheme: GoogleFonts.comfortaaTextTheme(),
+              ));
+  });
 }
+

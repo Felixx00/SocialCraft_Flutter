@@ -1,0 +1,28 @@
+{
+    "language": "Català",
+    "@language":{
+      "description": "Idioma actual català"
+    },
+    "loginNombre":"Nom d'usuari o correu electrònic",
+    "password": "Contrasenya",
+    "forgotPassword": "¿Has oblidat la contrasenya?",
+    "login": "Iniciar sessió",
+    "rellearCampos": "Ompli els camps",
+    "datosIncorrectos": "Dades incorrectes",
+    "google": "Conectar amb Google",
+    "notReg": "¿No està registrat?",
+    "newAcount": " Crear nou compte",
+    "editarFotoPerfil": "Editar foto de perfil",
+    "eliminarFotoPerfil": "Eliminar foto de perfil",
+    "seguidores": "Seguidors",
+    "seguidos": "Seguits",
+    "editarPerfil": "Editar Perfil",
+    "posts": "Posts",
+    "cerrarSesion": "Tancar la sessió",
+    "eliminarCuenta": "Eliminar compte",
+    "si": "Sí",
+    "no": "No",
+    "estasSeguroQueDeseasCerrarSesion": "¿Està segur que desitja tancar la sessió?",
+    "estasSeguroQueDeseasEliminarTuCuenta": "¿Està segur que desitja eliminar el compte?",
+    "configuracion": "Configuració"
+}

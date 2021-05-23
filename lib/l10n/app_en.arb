@@ -1,0 +1,29 @@
+{
+    "language": "English",
+    "@language":{
+      "description": "The current Language"
+    },
+    "loginNombre":"Username or email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "login": "Sing in",
+    "rellearCampos": "Fill all the fields",
+    "datosIncorrectos": "Incorrect data",
+    "google": "Connect with Google",
+    "notReg": "Not registered?",
+    "newAcount": " Sign up",
+    "editarFotoPerfil": "Edit profile picture",
+    "eliminarFotoPerfil": "Delete profile picture",
+    "seguidores": "Followers",
+    "seguidos": "Followeds",
+    "editarPerfil": "Edit Profile",
+    "posts": "Posts",
+    "cerrarSesion": "Log out",
+    "eliminarCuenta": "Delete account",
+    "si": "Yes",
+    "no": "No",
+    "estasSeguroQueDeseasCerrarSesion": "Are you sure?",
+    "estasSeguroQueDeseasEliminarTuCuenta": "Are you sure?",
+    "configuracion": "Settings"
+
+}

@@ -1,0 +1,29 @@
+{
+    "language": "Español",
+    "@language":{
+      "description": "Idioma actual español"
+    },
+    "loginNombre":"Nombre de usuario o Email",
+    "password": "Contraseña",
+    "forgotPassword": "¿Has olvidado la contraseña?",
+    "login": "Iniciar sesión",
+    "rellearCampos": "Rellena los campos",
+    "datosIncorrectos": "Datos incorrectos",
+    "google": "Conectar con google",
+    "notReg": "¿No estas registrado?",
+    "newAcount": " Crear cuenta",
+    "editarFotoPerfil": "Editar foto de perfil",
+    "eliminarFotoPerfil": "Eliminar foto de perfil",
+    "seguidores": "Seguidores",
+    "seguidos": "Seguidos",
+    "editarPerfil": "Editar Perfil",
+    "posts": "Posts",
+    "cerrarSesion": "Cerrar Sesión",
+    "eliminarCuenta": "Eliminar Cuenta",
+    "si": "Si",
+    "no": "No",
+    "estasSeguroQueDeseasCerrarSesion": "¿Estas seguro que deseas cerrar sesión?",
+    "estasSeguroQueDeseasEliminarTuCuenta": "¿Estas seguro que deseas eliminar tu cuenta?",
+    "configuracion": "Ajustes"
+
+}
