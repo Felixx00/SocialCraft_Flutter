@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'buscar.dart';
 
@@ -235,7 +236,7 @@ class Perfil2State extends State<Perfil2> {
                         style: boldTextStyle(size: 16, color: black),
                         semanticsLabel: "nFollow",
                       ).paddingLeft(92),
-                      Text("Seguidores",
+                      Text(AppLocalizations.of(context).seguidores,
                               style: boldTextStyle(size: 12, color: black))
                           .paddingLeft(92)
                     ],
@@ -247,7 +248,7 @@ class Perfil2State extends State<Perfil2> {
                         style: boldTextStyle(size: 16, color: black),
                         semanticsLabel: "nFollowers",
                       ).paddingRight(92),
-                      Text("Seguidos",
+                      Text(AppLocalizations.of(context).seguidos,
                               style: boldTextStyle(size: 12, color: black))
                           .paddingRight(92)
                     ],
@@ -255,7 +256,7 @@ class Perfil2State extends State<Perfil2> {
                 ],
               ),
               ElevatedButton.icon(
-                label: Text(unfollow ? 'Dejar de seguir' : 'Seguir Perfil'),
+                label: Text(unfollow ? AppLocalizations.of(context).dejarDeSeguir : AppLocalizations.of(context).seguirPerfil),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(170, 40),
                   //primary: Colors.lightBlueAccent[200],
@@ -300,7 +301,7 @@ class Perfil2State extends State<Perfil2> {
                     style: boldTextStyle(size: 16, color: black),
                     semanticsLabel: "nPosts",
                   ),
-                  Text("Posts", style: boldTextStyle(size: 12, color: black))
+                  Text(AppLocalizations.of(context).posts, style: boldTextStyle(size: 12, color: black))
                 ],
               ),
             ),

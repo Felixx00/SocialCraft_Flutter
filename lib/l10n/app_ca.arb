@@ -32,6 +32,8 @@
     "hasOlvidado_nLaContrasenya": "Has oblidat\nla contrasenya?",
     "introducirEmail":"Si us plau introdueix el seu email \na continuació i li farem arribar \nel codi de recuperació.",
     "email": "Email",
-    "enviar": "Enviar"
+    "enviar": "Enviar",
+    "dejarDeSeguir": "Deixar de seguir",
+    "seguirPerfil": "Seguir Perfil"
 
 }

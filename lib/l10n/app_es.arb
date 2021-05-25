@@ -29,6 +29,8 @@
     "hasOlvidado_nLaContrasenya": "¿Has olvidado \nla contraseña?",
     "introducirEmail":"Porfavor introduce tu email a continuación \ny te enviaremos el código de recuperación.",
     "email": "Email",
-    "enviar": "Enviar"
+    "enviar": "Enviar",
+    "dejarDeSeguir": "Dejar de seguir",
+    "seguirPerfil": "Seguir Perfil"
 
 }
