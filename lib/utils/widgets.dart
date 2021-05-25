@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/perfil2.dart';
 import 'package:socialcraft/post2.dart';
 import 'package:socialcraft/utils/fonts.dart';
 
@@ -28,7 +29,7 @@ class CommonButton extends StatelessWidget {
 }
 
 Widget targetaTutorial(
-    context, linkFoto, titulo, usuario, rate, descripcion, post) {
+    context, linkFoto, titulo, usuario, rate, descripcion, post, idCreador) {
   bool correct = true;
   if (rate == null) correct = false;
   return Card(
@@ -73,9 +74,21 @@ Widget targetaTutorial(
             SizedBox(height: 15),
             Row(
               children: [
-                Text("@" + usuario,
-                        style: TextStyle(fontSize: 16, color: Colors.grey[700]))
-                    .paddingOnly(left: 16, right: 16),
+                InkWell(
+                  child: Text("@" + usuario,
+                          style: TextStyle(fontSize: 16, color: azul_logo))
+                      .paddingOnly(left: 16, right: 16, top: 5),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Perfil2(
+                          idCreador,
+                        ),
+                      ),
+                    ); //.then((value) => setState(() {}));
+                  },
+                ),
                 Expanded(
                   child: Center(
                     child: Container(
@@ -92,12 +105,7 @@ Widget targetaTutorial(
                       },
                       onRatingUpdate: null,
                       ignoreGestures: true,
-                    ).paddingOnly(right: 5)
-                        /*child: Text(
-                          correct ? rate + "/5" : "-",
-                          style: TextStyle(fontSize: 20, color: textPrimaryColor),
-                        ).paddingOnly(left: 100),*/
-                        ),
+                    ).paddingOnly(right: 5)),
                   ),
                 ),
               ],

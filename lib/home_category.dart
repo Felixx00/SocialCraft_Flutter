@@ -201,16 +201,17 @@ class HomeCategoryState extends State<HomeCategory> {
                                                       color: azul_logo))
                                               .paddingOnly(
                                                   left: 16, right: 16, top: 5),
-                                          /*onTap: () {
+                                          onTap: () {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => Perfil2(
-                                                  tutoriales[index]["creador"],
+                                                  tutoriales[index]
+                                                      ["idCreador"],
                                                 ),
                                               ),
                                             ).then((value) => setState(() {}));
-                                          },*/
+                                          },
                                         ),
                                         Expanded(
                                           child: Center(

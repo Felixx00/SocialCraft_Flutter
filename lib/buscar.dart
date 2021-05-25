@@ -31,23 +31,30 @@ String token = '';
 String busqueda = "";
 var linkFoto = "";
 bool one = true;
-var users=[];
-var usersL=[];
+var users = [];
+var usersL = [];
 var tutorials = [];
 int user;
-String nombre= "";
-String rutaFoto = "https://www.labicok.com/wp-content/uploads/2020/06/default-user-image.png" ;
-bool followed= true;
+String nombre = "";
+String rutaFoto =
+    "https://www.labicok.com/wp-content/uploads/2020/06/default-user-image.png";
+bool followed = true;
 List infoBusqueda = [];
-bool unfollow= true;
+bool unfollow = true;
 var myself;
-List categories= [];
-List fotoVideos= ['https://cursosvirtualesgratis.com/wp-content/uploads/2018/02/time-totorial.jpg','https://serviwebsi.com/wp-content/uploads/2019/03/tutorial.png','https://www.authot.com/wordpress.new/wp-content/uploads/2019/09/online-3412498_1920-720x480.jpg','https://como-funciona.com/wp-content/uploads/2019/01/c%C3%B3mo-funciona-un-tutorial.jpg','https://www.freepik.com/blog/app/uploads/2019/12/Cabecera-Tutorials_instagram-1.jpg'];
+List categories = [];
+List fotoVideos = [
+  'https://cursosvirtualesgratis.com/wp-content/uploads/2018/02/time-totorial.jpg',
+  'https://serviwebsi.com/wp-content/uploads/2019/03/tutorial.png',
+  'https://www.authot.com/wordpress.new/wp-content/uploads/2019/09/online-3412498_1920-720x480.jpg',
+  'https://como-funciona.com/wp-content/uploads/2019/01/c%C3%B3mo-funciona-un-tutorial.jpg',
+  'https://www.freepik.com/blog/app/uploads/2019/12/Cabecera-Tutorials_instagram-1.jpg'
+];
 List userss = [
   {
-    "id" : 0,
-    "nombre" : "",
-    "username" : "",
+    "id": 0,
+    "nombre": "",
+    "username": "",
     "rutaFoto": socialcraft_logo,
     "followed": false
   },
@@ -84,18 +91,19 @@ class SearchW extends State<Search> {
     });
     await Firebase.initializeApp();
     value1 = "1";
-
   }
 
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
   }
-  Imagenes(String userName){
-    if(users != null || userName != ""){
+
+  Imagenes(String userName) {
+    if (users != null || userName != "") {
       getImage(userName);
     }
   }
+
   Future getImage(String userName) async {
     var r = FirebaseStorage.instance.ref(userName + '/image');
     try {
@@ -134,7 +142,7 @@ class SearchW extends State<Search> {
     map['offset'] = '0';
     final response = await http.post(
       Uri.https('api.socialcraft.club', 'users/searchUser'),
-      body:map,
+      body: map,
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -148,6 +156,7 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
+
   Future<Resp> listSearchTitle(String busqueda) async {
     var map = new Map<String, dynamic>();
     map['title'] = busqueda;
@@ -168,6 +177,7 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
+
   Future<Resp> listSearchDuration(String busqueda) async {
     var map = new Map<String, dynamic>();
     map['duracion'] = busqueda;
@@ -188,6 +198,7 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
+
   Future<Resp> listSearchDifficulty(String busqueda) async {
     var map = new Map<String, dynamic>();
     map['diff'] = busqueda;
@@ -208,6 +219,7 @@ class SearchW extends State<Search> {
       throw Exception('Failed to load response');
     }
   }
+
   Future<Resp> listCategories() async {
     final response = await http.get(
       Uri.https('api.socialcraft.club', '/tutorials/getCategories'),
@@ -248,7 +260,7 @@ class SearchW extends State<Search> {
     map['userId'] = id;
     final response = await http.post(
       Uri.https('api.socialcraft.club', '/users/unfollowUser'),
-      body:map,
+      body: map,
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -286,7 +298,7 @@ class SearchW extends State<Search> {
     map['catId'] = idCat;
     final response = await http.post(
       Uri.https('api.socialcraft.club', '/tutorials/unfollowCategory'),
-      body:map,
+      body: map,
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -304,257 +316,254 @@ class SearchW extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: GestureDetector(
-          onTap: (){
-            final FocusScopeNode focus = FocusScope.of(context);
-            if(!focus.hasPrimaryFocus && focus.hasFocus){
-              FocusManager.instance.primaryFocus.unfocus();
-            }
-          },
-          child: DefaultTabController(
-            length: 3,
-            child: NestedScrollView(
-                headerSliverBuilder: (BuildContext context, bool innerBoxIsScroll) {
-                  return [
-                    SliverAppBar(
-                      pinned: true,
-                      floating: true,
-                      snap:false,
-                      expandedHeight: 150.0,
-                      backgroundColor: azul_logo,
-                      flexibleSpace: Container(
-                        decoration: BoxDecoration(color: Colors.grey[300]),
-                        child: TextFormField(
-                          controller: _controller,
-                          keyboardType: TextInputType.name,
-                          cursorColor: azul_logo,
-                          decoration: InputDecoration(
-                            icon: Icon(Icons.search, color: azul_logo),
-                            border: InputBorder.none,
-                            hintText: "Buscar",
-
-                            suffixIcon: IconButton(
-                                icon: Icon(Icons.filter_alt,color: Colors.grey[600] ),
-                                onPressed: () {
-
-                                }),
-                          ),
-                          onTap: (){
-                            setState(() {
-                              users.clear();
-                              tutorials.clear();
+      onTap: () {
+        final FocusScopeNode focus = FocusScope.of(context);
+        if (!focus.hasPrimaryFocus && focus.hasFocus) {
+          FocusManager.instance.primaryFocus.unfocus();
+        }
+      },
+      child: DefaultTabController(
+        length: 3,
+        child: NestedScrollView(
+            headerSliverBuilder: (BuildContext context, bool innerBoxIsScroll) {
+              return [
+                SliverAppBar(
+                  pinned: true,
+                  floating: true,
+                  snap: false,
+                  expandedHeight: 150.0,
+                  backgroundColor: azul_logo,
+                  flexibleSpace: Container(
+                    decoration: BoxDecoration(color: Colors.grey[300]),
+                    child: TextFormField(
+                      controller: _controller,
+                      keyboardType: TextInputType.name,
+                      cursorColor: azul_logo,
+                      decoration: InputDecoration(
+                        icon: Icon(Icons.search, color: azul_logo),
+                        border: InputBorder.none,
+                        hintText: "Buscar",
+                        suffixIcon: IconButton(
+                            icon:
+                                Icon(Icons.filter_alt, color: Colors.grey[600]),
+                            onPressed: () {}),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          users.clear();
+                          tutorials.clear();
+                        });
+                      },
+                      onChanged: (texto) {
+                        if (texto.length == 0) {
+                          setState(() {
+                            users.clear();
+                            tutorials.clear();
+                          });
+                        }
+                        busqueda = texto;
+                        print(value1);
+                        if (busqueda.length > 0 && busqueda.length <= 3) {
+                          if (value1 == '1') {
+                            listSearchTitle(busqueda).then((response) async {
+                              tutorials = response.list;
+                              //tutorials = usersL;
+                              setState(() {});
+                              print(tutorials.length);
                             });
-                          },
-                          onChanged: (texto) {
-                            if(texto.length == 0){
-                              setState(() {
-                                users.clear();
-                                tutorials.clear();
+                          } else if (value1 == '2') {
+                            listSearchDuration(busqueda).then((response) async {
+                              tutorials = response.list;
+                              //users = usersL;
+                              setState(() {});
+                              print(tutorials.length);
+                            });
+                          } else if (value1 == '3') {
+                            if (busqueda == "facil" || busqueda == "1") {
+                              listSearchDifficulty("1").then((response) async {
+                                tutorials = response.list;
+                                //users = usersL;
+                                setState(() {});
                               });
                             }
-                            busqueda = texto;
-                            print(value1);
-                            if(busqueda.length > 0 && busqueda.length <= 3) {
-                              if (value1 == '1') {
-                                listSearchTitle(busqueda).then((response) async {
-                                  tutorials = response.list;
-                                  //tutorials = usersL;
-                                  setState(() {});
-                                  print(tutorials.length);
-                                });
-                              }
-                              else if (value1 == '2') {
-                                listSearchDuration(busqueda).then((
-                                    response) async {
-                                  tutorials = response.list;
-                                  //users = usersL;
-                                  setState(() {});
-                                  print(tutorials.length);
-                                });
-                              }
-                              else if (value1 == '3') {
-                                if(busqueda == "facil" || busqueda == "1"){
-                                  listSearchDifficulty("1").then((
-                                      response) async {
-                                    tutorials = response.list;
-                                    //users = usersL;
-                                    setState(() {});
-                                  });
-                                }
-                                if(busqueda == "intermedio" || busqueda == "2"){
-                                  listSearchDifficulty("2").then((
-                                      response) async {
-                                    tutorials = response.list;
-                                    //users = usersL;
-                                    setState(() {});
-                                  });
-                                }
-                                if(busqueda == "dificil" || busqueda == "3"){
-                                  listSearchDifficulty("3").then((
-                                      response) async {
-                                    tutorials = response.list;
-                                    //users = usersL;
-                                    setState(() {});
-                                  });
-                                }
-                                else{}
-                              }
+                            if (busqueda == "intermedio" || busqueda == "2") {
+                              listSearchDifficulty("2").then((response) async {
+                                tutorials = response.list;
+                                //users = usersL;
+                                setState(() {});
+                              });
                             }
-                            if (busqueda.length >= 3) {
-                              if (value1 == '1') {
-                                listSearchTitle(busqueda).then((response) async {
-                                  tutorials = response.list;
-                                  //tutorials = usersL;
-                                  setState(() {});
-                                  print(tutorials.length);
-                                });
-                              }
-                              else if (value1 == '2') {
-                                listSearchDuration(busqueda).then((response) async {
-                                  tutorials = response.list;
-                                  //users = usersL;
-                                  setState(() {});
-                                  print(tutorials.length);
-                                });
-                              }
-                              else if (value1 == '3') {
-                                if(busqueda == "facil" || busqueda == "1"){
-                                  listSearchDifficulty("1").then((
-                                      response) async {
-                                    tutorials = response.list;
-                                    //users = usersL;
-                                    setState(() {});
-                                  });
-                                }
-                                if(busqueda == "intermedio" || busqueda == "2"){
-                                  listSearchDifficulty("2").then((
-                                      response) async {
-                                    tutorials = response.list;
-                                    //users = usersL;
-                                    setState(() {});
-                                  });
-                                }
-                                if(busqueda == "dificil" || busqueda == "3"){
-                                  listSearchDifficulty("3").then((
-                                      response) async {
-                                    tutorials = response.list;
-                                    //users = usersL;
-                                    setState(() {});
-                                  });
-                                }
-                                  else{}
-                              }
-                              else {
-                                listSearchUser(busqueda).then((response) async {
-                                  usersL = response.list;
-                                  users = usersL;
-                                  setState(() {});
-                                  print(users.length);
-                                }
-                                );
-                              }
+                            if (busqueda == "dificil" || busqueda == "3") {
+                              listSearchDifficulty("3").then((response) async {
+                                tutorials = response.list;
+                                //users = usersL;
+                                setState(() {});
+                              });
+                            } else {}
+                          }
+                        }
+                        if (busqueda.length >= 3) {
+                          if (value1 == '1') {
+                            listSearchTitle(busqueda).then((response) async {
+                              tutorials = response.list;
+                              //tutorials = usersL;
+                              setState(() {});
+                              print(tutorials.length);
+                            });
+                          } else if (value1 == '2') {
+                            listSearchDuration(busqueda).then((response) async {
+                              tutorials = response.list;
+                              //users = usersL;
+                              setState(() {});
+                              print(tutorials.length);
+                            });
+                          } else if (value1 == '3') {
+                            if (busqueda == "facil" || busqueda == "1") {
+                              listSearchDifficulty("1").then((response) async {
+                                tutorials = response.list;
+                                //users = usersL;
+                                setState(() {});
+                              });
                             }
-                          },
-                        ).paddingLeft(10),
-                      ).cornerRadiusWithClipRRect(12).paddingOnly(top:70, left:20, right: 20, bottom:50),
-                      bottom: TabBar(
-                        indicatorColor: Colors.grey[300],
-                        indicatorSize: TabBarIndicatorSize.label,
-                        onTap: (index) {
-                          _controller.clear();
-                          if(index == 1){value1 = "flutter";}
-                          else value1 = "1";
-                        },
-                        tabs: <Widget>[
-                          Tab(icon: Icon(
-                            Icons.video_library_rounded,
-                            //Icons.view_headline_sharp,
-                            color: Colors.grey[300],
-                          )),
-                          Tab(icon: Icon(
-                            Icons.person,
-                            color: Colors.grey[300],
-                          )),
-                          Tab(
-                            icon: Icon(
-                              Icons.add_to_photos,
-                              color: Colors.grey[300],
-                            ),
-                          )
-                        ],
+                            if (busqueda == "intermedio" || busqueda == "2") {
+                              listSearchDifficulty("2").then((response) async {
+                                tutorials = response.list;
+                                //users = usersL;
+                                setState(() {});
+                              });
+                            }
+                            if (busqueda == "dificil" || busqueda == "3") {
+                              listSearchDifficulty("3").then((response) async {
+                                tutorials = response.list;
+                                //users = usersL;
+                                setState(() {});
+                              });
+                            } else {}
+                          } else {
+                            listSearchUser(busqueda).then((response) async {
+                              usersL = response.list;
+                              users = usersL;
+                              setState(() {});
+                              print(users.length);
+                            });
+                          }
+                        }
+                      },
+                    ).paddingLeft(10),
+                  )
+                      .cornerRadiusWithClipRRect(12)
+                      .paddingOnly(top: 70, left: 20, right: 20, bottom: 50),
+                  bottom: TabBar(
+                    indicatorColor: Colors.grey[300],
+                    indicatorSize: TabBarIndicatorSize.label,
+                    onTap: (index) {
+                      _controller.clear();
+                      if (index == 1) {
+                        value1 = "flutter";
+                      } else
+                        value1 = "1";
+                    },
+                    tabs: <Widget>[
+                      Tab(
+                          icon: Icon(
+                        Icons.video_library_rounded,
+                        //Icons.view_headline_sharp,
+                        color: Colors.grey[300],
+                      )),
+                      Tab(
+                          icon: Icon(
+                        Icons.person,
+                        color: Colors.grey[300],
+                      )),
+                      Tab(
+                        icon: Icon(
+                          Icons.add_to_photos,
+                          color: Colors.grey[300],
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ];
+            },
+            body: TabBarView(children: <Widget>[
+              Container(
+                child: Column(
+                  children: [
+                    SmartSelect<String>.single(
+                      tileBuilder: (context, state) {
+                        return S2Tile(
+                          title: state.titleWidget,
+                          leading: Icon(Icons.filter_alt),
+                          value: state.valueDisplay,
+                          onTap: state.showModal,
+                          isLoading: false,
+                        );
+                      },
+                      modalConfig: S2ModalConfig(
+                        type: S2ModalType.popupDialog,
+                        style: S2ModalStyle(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                       ),
-                    )
-                  ];
-                },
-                body: TabBarView(
-                    children: <Widget>[
-                      Container(
-                        child: Column(
-                          children: [
-                            SmartSelect<String>.single(
-                              tileBuilder: (context, state) {
-                                return S2Tile(
-                                  title: state.titleWidget,
-                                  leading: Icon(Icons.filter_alt),
-                                  value: state.valueDisplay,
-                                  onTap: state.showModal,
-                                  isLoading: false,
-                                );
-                              },
-                              modalConfig: S2ModalConfig(
-                                type: S2ModalType.popupDialog,
-                                style: S2ModalStyle(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                      modalHeaderStyle: S2ModalHeaderStyle(
+                          backgroundColor: azul_logo,
+                          textStyle: TextStyle(color: white)),
+                      title: 'Filtra tutoriales',
+                      value: value1,
+                      choiceItems: options,
+                      onChange: (state) => setState(() => value1 = state.value),
+                    ),
+                    Divider(
+                      height: 10,
+                      thickness: 3,
+                      color: Colors.grey[650],
+                    ),
+                    Expanded(
+                      child: tutorials.length == 0
+                          ? Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.search,
+                                    size: 100,
+                                    color: azul_logo,
                                   ),
-                                ),
+                                  Text(
+                                    'Buscar tutoriales...',
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w400),
+                                  )
+                                ],
                               ),
-                              modalHeaderStyle: S2ModalHeaderStyle(
-                                  backgroundColor: azul_logo,
-                                  textStyle: TextStyle(color: white)),
-                              title: 'Filtra tutoriales',
-                              value: value1,
-                              choiceItems: options,
-                              onChange: (state) => setState(() => value1 = state.value),
-                            ),
-                            Divider(
-                              height: 10,
-                              thickness: 3,
-                              color: Colors.grey[650],
-                            ),
-                            Expanded(
-                              child: tutorials.length == 0
-                                  ? Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.search, size: 100,color: azul_logo,),
-                                    Text(
-                                      'Buscar tutoriales...',
-                                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
-                                    )
-                                  ],
-                                ),
-                              )
-                                  :ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemCount: tutorials.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(right: 1,
-                                          bottom: 1),
-                                      child: Column(
-                                        children: <Widget>[
-                                          ListTile(
-                                            title: targetaTutorial(
-                                                context,
-                                                tutorials[index]["fotoRuta"] == null ? fotoVideos[index%5] : tutorials[index]["fotoRuta"],
-                                                tutorials[index]["titulo"],
-                                                tutorials[index]["creador"],
-                                                tutorials[index]["rate"],
-                                                tutorials[index]["tagline"],
-                                                tutorials[index]['id']),
-                                            /*leading: Container(
+                            )
+                          : ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: tutorials.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 1, bottom: 1),
+                                  child: Column(
+                                    children: <Widget>[
+                                      ListTile(
+                                        title: targetaTutorial(
+                                            context,
+                                            tutorials[index]["fotoRuta"] == null
+                                                ? fotoVideos[index % 5]
+                                                : tutorials[index]["fotoRuta"],
+                                            tutorials[index]["titulo"],
+                                            tutorials[index]["creador"],
+                                            tutorials[index]["rate"],
+                                            tutorials[index]["tagline"],
+                                            tutorials[index]['id'],
+                                            ""),
+                                        /*leading: Container(
                                               height: 300.0,
                                               width: 120.0,
                                               decoration: new BoxDecoration(
@@ -578,209 +587,245 @@ class SearchW extends State<Search> {
 
                                             subtitle:Text(tutorials[index]["creador"]),
                                             trailing: Text(""),*/
-                                            onTap: (){
-                                              _idPost = tutorials[index]["id"];
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => Post2(_idPost),
-                                                ),
-                                              ).then((value) => setState(() {}));
-                                            },
-                                          ),
-                                        ],
+                                        onTap: () {
+                                          _idPost = tutorials[index]["id"];
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Post2(_idPost),
+                                            ),
+                                          ).then((value) => setState(() {}));
+                                        },
                                       ),
-                                    );
-                                  }
-                              ),
+                                    ],
+                                  ),
+                                );
+                              }),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                child: users.length == 0
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.search,
+                              size: 100,
+                              color: azul_logo,
                             ),
+                            Text(
+                              'Buscar usuarios...',
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.w400),
+                            )
                           ],
                         ),
-                      ),
-                      Container(
-                        child: users.length == 0
-                            ? Center(
+                      )
+                    : ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: users.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 1, bottom: 1),
+                            child: Column(
+                              children: <Widget>[
+                                ListTile(
+                                    title: TextButton(
+                                        child: Text(
+                                          nombre = users[index]["nombre"],
+                                          semanticsLabel: "nombre",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black),
+                                        ),
+                                        onPressed: () {
+                                          if (myself ==
+                                              users[index]["username"]) {
+                                            Navigator.pushNamed(
+                                                context, "perfil");
+                                          } else {
+                                            _idUser = users[index]["id"];
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Perfil2(_idUser),
+                                              ),
+                                            ).then((value) => setState(() {}));
+                                          }
+                                        }),
+                                    leading: Container(
+                                      height: 50.0,
+                                      width: 50.0,
+                                      decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        //Imagenes(users[index]["username"]),
+                                        image: new DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: new NetworkImage(
+                                                users[index]["rutaFoto"] == null
+                                                    ? rutaFoto
+                                                    : users[index]
+                                                        ["rutaFoto"])),
+                                      ),
+                                    ).paddingOnly(top: 5, bottom: 5),
+                                    trailing: (myself ==
+                                            users[index]["username"])
+                                        ? IconButton(
+                                            icon: Icon(Icons.more_vert),
+                                            onPressed: () {
+                                              Navigator.pushNamed(
+                                                  context, "editar");
+                                            },
+                                          )
+                                        : IconButton(
+                                            icon: busqueda.length < 3
+                                                ? Icon(
+                                                    Icons.person_add,
+                                                    color: white,
+                                                  )
+                                                : Icon(
+                                                    users[index]["followed"]
+                                                        ? Icons
+                                                            .person_add_disabled
+                                                        : Icons.person_add,
+                                                    size: 18,
+                                                    color: users[index]
+                                                            ["followed"]
+                                                        ? Colors.red[600]
+                                                        : azul_logo),
+                                            onPressed: () {
+                                              if (users[index]["followed"] ==
+                                                  false) {
+                                                followUser(users[index]["id"])
+                                                    .then((response) async {
+                                                  users[index]["followed"] =
+                                                      !users[index]["followed"];
+                                                  setState(() {});
+                                                });
+                                              } else {
+                                                unfollowUser(users[index]["id"])
+                                                    .then((response) async {
+                                                  users[index]["followed"] =
+                                                      !users[index]["followed"];
+                                                  setState(() {});
+                                                });
+                                              }
+                                            },
+                                          )),
+                              ],
+                            ),
+                          );
+                        }),
+              ),
+              Container(
+                  child: categories.length == 0
+                      ? Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.search, size: 100,color: azul_logo,),
+                              Icon(
+                                Icons.search,
+                                size: 200,
+                                color: azul_logo,
+                              ),
                               Text(
-                                'Buscar usuarios...',
-                                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
+                                'Buscar categories...',
+                                style: TextStyle(
+                                    fontSize: 22, fontWeight: FontWeight.w400),
                               )
                             ],
                           ),
                         )
-                            :ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: users.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 1,
-                                    bottom: 1),
+                      : ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: categories.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 1, bottom: 1),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     ListTile(
                                         title: TextButton(
-                                            child:Text(
-                                              nombre = users[index]["nombre"],
-                                              semanticsLabel: "nombre",
-                                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                                            ),
+                                            child: Text(
+                                                categories[index]["nombre"],
+                                                style: TextStyle(
+                                                    color: black,
+                                                    fontSize: 15.0,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
                                             onPressed: () {
-                                              if(myself == users[index]["username"]){
-                                                Navigator.pushNamed(context, "perfil");
-                                              }
-                                              else{
-                                                _idUser = users[index]["id"];
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) => Perfil2(_idUser),
-                                                  ),
-                                                ).then((value) => setState(() {}));
-
-                                              }
-                                            }
+                                              //categoria concreta
+                                              _idCat = categories[index]["id"];
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeCategory(_idCat),
+                                                ),
+                                              ).then(
+                                                  (value) => setState(() {}));
+                                            }),
+                                        leading: CircleAvatar(
+                                          child: Text(
+                                              categories[index]["nombre"][0]),
                                         ),
-                                        leading: Container(
-                                          height: 50.0,
-                                          width: 50.0,
-                                          decoration: new BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            //Imagenes(users[index]["username"]),
-                                            image: new DecorationImage(
-                                                fit: BoxFit.fill,
-                                                image: new NetworkImage(
-                                                    users[index]["rutaFoto"]== null
-                                                        ? rutaFoto
-                                                        : users[index]["rutaFoto"])),
+                                        trailing: ElevatedButton.icon(
+                                          label: Text(categories[index]
+                                                  ["seguido"]
+                                              ? 'Unfollow'
+                                              : 'Follow'),
+                                          style: ElevatedButton.styleFrom(
+                                            minimumSize: Size(50, 40),
+                                            primary: categories[index]
+                                                    ["seguido"]
+                                                ? Colors.redAccent[200]
+                                                : Color.fromRGBO(
+                                                    68, 102, 216, 1.0),
+                                            onPrimary: Colors.white,
+                                            onSurface: Colors.grey,
                                           ),
-                                        ).paddingOnly(top: 5, bottom: 5),
-
-                                        trailing:
-                                        (myself == users[index]["username"])
-                                            ? IconButton(icon:Icon(Icons.more_vert),
+                                          icon: Icon(
+                                              categories[index]["seguido"]
+                                                  ? Icons.person_add_disabled
+                                                  : Icons.person_add,
+                                              size: 18),
                                           onPressed: () {
-                                            Navigator.pushNamed(context, "editar");
-                                          },
-                                        )
-                                            :IconButton(
-                                          icon: busqueda.length <3? Icon(Icons.person_add, color: white,): Icon(users[index]["followed"]
-                                              ? Icons.person_add_disabled
-                                              : Icons.person_add,
-                                              size: 18,
-                                              color: users[index]["followed"]
-                                                  ? Colors.red[600]
-                                                  : azul_logo),
-                                          onPressed: () {
-                                            if(users[index]["followed"] == false) {
-                                              followUser(users[index]["id"]).then((response) async {
-                                                users[index]["followed"] = !users[index]["followed"];
+                                            if (categories[index]["seguido"] ==
+                                                false) {
+                                              followCategory(
+                                                      categories[index]["id"])
+                                                  .then((response) async {
+                                                categories[index]["seguido"] =
+                                                    !categories[index]
+                                                        ["seguido"];
                                                 setState(() {});
                                               });
-                                            }
-                                            else {
-                                              unfollowUser(users[index]["id"]).then((response) async {
-                                                users[index]["followed"] = !users[index]["followed"];
+                                            } else {
+                                              unfollowCategory(
+                                                      categories[index]["id"])
+                                                  .then((response) async {
+                                                categories[index]["seguido"] =
+                                                    !categories[index]
+                                                        ["seguido"];
                                                 setState(() {});
                                               });
                                             }
                                           },
-                                        )
-                                    ),
+                                        )),
                                   ],
-                                ),
-                              );
-                            }
-                        ),
-                      ),
-                      Container(
-                          child: categories.length == 0
-                              ? Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.search, size: 200,color: azul_logo,),
-                                Text(
-                                  'Buscar categories...',
-                                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
-                                )
-                              ],
-                            ),
-                          )
-                              : ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: categories.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                    padding: const EdgeInsets.only(right:1,
-                                        bottom:1),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget> [
-                                        ListTile(
-                                            title: TextButton(
-                                                child: Text(
-                                                    categories[index]["nombre"],
-                                                    style: TextStyle(
-                                                        color:black,
-                                                        fontSize: 15.0,
-                                                        fontWeight: FontWeight.bold)),
-                                                onPressed: () {
-                                                  //categoria concreta
-                                                  _idCat = categories[index]["id"];
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          HomeCategory(_idCat),
-                                                    ),
-                                                  ).then((value) =>
-                                                      setState(() {}));
-                                                }
-                                            ),
-                                            leading: CircleAvatar(
-                                              child: Text(categories[index]["nombre"][0]),
-                                            ),
-                                            trailing: ElevatedButton.icon(
-                                              label: Text(categories[index]["seguido"] ? 'Unfollow' : 'Follow'),
-                                              style: ElevatedButton.styleFrom(
-                                                minimumSize: Size(50,40),
-                                                primary: categories[index]["seguido"] ?  Colors.redAccent[200] : Color.fromRGBO(68,102,216,1.0) ,
-                                                onPrimary: Colors.white,
-                                                onSurface: Colors.grey,
-                                              ),
-                                              icon: Icon(categories[index]["seguido"] ?  Icons.person_add_disabled : Icons.person_add, size: 18),
-                                              onPressed: () {
-                                                if(categories[index]["seguido"] == false) {
-                                                  followCategory(categories[index]["id"]).then((response) async {
-                                                    categories[index]["seguido"] = !categories[index]["seguido"];
-                                                    setState(() {});
-                                                  });
-                                                }
-                                                else {
-                                                  unfollowCategory(categories[index]["id"]).then((response) async {
-                                                    categories[index]["seguido"] = !categories[index]["seguido"];
-                                                    setState(() {});
-                                                  });
-                                                }
-                                              },
-                                            )
-                                        ),
-                                      ],
-                                    ));
-                              }
-                          )
-                      )
-                    ]
-                )
-            ),
-          ),
-        )
-    );
-
+                                ));
+                          }))
+            ])),
+      ),
+    ));
   }
 }
