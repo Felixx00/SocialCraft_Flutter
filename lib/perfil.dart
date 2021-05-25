@@ -15,6 +15,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'buscar.dart';
 import 'home.dart';
 import 'post.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Perfil extends StatefulWidget {
   static String tag = '/EGProfileScreen';
@@ -179,7 +180,7 @@ class PerfilState extends State<Perfil> {
               Icons.settings,
               color: Colors.white,
             ),
-            tooltip: 'Show Snackbar',
+            tooltip: AppLocalizations.of(context).configuracion,
             onPressed: () {
               Navigator.pushNamed(context, "settings");
             },
@@ -244,7 +245,7 @@ class PerfilState extends State<Perfil> {
                                               Icons.add_a_photo_rounded,
                                               color: azul_logo),
                                           title:
-                                              new Text('Editar foto de perfil'),
+                                              new Text(AppLocalizations.of(context).editarFotoPerfil),
                                           onTap: () async {
                                             var foto = await ImagePicker()
                                                 .getImage(
@@ -276,7 +277,7 @@ class PerfilState extends State<Perfil> {
                                           color: Colors.redAccent,
                                         ),
                                         title:
-                                            new Text('Eliminar foto de perfil'),
+                                            new Text(AppLocalizations.of(context).eliminarFotoPerfil),
                                         onTap: () async {
                                           Navigator.pop(context);
                                           final _firebaseStorage =
@@ -320,7 +321,7 @@ class PerfilState extends State<Perfil> {
                         style: boldTextStyle(size: 16, color: black),
                         semanticsLabel: "nFollow",
                       ).paddingLeft(92),
-                      Text("Seguidores",
+                      Text(AppLocalizations.of(context).seguidores,
                               style: boldTextStyle(size: 12, color: black))
                           .paddingLeft(92)
                     ],
@@ -332,7 +333,7 @@ class PerfilState extends State<Perfil> {
                         style: boldTextStyle(size: 16, color: black),
                         semanticsLabel: "nFollowers",
                       ).paddingRight(92),
-                      Text("Seguidos",
+                      Text(AppLocalizations.of(context).seguidos,
                               style: boldTextStyle(size: 12, color: black))
                           .paddingRight(92)
                     ],
@@ -340,7 +341,7 @@ class PerfilState extends State<Perfil> {
                 ],
               ),
               ElevatedButton.icon(
-                label: Text('Editar Perfil'),
+                label: Text(AppLocalizations.of(context).editarPerfil),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(150, 40),
                   primary: Color.fromRGBO(68, 102, 216, 1.0),
@@ -369,7 +370,7 @@ class PerfilState extends State<Perfil> {
                     style: boldTextStyle(size: 16, color: black),
                     semanticsLabel: "nPosts",
                   ),
-                  Text("Posts", style: boldTextStyle(size: 12, color: black))
+                  Text(AppLocalizations.of(context).posts, style: boldTextStyle(size: 12, color: black))
                 ],
               ),
             ),
