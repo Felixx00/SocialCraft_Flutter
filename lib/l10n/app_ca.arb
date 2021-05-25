@@ -24,5 +24,9 @@
     "no": "No",
     "estasSeguroQueDeseasCerrarSesion": "¿Està segur que desitja tancar la sessió?",
     "estasSeguroQueDeseasEliminarTuCuenta": "¿Està segur que desitja eliminar el compte?",
-    "configuracion": "Configuració"
+    "configuracion": "Configuració",
+    "home": "Menú",
+    "buscar": "Cerca",
+    "tienda": "Botiga",
+    "perfil": "Perfil"
 }
