@@ -24,6 +24,10 @@
     "no": "No",
     "estasSeguroQueDeseasCerrarSesion": "Are you sure?",
     "estasSeguroQueDeseasEliminarTuCuenta": "Are you sure?",
-    "configuracion": "Settings"
+    "configuracion": "Settings",
+    "home": "Home",
+    "buscar": "Search",
+    "tienda": "Shop",
+    "perfil": "Profile"
 
 }

@@ -9,6 +9,7 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'perfil.dart';
 import 'perfil2.dart';
 import 'buscar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class barra extends StatefulWidget {
   static String tag = '/EGNavigationScreen';
@@ -32,22 +33,22 @@ class barraState extends State<barra> {
             //backgroundColor: Colors.grey[200],
             currentIndex: _selectedIndex,
             type: BottomNavigationBarType.fixed,
-            items: const <BottomNavigationBarItem>[
+            items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                label: 'Home',
+                label: AppLocalizations.of(context).home,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.search),
-                label: 'Buscar',
+                label: AppLocalizations.of(context).buscar,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.shop),
-                label: 'Tienda',
+                label: AppLocalizations.of(context).tienda,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle),
-                label: 'Perfil',
+                label: AppLocalizations.of(context).perfil,
               ),
             ],
             fixedColor: azul_logo,

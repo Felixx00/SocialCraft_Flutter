@@ -1,8 +1,5 @@
 {
     "language": "Español",
-    "@language":{
-      "description": "Idioma actual español"
-    },
     "loginNombre":"Nombre de usuario o Email",
     "password": "Contraseña",
     "forgotPassword": "¿Has olvidado la contraseña?",
@@ -24,6 +21,10 @@
     "no": "No",
     "estasSeguroQueDeseasCerrarSesion": "¿Estas seguro que deseas cerrar sesión?",
     "estasSeguroQueDeseasEliminarTuCuenta": "¿Estas seguro que deseas eliminar tu cuenta?",
-    "configuracion": "Ajustes"
+    "configuracion": "Ajustes",
+    "home": "Menú",
+    "buscar": "Buscar",
+    "tienda": "Tienda",
+    "perfil": "Perfil"
 
 }
