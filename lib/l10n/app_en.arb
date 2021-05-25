@@ -28,6 +28,10 @@
     "home": "Home",
     "buscar": "Search",
     "tienda": "Shop",
-    "perfil": "Profile"
+    "perfil": "Profile",
+    "hasOlvidado_nLaContrasenya": "Forgot your\npassword?",
+    "introducirEmail":"Please enter your email below and we will send you the recovery code.",
+    "email": "Email",
+    "enviar": "Send"
 
 }

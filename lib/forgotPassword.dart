@@ -6,6 +6,7 @@ import 'package:socialcraft/resp.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotPassword extends StatefulWidget {
   static String tag = '/forgotPassword';
@@ -65,10 +66,10 @@ class ForgotPasswordState extends State<ForgotPassword> {
               Container(
                 child: Column(
                   children: [
-                    Text("¿Has olvidado \nla contraseña?",
+                    Text(AppLocalizations.of(context).hasOlvidado_nLaContrasenya,
                         style: boldTextStyle(size: 32)),
                     Text(
-                      "Porfavor introduce tu email a continuación \ny te enviaremos el código de recuperación.",
+                      AppLocalizations.of(context).introducirEmail,
                       style: TextStyle(color: Color(0xFF757575), fontSize: 16),
                       textAlign: TextAlign.center,
                     ).paddingTop(20.0),
@@ -87,7 +88,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                         },
                         decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Email",
+                            hintText: AppLocalizations.of(context).email,
                             hintStyle: secondaryTextStyle(size: 16)),
                       ).paddingOnly(left: 8, top: 2),
                     )
@@ -97,7 +98,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                 ),
               ),
               20.height,
-              CommonButton("Enviar").onTap(() {
+              CommonButton(AppLocalizations.of(context).enviar).onTap(() {
                 if (mail.validateEmail()) {
                   correct_mail = true;
                   recoverPassword(mail).then((respuesta) async {

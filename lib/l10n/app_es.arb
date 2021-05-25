@@ -25,6 +25,10 @@
     "home": "Menú",
     "buscar": "Buscar",
     "tienda": "Tienda",
-    "perfil": "Perfil"
+    "perfil": "Perfil",
+    "hasOlvidado_nLaContrasenya": "¿Has olvidado \nla contraseña?",
+    "introducirEmail":"Porfavor introduce tu email a continuación \ny te enviaremos el código de recuperación.",
+    "email": "Email",
+    "enviar": "Enviar"
 
 }
