@@ -7,6 +7,7 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -97,7 +98,7 @@ class LoginState extends State<Login> {
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "Nombre de usuario o Email",
+                              hintText: (AppLocalizations.of(context).loginNombre),
                               hintStyle: secondaryTextStyle(size: 16),
                             ),
                           ).paddingOnly(left: 8, top: 2),
@@ -130,7 +131,7 @@ class LoginState extends State<Login> {
                                     color: azul_logo),
                               ),
                               border: InputBorder.none,
-                              hintText: "Contraseña",
+                              hintText: (AppLocalizations.of(context).password),
                               hintStyle: secondaryTextStyle(size: 16),
                             ),
                           ).paddingOnly(left: 8, top: 2),
@@ -139,7 +140,7 @@ class LoginState extends State<Login> {
                             .paddingOnly(top: 16, bottom: 16),
                         Container(
                           alignment: Alignment.centerRight,
-                          child: Text("¿Has olvidado la contraseña?",
+                          child: Text((AppLocalizations.of(context).forgotPassword),
                               style: boldTextStyle(color: azul_logo)),
                         ).onTap(() {
                           Navigator.pushNamed(context, "forgotPassword");
@@ -151,19 +152,19 @@ class LoginState extends State<Login> {
                 Container(
                   child: Column(
                     children: [
-                      CommonButton("Iniciar sesión")
+                      CommonButton((AppLocalizations.of(context).login))
                           .paddingOnly(top: 16, bottom: 16)
                           .onTap(() {
                         if (user == "" || pass == "") {
                           correct = false;
                           setState(() {});
-                          toast("Rellena los campos", bgColor: toast_color);
+                          toast((AppLocalizations.of(context).rellearCampos), bgColor: toast_color);
                         } else {
                           loginUser(user, pass).then((respuesta) async {
                             if (respuesta.success == false) {
                               correct = false;
                               setState(() {});
-                              toast("Datos incorrectos", bgColor: toast_color);
+                              toast((AppLocalizations.of(context).datosIncorrectos), bgColor: toast_color);
                             } else {
                               final storage = new FlutterSecureStorage();
                               await storage.write(
@@ -181,7 +182,7 @@ class LoginState extends State<Login> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(google_logo, width: 25, height: 25),
-                            Text("Conectar con google",
+                            Text((AppLocalizations.of(context).google),
                                     style: TextStyle(
                                         color: Color(0xFF757575), fontSize: 16))
                                 .paddingAll(16),
@@ -194,11 +195,11 @@ class LoginState extends State<Login> {
                 Container(
                   child: createRichText(list: [
                     TextSpan(
-                        text: "¿No estas registrado?",
+                        text: (AppLocalizations.of(context).notReg),
                         style:
                             TextStyle(color: Color(0xFF757575), fontSize: 16)),
                     TextSpan(
-                        text: "  Crear cuenta",
+                        text: (AppLocalizations.of(context).newAcount),
                         style: boldTextStyle(color: azul_logo)),
                   ]).onTap(() {
                     Navigator.pushNamed(context, "register");
