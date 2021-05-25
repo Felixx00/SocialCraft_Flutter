@@ -15,6 +15,7 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'home_category.dart';
 
@@ -61,11 +62,7 @@ List userss = [
 ];
 
 String value1 = '1';
-List<S2Choice<String>> options = [
-  S2Choice<String>(value: '1', title: 'Título'),
-  S2Choice<String>(value: '2', title: 'Duración'),
-  S2Choice<String>(value: '3', title: 'Dificultad'),
-];
+
 
 class SearchW extends State<Search> {
   String _idUser = "";
@@ -314,6 +311,11 @@ class SearchW extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+    List<S2Choice<String>> options = [
+      S2Choice<String>(value: '1', title: AppLocalizations.of(context).titulo),
+      S2Choice<String>(value: '2', title: AppLocalizations.of(context).duracion),
+      S2Choice<String>(value: '3', title: AppLocalizations.of(context).dificultad),
+    ];
     return Scaffold(
         body: GestureDetector(
       onTap: () {
@@ -342,7 +344,7 @@ class SearchW extends State<Search> {
                       decoration: InputDecoration(
                         icon: Icon(Icons.search, color: azul_logo),
                         border: InputBorder.none,
-                        hintText: "Buscar",
+                        hintText: AppLocalizations.of(context).buscar,
                         suffixIcon: IconButton(
                             icon:
                                 Icon(Icons.filter_alt, color: Colors.grey[600]),
@@ -511,7 +513,7 @@ class SearchW extends State<Search> {
                       modalHeaderStyle: S2ModalHeaderStyle(
                           backgroundColor: azul_logo,
                           textStyle: TextStyle(color: white)),
-                      title: 'Filtra tutoriales',
+                      title: AppLocalizations.of(context).filtrarTutoriales,
                       value: value1,
                       choiceItems: options,
                       onChange: (state) => setState(() => value1 = state.value),
@@ -533,7 +535,7 @@ class SearchW extends State<Search> {
                                     color: azul_logo,
                                   ),
                                   Text(
-                                    'Buscar tutoriales...',
+                                    AppLocalizations.of(context).buscarTutoriales,
                                     style: TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.w400),
@@ -618,7 +620,7 @@ class SearchW extends State<Search> {
                               color: azul_logo,
                             ),
                             Text(
-                              'Buscar usuarios...',
+                              AppLocalizations.of(context).buscarUsuarios,
                               style: TextStyle(
                                   fontSize: 22, fontWeight: FontWeight.w400),
                             )
@@ -735,7 +737,7 @@ class SearchW extends State<Search> {
                                 color: azul_logo,
                               ),
                               Text(
-                                'Buscar categories...',
+                                AppLocalizations.of(context).buscarCategorias,
                                 style: TextStyle(
                                     fontSize: 22, fontWeight: FontWeight.w400),
                               )
@@ -781,8 +783,8 @@ class SearchW extends State<Search> {
                                         trailing: ElevatedButton.icon(
                                           label: Text(categories[index]
                                                   ["seguido"]
-                                              ? 'Unfollow'
-                                              : 'Follow'),
+                                              ? AppLocalizations.of(context).dejarDeSeguir
+                                              : AppLocalizations.of(context).seguirPerfil),
                                           style: ElevatedButton.styleFrom(
                                             minimumSize: Size(50, 40),
                                             primary: categories[index]
@@ -795,8 +797,8 @@ class SearchW extends State<Search> {
                                           ),
                                           icon: Icon(
                                               categories[index]["seguido"]
-                                                  ? Icons.person_add_disabled
-                                                  : Icons.person_add,
+                                                  ? Icons.block_outlined
+                                                  : Icons.check,
                                               size: 18),
                                           onPressed: () {
                                             if (categories[index]["seguido"] ==

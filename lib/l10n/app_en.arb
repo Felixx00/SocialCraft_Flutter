@@ -34,6 +34,13 @@
     "email": "Email",
     "enviar": "Send",
     "dejarDeSeguir": "Unfollow",
-    "seguirPerfil": "Follow"
+    "seguirPerfil": "Follow",
+    "filtrarTutoriales":"Filter tutorials",
+    "buscarTutoriales": "Searching tutorials...",
+    "buscarUsuarios": "Searching users...",
+    "buscarCategorias":"Searching categories...",
+    "titulo": "Title",
+    "duracion":"Time",
+    "dificultad":"Difficulty"
 
 }

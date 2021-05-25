@@ -34,6 +34,13 @@
     "email": "Email",
     "enviar": "Enviar",
     "dejarDeSeguir": "Deixar de seguir",
-    "seguirPerfil": "Seguir Perfil"
+    "seguirPerfil": "Seguir",
+    "filtrarTutoriales": "Filtrar tutorials",
+    "buscarTutoriales": "Cerca tutorials...",
+    "buscarUsuarios": "Cerca usuaris...",
+    "buscarCategorias":"Cerca categories...",
+    "titulo": "Títol",
+    "duracion":"Duració",
+    "dificultad":"Dificultat"
 
 }
