@@ -25,7 +25,9 @@ import 'package:image_picker/image_picker.dart';
 class editpasos extends StatefulWidget {
   static String tag = '/upload';
   var map = Map<String, dynamic>();
-  editpasos(this.map);
+  final String idPost;
+  List<dynamic> pasos2 = [];
+  editpasos(this.map, this.idPost, this.pasos2);
   @override
   editpasosState createState() => editpasosState();
 }
@@ -37,11 +39,15 @@ class editpasosState extends State<editpasos> {
     init();
   }
 
+  String tutId = '';
+  List<dynamic> pasos = [];
   var map2 = Map<String, dynamic>();
   String token = "";
   var objeto_foto;
 
   init() async {
+    tutId = widget.idPost;
+    pasos = widget.pasos2;
     map2 = widget.map;
     objeto_foto = map2['rutaFoto'];
     map2['rutaFoto'] = 'placeholder';
@@ -92,32 +98,15 @@ class editpasosState extends State<editpasos> {
 
   var mapfoto = Map<String, dynamic>();
 
-  Future<Resp> subirTuto() async {
-    final response = await http.post(
-      Uri.https('api.socialcraft.club', 'tutorials/uploadTutorial'),
-      body: map2,
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    );
-    if (response.statusCode == 200) {
-      print(response.body);
-      print('tuto bien');
-      return Resp.fromJson3(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load response');
-    }
-  }
-
-  Future<Resp> subirPasos(int id, int numeropaso) async {
-    await subirfotopaso(id, (numeropaso + 1));
+  Future<Resp> subirPasos(String id, int numeropaso) async {
+    await subirfotopaso(tutId.toInt(), (numeropaso + 1));
     var map3 = new Map<String, dynamic>();
-    map3['IdTutorial'] = id.toString();
+    map3['IdPaso'] = id;
     map3['NumPaso'] = numeropaso.toString();
     map3['Text'] = descripciones[numeropaso];
     map3['RutaFoto'] = fotopasoeditar;
     final response = await http.post(
-      Uri.https('api.socialcraft.club', 'tutorials/uploadStep'),
+      Uri.https('api.socialcraft.club', 'tutorials/editStep'),
       body: map3,
       headers: {
         'Authorization': 'Bearer $token',
@@ -127,51 +116,6 @@ class editpasosState extends State<editpasos> {
       print(response.body);
 
       return Resp.fromJson2(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load response');
-    }
-  }
-
-  void subirfoto(int x) async {
-    var foto = objeto_foto;
-    Navigator.pop(context);
-    print(foto);
-
-    if (foto != null) {
-      final _firebaseStorage = FirebaseStorage.instance;
-      var file = File(objeto_foto.path);
-      print('oooo');
-      print(file);
-      print('aaaaa');
-      await _firebaseStorage
-          .ref()
-          .child('Posts/' + x.toString() + '/principal')
-          .putFile(file);
-
-      var ref =
-          _firebaseStorage.ref().child("Posts/" + x.toString() + '/principal');
-      mapfoto['rutaFoto'] = (await ref.getDownloadURL()).toString();
-      print('eeee' + mapfoto['rutaFoto']);
-      mapfoto['tutId'] = x.toString();
-      cambios();
-
-      //print(foto.path);
-    } else {
-      print('No image selected.');
-    }
-  }
-
-  Future<Resp> cambios() async {
-    final response = await http.post(
-      Uri.https('api.socialcraft.club', '/tutorials/editTutorial'),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-      body: mapfoto,
-    );
-    if (response.statusCode == 200) {
-      print(response.body);
-      return Resp.modificar(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load response');
     }
@@ -227,23 +171,10 @@ class editpasosState extends State<editpasos> {
                   }
                 }
                 if (!vacio) {
-                  await subirTuto().then((respuesta) async {
-                    if (respuesta.success == false) {
-                      setState(() {});
-                      toast("Incorrecto", bgColor: toast_color);
-                    } else {
-                      print(respuesta.id);
-                      for (int i = 0; i < upperBound; i++) {
-                        subirPasos(respuesta.id, i);
-                        //subirfotopaso(respuesta.id, (i + 1));
-                      }
-
-                      subirfoto(respuesta.id);
-                      print(mapfoto);
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, 'barra', (Route<dynamic> route) => false);
-                    }
-                  });
+                  for (int i = 0; i < upperBound; i++) {
+                    subirPasos(pasos[i]['Id'], i);
+                  }
+                  Navigator.pop(context);
                 }
               },
             ),

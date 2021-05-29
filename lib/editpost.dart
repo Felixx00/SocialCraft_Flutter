@@ -24,7 +24,8 @@ import 'resp.dart';
 class EditPost extends StatefulWidget {
   static String tag = '/upload';
   final String idPost;
-  EditPost(this.idPost);
+  List<dynamic> pasos = [];
+  EditPost(this.idPost, this.pasos);
   @override
   EditPostState createState() => EditPostState();
 }
@@ -38,12 +39,14 @@ class EditPostState extends State<EditPost> {
 
   String token = '';
   String tutId = '';
+  List<dynamic> pasos2 = [];
   bool nova_foto = false;
 
   init() async {
     final storage = new FlutterSecureStorage();
     token = await storage.read(key: 'jwt');
     tutId = widget.idPost;
+    pasos2 = widget.pasos;
     value1 = "";
     value2 = "";
     result = "";
@@ -394,7 +397,7 @@ class EditPostState extends State<EditPost> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => editpasos(map),
+                            builder: (context) => editpasos(map, tutId, pasos2),
                           ),
                         );
                       },
