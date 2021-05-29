@@ -65,7 +65,18 @@ class editpasosState extends State<editpasos> {
   int upperBound = 1;
   List<int> numb = [1];
   List<String> textos = ["", "", "", "", "", "", "", "", "", ""];
-  List<String> descripciones = ["", "", "", "", "", "", "", "", "", ""];
+  List<String> descripciones = [
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " ",
+    " "
+  ];
   List<PickedFile> imagenes = [
     null,
     null,
@@ -201,7 +212,7 @@ class editpasosState extends State<editpasos> {
             padding: EdgeInsets.all(10.0),
             child: OutlinedButton.icon(
               label:
-                  Text('Subir', style: primaryTextStyle(color: Colors.white)),
+                  Text('Editar', style: primaryTextStyle(color: Colors.white)),
               style: OutlinedButton.styleFrom(
                 primary: Colors.white,
                 side: BorderSide(color: Colors.white, width: 1.5),
@@ -210,7 +221,7 @@ class editpasosState extends State<editpasos> {
               onPressed: () async {
                 bool vacio = false;
                 for (int i = 0; i < upperBound && !vacio; ++i) {
-                  if (descripciones[i] == "") {
+                  if (descripciones[i] == " ") {
                     vacio = true;
                     toast("Existe Step Vacío", bgColor: toast_color);
                   }
@@ -290,28 +301,73 @@ class editpasosState extends State<editpasos> {
                   onPressed: () {
                     imagenes[activeStep] = null;
                   }),
+              90.height,
+              Stack(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: FloatingActionButton.extended(
+                      onPressed: () {
+                        if (numb.length > 1) {
+                          upperBound -= 1;
+                          controller.text = " ";
+                          numb.remove(activeStep + 1);
+                          for (int i = activeStep; i < numb.length + 1; ++i) {
+                            if (i < numb.length) {
+                              numb[i] = numb[i] - 1;
+                              descripciones[i] = descripciones[i + 1];
+                            } else
+                              descripciones[i] = " ";
+                            if (i != numb.length)
+                              imagenes[i] = imagenes[i + 1];
+                            else
+                              imagenes[i] = null;
+                          }
+                          if (activeStep != numb.length)
+                            controller2.text = descripciones[activeStep];
+                          else
+                            controller2.text = descripciones[activeStep - 1];
+                          if (activeStep == numb.length)
+                            activeStep = activeStep - 1;
+                          print(descripciones);
+                          setState(() {});
+                        }
+                      },
+                      label: Text(
+                        'Step',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      icon: Icon(Icons.remove),
+                      backgroundColor: azul_logo,
+                    ).paddingLeft(10),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: FloatingActionButton.extended(
+                      onPressed: () {
+                        print(descripciones);
+                        if (numb.length < 10) {
+                          upperBound += 1;
+                          controller.text = "";
+                          controller2.text = "";
+                          activeStep = numb.length;
+                          numb.add(numb.length + 1);
+                          setState(() {});
+                        }
+                      },
+                      label: Text(
+                        'Step',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      icon: Icon(Icons.add),
+                      backgroundColor: azul_logo,
+                    ).paddingRight(10),
+                  ),
+                ],
+              )
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          print(descripciones);
-          if (numb.length < 10) {
-            upperBound += 1;
-            controller.text = "";
-            controller2.text = "";
-            activeStep = numb.length;
-            numb.add(numb.length + 1);
-            setState(() {});
-          }
-        },
-        label: Text(
-          'Step',
-          style: TextStyle(fontSize: 18),
-        ),
-        icon: Icon(Icons.add),
-        backgroundColor: azul_logo,
       ),
     ));
   }

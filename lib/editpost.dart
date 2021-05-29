@@ -389,7 +389,7 @@ class EditPostState extends State<EditPost> {
                   ).paddingOnly(bottom: 10).center(),
                   Align(
                     alignment: Alignment.centerRight,
-                    /*child: ElevatedButton(
+                    child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -409,7 +409,7 @@ class EditPostState extends State<EditPost> {
                           borderRadius: new BorderRadius.circular(50.0),
                         ),
                       ),
-                    ).paddingOnly(bottom: 10, right: 50),*/
+                    ).paddingOnly(bottom: 10, right: 50),
                   ),
                 ],
               ),

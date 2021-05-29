@@ -290,30 +290,73 @@ class SubirPasosState extends State<SubirPasos> {
                   onPressed: () {
                     imagenes[activeStep] = null;
                   }),
+              90.height,
+              Stack(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: FloatingActionButton.extended(
+                      onPressed: () {
+                        if (numb.length > 1) {
+                          upperBound -= 1;
+                          controller.text = "";
+                          numb.remove(activeStep + 1);
+                          for (int i = activeStep; i < numb.length + 1; ++i) {
+                            if (i < numb.length) {
+                              numb[i] = numb[i] - 1;
+                              descripciones[i] = descripciones[i + 1];
+                            } else
+                              descripciones[i] = "";
+                            if (i != numb.length)
+                              imagenes[i] = imagenes[i + 1];
+                            else
+                              imagenes[i] = null;
+                          }
+                          if (activeStep != numb.length)
+                            controller2.text = descripciones[activeStep];
+                          else
+                            controller2.text = descripciones[activeStep - 1];
+                          if (activeStep == numb.length)
+                            activeStep = activeStep - 1;
+                          print(descripciones);
+                          setState(() {});
+                        }
+                      },
+                      label: Text(
+                        'Step',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      icon: Icon(Icons.remove),
+                      backgroundColor: azul_logo,
+                    ).paddingLeft(10),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: FloatingActionButton.extended(
+                      onPressed: () {
+                        print(descripciones);
+                        if (numb.length < 10) {
+                          upperBound += 1;
+                          controller.text = "";
+                          controller2.text = "";
+                          activeStep = numb.length;
+                          numb.add(numb.length + 1);
+                          setState(() {});
+                        }
+                      },
+                      label: Text(
+                        'Step',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      icon: Icon(Icons.add),
+                      backgroundColor: azul_logo,
+                    ).paddingRight(10),
+                  ),
+                ],
+              )
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          print(descripciones);
-          if (numb.length < 10) {
-            upperBound += 1;
-            controller.text = "";
-            controller2.text = "";
-            activeStep = numb.length;
-            numb.add(numb.length + 1);
-            setState(() {});
-          } else {
-            toast("Máximo 10 pasos", bgColor: toast_color);
-          }
-        },
-        label: Text(
-          'Step',
-          style: TextStyle(fontSize: 18),
-        ),
-        icon: Icon(Icons.add),
-        backgroundColor: azul_logo,
       ),
     ));
   }
