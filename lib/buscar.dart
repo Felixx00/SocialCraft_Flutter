@@ -63,7 +63,6 @@ List userss = [
 
 String value1 = '1';
 
-
 class SearchW extends State<Search> {
   String _idUser = "";
   String _idCat = "";
@@ -313,8 +312,10 @@ class SearchW extends State<Search> {
   Widget build(BuildContext context) {
     List<S2Choice<String>> options = [
       S2Choice<String>(value: '1', title: AppLocalizations.of(context).titulo),
-      S2Choice<String>(value: '2', title: AppLocalizations.of(context).duracion),
-      S2Choice<String>(value: '3', title: AppLocalizations.of(context).dificultad),
+      S2Choice<String>(
+          value: '2', title: AppLocalizations.of(context).duracion),
+      S2Choice<String>(
+          value: '3', title: AppLocalizations.of(context).dificultad),
     ];
     return Scaffold(
         body: GestureDetector(
@@ -535,7 +536,8 @@ class SearchW extends State<Search> {
                                     color: azul_logo,
                                   ),
                                   Text(
-                                    AppLocalizations.of(context).buscarTutoriales,
+                                    AppLocalizations.of(context)
+                                        .buscarTutoriales,
                                     style: TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.w400),
@@ -564,7 +566,7 @@ class SearchW extends State<Search> {
                                             tutorials[index]["rate"],
                                             tutorials[index]["tagline"],
                                             tutorials[index]['id'],
-                                            ""),
+                                            tutorials[index]['idCreador']),
                                         /*leading: Container(
                                               height: 300.0,
                                               width: 120.0,
@@ -783,8 +785,10 @@ class SearchW extends State<Search> {
                                         trailing: ElevatedButton.icon(
                                           label: Text(categories[index]
                                                   ["seguido"]
-                                              ? AppLocalizations.of(context).dejarDeSeguir
-                                              : AppLocalizations.of(context).seguirPerfil),
+                                              ? AppLocalizations.of(context)
+                                                  .dejarDeSeguir
+                                              : AppLocalizations.of(context)
+                                                  .seguirPerfil),
                                           style: ElevatedButton.styleFrom(
                                             minimumSize: Size(50, 40),
                                             primary: categories[index]

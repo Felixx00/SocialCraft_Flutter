@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/perfil.dart';
+import 'package:socialcraft/perfil2.dart';
+import 'package:socialcraft/resp.dart';
 import 'package:socialcraft/utils/fonts.dart';
+import 'package:http/http.dart' as http;
 
 class PostDesc extends StatelessWidget {
   final String titulo;
@@ -11,10 +18,20 @@ class PostDesc extends StatelessWidget {
   final String categoria;
   final String materiales;
   final String duracion;
+  final String idUsuario;
   bool correct = false;
+  var myself;
 
-  PostDesc(this.titulo, this.descripcion, this.usuario, this.rate,
-      this.dificultad, this.categoria, this.materiales, this.duracion);
+  PostDesc(
+      this.titulo,
+      this.descripcion,
+      this.usuario,
+      this.rate,
+      this.dificultad,
+      this.categoria,
+      this.materiales,
+      this.duracion,
+      this.idUsuario);
   @override
   Widget build(BuildContext context) {
     if (rate != "0") correct = true;
@@ -42,10 +59,32 @@ class PostDesc extends StatelessWidget {
                 Row(children: [
                   Icon(Icons.account_circle, color: azul_logo, size: 30),
                   16.width,
-                  Text(
-                    "Usuario: " + usuario,
-                    style: TextStyle(fontSize: 16),
-                  )
+                  InkWell(
+                    child: Text("@" + usuario,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 16, color: azul_logo))
+                        .paddingOnly(left: 16, right: 16, top: 5),
+                    onTap: () {
+                      Myself().then((response) async {
+                        myself = response.data['username'];
+                        print(myself);
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => myself == usuario
+                              ? Perfil()
+                              : Perfil2(
+                                  idUsuario,
+                                ),
+                        ),
+                      ); //.then((value) => setState(() {}));
+                    },
+                  ),
+                  //Text(
+                  //"Usuario: " + usuario,
+                  //style: TextStyle(fontSize: 16),
+                  //)
                 ]),
                 16.height,
                 Row(children: [
@@ -101,5 +140,24 @@ class PostDesc extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+Future<Resp> Myself() async {
+  final storage2 = new FlutterSecureStorage();
+  String token = await storage2.read(key: 'jwt');
+  final response = await http.get(
+    Uri.https('api.socialcraft.club', 'users/getMyProfile'),
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    },
+  );
+  if (response.statusCode == 200) {
+    print(response.body);
+    return Resp.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to load response');
   }
 }

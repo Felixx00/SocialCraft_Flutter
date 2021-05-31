@@ -36,6 +36,7 @@ String duracion = "";
 String usuario = "";
 String rate = "";
 String categoria = "";
+String idUsuario = "";
 List<dynamic> pasos = [];
 List<dynamic> comments = [];
 
@@ -63,6 +64,7 @@ class PostState2 extends State<Post2> {
       pasos = respuesta.data['pasos'];
       comments = respuesta.data['comments'];
       rutaFoto = respuesta.data['rutaFoto'];
+      idUsuario = respuesta.data['idUsuario'];
       if (dificultad == "1") dificultad = "Fácil";
       if (dificultad == "2") dificultad = "Intermedio";
       if (dificultad == "3") dificultad = "Difícil";
@@ -177,7 +179,7 @@ class PostState2 extends State<Post2> {
           },
           body: TabBarView(children: <Widget>[
             PostDesc(titulo, descripcion, usuario, rate, dificultad, categoria,
-                materiales, duracion),
+                materiales, duracion, idUsuario),
             PostPasos(titulo, descripcion, pasos, tutId),
             PostComentarios(tutId)
           ]),
