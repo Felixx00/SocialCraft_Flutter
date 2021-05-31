@@ -21,6 +21,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class editpasos extends StatefulWidget {
   static String tag = '/upload';
@@ -149,14 +150,14 @@ class editpasosState extends State<editpasos> {
         child: Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Editar pasos'),
+        title: Text(AppLocalizations.of(context).editarPasos),
         backgroundColor: azul_logo,
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.all(10.0),
             child: OutlinedButton.icon(
               label:
-                  Text('Editar', style: primaryTextStyle(color: Colors.white)),
+                  Text(AppLocalizations.of(context).editar, style: primaryTextStyle(color: Colors.white)),
               style: OutlinedButton.styleFrom(
                 primary: Colors.white,
                 side: BorderSide(color: Colors.white, width: 1.5),
@@ -167,7 +168,7 @@ class editpasosState extends State<editpasos> {
                 for (int i = 0; i < upperBound && !vacio; ++i) {
                   if (descripciones[i] == " ") {
                     vacio = true;
-                    toast("Existe Step Vacío", bgColor: toast_color);
+                    toast(AppLocalizations.of(context).existePasoVacio, bgColor: toast_color);
                   }
                 }
                 if (!vacio) {
@@ -210,7 +211,7 @@ class editpasosState extends State<editpasos> {
               ),
               20.height,
               ElevatedButton(
-                child: Text('Selecciona Imagen o Video'),
+                child: Text(AppLocalizations.of(context).seleccionaImagen),
                 style: ElevatedButton.styleFrom(
                   //minimumSize: Size(150, 40),
                   //primary: Colors.lightBlueAccent[200],
@@ -265,7 +266,7 @@ class editpasosState extends State<editpasos> {
                         }
                       },
                       label: Text(
-                        'Step',
+                        AppLocalizations.of(context).paso,
                         style: TextStyle(fontSize: 18),
                       ),
                       icon: Icon(Icons.remove),
@@ -287,7 +288,7 @@ class editpasosState extends State<editpasos> {
                         }
                       },
                       label: Text(
-                        'Step',
+                        AppLocalizations.of(context).paso,
                         style: TextStyle(fontSize: 18),
                       ),
                       icon: Icon(Icons.add),
@@ -338,7 +339,7 @@ class editpasosState extends State<editpasos> {
               border: InputBorder.none,
               contentPadding:
                   new EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-              hintText: "Añade una descripción ...",
+              hintText: AppLocalizations.of(context).anadeUnaDescripcion,
             ),
             onChanged: (newValue) {
               descripciones[activeStep] = newValue;

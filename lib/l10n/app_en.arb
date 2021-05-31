@@ -45,6 +45,12 @@
     "nombre": "Name",
     "descripcion": "Description",
     "ciudad":"City",
-    "modificarContrasena":"Set password"
+    "modificarContrasena":"Set password",
+    "editarPasos":"Edit steps",
+    "editar":"Edit",
+    "existePasoVacio": "Exist an empty step",
+    "seleccionaImagen":"Select picture",
+    "paso":"Step",
+    "anadeUnaDescripcion": "Add a description..."
 
 }

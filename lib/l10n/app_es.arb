@@ -45,6 +45,12 @@
     "nombre": "Nombre",
     "descripcion": "Descripción",
     "ciudad":"Ciudad",
-    "modificarContrasena":"Modificar Contraseña"
+    "modificarContrasena":"Modificar Contraseña",
+    "editarPasos":"Editar pasos",
+    "editar":"Editar",
+    "existePasoVacio": "Existe paso vacío",
+    "seleccionaImagen":"Seleccionar imagen",
+    "paso":"Paso",
+    "anadeUnaDescripcion": "Añade una descripcion..."
 
 }
