@@ -308,6 +308,43 @@ class SearchW extends State<Search> {
     }
   }
 
+  void _showAlertDialog() {
+    showDialog(
+        context: context,
+        builder: (buildcontext) {
+          return AlertDialog(
+            title:
+                Text("Información del buscador" , style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+            content:
+            RichText(
+              textAlign: TextAlign.left,
+              text: new TextSpan(
+                style: TextStyle(color: Colors.black),
+                children: <TextSpan>[
+                  new TextSpan(text: "Usuario:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                  new TextSpan(text: "Introduce mínimo 3 caracteres\n\n" , style: new TextStyle(fontSize: 17)),
+                  new TextSpan(text: "Título:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                  new TextSpan(text: "Introduce mínimo 1 carácter\n\n" , style: new TextStyle(fontSize: 17)),
+                  new TextSpan(text: "Duración:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                  new TextSpan(text: "Indica si el tutorial dura (min): \n" , style: new TextStyle(fontSize: 17)),
+                  new TextSpan(text: "   <10\n     10\n     20\n     30\n     40\n     50\n     60\n   >60\n\n", style: new TextStyle(fontSize: 17)),
+                  new TextSpan(text: "Dificultad:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                  new TextSpan(text: "Selecciona entre: \n", style: new TextStyle(fontSize: 17)),
+                  new TextSpan(text: "     1 o facil \n     2 o intermedio \n     3 o dificil", style: new TextStyle(fontSize: 17)),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              RaisedButton(
+                child: Text("CERRAR", style: TextStyle(color: Colors.white),),
+               color:  azul_logo,
+                onPressed: (){ Navigator.of(context).pop(); },
+              )
+            ],
+          );
+        }
+    );
+  }
   @override
   Widget build(BuildContext context) {
     List<S2Choice<String>> options = [
@@ -348,8 +385,10 @@ class SearchW extends State<Search> {
                         hintText: AppLocalizations.of(context).buscar,
                         suffixIcon: IconButton(
                             icon:
-                                Icon(Icons.filter_alt, color: Colors.grey[600]),
-                            onPressed: () {}),
+                                Icon(Icons.info_outline, color: Colors.grey[600]),
+                            onPressed: () {
+                              _showAlertDialog();
+                            }),
                       ),
                       onTap: () {
                         setState(() {
@@ -382,21 +421,21 @@ class SearchW extends State<Search> {
                               print(tutorials.length);
                             });
                           } else if (value1 == '3') {
-                            if (busqueda == "facil" || busqueda == "1") {
+                            if (busqueda == "facil" || busqueda == "1"|| busqueda == "easy") {
                               listSearchDifficulty("1").then((response) async {
                                 tutorials = response.list;
                                 //users = usersL;
                                 setState(() {});
                               });
                             }
-                            if (busqueda == "intermedio" || busqueda == "2") {
+                            if (busqueda == "intermedio" || busqueda == "2"|| busqueda == "intermig" || busqueda == "normal") {
                               listSearchDifficulty("2").then((response) async {
                                 tutorials = response.list;
                                 //users = usersL;
                                 setState(() {});
                               });
                             }
-                            if (busqueda == "dificil" || busqueda == "3") {
+                            if (busqueda == "dificil" || busqueda == "3" || busqueda == "difficult") {
                               listSearchDifficulty("3").then((response) async {
                                 tutorials = response.list;
                                 //users = usersL;
