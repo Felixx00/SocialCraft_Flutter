@@ -173,11 +173,14 @@ class HomeCategoryState extends State<HomeCategory> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(tutoriales[index]["titulo"],
-                                                style: boldTextStyle(
-                                                    size: 20,
-                                                    color: textPrimaryColor))
-                                            .paddingOnly(left: 16),
+                                        Expanded(
+                                          child: Text(tutoriales[index]["titulo"],
+                                              overflow: TextOverflow.ellipsis,
+                                                  style: boldTextStyle(
+                                                      size: 20,
+                                                      color: textPrimaryColor))
+                                              .paddingOnly(left: 16),
+                                        ),
 
                                         /*Container(
                                             child: Text(

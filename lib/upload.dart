@@ -98,7 +98,14 @@ class UploadState extends State<Upload> {
             //Navigator
           }),
         ),
-        body: SingleChildScrollView(
+        body: GestureDetector(
+          onTap: () {
+            final FocusScopeNode focus = FocusScope.of(context);
+            if (!focus.hasPrimaryFocus && focus.hasFocus) {
+              FocusManager.instance.primaryFocus.unfocus();
+            }
+          },
+          child:SingleChildScrollView(
           child: Column(
             children: [
               30.height,
@@ -356,6 +363,7 @@ class UploadState extends State<Upload> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

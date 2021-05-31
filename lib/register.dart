@@ -78,7 +78,14 @@ class RegisterW extends State<Register> {
             finish(context);
           }),
         ),
-        body: Center(
+        body: GestureDetector(
+          onTap: () {
+            final FocusScopeNode focus = FocusScope.of(context);
+            if (!focus.hasPrimaryFocus && focus.hasFocus) {
+              FocusManager.instance.primaryFocus.unfocus();
+            }
+          },
+          child: Center(
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -275,6 +282,7 @@ class RegisterW extends State<Register> {
             ),
           ),
         ),
+      ),
       ),
       debugShowCheckedModeBanner: false,
     );
