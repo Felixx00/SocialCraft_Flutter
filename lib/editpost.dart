@@ -18,6 +18,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:smart_select/smart_select.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'resp.dart';
 
@@ -139,7 +140,7 @@ class EditPostState extends State<EditPost> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Editar post'),
+          title: Text(AppLocalizations.of(context).editarPost),
           backgroundColor: azul_logo,
           leading: Icon(Icons.arrow_back).onTap(() {
             Navigator.pop(context);
@@ -219,7 +220,7 @@ class EditPostState extends State<EditPost> {
                   decoration: InputDecoration(
                     //icon: Icon(Icons.search, color: azul_logo),
                     border: InputBorder.none,
-                    hintText: "Título ...",
+                    hintText: AppLocalizations.of(context).titulo,
                   ),
                 ).paddingLeft(10),
               )
@@ -239,7 +240,7 @@ class EditPostState extends State<EditPost> {
                     border: InputBorder.none,
                     contentPadding: new EdgeInsets.symmetric(
                         vertical: 15.0, horizontal: 10.0),
-                    hintText: "Añade una descripción ...",
+                    hintText: AppLocalizations.of(context).anadeUnaDescripcion,
                   ),
                 ).paddingLeft(10),
               )
@@ -267,7 +268,7 @@ class EditPostState extends State<EditPost> {
                 modalHeaderStyle: S2ModalHeaderStyle(
                     backgroundColor: azul_logo,
                     textStyle: TextStyle(color: white)),
-                title: 'Dificultad',
+                title: AppLocalizations.of(context).dificultad,
                 value: value1,
                 choiceItems: options,
                 onChange: (state) => setState(() => value1 = state.value),
@@ -288,7 +289,7 @@ class EditPostState extends State<EditPost> {
                 modalHeaderStyle: S2ModalHeaderStyle(
                     backgroundColor: azul_logo,
                     textStyle: TextStyle(color: white)),
-                title: 'Categoria',
+                title: AppLocalizations.of(context).categoria,
                 value: value2,
                 choiceItems: categorias,
                 onChange: (state) => setState(() => value2 = state.value),
@@ -314,7 +315,7 @@ class EditPostState extends State<EditPost> {
                 modalHeaderStyle: S2ModalHeaderStyle(
                     backgroundColor: azul_logo,
                     textStyle: TextStyle(color: white)),
-                title: 'Duración',
+                title: AppLocalizations.of(context).duracion,
                 value: value4,
                 choiceItems: tiempos,
                 onChange: (state) => setState(() => value4 = state.value),
@@ -347,7 +348,7 @@ class EditPostState extends State<EditPost> {
                 modalHeaderStyle: S2ModalHeaderStyle(
                     backgroundColor: azul_logo,
                     textStyle: TextStyle(color: white)),
-                title: 'Materiales',
+                title: AppLocalizations.of(context).materiales,
                 value: value4,
                 choiceItems: tiempos,
                 onChange: (state) => setState(() => value4 = state.value),
@@ -364,7 +365,7 @@ class EditPostState extends State<EditPost> {
                       print(materiales);
                       cambios().then((respuesta) async {
                         if (respuesta.success == false) {
-                          print("Algun Parametro Incorrecto");
+                          print(AppLocalizations.of(context).parametroIncorrecto);
                         } else {
                           if (nova_foto) {
                             nova_foto = false;
@@ -376,7 +377,7 @@ class EditPostState extends State<EditPost> {
                       });
                     },
                     child: Text(
-                      'Editar',
+                      AppLocalizations.of(context).editar,
                       style: TextStyle(fontSize: 20),
                     ),
                     style: ElevatedButton.styleFrom(

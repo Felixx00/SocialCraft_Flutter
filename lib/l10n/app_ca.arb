@@ -51,6 +51,12 @@
     "existePasoVacio": "Hi ha algun pas buit",
     "seleccionaImagen":"Selecciona imatege",
     "paso":"Pas",
-    "anadeUnaDescripcion": "Afegeix una descripció..."
+    "anadeUnaDescripcion": "Afegeix una descripció...",
+    "editarPost": "Editar Post",
+    "categoria":"Categoria",
+    "materiales":"Materials",
+    "facil":"Fàcil",
+    "intermedio":"Intermig",
+    "dificil":"Difícl"
 
 }

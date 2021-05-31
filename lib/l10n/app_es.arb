@@ -51,6 +51,12 @@
     "existePasoVacio": "Existe paso vacío",
     "seleccionaImagen":"Seleccionar imagen",
     "paso":"Paso",
-    "anadeUnaDescripcion": "Añade una descripcion..."
+    "anadeUnaDescripcion": "Añade una descripcion...",
+    "editarPost": "Editar Post",
+    "categoria":"Categoria",
+    "materiales":"Materiales",
+    "facil":"Fácil",
+    "intermedio":"Intermedio",
+    "dificil":"Difícil"
 
 }
