@@ -1,20 +1,32 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/perfil2.dart';
 import 'package:socialcraft/post2.dart';
 import 'package:socialcraft/utils/fonts.dart';
+import 'package:http/http.dart' as http;
+import '../perfil.dart';
+import '../resp.dart';
+
+
+String token = '';
+var myself;
 
 class CommonButton extends StatelessWidget {
   final String buttonName;
-
   CommonButton(
     this.buttonName,
   );
 
+
+
   @override
   Widget build(BuildContext context) {
+
     return Container(
       decoration: BoxDecoration(color: azul_logo),
       width: context.width(),
@@ -79,12 +91,22 @@ Widget targetaTutorial(
                           style: TextStyle(fontSize: 16, color: azul_logo))
                       .paddingOnly(left: 16, right: 16, top: 5),
                   onTap: () {
+                    Myself().then((response) async {
+                      myself = response.data['username'];
+                      print(myself);
+                    });
                     Navigator.push(
                       context,
+
                       MaterialPageRoute(
-                        builder: (context) => Perfil2(
-                          idCreador,
-                        ),
+                        builder: (context) =>
+                            myself == usuario ?
+                            Perfil(
+                        )
+                                :
+                            Perfil2(
+                              idCreador,
+                            ),
                       ),
                     ); //.then((value) => setState(() {}));
                   },
@@ -121,4 +143,22 @@ Widget targetaTutorial(
       ),
     ),
   );
+}
+Future<Resp> Myself() async {
+  final storage2 = new FlutterSecureStorage();
+  String token = await storage2.read(key: 'jwt');
+  final response = await http.get(
+    Uri.https('api.socialcraft.club', 'users/getMyProfile'),
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    },
+  );
+  if (response.statusCode == 200) {
+    print(response.body);
+    return Resp.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to load response');
+  }
 }
