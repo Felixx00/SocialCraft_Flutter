@@ -57,6 +57,8 @@
     "materiales":"Materials",
     "facil":"Fàcil",
     "intermedio":"Intermig",
-    "dificil":"Difícl"
+    "dificil":"Difícl",
+    "emailEnviadoCorrectamente":"Email enviat correctament",
+    "emailIncorrecto":"Email incorrecte"
 
 }

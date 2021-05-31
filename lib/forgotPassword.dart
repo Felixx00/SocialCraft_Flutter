@@ -105,14 +105,14 @@ class ForgotPasswordState extends State<ForgotPassword> {
                     if (respuesta.success == false) {
                     } else {
                       finish(context);
-                      toast("Email enviado correctamente",
+                      toast(AppLocalizations.of(context).emailEnviadoCorrectamente,
                           bgColor: toast_color);
                     }
                   });
                 } else {
                   correct_mail = false;
                   setState(() {});
-                  toast("Email incorrecto", bgColor: toast_color);
+                  toast(AppLocalizations.of(context).emailIncorrecto, bgColor: toast_color);
                 }
               })
             ],
