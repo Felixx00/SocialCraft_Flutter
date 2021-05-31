@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/materiales.dart';
@@ -24,6 +26,7 @@ class Upload extends StatefulWidget {
 }
 
 class UploadState extends State<Upload> {
+  File imageFile;
   @override
   void initState() {
     super.initState();
@@ -74,7 +77,78 @@ class UploadState extends State<Upload> {
       throw Exception('Failed to load response');
     }
   }
+  _openGallery(BuildContext context) async{
+    final foto  = await ImagePicker().getImage(source: ImageSource.gallery);
+    setState((){
+      if (foto != null){
+        imageFile = File(foto.path);
+      }
+      else {
+      }
+    });
+    Navigator.of(context).pop();
+  }
 
+  _openCamara(BuildContext context)async{
+    final foto  = await ImagePicker().getImage(source: ImageSource.camera);
+    setState((){
+      if (foto != null){
+        imageFile = File(foto.path);
+      }
+      else {
+      }
+    });
+    Navigator.of(context).pop();
+  }
+  Future<void> _showChoiceDialog(BuildContext context) {
+    return showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text("Selecionar"),
+        content: SingleChildScrollView(
+            child:ListBody(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                    Icon(
+                      Icons.photo_library_outlined,
+                      color: azul_logo,
+                      size: 30.0,
+                      semanticLabel:
+                      'Text to announce in accessibility modes',
+                    ).paddingAll(20),
+                    GestureDetector(
+                        child: Text("Galeria"),
+                        onTap: (){
+                          _openGallery(context);
+                        }
+                    ),
+                  ],
+                  ),
+                  //Padding(padding: EdgeInsets.all(8.0)),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.add_a_photo_rounded,
+                        color: azul_logo,
+                        size: 30.0,
+                        semanticLabel:
+                        'Text to announce in accessibility modes',
+                      ).paddingAll(20),
+                      GestureDetector(
+                          child: Text("Cámara"),
+                          onTap: (){
+                            _openCamara(context);
+                          }
+                      ),
+                    ],
+                  ),
+                ]
+            )
+
+        ),
+      );
+    });
+  }
   String token = "";
   String result = "placeholder";
   bool correct = false;
@@ -121,14 +195,15 @@ class UploadState extends State<Upload> {
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                       child: GestureDetector(
                         onTap: () async {
-                          foto = await ImagePicker()
+                          _showChoiceDialog(context);
+                          /*foto = await ImagePicker()
                               .getImage(source: ImageSource.gallery);
                           //Navigator.pop(context);
                           print(foto);
                           if (foto != null) {
                             correct = true;
                           }
-                          setState(() {});
+                          setState(() {});*/
                         },
                         child: Container(
                           child: Icon(

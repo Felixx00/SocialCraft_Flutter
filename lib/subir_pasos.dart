@@ -31,6 +31,7 @@ class SubirPasos extends StatefulWidget {
 }
 
 class SubirPasosState extends State<SubirPasos> {
+  File imageFile;
   @override
   void initState() {
     super.initState();
@@ -187,7 +188,92 @@ class SubirPasosState extends State<SubirPasos> {
       print('No image selected.');
     }
   }
+  Future<Resp> getcategorias() async {
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', 'tutorials/getCategories'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+  _openGallery(BuildContext context) async{
+    imagenes[activeStep] = await ImagePicker().getImage(source: ImageSource.gallery);
+    setState((){
+      if (imagenes[activeStep] != null){
+        imageFile = File(imagenes[activeStep].path);
+      }
+      else {
+      }
+    });
+    Navigator.of(context).pop();
+  }
 
+  _openCamara(BuildContext context)async{
+    imagenes[activeStep] = await ImagePicker().getImage(source: ImageSource.camera);
+    setState((){
+      if (imagenes[activeStep] != null){
+        imageFile = File(imagenes[activeStep].path);
+      }
+      else {
+      }
+    });
+    Navigator.of(context).pop();
+  }
+  Future<void> _showChoiceDialog(BuildContext context) {
+    return showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text("Selecionar"),
+        content: SingleChildScrollView(
+            child:ListBody(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.photo_library_outlined,
+                        color: azul_logo,
+                        size: 30.0,
+                        semanticLabel:
+                        'Text to announce in accessibility modes',
+                      ).paddingAll(20),
+                      GestureDetector(
+                          child: Text("Galeria"),
+                          onTap: (){
+                            _openGallery(context);
+                          }
+                      ),
+                    ],
+                  ),
+                  //Padding(padding: EdgeInsets.all(8.0)),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.add_a_photo_rounded,
+                        color: azul_logo,
+                        size: 30.0,
+                        semanticLabel:
+                        'Text to announce in accessibility modes',
+                      ).paddingAll(20),
+                      GestureDetector(
+                          child: Text("Cámara"),
+                          onTap: (){
+                            _openCamara(context);
+                          }
+                      ),
+                    ],
+                  ),
+                ]
+            )
+
+        ),
+      );
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -224,7 +310,6 @@ class SubirPasosState extends State<SubirPasos> {
                       print(respuesta.id);
                       for (int i = 0; i < upperBound; i++) {
                         subirPasos(respuesta.id, i);
-                        //subirfotopaso(respuesta.id, (i + 1));
                       }
 
                       subirfoto(respuesta.id);
@@ -277,8 +362,9 @@ class SubirPasosState extends State<SubirPasos> {
                   onSurface: Colors.grey,
                 ),
                 onPressed: () async {
-                  imagenes[activeStep] =
-                      await ImagePicker().getImage(source: ImageSource.gallery);
+                  _showChoiceDialog(context);
+                  /*imagenes[activeStep] =
+                      await ImagePicker().getImage(source: ImageSource.gallery);*/
                   print(imagenes);
                 },
               ),
