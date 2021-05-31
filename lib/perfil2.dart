@@ -371,8 +371,12 @@ class Product extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(posts[pos]['titulo'],
+                  Expanded(
+                  child: Text(posts[pos]['titulo'],
+                      overflow: TextOverflow.ellipsis,
                       style: primaryTextStyle(color: Colors.black)),
+
+                  ),
                 ],
               ),
             )

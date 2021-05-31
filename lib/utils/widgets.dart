@@ -48,6 +48,7 @@ Widget targetaTutorial(
     margin: EdgeInsets.all(16),
     color: Colors.white,
     elevation: 2,
+    clipBehavior: Clip.antiAlias,
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16))),
     child: InkWell(
@@ -55,7 +56,6 @@ Widget targetaTutorial(
       onTap: () {
         Post2(post).launch(context);
       },
-      child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -72,22 +72,29 @@ Widget targetaTutorial(
                   fit: BoxFit.fill),
             ),
             SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(titulo,
-                        style: boldTextStyle(size: 20, color: textPrimaryColor))
-                    .paddingOnly(left: 16),
 
-                //Icon(Icons.star_outlined, color: azul_logo, size: 22)
-                // .paddingOnly(right: 5),
-              ],
+            //Expanded(
+             // child:
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                  Expanded(
+
+                    child: Text(titulo,
+                        overflow: TextOverflow.ellipsis,
+                            style: boldTextStyle(size: 20, color: textPrimaryColor))
+                        .paddingOnly(left: 16),
+                    ),
+                  ],
+
+             // ),
             ),
             SizedBox(height: 15),
             Row(
               children: [
                 InkWell(
                   child: Text("@" + usuario,
+                      overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: 16, color: azul_logo))
                       .paddingOnly(left: 16, right: 16, top: 5),
                   onTap: () {
@@ -141,7 +148,7 @@ Widget targetaTutorial(
           ],
         ),
       ),
-    ),
+
   );
 }
 Future<Resp> Myself() async {
