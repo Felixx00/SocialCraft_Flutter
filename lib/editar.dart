@@ -11,6 +11,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Editar extends StatefulWidget {
   static String tag = '/editar';
@@ -158,13 +159,13 @@ class EditarState extends State<Editar> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Editar Perfil'),
+          title:  Text(AppLocalizations.of(context).editarPerfil),
           backgroundColor: azul_logo,
           actions: <Widget>[
             Padding(
               padding: EdgeInsets.all(10.0),
               child: OutlinedButton.icon(
-                label: Text('Guardar',
+                label: Text(AppLocalizations.of(context).guardar,
                     style: primaryTextStyle(color: Colors.white)),
                 style: OutlinedButton.styleFrom(
                   primary: Colors.white,
@@ -174,7 +175,7 @@ class EditarState extends State<Editar> {
                 onPressed: () {
                   cambios().then((respuesta) {
                     if (respuesta.success == false) {
-                      print("Algun Parametro Incorrecto");
+                      print(AppLocalizations.of(context).parametroIncorrecto);
                     } else {
                       print('a');
                       //finish(context);
@@ -206,7 +207,7 @@ class EditarState extends State<Editar> {
               ),
               7.height,
               TextButton(
-                child: Text('Cambiar foto de perfil',
+                child: Text(AppLocalizations.of(context).cambiarFotoDePerfil,
                     style: TextStyle(color: azul_logo)),
                 onPressed: () async {
                   var foto =
@@ -252,7 +253,7 @@ class EditarState extends State<Editar> {
                           decoration: InputDecoration(
                             icon: Icon(Icons.portrait, color: azul_logo),
                             border: InputBorder.none,
-                            hintText: "Nombre",
+                            hintText: AppLocalizations.of(context).nombre,
                           ),
                         ).paddingOnly(left: 8),
                       )
@@ -269,7 +270,7 @@ class EditarState extends State<Editar> {
                           decoration: InputDecoration(
                             icon: Icon(Icons.person, color: azul_logo),
                             border: InputBorder.none,
-                            hintText: "Descripción",
+                            hintText: AppLocalizations.of(context).descripcion,
                           ),
                         ).paddingOnly(left: 8),
                       )
@@ -286,7 +287,7 @@ class EditarState extends State<Editar> {
                           decoration: InputDecoration(
                             icon: Icon(Icons.email, color: azul_logo),
                             border: InputBorder.none,
-                            hintText: "Email",
+                            hintText: AppLocalizations.of(context).email,
                           ),
                         ).paddingOnly(left: 8),
                       )
@@ -303,7 +304,7 @@ class EditarState extends State<Editar> {
                           decoration: InputDecoration(
                             icon: Icon(Icons.location_on, color: azul_logo),
                             border: InputBorder.none,
-                            hintText: "Ciudad",
+                            hintText: AppLocalizations.of(context).ciudad,
                           ),
                         ).paddingOnly(left: 8),
                       )
@@ -312,7 +313,7 @@ class EditarState extends State<Editar> {
                       Align(
                           alignment: Alignment.centerLeft,
                           child: ElevatedButton.icon(
-                            label: Text('Modificar Contraseña'),
+                            label: Text(AppLocalizations.of(context).modificarContrasena),
                             style: ElevatedButton.styleFrom(
                               minimumSize: Size(180, 40),
                               //primary: Colors.lightBlueAccent[200],

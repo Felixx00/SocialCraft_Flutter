@@ -38,6 +38,13 @@
     "buscarCategorias":"Cerca categorias...",
     "titulo": "Título",
     "duracion":"Duración",
-    "dificultad":"Dificultad"
+    "dificultad":"Dificultad",
+    "guardar":"Guardar",
+    "parametroIncorrecto":"Algún parámetro incorrecto",
+    "cambiarFotoDePerfil":"Cambiar foto de perfil",
+    "nombre": "Nombre",
+    "descripcion": "Descripción",
+    "ciudad":"Ciudad",
+    "modificarContrasena":"Modificar Contraseña"
 
 }

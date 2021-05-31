@@ -1,12 +1,9 @@
 {
     "language": "English",
-    "@language":{
-      "description": "The current Language"
-    },
     "loginNombre":"Username or email",
     "password": "Password",
     "forgotPassword": "Forgot password?",
-    "login": "Sing in",
+    "login": "Sign in",
     "rellearCampos": "Fill all the fields",
     "datosIncorrectos": "Incorrect data",
     "google": "Connect with Google",
@@ -41,6 +38,13 @@
     "buscarCategorias":"Searching categories...",
     "titulo": "Title",
     "duracion":"Time",
-    "dificultad":"Difficulty"
+    "dificultad":"Difficulty",
+    "guardar": "Save",
+    "parametroIncorrecto":"Incorrect parameters",
+    "cambiarFotoDePerfil":"Change profile picture",
+    "nombre": "Name",
+    "descripcion": "Description",
+    "ciudad":"City",
+    "modificarContrasena":"Set password"
 
 }

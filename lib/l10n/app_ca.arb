@@ -1,8 +1,5 @@
 {
     "language": "Català",
-    "@language":{
-      "description": "Idioma actual català"
-    },
     "loginNombre":"Nom d'usuari o correu electrònic",
     "password": "Contrasenya",
     "forgotPassword": "¿Has oblidat la contrasenya?",
@@ -41,6 +38,13 @@
     "buscarCategorias":"Cerca categories...",
     "titulo": "Títol",
     "duracion":"Duració",
-    "dificultad":"Dificultat"
+    "dificultad":"Dificultat",
+    "guardar": "Guardar",
+    "parametroIncorrecto":"Algun paràmetre incorrecte",
+    "cambiarFotoDePerfil":"Canviar foto de perfil",
+    "nombre": "Nom",
+    "descripcion": "Descripció",
+    "ciudad":"Ciutat",
+    "modificarContrasena":"Modificar Contrasenya"
 
 }
