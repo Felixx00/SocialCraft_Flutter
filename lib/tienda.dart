@@ -22,6 +22,7 @@ class TiendaState extends State<Tienda> {
   String user = "";
   String pass = "";
   bool correct = true;
+  bool fet = false;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   var loc2;
 
@@ -29,9 +30,11 @@ class TiendaState extends State<Tienda> {
   void initState() {
     super.initState();
     init();
+    setState(() {});
   }
 
   init() async {
+    setState(() {});
     Location loc = Location();
 
     await loc.serviceEnabled();
@@ -39,10 +42,10 @@ class TiendaState extends State<Tienda> {
     await loc.hasPermission();
     await loc.requestPermission();
     loc2 = await loc.getLocation();
-    setState(() {});
+
     print('aaaaaaaaaaaaaa');
     print(loc2.latitude + loc2.longitude);
-
+    setState(() {});
     final Marker marker = Marker(
       markerId: MarkerId('a'),
       position: LatLng(41.3055106, 2.0003913),
@@ -51,6 +54,8 @@ class TiendaState extends State<Tienda> {
       onTap: () {},
     );
     markers[MarkerId('a')] = marker;
+    fet = true;
+
     setState(() {});
   }
 
@@ -61,16 +66,20 @@ class TiendaState extends State<Tienda> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GoogleMap(
-        myLocationButtonEnabled: true,
-        zoomControlsEnabled: false,
-        initialCameraPosition: CameraPosition(
-            target: LatLng(loc2.latitude, loc2.longitude), zoom: 10.5),
-        markers: Set<Marker>.of(markers.values),
-        myLocationEnabled: true,
-      ),
-    );
+    return !fet
+        ? Container()
+        : Scaffold(
+            body: GoogleMap(
+              myLocationButtonEnabled: true,
+              zoomControlsEnabled: false,
+              initialCameraPosition: CameraPosition(
+                  target: LatLng(
+                      fet ? loc2.latitude : 41.68, fet ? loc2.longitude : 2.17),
+                  zoom: fet ? 14.5 : 10),
+              markers: Set<Marker>.of(markers.values),
+              myLocationEnabled: true,
+            ),
+          );
   }
 }
 
