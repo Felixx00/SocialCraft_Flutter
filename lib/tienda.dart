@@ -7,7 +7,8 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-//import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class Tienda extends StatefulWidget {
   @override
@@ -21,64 +22,79 @@ class TiendaState extends State<Tienda> {
   String user = "";
   String pass = "";
   bool correct = true;
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  var loc2;
+
   @override
   void initState() {
     super.initState();
     init();
   }
 
-  init() async {}
+  init() async {
+    Location loc = Location();
+
+    await loc.serviceEnabled();
+    await loc.requestService();
+    await loc.hasPermission();
+    await loc.requestPermission();
+    loc2 = await loc.getLocation();
+    setState(() {});
+    print('aaaaaaaaaaaaaa');
+    print(loc2.latitude + loc2.longitude);
+
+    final Marker marker = Marker(
+      markerId: MarkerId('a'),
+      position: LatLng(41.3055106, 2.0003913),
+      infoWindow: InfoWindow(
+          title: 'Botiga 1', snippet: 'Botiga de productes per crafts'),
+      onTap: () {},
+    );
+    markers[MarkerId('a')] = marker;
+    setState(() {});
+  }
 
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
   }
 
-  Future<Resp> loginUser(String user, String pass) async {
-    var map = new Map<String, dynamic>();
-    map['user'] = user;
-    map['pass'] = pass;
-    final response = await http.post(
-      Uri.https('api.socialcraft.club', 'login'),
-      body: map,
-    );
-    if (response.statusCode == 200) {
-      return Resp.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load response');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                Container(
-                  child: Column(
-                    children: [
-                      Container(
-                        child: Image.asset(socialcraft_logo,
-                            width: 100, height: 100),
-                      ).cornerRadiusWithClipRRect(16).paddingTop(50),
-                      Container(
-                        child: Image.asset(socialcraft_logo_letras,
-                            width: 300, height: 100),
-                      ).cornerRadiusWithClipRRect(16).paddingTop(1),
-                      Text("Próximamente",
-                          style: TextStyle(color: azul_logo, fontSize: 25))
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ).paddingOnly(top: 200, left: 16, right: 16),
+    return Scaffold(
+      body: GoogleMap(
+        myLocationButtonEnabled: true,
+        zoomControlsEnabled: false,
+        initialCameraPosition: CameraPosition(
+            target: LatLng(loc2.latitude, loc2.longitude), zoom: 10.5),
+        markers: Set<Marker>.of(markers.values),
+        myLocationEnabled: true,
       ),
     );
   }
 }
+
+/*
+class MapScreen extends StatefulWidget {
+  @override
+  _MapScreenState createState() => _MapScreenState();
+}
+
+Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+
+class _MapScreenState extends State<MapScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GoogleMap(
+        myLocationButtonEnabled: true,
+        zoomControlsEnabled: false,
+        initialCameraPosition: CameraPosition(
+            target: LatLng(41.386737531762506, 2.171121952500942), zoom: 10.5),
+        markers: Set<Marker>.of(markers.values),
+        myLocationEnabled: true,
+      ),
+    );
+  }
+}
+*/
