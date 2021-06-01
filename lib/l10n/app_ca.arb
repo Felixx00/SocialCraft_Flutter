@@ -60,6 +60,10 @@
     "dificil":"Difícl",
     "emailEnviadoCorrectamente":"Email enviat correctament",
     "emailIncorrecto":"Email incorrecte",
-    "aunNoSiguesANadie":"Encara no segueixes a ningú, dirigeix-te a la pantalla de cerca per començar a descobrir Crafts!"
+    "aunNoSiguesANadie":"Encara no segueixes a ningú, dirigeix-te a la pantalla de cerca per començar a descobrir Crafts!",
+    "pasos":"Passos",
+    "valoraciones":"Valoracions",
+    "tutorialEliminadoCorrectamente": "Tutorial eliminat correctament",
+    "estasSeguroTutorial":"Estas segur que voleu eliminar el tutorial?"
 
 }

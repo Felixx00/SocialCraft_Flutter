@@ -60,6 +60,11 @@
     "dificil":"Difícil",
     "emailEnviadoCorrectamente":"Email enviado correctamente",
     "emailIncorrecto":"Email incorrecto",
-    "aunNoSiguesANadie":"Aún no sigues a nadie, dirígete a la pantalla de búsqueda para empezar a descubrir Crafts!"
+    "aunNoSiguesANadie":"Aún no sigues a nadie, dirígete a la pantalla de búsqueda para empezar a descubrir Crafts!",
+    "pasos":"Pasos",
+    "valoraciones":"Valoraciones",
+    "tutorialEliminadoCorrectamente": "Tutorial eliminado correctamente",
+    "estasSeguroTutorial":"¿Estas seguro que deseas eliminar el tutorial?"
+
 
 }
