@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/images.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Transition extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class TransitionState extends State<Transition> with TickerProviderStateMixin {
     init();
   }
 
+  String token;
   init() async {
     _controller = AnimationController(
         duration: const Duration(seconds: 2), vsync: this, value: 0.1);
@@ -35,10 +37,17 @@ class TransitionState extends State<Transition> with TickerProviderStateMixin {
     return Timer(_duration, navigationPage);
   }
 
-  void navigationPage() {
+  void navigationPage() async {
     if (mounted) {
+      final storage2 = new FlutterSecureStorage();
+      token = await storage2.read(key: 'jwt');
+      print(token);
+      print('a');
       finish(context);
-      Navigator.pushNamed(context, "login");
+      (token == null)
+          ? Navigator.pushNamed(context, "login")
+          : Navigator.pushNamed(context, "barra");
+      //Navigator.pushNamed(context, "login");
     }
   }
 
