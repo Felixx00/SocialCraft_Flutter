@@ -21,6 +21,8 @@ class TiendaState extends State<Tienda> {
   FocusNode passwordNode = FocusNode();
   String user = "";
   String pass = "";
+  double lat;
+  double lon;
   bool correct = true;
   bool fet = false;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
@@ -33,8 +35,30 @@ class TiendaState extends State<Tienda> {
     setState(() {});
   }
 
+  Future<Resp> tiendas() async {
+    var map = new Map<String, dynamic>();
+    map['lat'] = lat.toString();
+    map['lon'] = lon.toString();
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', 'stores/getStoresNearby', map),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
   init() async {
     setState(() {});
+    final storage2 = new FlutterSecureStorage();
+    token = await storage2.read(key: 'jwt');
     Location loc = Location();
 
     await loc.serviceEnabled();
@@ -42,18 +66,61 @@ class TiendaState extends State<Tienda> {
     await loc.hasPermission();
     await loc.requestPermission();
     loc2 = await loc.getLocation();
+    lat = loc2.latitude;
+    lon = loc2.longitude;
 
+    await tiendas().then((respuesta) async {
+      print(respuesta.list.length);
+      for (int i = 0; i < respuesta.list.length; ++i) {
+        print('---------------');
+        Marker marker = Marker(
+          markerId: MarkerId(i.toString()),
+          position: LatLng(double.parse(respuesta.list[i]['longitud']),
+              double.parse(respuesta.list[i]['latitud'])),
+          infoWindow: InfoWindow(
+              title: respuesta.list[i]['nombre'],
+              snippet: respuesta.list[i]['descripcion']),
+          onTap: () {},
+        );
+        markers[MarkerId(i.toString())] = marker;
+        print(respuesta.list[i]['latitud'] +
+            ' ' +
+            respuesta.list[i]['longitud'] +
+            ' ' +
+            respuesta.list[i]['nombre']);
+        print('---------------');
+      }
+    });
+
+    print(markers);
     print('aaaaaaaaaaaaaa');
     print(loc2.latitude + loc2.longitude);
     setState(() {});
-    final Marker marker = Marker(
+
+    /*
+    Marker marker = Marker(
       markerId: MarkerId('a'),
-      position: LatLng(41.3055106, 2.0003913),
+      position: LatLng(41.30, 2.00696),
       infoWindow: InfoWindow(
-          title: 'Botiga 1', snippet: 'Botiga de productes per crafts'),
+        title: 'a',
+        snippet: 'bsasd',
+      ),
       onTap: () {},
     );
     markers[MarkerId('a')] = marker;
+
+    Marker marker2 = Marker(
+      markerId: MarkerId('b'),
+      position: LatLng(41.30, 2.10696),
+      infoWindow: InfoWindow(
+        title: 'a',
+        snippet: 'bsasd',
+      ),
+      onTap: () {},
+    );
+    markers[MarkerId('b')] = marker2;
+    */
+
     fet = true;
 
     setState(() {});
@@ -70,6 +137,7 @@ class TiendaState extends State<Tienda> {
         ? Container()
         : Scaffold(
             body: GoogleMap(
+              mapToolbarEnabled: false,
               myLocationButtonEnabled: true,
               zoomControlsEnabled: false,
               initialCameraPosition: CameraPosition(
