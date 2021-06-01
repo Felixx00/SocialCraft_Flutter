@@ -64,7 +64,12 @@
     "pasos":"Pasos",
     "valoraciones":"Valoraciones",
     "tutorialEliminadoCorrectamente": "Tutorial eliminado correctamente",
-    "estasSeguroTutorial":"¿Estas seguro que deseas eliminar el tutorial?"
+    "estasSeguroTutorial":"¿Estas seguro que deseas eliminar el tutorial?",
+    "galeria":"Galeria",
+    "camera":"Cámera",
+    "subir":"Subir",
+    "rellenaTodosLosParametros":"Rellena todos los parámetros",
+    "continuar":"Continuar"
 
 
 }

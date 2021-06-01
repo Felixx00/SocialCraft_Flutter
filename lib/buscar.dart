@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:socialcraft/l10n/l10n.dart';
 
 import 'home_category.dart';
 
@@ -43,6 +44,7 @@ bool followed = true;
 List infoBusqueda = [];
 bool unfollow = true;
 var myself;
+var flag;
 List categories = [];
 List fotoVideos = [
   'https://cursosvirtualesgratis.com/wp-content/uploads/2018/02/time-totorial.jpg',
@@ -217,8 +219,20 @@ class SearchW extends State<Search> {
   }
 
   Future<Resp> listCategories() async {
+    final locale = Localizations.localeOf(context);
+    final flag = L10n.getFlag(locale.languageCode);
+    String idioma;
+    if(flag == "English"){
+      idioma = 'en';
+    }
+    else if(flag == "Català"){
+      idioma = 'ca';
+    }
+    else idioma = 'es';
+    var map = new Map<String, dynamic>();
+    map['idioma'] = idioma;
     final response = await http.get(
-      Uri.https('api.socialcraft.club', '/tutorials/getCategories'),
+      Uri.https('api.socialcraft.club', '/tutorials/getCategories',map),
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -316,22 +330,24 @@ class SearchW extends State<Search> {
             title:
                 Text("Información del buscador" , style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
             content:
-            RichText(
-              textAlign: TextAlign.left,
-              text: new TextSpan(
-                style: TextStyle(color: Colors.black),
-                children: <TextSpan>[
-                  new TextSpan(text: "Usuario:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                  new TextSpan(text: "Introduce mínimo 3 caracteres\n\n" , style: new TextStyle(fontSize: 17)),
-                  new TextSpan(text: "Título:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                  new TextSpan(text: "Introduce mínimo 1 carácter\n\n" , style: new TextStyle(fontSize: 17)),
-                  new TextSpan(text: "Duración:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                  new TextSpan(text: "Indica si el tutorial dura (min): \n" , style: new TextStyle(fontSize: 17)),
-                  new TextSpan(text: "   <10\n     10\n     20\n     30\n     40\n     50\n     60\n   >60\n\n", style: new TextStyle(fontSize: 17)),
-                  new TextSpan(text: "Dificultad:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                  new TextSpan(text: "Selecciona entre: \n", style: new TextStyle(fontSize: 17)),
-                  new TextSpan(text: "     1 o facil \n     2 o intermedio \n     3 o dificil", style: new TextStyle(fontSize: 17)),
-                ],
+             SingleChildScrollView(
+              child: RichText(
+                textAlign: TextAlign.left,
+                text: new TextSpan(
+                  style: TextStyle(color: Colors.black),
+                  children: <TextSpan>[
+                    new TextSpan(text: "Usuario:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    new TextSpan(text: "Introduce mínimo 3 caracteres\n\n" , style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: "Título:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    new TextSpan(text: "Introduce mínimo 1 carácter\n\n" , style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: "Duración:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    new TextSpan(text: "Indica si el tutorial dura (min): \n" , style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: "   <10\n     10\n     20\n     30\n     40\n     50\n     60\n   >60\n\n", style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: "Dificultad:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    new TextSpan(text: "Selecciona entre: \n", style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: "     1 o facil \n     2 o intermedio \n     3 o dificil\n", style: new TextStyle(fontSize: 17)),
+                  ],
+                ),
               ),
             ),
             actions: <Widget>[

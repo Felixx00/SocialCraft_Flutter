@@ -51,6 +51,7 @@ class UploadState extends State<Upload> {
         toast("Error al cargar", bgColor: toast_color);
       } else {
         print(respuesta.list.length);
+        categorias.clear();
         for (int i = 0; i < respuesta.list.length; ++i) {
           categorias.add(
             S2Choice<String>(
@@ -137,7 +138,7 @@ class UploadState extends State<Upload> {
                     semanticLabel: 'Text to announce in accessibility modes',
                   ).paddingAll(20),
                   GestureDetector(
-                      child: Text("Galeria"),
+                      child: Text(AppLocalizations.of(context).galeria),
                       onTap: () {
                         _openGallery(context);
                       }),
@@ -153,7 +154,7 @@ class UploadState extends State<Upload> {
                     semanticLabel: 'Text to announce in accessibility modes',
                   ).paddingAll(20),
                   GestureDetector(
-                      child: Text("Cámara"),
+                      child: Text(AppLocalizations.of(context).camera),
                       onTap: () {
                         _openCamara(context);
                       }),
@@ -180,7 +181,7 @@ class UploadState extends State<Upload> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Upload'),
+          title: Text(AppLocalizations.of(context).subir),
           backgroundColor: azul_logo,
           leading: Icon(Icons.arrow_back).onTap(() {
             Navigator.pop(context);
@@ -256,7 +257,7 @@ class UploadState extends State<Upload> {
                     decoration: InputDecoration(
                       //icon: Icon(Icons.search, color: azul_logo),
                       border: InputBorder.none,
-                      hintText: "Título ...",
+                      hintText: AppLocalizations.of(context).titulo,
                     ),
                     onChanged: (newValue) {
                       titulo = newValue;
@@ -277,7 +278,7 @@ class UploadState extends State<Upload> {
                       border: InputBorder.none,
                       contentPadding: new EdgeInsets.symmetric(
                           vertical: 15.0, horizontal: 10.0),
-                      hintText: "Añade una descripción ...",
+                      hintText: AppLocalizations.of(context).anadeUnaDescripcion,
                     ),
                     onChanged: (newValue) {
                       desc = newValue;
@@ -309,7 +310,7 @@ class UploadState extends State<Upload> {
                   modalHeaderStyle: S2ModalHeaderStyle(
                       backgroundColor: azul_logo,
                       textStyle: TextStyle(color: white)),
-                  title: 'Dificultad',
+                  title: AppLocalizations.of(context).dificultad,
                   value: value1,
                   choiceItems: options,
                   onChange: (state) => setState(() => value1 = state.value),
@@ -332,7 +333,7 @@ class UploadState extends State<Upload> {
                     textStyle: TextStyle(color: white),
                     iconTheme: IconThemeData(color: white),
                   ),
-                  title: 'Categoria',
+                  title: AppLocalizations.of(context).categoria,
                   value: value2,
                   choiceItems: categorias,
                   onChange: (state) => setState(() => value2 = state.value),
@@ -358,7 +359,7 @@ class UploadState extends State<Upload> {
                   modalHeaderStyle: S2ModalHeaderStyle(
                       backgroundColor: azul_logo,
                       textStyle: TextStyle(color: white)),
-                  title: 'Duración',
+                  title: AppLocalizations.of(context).duracion,
                   value: value4,
                   choiceItems: tiempos,
                   onChange: (state) => setState(() => value4 = state.value),
@@ -391,7 +392,7 @@ class UploadState extends State<Upload> {
                   modalHeaderStyle: S2ModalHeaderStyle(
                       backgroundColor: azul_logo,
                       textStyle: TextStyle(color: white)),
-                  title: 'Materiales',
+                  title: AppLocalizations.of(context).materiales,
                   value: value4,
                   choiceItems: tiempos,
                   onChange: (state) => setState(() => value4 = state.value),
@@ -424,12 +425,12 @@ class UploadState extends State<Upload> {
                         ),
                       );
                     } else {
-                      toast("Rellena todos los parámetros",
+                      toast(AppLocalizations.of(context).rellenaTodosLosParametros,
                           bgColor: toast_color);
                     }
                   },
                   child: Text(
-                    'Continuar',
+                    AppLocalizations.of(context).continuar,
                     style: TextStyle(fontSize: 20),
                   ),
                   style: ElevatedButton.styleFrom(
