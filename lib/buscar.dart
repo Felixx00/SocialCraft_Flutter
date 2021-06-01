@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:socialcraft/l10n/l10n.dart';
 
 import 'home_category.dart';
 
@@ -43,6 +44,7 @@ bool followed = true;
 List infoBusqueda = [];
 bool unfollow = true;
 var myself;
+var flag;
 List categories = [];
 List fotoVideos = [
   'https://cursosvirtualesgratis.com/wp-content/uploads/2018/02/time-totorial.jpg',
@@ -217,8 +219,20 @@ class SearchW extends State<Search> {
   }
 
   Future<Resp> listCategories() async {
+    final locale = Localizations.localeOf(context);
+    final flag = L10n.getFlag(locale.languageCode);
+    String idioma;
+    if(flag == "English"){
+      idioma = 'en';
+    }
+    else if(flag == "Català"){
+      idioma = 'ca';
+    }
+    else idioma = 'es';
+    var map = new Map<String, dynamic>();
+    map['idioma'] = idioma;
     final response = await http.get(
-      Uri.https('api.socialcraft.club', '/tutorials/getCategories'),
+      Uri.https('api.socialcraft.club', '/tutorials/getCategories',map),
       headers: {
         'Authorization': 'Bearer $token',
       },
