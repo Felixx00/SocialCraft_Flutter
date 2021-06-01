@@ -75,6 +75,12 @@
     "noHayComentarios":"No ratings",
     "eliminarValoracion":"Do you want to remove the rating?",
     "valoracionNoEsTuyo":"It's not your rating",
-    "valoracionDosPuntos":"Rate: "
+    "valoracionDosPuntos":"Rate: ",
+    "selecionar":"Select",
+    "anadirValoracion":"Add Rating",
+    "camposObligatoriosValoracion":"Must fill comment and rate",
+    "valoracion":"Rate",
+    "comentario": "Comment",
+    "expreseSuOpinionAqui":"Express your opinion here"
 
 }

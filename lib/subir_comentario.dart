@@ -14,6 +14,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SubirComentario extends StatefulWidget {
   @override
@@ -59,6 +60,10 @@ class SubirComentarioState extends State<SubirComentario> {
         'Authorization': 'Bearer $token',
       },
     );
+    print(map['tutId']);
+    print(map['score']);
+    print(map['comment']);
+    print(map['image']);
     print(response.statusCode);
     print(token);
     if (response.statusCode == 200) {
@@ -111,19 +116,19 @@ class SubirComentarioState extends State<SubirComentario> {
   Future<void> _showChoiceDialog(BuildContext context) {
     return showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
-        title: Text("Selecionar",),
+        title: Text(AppLocalizations.of(context).selecionar,),
         content: SingleChildScrollView(
           child:ListBody(
             children: <Widget>[
               GestureDetector(
-                child: Text("Galeria"),
+                child: Text(AppLocalizations.of(context).galeria),
                 onTap: (){
                   _openGallery(context);
                 }
               ),
               Padding(padding: EdgeInsets.all(8.0)),
               GestureDetector(
-                  child: Text("Cámara"),
+                  child: Text(AppLocalizations.of(context).camera),
                   onTap: (){
                     _openCamara(context);
                   }
@@ -155,7 +160,7 @@ class SubirComentarioState extends State<SubirComentario> {
         leading: Icon(Icons.arrow_back).onTap((){
           finish(context);
       }),
-        title: Text("Añadir Comentario",
+        title: Text(AppLocalizations.of(context).anadirValoracion,
         style: GoogleFonts.comfortaa(
           textStyle: TextStyle(
             fontSize: 15,
@@ -166,7 +171,7 @@ class SubirComentarioState extends State<SubirComentario> {
         actions: <Widget>[
           OutlinedButton.icon(
             label:
-                Text('Subir', style: GoogleFonts.comfortaa(
+                Text(AppLocalizations.of(context).subir, style: GoogleFonts.comfortaa(
                   textStyle: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
@@ -183,11 +188,10 @@ class SubirComentarioState extends State<SubirComentario> {
             ),
             onPressed: () async{
               if (points == 0 || comentario_text =="") {
-                toast("Campos obligatorios: Puntuación y Texto", bgColor: toast_color);
+                toast(AppLocalizations.of(context).camposObligatoriosValoracion, bgColor: toast_color);
               }
               else{
                 if (imageFile != null) {
-                  print("ENTASTE");
                   var now = DateTime.now();
                   String nows = now.toString();
                   final _firebaseStorage =
@@ -229,7 +233,7 @@ class SubirComentarioState extends State<SubirComentario> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             20.height,
-            Text('Valoración:',style: GoogleFonts.comfortaa(
+            Text(AppLocalizations.of(context).valoracion + ":",style: GoogleFonts.comfortaa(
                 textStyle: TextStyle(
                     color: azul_logo,
                     fontSize: 20,
@@ -253,7 +257,7 @@ class SubirComentarioState extends State<SubirComentario> {
               }
             ),
             10.height,
-            Text('Comentario:',style: GoogleFonts.comfortaa(
+            Text(AppLocalizations.of(context).comentario + ':',style: GoogleFonts.comfortaa(
                 textStyle: TextStyle(
                   color: azul_logo,
                   fontSize: 20,
@@ -276,7 +280,7 @@ class SubirComentarioState extends State<SubirComentario> {
                 //maxLength: 1000,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: "Exprese su opinión aquí",
+                  hintText: AppLocalizations.of(context).expreseSuOpinionAqui,
                   hintStyle: secondaryTextStyle(size: 16),
                 ),
               ).paddingLeft(8)
@@ -319,7 +323,7 @@ class SubirComentarioState extends State<SubirComentario> {
               color:azul_logo,
               onPressed:(){
                 _showChoiceDialog(context);
-              },child:Text("Select Image", style: TextStyle(color:Colors.white)),
+              },child:Text(AppLocalizations.of(context).seleccionaImagen, style: TextStyle(color:Colors.white)),
             )
 
           ]

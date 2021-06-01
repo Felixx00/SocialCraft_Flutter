@@ -75,6 +75,12 @@
     "noHayComentarios":"No hi ha valoracions",
     "eliminarValoracion":"Vols eliminar la valoració?",
     "valoracionNoEsTuyo":"La valoració no és teva",
-    "valoracionDosPuntos":"Valoració: "
+    "valoracionDosPuntos":"Valoració: ",
+    "selecionar":"Selecionar",
+    "anadirValoracion":"Afegir Valoració",
+    "camposObligatoriosValoracion":"Camps obligatoris: Puntuació y Comentari",
+    "valoracion":"Valoració",
+    "comentario": "Comentari",
+    "expreseSuOpinionAqui":"Expressi la seva opinió aquí"
 
 }

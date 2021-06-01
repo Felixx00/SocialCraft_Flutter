@@ -75,7 +75,13 @@
     "noHayComentarios":"No hay valoraciones",
     "eliminarValoracion":"¿Quieres eliminar la valoración?",
     "valoracionNoEsTuyo":"La valoración no es tuya",
-    "valoracionDosPuntos":"Valoración: "
+    "valoracionDosPuntos":"Valoración: ",
+    "selecionar":"Selecionar",
+    "anadirValoracion":"Añadir Valoración",
+    "camposObligatoriosValoracion":"Campos obligatorios: Puntuación y Comentario",
+    "valoracion":"Valoración",
+    "comentario": "Comentario",
+    "expreseSuOpinionAqui":"Exprese su opinión aqui"
 
 
 }
