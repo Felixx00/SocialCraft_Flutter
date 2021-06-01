@@ -345,7 +345,7 @@ class SearchW extends State<Search> {
                     new TextSpan(text: "   <10\n     10\n     20\n     30\n     40\n     50\n     60\n   >60\n\n", style: new TextStyle(fontSize: 17)),
                     new TextSpan(text: "Dificultad:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
                     new TextSpan(text: "Selecciona entre: \n", style: new TextStyle(fontSize: 17)),
-                    new TextSpan(text: "     1 o facil \n     2 o intermedio \n     3 o dificil", style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: "     1 o facil \n     2 o intermedio \n     3 o dificil\n", style: new TextStyle(fontSize: 17)),
                   ],
                 ),
               ),
