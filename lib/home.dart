@@ -9,6 +9,7 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -81,7 +82,7 @@ class HomeState extends State<Home> {
           body: Container(
               child: Column(
             children: [
-              Text("Aún no sigues a nadie, dirígete a la pantalla de búsqueda para empezar a descubrir Crafts!",
+              Text(AppLocalizations.of(context).aunNoSiguesANadie,
                       style: TextStyle(color: azul_logo, fontSize: 27),
                       textAlign: TextAlign.center)
                   .paddingOnly(top: 200, right: 30, left: 30, bottom: 30),
