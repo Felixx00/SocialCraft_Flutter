@@ -72,7 +72,6 @@ class TiendaState extends State<Tienda> {
     await tiendas().then((respuesta) async {
       print(respuesta.list.length);
       for (int i = 0; i < respuesta.list.length; ++i) {
-        print('---------------');
         Marker marker = Marker(
           markerId: MarkerId(i.toString()),
           position: LatLng(double.parse(respuesta.list[i]['longitud']),
@@ -83,12 +82,6 @@ class TiendaState extends State<Tienda> {
           onTap: () {},
         );
         markers[MarkerId(i.toString())] = marker;
-        print(respuesta.list[i]['latitud'] +
-            ' ' +
-            respuesta.list[i]['longitud'] +
-            ' ' +
-            respuesta.list[i]['nombre']);
-        print('---------------');
       }
     });
 

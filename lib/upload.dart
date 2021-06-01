@@ -17,6 +17,12 @@ import 'package:smart_select/smart_select.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:intl/locale.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:socialcraft/provider/locale_provider.dart';
+import 'package:socialcraft/l10n/l10n.dart';
+import 'l10n/l10n.dart';
 
 class Upload extends StatefulWidget {
   static String tag = '/upload';
@@ -64,9 +70,25 @@ class UploadState extends State<Upload> {
   }
 
   Future<Resp> getcategorias() async {
+    var map = new Map<String, dynamic>();
+
+    final locale = Localizations.localeOf(context);
+    final flag = L10n.getFlag(locale.languageCode);
+    if (flag == "English") {
+      idioma = 'en';
+    } else if (flag == "Català") {
+      idioma = 'ca';
+    } else
+      idioma = 'es';
+
+    print(idioma);
+    map['idioma'] = idioma;
+
     final response = await http.get(
-      Uri.https('api.socialcraft.club', 'tutorials/getCategories'),
+      Uri.https('api.socialcraft.club', 'tutorials/getCategories', map),
       headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
     );
@@ -77,82 +99,76 @@ class UploadState extends State<Upload> {
       throw Exception('Failed to load response');
     }
   }
-  _openGallery(BuildContext context) async{
-    final foto  = await ImagePicker().getImage(source: ImageSource.gallery);
-    setState((){
-      if (foto != null){
+
+  _openGallery(BuildContext context) async {
+    final foto = await ImagePicker().getImage(source: ImageSource.gallery);
+    setState(() {
+      if (foto != null) {
         imageFile = File(foto.path);
-      }
-      else {
-      }
+      } else {}
     });
     Navigator.of(context).pop();
   }
 
-  _openCamara(BuildContext context)async{
-    final foto  = await ImagePicker().getImage(source: ImageSource.camera);
-    setState((){
-      if (foto != null){
+  _openCamara(BuildContext context) async {
+    final foto = await ImagePicker().getImage(source: ImageSource.camera);
+    setState(() {
+      if (foto != null) {
         imageFile = File(foto.path);
-      }
-      else {
-      }
+      } else {}
     });
     Navigator.of(context).pop();
   }
+
   Future<void> _showChoiceDialog(BuildContext context) {
-    return showDialog(context: context, builder: (BuildContext context){
-      return AlertDialog(
-        title: Text("Selecionar"),
-        content: SingleChildScrollView(
-            child:ListBody(
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Selecionar"),
+            content: SingleChildScrollView(
+                child: ListBody(children: <Widget>[
+              Row(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                    Icon(
-                      Icons.photo_library_outlined,
-                      color: azul_logo,
-                      size: 30.0,
-                      semanticLabel:
-                      'Text to announce in accessibility modes',
-                    ).paddingAll(20),
-                    GestureDetector(
-                        child: Text("Galeria"),
-                        onTap: (){
-                          _openGallery(context);
-                        }
-                    ),
-                  ],
-                  ),
-                  //Padding(padding: EdgeInsets.all(8.0)),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.add_a_photo_rounded,
-                        color: azul_logo,
-                        size: 30.0,
-                        semanticLabel:
-                        'Text to announce in accessibility modes',
-                      ).paddingAll(20),
-                      GestureDetector(
-                          child: Text("Cámara"),
-                          onTap: (){
-                            _openCamara(context);
-                          }
-                      ),
-                    ],
-                  ),
-                ]
-            )
-
-        ),
-      );
-    });
+                  Icon(
+                    Icons.photo_library_outlined,
+                    color: azul_logo,
+                    size: 30.0,
+                    semanticLabel: 'Text to announce in accessibility modes',
+                  ).paddingAll(20),
+                  GestureDetector(
+                      child: Text("Galeria"),
+                      onTap: () {
+                        _openGallery(context);
+                      }),
+                ],
+              ),
+              //Padding(padding: EdgeInsets.all(8.0)),
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.add_a_photo_rounded,
+                    color: azul_logo,
+                    size: 30.0,
+                    semanticLabel: 'Text to announce in accessibility modes',
+                  ).paddingAll(20),
+                  GestureDetector(
+                      child: Text("Cámara"),
+                      onTap: () {
+                        _openCamara(context);
+                      }),
+                ],
+              ),
+            ])),
+          );
+        });
   }
+
   String token = "";
   String result = "placeholder";
   bool correct = false;
   String titulo = "";
+  String idioma;
   String desc = "";
   var foto;
 
@@ -179,12 +195,12 @@ class UploadState extends State<Upload> {
               FocusManager.instance.primaryFocus.unfocus();
             }
           },
-          child:SingleChildScrollView(
-          child: Column(
-            children: [
-              30.height,
-              Stack(
-                children: [
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                30.height,
+                Stack(
+                  children: [
                     ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                       child: GestureDetector(
@@ -193,242 +209,244 @@ class UploadState extends State<Upload> {
                         },
                         child: imageFile == null
                             ? DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(12),
-                            padding: EdgeInsets.all(6),
-                            dashPattern: [8, 8],
-                            color: azul_logo,
-                            strokeWidth: 3,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.all(Radius.circular(12)),
-                              child: Container(
-                                child: Icon(
-                                  Icons.add_a_photo_rounded,
-                                  color: azul_logo,
-                                  size:100.0,
-                                ).paddingAll(20),
-                              ),
-                            )
-                        )
-                            :
-                        DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(12),
-
-                            dashPattern: [8, 8],
-                            strokeWidth: 3,
-                            color: azul_logo,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.all(Radius.circular(12)),
-                              child: Image.file(imageFile, width:200, height: 200,),
-
-                            )
-                        ),
+                                borderType: BorderType.RRect,
+                                radius: Radius.circular(12),
+                                padding: EdgeInsets.all(6),
+                                dashPattern: [8, 8],
+                                color: azul_logo,
+                                strokeWidth: 3,
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                  child: Container(
+                                    child: Icon(
+                                      Icons.add_a_photo_rounded,
+                                      color: azul_logo,
+                                      size: 100.0,
+                                    ).paddingAll(20),
+                                  ),
+                                ))
+                            : DottedBorder(
+                                borderType: BorderType.RRect,
+                                radius: Radius.circular(12),
+                                dashPattern: [8, 8],
+                                strokeWidth: 3,
+                                color: azul_logo,
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                  child: Image.file(
+                                    imageFile,
+                                    width: 200,
+                                    height: 200,
+                                  ),
+                                )),
                       ),
                     ),
-                ],
-                clipBehavior: Clip.none,
-              ),
-              5.height,
-              Container(
-                decoration: BoxDecoration(color: Colors.grey[300]),
-                child: TextFormField(
-                  //maxLength: 20,
-                  keyboardType: TextInputType.name,
-                  cursorColor: azul_logo,
-                  decoration: InputDecoration(
-                    //icon: Icon(Icons.search, color: azul_logo),
-                    border: InputBorder.none,
-                    hintText: "Título ...",
-                  ),
-                  onChanged: (newValue) {
-                    titulo = newValue;
-                    setState(() {});
-                  },
-                ).paddingLeft(10),
-              )
-                  .cornerRadiusWithClipRRect(12)
-                  .paddingOnly(top: 30, left: 30, right: 30),
-              Container(
-                decoration: BoxDecoration(color: Colors.grey[300]),
-                child: TextFormField(
-                  keyboardType: TextInputType.name,
-                  cursorColor: azul_logo,
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    //icon: Icon(Icons.search, color: azul_logo),
-                    border: InputBorder.none,
-                    contentPadding: new EdgeInsets.symmetric(
-                        vertical: 15.0, horizontal: 10.0),
-                    hintText: "Añade una descripción ...",
-                  ),
-                  onChanged: (newValue) {
-                    desc = newValue;
-                    setState(() {});
-                  },
-                ).paddingLeft(10),
-              )
-                  .cornerRadiusWithClipRRect(12)
-                  .paddingOnly(top: 30, left: 30, right: 30),
-              10.height,
-              SmartSelect<String>.single(
-                tileBuilder: (context, state) {
-                  return S2Tile(
-                    title: state.titleWidget,
-                    leading: Icon(Icons.bar_chart_rounded),
-                    value: state.valueDisplay,
-                    onTap: state.showModal,
-                    isLoading: false,
-                  );
-                },
-                modalConfig: S2ModalConfig(
-                  type: S2ModalType.popupDialog,
-                  style: S2ModalStyle(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                  ],
+                  clipBehavior: Clip.none,
+                ),
+                5.height,
+                Container(
+                  decoration: BoxDecoration(color: Colors.grey[300]),
+                  child: TextFormField(
+                    //maxLength: 20,
+                    keyboardType: TextInputType.name,
+                    cursorColor: azul_logo,
+                    decoration: InputDecoration(
+                      //icon: Icon(Icons.search, color: azul_logo),
+                      border: InputBorder.none,
+                      hintText: "Título ...",
                     ),
-                  ),
-                ),
-                modalHeaderStyle: S2ModalHeaderStyle(
-                    backgroundColor: azul_logo,
-                    textStyle: TextStyle(color: white)),
-                title: 'Dificultad',
-                value: value1,
-                choiceItems: options,
-                onChange: (state) => setState(() => value1 = state.value),
-              ),
-              SmartSelect<String>.single(
-                tileBuilder: (context, state) {
-                  return S2Tile(
-                    title: state.titleWidget,
-                    leading: Icon(Icons.grid_view),
-                    value: state.valueDisplay,
-                    onTap: state.showModal,
-                    isLoading: false,
-                  );
-                },
-                modalConfig: S2ModalConfig(
-                  type: S2ModalType.fullPage,
-                ),
-                modalHeaderStyle: S2ModalHeaderStyle(
-                  backgroundColor: azul_logo,
-                  textStyle: TextStyle(color: white),
-                  iconTheme: IconThemeData(color: white),
-                ),
-                title: 'Categoria',
-                value: value2,
-                choiceItems: categorias,
-                onChange: (state) => setState(() => value2 = state.value),
-              ),
-              SmartSelect<String>.single(
-                tileBuilder: (context, state) {
-                  return S2Tile(
-                    title: state.titleWidget,
-                    leading: Icon(Icons.av_timer),
-                    value: state.valueDisplay,
-                    onTap: state.showModal,
-                    isLoading: false,
-                  );
-                },
-                modalConfig: S2ModalConfig(
-                  type: S2ModalType.popupDialog,
-                  style: S2ModalStyle(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                modalHeaderStyle: S2ModalHeaderStyle(
-                    backgroundColor: azul_logo,
-                    textStyle: TextStyle(color: white)),
-                title: 'Duración',
-                value: value4,
-                choiceItems: tiempos,
-                onChange: (state) => setState(() => value4 = state.value),
-              ),
-              SmartSelect<String>.single(
-                tileBuilder: (context, state) {
-                  return S2Tile(
-                    title: state.titleWidget,
-                    leading: Icon(Icons.brush_rounded),
-                    value: state.valueDisplay,
-                    hideValue: true,
-                    onTap: () async {
-                      result = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Materiales()));
+                    onChanged: (newValue) {
+                      titulo = newValue;
                       setState(() {});
                     },
-                    isLoading: false,
-                  );
-                },
-                modalConfig: S2ModalConfig(
-                  type: S2ModalType.popupDialog,
-                  style: S2ModalStyle(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                  ).paddingLeft(10),
+                )
+                    .cornerRadiusWithClipRRect(12)
+                    .paddingOnly(top: 30, left: 30, right: 30),
+                Container(
+                  decoration: BoxDecoration(color: Colors.grey[300]),
+                  child: TextFormField(
+                    keyboardType: TextInputType.name,
+                    cursorColor: azul_logo,
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      //icon: Icon(Icons.search, color: azul_logo),
+                      border: InputBorder.none,
+                      contentPadding: new EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 10.0),
+                      hintText: "Añade una descripción ...",
+                    ),
+                    onChanged: (newValue) {
+                      desc = newValue;
+                      setState(() {});
+                    },
+                  ).paddingLeft(10),
+                )
+                    .cornerRadiusWithClipRRect(12)
+                    .paddingOnly(top: 30, left: 30, right: 30),
+                10.height,
+                SmartSelect<String>.single(
+                  tileBuilder: (context, state) {
+                    return S2Tile(
+                      title: state.titleWidget,
+                      leading: Icon(Icons.bar_chart_rounded),
+                      value: state.valueDisplay,
+                      onTap: state.showModal,
+                      isLoading: false,
+                    );
+                  },
+                  modalConfig: S2ModalConfig(
+                    type: S2ModalType.popupDialog,
+                    style: S2ModalStyle(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                   ),
+                  modalHeaderStyle: S2ModalHeaderStyle(
+                      backgroundColor: azul_logo,
+                      textStyle: TextStyle(color: white)),
+                  title: 'Dificultad',
+                  value: value1,
+                  choiceItems: options,
+                  onChange: (state) => setState(() => value1 = state.value),
                 ),
-                modalHeaderStyle: S2ModalHeaderStyle(
-                    backgroundColor: azul_logo,
-                    textStyle: TextStyle(color: white)),
-                title: 'Materiales',
-                value: value4,
-                choiceItems: tiempos,
-                onChange: (state) => setState(() => value4 = state.value),
-              ),
-              20.height,
-              ElevatedButton(
-                onPressed: () {
-                  if (titulo != "" &&
-                      desc != "" &&
-                      value1 != "" &&
-                      value2 != "" &&
-                      value4 != "" &&
-                      result != "" &&
-                      foto != null) {
-                    map['titulo'] = titulo;
-                    map['subtitulo'] = desc;
-                    map['rutaFoto'] = foto;
-                    map['dificultad'] = value1;
-                    map['materiales'] = result;
-                    map['categoria'] = value2;
-                    map['duracion'] = value4;
-                    map['descripcion'] = desc;
-                    print(map);
-                    print(result);
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SubirPasos(map),
-                      ),
+                SmartSelect<String>.single(
+                  tileBuilder: (context, state) {
+                    return S2Tile(
+                      title: state.titleWidget,
+                      leading: Icon(Icons.grid_view),
+                      value: state.valueDisplay,
+                      onTap: state.showModal,
+                      isLoading: false,
                     );
-                  } else {
-                    toast("Rellena todos los parámetros", bgColor: toast_color);
-                  }
-                },
-                child: Text(
-                  'Continuar',
-                  style: TextStyle(fontSize: 20),
-                ),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(120, 50),
-                  //primary: Colors.lightBlueAccent[200],
-                  primary: Color.fromRGBO(68, 102, 216, 1.0),
-                  onPrimary: Colors.white,
-                  onSurface: Colors.grey,
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(50.0),
+                  },
+                  modalConfig: S2ModalConfig(
+                    type: S2ModalType.fullPage,
                   ),
+                  modalHeaderStyle: S2ModalHeaderStyle(
+                    backgroundColor: azul_logo,
+                    textStyle: TextStyle(color: white),
+                    iconTheme: IconThemeData(color: white),
+                  ),
+                  title: 'Categoria',
+                  value: value2,
+                  choiceItems: categorias,
+                  onChange: (state) => setState(() => value2 = state.value),
                 ),
-              ).paddingOnly(bottom: 10),
-            ],
+                SmartSelect<String>.single(
+                  tileBuilder: (context, state) {
+                    return S2Tile(
+                      title: state.titleWidget,
+                      leading: Icon(Icons.av_timer),
+                      value: state.valueDisplay,
+                      onTap: state.showModal,
+                      isLoading: false,
+                    );
+                  },
+                  modalConfig: S2ModalConfig(
+                    type: S2ModalType.popupDialog,
+                    style: S2ModalStyle(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  modalHeaderStyle: S2ModalHeaderStyle(
+                      backgroundColor: azul_logo,
+                      textStyle: TextStyle(color: white)),
+                  title: 'Duración',
+                  value: value4,
+                  choiceItems: tiempos,
+                  onChange: (state) => setState(() => value4 = state.value),
+                ),
+                SmartSelect<String>.single(
+                  tileBuilder: (context, state) {
+                    return S2Tile(
+                      title: state.titleWidget,
+                      leading: Icon(Icons.brush_rounded),
+                      value: state.valueDisplay,
+                      hideValue: true,
+                      onTap: () async {
+                        result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Materiales()));
+                        setState(() {});
+                      },
+                      isLoading: false,
+                    );
+                  },
+                  modalConfig: S2ModalConfig(
+                    type: S2ModalType.popupDialog,
+                    style: S2ModalStyle(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  modalHeaderStyle: S2ModalHeaderStyle(
+                      backgroundColor: azul_logo,
+                      textStyle: TextStyle(color: white)),
+                  title: 'Materiales',
+                  value: value4,
+                  choiceItems: tiempos,
+                  onChange: (state) => setState(() => value4 = state.value),
+                ),
+                20.height,
+                ElevatedButton(
+                  onPressed: () {
+                    if (titulo != "" &&
+                        desc != "" &&
+                        value1 != "" &&
+                        value2 != "" &&
+                        value4 != "" &&
+                        result != "" &&
+                        foto != null) {
+                      map['titulo'] = titulo;
+                      map['subtitulo'] = desc;
+                      map['rutaFoto'] = foto;
+                      map['dificultad'] = value1;
+                      map['materiales'] = result;
+                      map['categoria'] = value2;
+                      map['duracion'] = value4;
+                      map['descripcion'] = desc;
+                      print(map);
+                      print(result);
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SubirPasos(map),
+                        ),
+                      );
+                    } else {
+                      toast("Rellena todos los parámetros",
+                          bgColor: toast_color);
+                    }
+                  },
+                  child: Text(
+                    'Continuar',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(120, 50),
+                    //primary: Colors.lightBlueAccent[200],
+                    primary: Color.fromRGBO(68, 102, 216, 1.0),
+                    onPrimary: Colors.white,
+                    onSurface: Colors.grey,
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(50.0),
+                    ),
+                  ),
+                ).paddingOnly(bottom: 10),
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }
