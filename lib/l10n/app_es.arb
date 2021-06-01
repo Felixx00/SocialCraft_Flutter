@@ -74,7 +74,8 @@
     "escribeElMaterial": "Escribe el material...",
     "noHayComentarios":"No hay valoraciones",
     "eliminarValoracion":"¿Quieres eliminar la valoración?",
-    "valoracionNoEsTuyo":"La valoración no es tuya"
+    "valoracionNoEsTuyo":"La valoración no es tuya",
+    "valoracionDosPuntos":"Valoración: "
 
 
 }

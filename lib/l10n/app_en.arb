@@ -74,6 +74,7 @@
     "escribeElMaterial": "Write the material...",
     "noHayComentarios":"No ratings",
     "eliminarValoracion":"Do you want to remove the rating?",
-    "valoracionNoEsTuyo":"It's not your rating"
+    "valoracionNoEsTuyo":"It's not your rating",
+    "valoracionDosPuntos":"Rate: "
 
 }
