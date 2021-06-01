@@ -3,6 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PostPasos extends StatelessWidget {
   final String titulo;
@@ -18,7 +19,7 @@ class PostPasos extends StatelessWidget {
       padding: EdgeInsets.only(top: 20, left: 20, right: 20),
       children: <Widget>[
         Text(
-          "Pasos",
+          AppLocalizations.of(context).pasos,
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 15),
