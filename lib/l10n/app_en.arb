@@ -64,6 +64,11 @@
     "pasos":"Steps",
     "valoraciones":"Ratings",
     "tutorialEliminadoCorrectamente": "Tutorial successfully deleted",
-    "estasSeguroTutorial":"Are you sure you want to delete the tutorial?"
+    "estasSeguroTutorial":"Are you sure you want to delete the tutorial?",
+    "galeria":"Gallery",
+    "camera":"Camera",
+    "subir":"Upload",
+    "rellenaTodosLosParametros":"Fill all parameters",
+    "continuar":"Continue"
 
 }
