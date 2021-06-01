@@ -225,6 +225,7 @@ class PostState extends State<Post> {
       },
     );
 
+
     AlertDialog alert = AlertDialog(
       content: Text(AppLocalizations.of(context).estasSeguroTutorial),
       actions: [
