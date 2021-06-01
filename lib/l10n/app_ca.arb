@@ -71,6 +71,9 @@
     "rellenaTodosLosParametros":"Omple tots els paràmetres",
     "continuar":"Continuar",
     "anadirLosMateriales":"Afegeix els materials necessaris: ",
-    "escribeElMaterial": "Escriu el material..."
+    "escribeElMaterial": "Escriu el material...",
+    "noHayComentarios":"No hi ha valoracions",
+    "eliminarValoracion":"Vols eliminar la valoració?",
+    "valoracionNoEsTuyo":"La valoració no és teva"
 
 }

@@ -71,6 +71,9 @@
     "rellenaTodosLosParametros":"Fill all parameters",
     "continuar":"Continue",
     "anadirLosMateriales":"Add the necessary materials: ",
-    "escribeElMaterial": "Write the material..."
+    "escribeElMaterial": "Write the material...",
+    "noHayComentarios":"No ratings",
+    "eliminarValoracion":"Do you want to remove the rating?",
+    "valoracionNoEsTuyo":"It's not your rating"
 
 }

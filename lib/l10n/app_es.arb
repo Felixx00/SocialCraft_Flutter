@@ -71,7 +71,10 @@
     "rellenaTodosLosParametros":"Rellena todos los parámetros",
     "continuar":"Continuar",
     "anadirLosMateriales":"Añade los materiales necesarios: ",
-    "escribeElMaterial": "Escribe el material..."
+    "escribeElMaterial": "Escribe el material...",
+    "noHayComentarios":"No hay valoraciones",
+    "eliminarValoracion":"¿Quieres eliminar la valoración?",
+    "valoracionNoEsTuyo":"La valoración no es tuya"
 
 
 }
