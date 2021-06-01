@@ -330,7 +330,7 @@ class SearchW extends State<Search> {
             title:
                 Text("Información del buscador" , style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
             content:
-            SingleChildScrollView(
+             SingleChildScrollView(
               child: RichText(
                 textAlign: TextAlign.left,
                 text: new TextSpan(
