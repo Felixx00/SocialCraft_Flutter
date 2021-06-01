@@ -51,6 +51,7 @@ class UploadState extends State<Upload> {
         toast("Error al cargar", bgColor: toast_color);
       } else {
         print(respuesta.list.length);
+        categorias.clear();
         for (int i = 0; i < respuesta.list.length; ++i) {
           categorias.add(
             S2Choice<String>(
