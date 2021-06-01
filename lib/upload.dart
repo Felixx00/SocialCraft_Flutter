@@ -191,7 +191,8 @@ class UploadState extends State<Upload> {
                         onTap: () async {
                           _showChoiceDialog(context);
                         },
-                        child: imageFile == null ? DottedBorder(
+                        child: imageFile == null
+                            ? DottedBorder(
                             borderType: BorderType.RRect,
                             radius: Radius.circular(12),
                             padding: EdgeInsets.all(6),
@@ -204,27 +205,21 @@ class UploadState extends State<Upload> {
                                 child: Icon(
                                   Icons.add_a_photo_rounded,
                                   color: azul_logo,
-                                  size:160.0,
-                                ).paddingAll(20),
+                                  size:100.0,
+                                ),//.paddingAll(20),
                               ),
                             )
                         )
                             :
-                        DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(12),
-                            padding: EdgeInsets.all(6),
-                            dashPattern: [8, 8],
-                            strokeWidth: 3,
-                            color: azul_logo,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.all(Radius.circular(12)),
-                              child: Image.file(imageFile, width:200, height: 200,),
+
+                            ClipRRect(
+                              //borderRadius: BorderRadius.all(Radius.circular(12)),
+                              child: Image.file(imageFile, width:300, height: 300,),
 
                             )
                         ),
                       ),
-                    ),
+
                 ],
                 clipBehavior: Clip.none,
               ),
