@@ -185,57 +185,46 @@ class UploadState extends State<Upload> {
               30.height,
               Stack(
                 children: [
-                  DottedBorder(
-                    borderType: BorderType.RRect,
-                    radius: Radius.circular(12),
-                    padding: EdgeInsets.all(6),
-                    dashPattern: [8, 8],
-                    strokeWidth: 3,
-                    child: ClipRRect(
+                    ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                       child: GestureDetector(
                         onTap: () async {
                           _showChoiceDialog(context);
-                          /*foto = await ImagePicker()
-                              .getImage(source: ImageSource.gallery);
-                          //Navigator.pop(context);
-                          print(foto);
-                          if (foto != null) {
-                            correct = true;
-                          }
-                          setState(() {});*/
                         },
-                        child: Container(
-                          child: Icon(
-                            Icons.add_a_photo_rounded,
+                        child: imageFile == null ? DottedBorder(
+                            borderType: BorderType.RRect,
+                            radius: Radius.circular(12),
+                            padding: EdgeInsets.all(6),
+                            dashPattern: [8, 8],
                             color: azul_logo,
-                            size: 75.0,
-                            semanticLabel:
-                                'Text to announce in accessibility modes',
-                          ).paddingAll(20),
+                            strokeWidth: 3,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                              child: Container(
+                                child: Icon(
+                                  Icons.add_a_photo_rounded,
+                                  color: azul_logo,
+                                  size:160.0,
+                                ).paddingAll(20),
+                              ),
+                            )
+                        )
+                            :
+                        DottedBorder(
+                            borderType: BorderType.RRect,
+                            radius: Radius.circular(12),
+                            padding: EdgeInsets.all(6),
+                            dashPattern: [8, 8],
+                            strokeWidth: 3,
+                            color: azul_logo,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                              child: Image.file(imageFile, width:200, height: 200,),
+
+                            )
                         ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: -20,
-                    right: -30,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(), primary: azul_logo),
-                      child: Container(
-                        alignment: AlignmentDirectional.bottomEnd,
-                        decoration: BoxDecoration(shape: BoxShape.circle),
-                        child: Icon(
-                          correct ? Icons.check : Icons.close,
-                          color: correct ? Colors.green : Colors.red,
-                          size: 24.0,
-                          semanticLabel: 'A',
-                        ),
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
                 ],
                 clipBehavior: Clip.none,
               ),
