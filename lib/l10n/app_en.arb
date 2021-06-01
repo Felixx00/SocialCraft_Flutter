@@ -59,6 +59,7 @@
     "intermedio":"Middle",
     "dificil":"Hard",
     "emailEnviadoCorrectamente":"email sended correctly",
-    "emailIncorrecto":"Incorrect email"
+    "emailIncorrecto":"Incorrect email",
+    "aunNoSiguesANadie":"You are not following anyone yet, head over to the search screen to start discovering Crafts!"
 
 }
