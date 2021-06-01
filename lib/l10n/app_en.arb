@@ -69,6 +69,8 @@
     "camera":"Camera",
     "subir":"Upload",
     "rellenaTodosLosParametros":"Fill all parameters",
-    "continuar":"Continue"
+    "continuar":"Continue",
+    "anadirLosMateriales":"Add the necessary materials: ",
+    "escribeElMaterial": "Write the material..."
 
 }

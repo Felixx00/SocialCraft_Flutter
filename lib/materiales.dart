@@ -8,6 +8,7 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:smart_select/smart_select.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Materiales extends StatefulWidget {
   static String tag = '/materiales';
@@ -46,7 +47,7 @@ class MaterialesState extends State<Materiales> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Materiales'),
+          title: Text(AppLocalizations.of(context).materiales),
           backgroundColor: azul_logo,
           leading: Icon(Icons.arrow_back).onTap(() {
             Navigator.pop(context, b);
@@ -61,7 +62,7 @@ class MaterialesState extends State<Materiales> {
             children: [
               30.height,
               Text(
-                'Añade los materiales necesarios: ',
+                AppLocalizations.of(context).anadirLosMateriales,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ).paddingLeft(15),
               20.height,
@@ -79,7 +80,7 @@ class MaterialesState extends State<Materiales> {
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Escribe el material...",
+                        hintText: AppLocalizations.of(context).escribeElMaterial,
                         hintStyle: secondaryTextStyle(size: 16),
                       ),
                       onChanged: (newValue) {

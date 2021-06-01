@@ -69,6 +69,8 @@
     "camera":"Càmera",
     "subir":"Penjar",
     "rellenaTodosLosParametros":"Omple tots els paràmetres",
-    "continuar":"Continuar"
+    "continuar":"Continuar",
+    "anadirLosMateriales":"Afegeix els materials necessaris: ",
+    "escribeElMaterial": "Escriu el material..."
 
 }
