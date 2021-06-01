@@ -206,20 +206,26 @@ class UploadState extends State<Upload> {
                                   Icons.add_a_photo_rounded,
                                   color: azul_logo,
                                   size:100.0,
-                                ),//.paddingAll(20),
+                                ).paddingAll(20),
                               ),
                             )
                         )
                             :
+                        DottedBorder(
+                            borderType: BorderType.RRect,
+                            radius: Radius.circular(12),
 
-                            ClipRRect(
-                              //borderRadius: BorderRadius.all(Radius.circular(12)),
-                              child: Image.file(imageFile, width:300, height: 300,),
+                            dashPattern: [8, 8],
+                            strokeWidth: 3,
+                            color: azul_logo,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                              child: Image.file(imageFile, width:200, height: 200,),
 
                             )
                         ),
                       ),
-
+                    ),
                 ],
                 clipBehavior: Clip.none,
               ),
