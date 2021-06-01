@@ -14,6 +14,8 @@ import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
+import 'package:socialcraft/l10n/l10n.dart';
+import 'l10n/l10n.dart';
 
 import 'post_desc.dart';
 
@@ -39,6 +41,7 @@ String categoria = "";
 String idUsuario = "";
 List<dynamic> pasos = [];
 List<dynamic> comments = [];
+var flag;
 
 class PostState2 extends State<Post2> {
   @override
@@ -51,7 +54,7 @@ class PostState2 extends State<Post2> {
     tutId = widget.idPost;
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
-    post().then((respuesta) async {
+    post(context).then((respuesta) async {
       titulo = respuesta.data['titulo'];
       descripcion = respuesta.data['descripcion'];
       video = respuesta.data['video'];
@@ -78,9 +81,20 @@ class PostState2 extends State<Post2> {
     if (mounted) super.setState(fn);
   }
 
-  Future<Resp> post() async {
+  Future<Resp> post(context) async {
+    final locale = Localizations.localeOf(context);
+    final flag = L10n.getFlag(locale.languageCode);
+    String idioma;
+    if(flag == "English"){
+      idioma = 'en';
+    }
+    else if(flag == "Català"){
+      idioma = 'ca';
+    }
+    else idioma = 'es';
     var map = new Map<String, dynamic>();
     map['tutid'] = tutId;
+    map['idioma'] = idioma;
     final response = await http.get(
       Uri.https('api.socialcraft.club', '/tutorials/getTutorial', map),
       headers: {
@@ -141,15 +155,15 @@ class PostState2 extends State<Post2> {
                   labelColor: Colors.white,
                   tabs: <Widget>[
                     Tab(
-                        child: Text("Descripción",
+                        child: Text(AppLocalizations.of(context).descripcion,
                             style: GoogleFonts.comfortaa(
                                 fontSize: 15, fontWeight: FontWeight.bold))),
                     Tab(
-                        child: Text("Pasos",
+                        child: Text(AppLocalizations.of(context).pasos,
                             style: GoogleFonts.comfortaa(
                                 fontSize: 15, fontWeight: FontWeight.bold))),
                     Tab(
-                        child: Text("Comentarios",
+                        child: Text(AppLocalizations.of(context).valoraciones,
                             style: GoogleFonts.comfortaa(
                                 fontSize: 15, fontWeight: FontWeight.bold))),
                   ],
@@ -190,24 +204,24 @@ class PostState2 extends State<Post2> {
 
   showAlertDialog(BuildContext context) {
     Widget cancelButton = TextButton(
-        child: Text("Sí"),
+        child: Text(AppLocalizations.of(context).si),
         onPressed: () async {
           deletePost().then((respuesta) async {
-            toast("Tutorial eliminado correctamente", bgColor: toast_color);
+            toast(AppLocalizations.of(context).tutorialEliminadoCorrectamente, bgColor: toast_color);
             //Navigator.pushNamed(context, "barra");
             Navigator.pop(context);
             Navigator.pop(context);
           });
         });
     Widget continueButton = TextButton(
-      child: Text("No"),
+      child: Text(AppLocalizations.of(context).no),
       onPressed: () {
         Navigator.pop(context);
       },
     );
 
     AlertDialog alert = AlertDialog(
-      content: Text("¿Estas seguro que deseas eliminar el tutorial?"),
+      content: Text(AppLocalizations.of(context).estasSeguroTutorial),
       actions: [
         cancelButton,
         continueButton,
