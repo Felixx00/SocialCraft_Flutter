@@ -11,6 +11,7 @@ import 'package:socialcraft/settings.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'subir_comentario.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class PostComentarios extends StatefulWidget {
@@ -78,7 +79,7 @@ class PostComentariosState extends State<PostComentarios> {
           onRefresh: () => init(),
           child: comentarios.length == 0 ? Container(
             child: Center(
-                child: Text("No hay comentarios",
+                child: Text(AppLocalizations.of(context).noHayComentarios,
                     style: TextStyle(fontSize: 20, color: textPrimaryColor)),
             ),
           ):ListView.builder(
@@ -221,27 +222,27 @@ class PostComentariosState extends State<PostComentarios> {
 
 showAlertDialog(BuildContext context, String id) {
   Widget cancelButton = TextButton(
-    child: Text("Sí"),
+    child: Text(AppLocalizations.of(context).si),
     onPressed: () async {
       final storage = new FlutterSecureStorage();
       String token = await storage.read(key: 'jwt');
       deleteCommentTutorial(id).then((respuesta) async {
         if(respuesta.ecode == "ERR_TUT_COMMENTNOMIO"){
-          toast("El comentario no es tuyo", bgColor: toast_color);
+          toast(AppLocalizations.of(context).valoracionNoEsTuyo, bgColor: toast_color);
         }
       });
       Navigator.pop(context);
     },
   );
   Widget continueButton = TextButton(
-    child: Text("No"),
+    child: Text(AppLocalizations.of(context).no),
     onPressed: () {
       Navigator.pop(context);
     },
   );
 
   AlertDialog alert = AlertDialog(
-    content: Text("¿Quieres eliminar el comentario?"),
+    content: Text(AppLocalizations.of(context).eliminarValoracion),
     actions: [
       cancelButton,
       continueButton,

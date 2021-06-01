@@ -16,6 +16,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'post.dart';
+import 'package:socialcraft/l10n/l10n.dart';
 
 class HomeCategory extends StatefulWidget {
   @override
@@ -96,8 +97,20 @@ class HomeCategoryState extends State<HomeCategory> {
   }
 
   Future<Resp> listCategories() async {
+    final locale = Localizations.localeOf(context);
+    final flag = L10n.getFlag(locale.languageCode);
+    String idioma;
+    if(flag == "English"){
+      idioma = 'en';
+    }
+    else if(flag == "Català"){
+      idioma = 'ca';
+    }
+    else idioma = 'es';
+    var map = new Map<String, dynamic>();
+    map['idioma'] = idioma;
     final response = await http.get(
-      Uri.https('api.socialcraft.club', '/tutorials/getCategories'),
+      Uri.https('api.socialcraft.club', '/tutorials/getCategories',map),
       headers: {
         'Authorization': 'Bearer $token',
       },
