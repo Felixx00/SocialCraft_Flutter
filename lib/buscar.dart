@@ -316,22 +316,24 @@ class SearchW extends State<Search> {
             title:
                 Text("Información del buscador" , style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
             content:
-            RichText(
-              textAlign: TextAlign.left,
-              text: new TextSpan(
-                style: TextStyle(color: Colors.black),
-                children: <TextSpan>[
-                  new TextSpan(text: "Usuario:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                  new TextSpan(text: "Introduce mínimo 3 caracteres\n\n" , style: new TextStyle(fontSize: 17)),
-                  new TextSpan(text: "Título:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                  new TextSpan(text: "Introduce mínimo 1 carácter\n\n" , style: new TextStyle(fontSize: 17)),
-                  new TextSpan(text: "Duración:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                  new TextSpan(text: "Indica si el tutorial dura (min): \n" , style: new TextStyle(fontSize: 17)),
-                  new TextSpan(text: "   <10\n     10\n     20\n     30\n     40\n     50\n     60\n   >60\n\n", style: new TextStyle(fontSize: 17)),
-                  new TextSpan(text: "Dificultad:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                  new TextSpan(text: "Selecciona entre: \n", style: new TextStyle(fontSize: 17)),
-                  new TextSpan(text: "     1 o facil \n     2 o intermedio \n     3 o dificil", style: new TextStyle(fontSize: 17)),
-                ],
+            SingleChildScrollView(
+              child: RichText(
+                textAlign: TextAlign.left,
+                text: new TextSpan(
+                  style: TextStyle(color: Colors.black),
+                  children: <TextSpan>[
+                    new TextSpan(text: "Usuario:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    new TextSpan(text: "Introduce mínimo 3 caracteres\n\n" , style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: "Título:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    new TextSpan(text: "Introduce mínimo 1 carácter\n\n" , style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: "Duración:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    new TextSpan(text: "Indica si el tutorial dura (min): \n" , style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: "   <10\n     10\n     20\n     30\n     40\n     50\n     60\n   >60\n\n", style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: "Dificultad:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    new TextSpan(text: "Selecciona entre: \n", style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: "     1 o facil \n     2 o intermedio \n     3 o dificil", style: new TextStyle(fontSize: 17)),
+                  ],
+                ),
               ),
             ),
             actions: <Widget>[
