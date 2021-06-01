@@ -8,6 +8,7 @@ import 'package:socialcraft/perfil2.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PostDesc extends StatelessWidget {
   final String titulo;
@@ -91,7 +92,7 @@ class PostDesc extends StatelessWidget {
                   Icon(Icons.star_outlined, color: azul_logo, size: 30),
                   16.width,
                   Text(
-                    correct ? "Valoración: " + rate + "/5" : "Valoración: -",
+                    correct ? AppLocalizations.of(context).valoracionDosPuntos + rate + "/5" : AppLocalizations.of(context).valoracionDosPuntos + " -",
                     style: TextStyle(fontSize: 16),
                   )
                 ]),
@@ -100,7 +101,7 @@ class PostDesc extends StatelessWidget {
                   Icon(Icons.bar_chart_rounded, color: azul_logo, size: 30),
                   16.width,
                   Text(
-                    "Dificultad: " + dificultad,
+                    AppLocalizations.of(context).dificultad + ": " + dificultad,
                     style: TextStyle(fontSize: 16),
                   )
                 ]),
@@ -109,7 +110,7 @@ class PostDesc extends StatelessWidget {
                   Icon(Icons.grid_view, color: azul_logo, size: 30),
                   16.width,
                   Text(
-                    "Categoria: " + categoria,
+                    AppLocalizations.of(context).categoria+": " + categoria,
                     style: TextStyle(fontSize: 16),
                   )
                 ]),
@@ -118,7 +119,7 @@ class PostDesc extends StatelessWidget {
                   Icon(Icons.av_timer, color: azul_logo, size: 30),
                   16.width,
                   Text(
-                    "Duración: " + duracion + "min",
+                    AppLocalizations.of(context).duracion + ": " + duracion + "min",
                     style: TextStyle(fontSize: 16),
                   )
                 ]),
@@ -129,7 +130,7 @@ class PostDesc extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width / 1.5,
                     child: Text(
-                      "Materiales: " + materiales,
+                      AppLocalizations.of(context).materiales + ": " + materiales,
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
