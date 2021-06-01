@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/materiales.dart';
+import 'package:socialcraft/post.dart';
 import 'dart:convert';
 import 'package:socialcraft/resp.dart';
 import 'package:socialcraft/subir_pasos.dart';
@@ -102,7 +103,7 @@ class UploadState extends State<Upload> {
   }
 
   _openGallery(BuildContext context) async {
-    final foto = await ImagePicker().getImage(source: ImageSource.gallery);
+    foto = await ImagePicker().getImage(source: ImageSource.gallery);
     setState(() {
       if (foto != null) {
         imageFile = File(foto.path);
@@ -112,7 +113,7 @@ class UploadState extends State<Upload> {
   }
 
   _openCamara(BuildContext context) async {
-    final foto = await ImagePicker().getImage(source: ImageSource.camera);
+    foto = await ImagePicker().getImage(source: ImageSource.camera);
     setState(() {
       if (foto != null) {
         imageFile = File(foto.path);
@@ -278,7 +279,8 @@ class UploadState extends State<Upload> {
                       border: InputBorder.none,
                       contentPadding: new EdgeInsets.symmetric(
                           vertical: 15.0, horizontal: 10.0),
-                      hintText: AppLocalizations.of(context).anadeUnaDescripcion,
+                      hintText:
+                          AppLocalizations.of(context).anadeUnaDescripcion,
                     ),
                     onChanged: (newValue) {
                       desc = newValue;
@@ -425,7 +427,10 @@ class UploadState extends State<Upload> {
                         ),
                       );
                     } else {
-                      toast(AppLocalizations.of(context).rellenaTodosLosParametros,
+                      print(foto);
+                      toast(
+                          AppLocalizations.of(context)
+                              .rellenaTodosLosParametros,
                           bgColor: toast_color);
                     }
                   },
