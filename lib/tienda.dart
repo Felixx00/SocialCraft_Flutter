@@ -127,7 +127,9 @@ class TiendaState extends State<Tienda> {
   @override
   Widget build(BuildContext context) {
     return !fet
-        ? Container()
+        ? Container(
+            child: CircularProgressIndicator(),
+          )
         : Scaffold(
             body: GoogleMap(
               mapToolbarEnabled: false,
