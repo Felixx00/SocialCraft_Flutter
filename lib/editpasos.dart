@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/materiales.dart';
-import 'package:socialcraft/post.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/widgets.dart';
@@ -170,14 +169,7 @@ class editpasosState extends State<editpasos> {
                   for (int i = 0; i < upperBound; i++) {
                     subirPasos(pasos[i]['Id'], i);
                   }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Post(tutId),
-                    ),
-                  ).then((value) => setState(() {}));
-                  toast(AppLocalizations.of(context).existePasoVacio,
-                      bgColor: toast_color);
+                  Navigator.pop(context);
                   toast("Pasos editados correctamente");
                 }
               },

@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:socialcraft/tienda.dart';
@@ -7,7 +8,6 @@ import 'editpost.dart';
 import 'home.dart';
 import 'perfil2.dart';
 import 'login.dart';
-import 'provider/PushNotifications.dart';
 import 'register.dart';
 import 'perfil.dart';
 import 'barraNavegacion.dart';
@@ -30,7 +30,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'l10n/l10n.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -40,11 +42,20 @@ class MyApp extends StatelessWidget {
       create: (context) => LocaleProvider(),
       builder: (context, child) {
         final provider = Provider.of<LocaleProvider>(context);
+
+        FirebaseMessaging messaging = FirebaseMessaging.instance;
+        messaging.getToken().then((value) => print(value));
         /*
-        Firebase.initializeApp().then((value) => () {
-              final pushProvider = new pushNotifications();
-              //pushProvider.initNotifications();
-            });*/
+        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+          print('Got a message whilst in the foreground!');
+          print('Message data: ${message.data}');
+
+          if (message.notification != null) {
+            print(
+                'Message also contained a notification: ${message.notification}');
+          }
+        });
+        */
         return MaterialApp(
             supportedLocales: L10n.all,
             locale: provider.localee,
