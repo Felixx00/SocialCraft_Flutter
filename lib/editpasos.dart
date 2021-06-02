@@ -52,6 +52,7 @@ class editpasosState extends State<editpasos> {
       numb.add(i);
     }
     upperBound = pasos.length;
+    controller2.text = pasos[activeStep]['Texto'];
     setState(() {});
   }
 
@@ -63,7 +64,6 @@ class editpasosState extends State<editpasos> {
   String fotopasoeditar = "";
 
   int activeStep = 0;
-  final controller = TextEditingController(text: "");
   final controller2 = TextEditingController(text: "");
 
   int upperBound;
@@ -116,6 +116,10 @@ class editpasosState extends State<editpasos> {
     if (descripciones[numeropaso] != " ")
       map3['Text'] = descripciones[numeropaso];
     if (fotopasoeditar != null) map3['RutaFoto'] = fotopasoeditar;
+    if (cambioFoto[numeropaso]) {
+      map3['RutaFoto'] = "";
+    }
+
     final response = await http.post(
       Uri.https('api.socialcraft.club', 'tutorials/editStep'),
       body: map3,
@@ -133,26 +137,22 @@ class editpasosState extends State<editpasos> {
   }
 
   Future subirfotopaso(int x, int idpaso) async {
-    if (cambioFoto[idpaso - 1]) {
-      print(cambioFoto[idpaso - 1]);
+    if (imagenes[idpaso - 1] != null) {
+      final _firebaseStorage = FirebaseStorage.instance;
+      var file = File(imagenes[idpaso - 1].path);
+      await _firebaseStorage
+          .ref()
+          .child('Posts/' + x.toString() + '/paso' + idpaso.toString())
+          .putFile(file);
+      var ref = FirebaseStorage.instance
+          .ref()
+          .child('Posts/' + x.toString() + '/paso' + idpaso.toString());
+      fotopasoeditar = (await ref.getDownloadURL()).toString();
+      Future a;
+      return a;
     } else {
-      if (imagenes[idpaso - 1] != null) {
-        final _firebaseStorage = FirebaseStorage.instance;
-        var file = File(imagenes[idpaso - 1].path);
-        await _firebaseStorage
-            .ref()
-            .child('Posts/' + x.toString() + '/paso' + idpaso.toString())
-            .putFile(file);
-        var ref = FirebaseStorage.instance
-            .ref()
-            .child('Posts/' + x.toString() + '/paso' + idpaso.toString());
-        fotopasoeditar = (await ref.getDownloadURL()).toString();
-        Future a;
-        return a;
-      } else {
-        fotopasoeditar = null;
-        print('No image selected.');
-      }
+      fotopasoeditar = null;
+      print('No image selected.');
     }
   }
 
@@ -177,12 +177,12 @@ class editpasosState extends State<editpasos> {
               icon: Icon(Icons.cloud_upload_outlined),
               onPressed: () async {
                 for (int i = 0; i < upperBound; i++) {
-                  print(pasos[i]['Id']);
                   subirPasos(pasos[i]['Id'], i);
                 }
                 Navigator.pop(context);
 
-                toast(AppLocalizations.of(context).pasosEditadosCorrecamente);
+                toast(AppLocalizations.of(context).pasosEditadosCorrecamente,
+                    bgColor: toast_color);
               },
             ),
           ),
@@ -203,8 +203,7 @@ class editpasosState extends State<editpasos> {
                 onStepReached: (index) {
                   setState(() {
                     activeStep = index;
-                    controller.text = textos[activeStep];
-                    controller2.text = descripciones[activeStep];
+                    controller2.text = pasos[activeStep]['Texto'];
                   });
                 },
               ),
@@ -239,70 +238,6 @@ class editpasosState extends State<editpasos> {
                     imagenes[activeStep] = null;
                     cambioFoto[activeStep] = true;
                   }),
-              90.height,
-              Stack(
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: FloatingActionButton.extended(
-                      onPressed: () {
-                        if (numb.length > 1) {
-                          upperBound -= 1;
-                          pasos.remove(activeStep + 1);
-                          controller.text = " ";
-                          numb.remove(activeStep + 1);
-                          for (int i = activeStep; i < numb.length + 1; ++i) {
-                            if (i < numb.length) {
-                              numb[i] = numb[i] - 1;
-                              descripciones[i] = descripciones[i + 1];
-                            } else
-                              descripciones[i] = " ";
-                            if (i != numb.length)
-                              imagenes[i] = imagenes[i + 1];
-                            else
-                              imagenes[i] = null;
-                          }
-                          if (activeStep != numb.length)
-                            controller2.text = descripciones[activeStep];
-                          else
-                            controller2.text = descripciones[activeStep - 1];
-                          if (activeStep == numb.length)
-                            activeStep = activeStep - 1;
-                          setState(() {});
-                        }
-                      },
-                      label: Text(
-                        AppLocalizations.of(context).paso,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      icon: Icon(Icons.remove),
-                      backgroundColor: azul_logo,
-                    ).paddingLeft(10),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: FloatingActionButton.extended(
-                      onPressed: () {
-                        if (numb.length < 10) {
-                          upperBound += 1;
-                          pasos.add(" ");
-                          controller.text = "";
-                          controller2.text = "";
-                          activeStep = numb.length;
-                          numb.add(numb.length + 1);
-                          setState(() {});
-                        }
-                      },
-                      label: Text(
-                        AppLocalizations.of(context).paso,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      icon: Icon(Icons.add),
-                      backgroundColor: azul_logo,
-                    ).paddingRight(10),
-                  ),
-                ],
-              )
             ],
           ),
         ),

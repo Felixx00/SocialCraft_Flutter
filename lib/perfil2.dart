@@ -192,12 +192,6 @@ class Perfil2State extends State<Perfil2> {
             Stack(
               children: [
                 Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                    child: Image.asset(trophy, width: 40, height: 40),
-                  ),
-                ),
-                Align(
                   alignment: Alignment.center,
                   child: Stack(
                     children: [
@@ -256,7 +250,9 @@ class Perfil2State extends State<Perfil2> {
                 ],
               ),
               ElevatedButton.icon(
-                label: Text(unfollow ? AppLocalizations.of(context).dejarDeSeguir : AppLocalizations.of(context).seguirPerfil),
+                label: Text(unfollow
+                    ? AppLocalizations.of(context).dejarDeSeguir
+                    : AppLocalizations.of(context).seguirPerfil),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(170, 40),
                   //primary: Colors.lightBlueAccent[200],
@@ -301,7 +297,8 @@ class Perfil2State extends State<Perfil2> {
                     style: boldTextStyle(size: 16, color: black),
                     semanticsLabel: "nPosts",
                   ),
-                  Text(AppLocalizations.of(context).posts, style: boldTextStyle(size: 12, color: black))
+                  Text(AppLocalizations.of(context).posts,
+                      style: boldTextStyle(size: 12, color: black))
                 ],
               ),
             ),
@@ -372,10 +369,9 @@ class Product extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Expanded(
-                  child: Text(posts[pos]['titulo'],
-                      overflow: TextOverflow.ellipsis,
-                      style: primaryTextStyle(color: Colors.black)),
-
+                    child: Text(posts[pos]['titulo'],
+                        overflow: TextOverflow.ellipsis,
+                        style: primaryTextStyle(color: Colors.black)),
                   ),
                 ],
               ),
