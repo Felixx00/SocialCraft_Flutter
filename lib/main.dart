@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
               'perfil': (BuildContext context) => Perfil(),
               //'perfil2': (BuildContext context) => Perfil2(),
               'forgotPassword': (BuildContext context) => ForgotPassword(),
-              'editar': (BuildContext context) => Editar(),
+              'editar': (BuildContext context) => Editar("","","",""),
               'search': (BuildContext context) => Search(),
               'password': (BuildContext context) => Password(),
               'settings': (BuildContext context) => Settings(),
