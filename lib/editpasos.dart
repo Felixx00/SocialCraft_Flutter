@@ -181,7 +181,7 @@ class editpasosState extends State<editpasos> {
                   subirPasos(pasos[i]['Id'], i);
                 }
                 Navigator.pop(context);
-                toast("Pasos editados correctamente");
+                toast(AppLocalizations.of(context).pasosEditadosCorrecamente);
               },
             ),
           ),
