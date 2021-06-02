@@ -41,7 +41,7 @@ class PostPasos extends StatelessWidget {
                             style: TextStyle(fontSize: 16, color: Colors.black))
                         .paddingOnly(bottom: 15, top: 15),
                     subtitle: Container(
-                      height: pasos[index]['Foto'] != "" ? 300.0 : 0.0,
+                      height: pasos[index]['Foto'] != "" ? 250.0 : 0.0,
                       width: 300.0,
                       child: Image.network(pasos[index]['Foto'])
                           .paddingOnly(bottom: 10),

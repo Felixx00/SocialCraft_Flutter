@@ -48,6 +48,11 @@ class editpasosState extends State<editpasos> {
     pasos = widget.pasos2;
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
+    for (int i = 1; i <= pasos.length; i++) {
+      numb.add(i);
+    }
+    upperBound = pasos.length;
+    setState(() {});
   }
 
   @override
@@ -61,9 +66,21 @@ class editpasosState extends State<editpasos> {
   final controller = TextEditingController(text: "");
   final controller2 = TextEditingController(text: "");
 
-  int upperBound = 1;
-  List<int> numb = [1];
+  int upperBound;
+  List<int> numb = [];
   List<String> textos = ["", "", "", "", "", "", "", "", "", ""];
+  List<bool> cambioFoto = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
   List<String> descripciones = [
     " ",
     " ",
@@ -96,7 +113,8 @@ class editpasosState extends State<editpasos> {
     var map3 = new Map<String, dynamic>();
     map3['IdPaso'] = id;
     map3['NumPaso'] = numeropaso.toString();
-    map3['Text'] = descripciones[numeropaso];
+    if (descripciones[numeropaso] != " ")
+      map3['Text'] = descripciones[numeropaso];
     if (fotopasoeditar != null) map3['RutaFoto'] = fotopasoeditar;
     final response = await http.post(
       Uri.https('api.socialcraft.club', 'tutorials/editStep'),
@@ -115,25 +133,26 @@ class editpasosState extends State<editpasos> {
   }
 
   Future subirfotopaso(int x, int idpaso) async {
-    if (imagenes[idpaso - 1] != null) {
-      final _firebaseStorage = FirebaseStorage.instance;
-      var file = File(imagenes[idpaso - 1].path);
-      print(file);
-      print('aaaaaaaaaaaaaaa');
-      await _firebaseStorage
-          .ref()
-          .child('Posts/' + x.toString() + '/paso' + idpaso.toString())
-          .putFile(file);
-      var ref = FirebaseStorage.instance
-          .ref()
-          .child('Posts/' + x.toString() + '/paso' + idpaso.toString());
-      fotopasoeditar = (await ref.getDownloadURL()).toString();
-      Future a;
-      return a;
-      //print(foto.path);
+    if (cambioFoto[idpaso - 1]) {
+      print(cambioFoto[idpaso - 1]);
     } else {
-      fotopasoeditar = null;
-      print('No image selected.');
+      if (imagenes[idpaso - 1] != null) {
+        final _firebaseStorage = FirebaseStorage.instance;
+        var file = File(imagenes[idpaso - 1].path);
+        await _firebaseStorage
+            .ref()
+            .child('Posts/' + x.toString() + '/paso' + idpaso.toString())
+            .putFile(file);
+        var ref = FirebaseStorage.instance
+            .ref()
+            .child('Posts/' + x.toString() + '/paso' + idpaso.toString());
+        fotopasoeditar = (await ref.getDownloadURL()).toString();
+        Future a;
+        return a;
+      } else {
+        fotopasoeditar = null;
+        print('No image selected.');
+      }
     }
   }
 
@@ -157,21 +176,12 @@ class editpasosState extends State<editpasos> {
               ),
               icon: Icon(Icons.cloud_upload_outlined),
               onPressed: () async {
-                bool vacio = false;
-                for (int i = 0; i < upperBound && !vacio; ++i) {
-                  if (descripciones[i] == " ") {
-                    vacio = true;
-                    toast(AppLocalizations.of(context).existePasoVacio,
-                        bgColor: toast_color);
-                  }
+                for (int i = 0; i < upperBound; i++) {
+                  print(pasos[i]['Id']);
+                  subirPasos(pasos[i]['Id'], i);
                 }
-                if (!vacio) {
-                  for (int i = 0; i < upperBound; i++) {
-                    subirPasos(pasos[i]['Id'], i);
-                  }
-                  Navigator.pop(context);
-                  toast("Pasos editados correctamente");
-                }
+                Navigator.pop(context);
+                toast("Pasos editados correctamente");
               },
             ),
           ),
@@ -217,7 +227,6 @@ class editpasosState extends State<editpasos> {
                 onPressed: () async {
                   imagenes[activeStep] =
                       await ImagePicker().getImage(source: ImageSource.gallery);
-                  print(imagenes);
                 },
               ),
               16.height,
@@ -225,8 +234,9 @@ class editpasosState extends State<editpasos> {
                   icon: Icon(Icons.delete),
                   iconSize: 35,
                   color: Colors.redAccent[200],
-                  onPressed: () {
+                  onPressed: () async {
                     imagenes[activeStep] = null;
+                    cambioFoto[activeStep] = true;
                   }),
               90.height,
               Stack(
@@ -237,6 +247,7 @@ class editpasosState extends State<editpasos> {
                       onPressed: () {
                         if (numb.length > 1) {
                           upperBound -= 1;
+                          pasos.remove(activeStep + 1);
                           controller.text = " ";
                           numb.remove(activeStep + 1);
                           for (int i = activeStep; i < numb.length + 1; ++i) {
@@ -256,7 +267,6 @@ class editpasosState extends State<editpasos> {
                             controller2.text = descripciones[activeStep - 1];
                           if (activeStep == numb.length)
                             activeStep = activeStep - 1;
-                          print(descripciones);
                           setState(() {});
                         }
                       },
@@ -272,9 +282,9 @@ class editpasosState extends State<editpasos> {
                     alignment: Alignment.bottomRight,
                     child: FloatingActionButton.extended(
                       onPressed: () {
-                        print(descripciones);
                         if (numb.length < 10) {
                           upperBound += 1;
+                          pasos.add(" ");
                           controller.text = "";
                           controller2.text = "";
                           activeStep = numb.length;
