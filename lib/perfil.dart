@@ -168,7 +168,7 @@ class PerfilState extends State<Perfil> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.arrow_back).onTap(() {
-          Navigator.pop(context);
+          Navigator.maybePop(context);
         }),
         title: Text(userName,
             style: GoogleFonts.comfortaa(
