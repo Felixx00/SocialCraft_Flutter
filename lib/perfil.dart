@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialcraft/editar.dart';
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/resp.dart';
@@ -33,6 +34,8 @@ String follow = '0';
 String nFollow = "";
 String followers = '0';
 String nFollowers = "";
+String email = "";
+String ciudad = "";
 bool unfollow = true;
 var linkfoto = "";
 List<dynamic> posts = [];
@@ -62,6 +65,8 @@ class PerfilState extends State<Perfil> {
       userName = respuesta.data['username'];
       follow = respuesta.data['seguidos'];
       followers = respuesta.data['seguidores'];
+      email = respuesta.data['email'];
+      ciudad = respuesta.data['city'];
 
       await Firebase.initializeApp();
       await getImage();
@@ -350,8 +355,15 @@ class PerfilState extends State<Perfil> {
                 ),
                 icon: Icon(Icons.person_outline_sharp, size: 18),
                 onPressed: () {
-                  Navigator.pushNamed(context, "editar");
-                  setState(() {});
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          Editar(user,about,email,ciudad),
+                    ),
+                  ).then((value) => setState(() {}));
+                  //Navigator.pushNamed(context, "editar");
+                  //setState(() {});
                 },
               ),
             ]),

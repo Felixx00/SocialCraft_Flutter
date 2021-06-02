@@ -14,7 +14,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Editar extends StatefulWidget {
-  static String tag = '/editar';
+  //static String tag = '/editar';
+  final String user;
+  final String about;
+  final String email;
+  final String ciudad;
+  Editar(this.user,this.about,this.email,this.ciudad);
 
   @override
   EditarState createState() => EditarState();
@@ -25,8 +30,16 @@ String userName = "";
 var linkfoto = "";
 
 class EditarState extends State<Editar> {
+  TextEditingController _controller;
+  TextEditingController _controller2;
+  TextEditingController _controller3;
+  TextEditingController _controller4;
   @override
   void initState() {
+    _controller = TextEditingController(text: widget.user);
+    _controller2 = TextEditingController(text: widget.about);
+    _controller3 = TextEditingController(text: widget.email);
+    _controller4 = TextEditingController(text: widget.ciudad);
     super.initState();
     init();
   }
@@ -245,6 +258,8 @@ class EditarState extends State<Editar> {
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
+                          controller: _controller,
+
                           cursorColor: azul_logo,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (newValue) {
@@ -262,6 +277,7 @@ class EditarState extends State<Editar> {
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
+                          controller: _controller2,
                           cursorColor: azul_logo,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (newValue) {
@@ -279,6 +295,7 @@ class EditarState extends State<Editar> {
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
+                          controller: _controller3,
                           cursorColor: azul_logo,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (newValue) {
@@ -296,6 +313,7 @@ class EditarState extends State<Editar> {
                       Container(
                         decoration: BoxDecoration(color: Colors.grey[100]),
                         child: TextFormField(
+                          controller: _controller4,
                           cursorColor: azul_logo,
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (newValue) {
