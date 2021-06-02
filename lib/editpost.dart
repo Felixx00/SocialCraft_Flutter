@@ -365,7 +365,8 @@ class EditPostState extends State<EditPost> {
                       print(materiales);
                       cambios().then((respuesta) async {
                         if (respuesta.success == false) {
-                          print(AppLocalizations.of(context).parametroIncorrecto);
+                          print(
+                              AppLocalizations.of(context).parametroIncorrecto);
                         } else {
                           if (nova_foto) {
                             nova_foto = false;
@@ -398,7 +399,7 @@ class EditPostState extends State<EditPost> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => editpasos(map, tutId, pasos2),
+                            builder: (context) => editpasos(tutId, pasos2),
                           ),
                         );
                       },

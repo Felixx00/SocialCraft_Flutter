@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/materiales.dart';
+import 'package:socialcraft/post.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/widgets.dart';
@@ -25,10 +26,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class editpasos extends StatefulWidget {
   static String tag = '/upload';
-  var map = Map<String, dynamic>();
   final String idPost;
   List<dynamic> pasos2 = [];
-  editpasos(this.map, this.idPost, this.pasos2);
+  editpasos(this.idPost, this.pasos2);
   @override
   editpasosState createState() => editpasosState();
 }
@@ -42,20 +42,13 @@ class editpasosState extends State<editpasos> {
 
   String tutId = '';
   List<dynamic> pasos = [];
-  var map2 = Map<String, dynamic>();
   String token = "";
-  var objeto_foto;
 
   init() async {
     tutId = widget.idPost;
     pasos = widget.pasos2;
-    map2 = widget.map;
-    objeto_foto = map2['rutaFoto'];
-    map2['rutaFoto'] = 'placeholder';
-    mapfoto['rutaFoto'] = "";
     final storage2 = new FlutterSecureStorage();
     token = await storage2.read(key: 'jwt');
-    print(map2);
   }
 
   @override
@@ -105,7 +98,7 @@ class editpasosState extends State<editpasos> {
     map3['IdPaso'] = id;
     map3['NumPaso'] = numeropaso.toString();
     map3['Text'] = descripciones[numeropaso];
-    map3['RutaFoto'] = fotopasoeditar;
+    if (fotopasoeditar != null) map3['RutaFoto'] = fotopasoeditar;
     final response = await http.post(
       Uri.https('api.socialcraft.club', 'tutorials/editStep'),
       body: map3,
@@ -140,6 +133,7 @@ class editpasosState extends State<editpasos> {
       return a;
       //print(foto.path);
     } else {
+      fotopasoeditar = null;
       print('No image selected.');
     }
   }
@@ -156,8 +150,8 @@ class editpasosState extends State<editpasos> {
           Padding(
             padding: EdgeInsets.all(10.0),
             child: OutlinedButton.icon(
-              label:
-                  Text(AppLocalizations.of(context).editar, style: primaryTextStyle(color: Colors.white)),
+              label: Text(AppLocalizations.of(context).editar,
+                  style: primaryTextStyle(color: Colors.white)),
               style: OutlinedButton.styleFrom(
                 primary: Colors.white,
                 side: BorderSide(color: Colors.white, width: 1.5),
@@ -168,14 +162,23 @@ class editpasosState extends State<editpasos> {
                 for (int i = 0; i < upperBound && !vacio; ++i) {
                   if (descripciones[i] == " ") {
                     vacio = true;
-                    toast(AppLocalizations.of(context).existePasoVacio, bgColor: toast_color);
+                    toast(AppLocalizations.of(context).existePasoVacio,
+                        bgColor: toast_color);
                   }
                 }
                 if (!vacio) {
                   for (int i = 0; i < upperBound; i++) {
                     subirPasos(pasos[i]['Id'], i);
                   }
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Post(tutId),
+                    ),
+                  ).then((value) => setState(() {}));
+                  toast(AppLocalizations.of(context).existePasoVacio,
+                      bgColor: toast_color);
+                  toast("Pasos editados correctamente");
                 }
               },
             ),
