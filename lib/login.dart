@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
+import 'package:socialcraft/provider/google_sign_in.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/utils/fonts.dart';
@@ -195,7 +197,10 @@ class LoginState extends State<Login> {
                                           color: Color(0xFF757575), fontSize: 16))
                                   .paddingAll(16),
                             ],
-                          ),
+                          ).onTap(() {
+                            final provider = Provider.of<GoogleSignInProvider>(context,listen: false);
+                            provider.login();
+                          }),
                         ).cornerRadiusWithClipRRect(12),
                       ],
                     ),

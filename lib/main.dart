@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:socialcraft/provider/google_sign_in.dart';
 import 'package:socialcraft/tienda.dart';
 import 'buscar.dart';
 import 'editpost.dart';
@@ -33,6 +34,7 @@ import 'package:socialcraft/provider/locale_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'l10n/l10n.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,10 +49,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => LocaleProvider()),
+          ChangeNotifierProvider(create: (context) => GoogleSignInProvider())
         ],
         child: Consumer<LocaleProvider>(
             builder: (context,provider,child) => MaterialApp(
-
                 supportedLocales: L10n.all,
                 locale: provider.localee,
                 localizationsDelegates: [
@@ -86,9 +88,17 @@ class MyApp extends StatelessWidget {
                 theme: ThemeData(
                   textTheme: GoogleFonts.comfortaaTextTheme(),
                 )
-
-            ))
+            )
+        )
     );
   }
+
+  Widget buildLoading() => Stack(
+    fit: StackFit.expand,
+    children: [
+      //CustomPaint(painter: BackgroundPainter()),
+      Center(child: CircularProgressIndicator()),
+    ],
+  );
 
 }
