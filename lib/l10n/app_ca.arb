@@ -90,6 +90,13 @@
     "cambiarContrasena":"Canviar Contrasenya ",
     "contrasenaActual":"Contrasenya actual",
     "nuevaContrasena":"Nova Contrasenya",
-    "confirmaNuevaContrasena":"Confirma nova contrasenya"
+    "confirmaNuevaContrasena":"Confirma nova contrasenya",
+    "pasosEditadosCorrecamente":"Passos editats correctament",
+    "informacionDelBuscador":"Informació del buscador",
+    "usuario":"Usuari",
+    "introduceMinimoCaracteres":"Introdueix mínim 3 caràcters",
+    "introduceTitulo":"Introdueix mínim 1 caràcter",
+    "indicaSiElTutorialDura": "Indica si els tutorials duren (min)",
+    "cerrar":"Tancar"
 
 }

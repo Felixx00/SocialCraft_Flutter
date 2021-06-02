@@ -90,7 +90,14 @@
     "cambiarContrasena":"Cambiar Contraseña",
     "contrasenaActual":"Contraseña actual",
     "nuevaContrasena":"Nueva Contraseña",
-    "confirmaNuevaContrasena":"Confirma nueva contraseña"
+    "confirmaNuevaContrasena":"Confirma nueva contraseña",
+    "pasosEditadosCorrecamente":"Pasos editados correctamente",
+    "informacionDelBuscador":"Información del buscador",
+    "usuario":"Usuario",
+    "introduceMinimoCaracteres":"Introduce mínimo 3 caracteres",
+    "introduceTitulo":"Introduce mínimo 1 carácter",
+    "indicaSiElTutorialDura": "Indica si el tutorial dura (min)",
+    "cerrar":"Cerrar"
 
 
 
