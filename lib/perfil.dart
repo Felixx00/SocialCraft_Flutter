@@ -165,263 +165,268 @@ class PerfilState extends State<Perfil> {
   Widget build(BuildContext context) {
     double cardWidth = context.width() / 2;
     double cardHeight = context.height() / 4;
-    return Scaffold(
-      appBar: AppBar(
-        leading: Icon(Icons.arrow_back).onTap(() {
-          Navigator.maybePop(context);
-        }),
-        title: Text(userName,
-            style: GoogleFonts.comfortaa(
-                textStyle: TextStyle(
-              fontSize: 20,
-              color: Colors.white,
-              fontWeight: FontWeight.w800,
-            ))),
-        automaticallyImplyLeading: false,
-        backgroundColor: azul_logo,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: Colors.white,
+    return RefreshIndicator(
+      onRefresh: () => init(),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: Icon(Icons.arrow_back).onTap(() {
+            Navigator.maybePop(context);
+          }),
+          title: Text(userName,
+              style: GoogleFonts.comfortaa(
+                  textStyle: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+                fontWeight: FontWeight.w800,
+              ))),
+          automaticallyImplyLeading: false,
+          backgroundColor: azul_logo,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
+              tooltip: AppLocalizations.of(context).configuracion,
+              onPressed: () {
+                Navigator.pushNamed(context, "settings");
+              },
             ),
-            tooltip: AppLocalizations.of(context).configuracion,
-            onPressed: () {
-              Navigator.pushNamed(context, "settings");
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            16.height,
-            Stack(
-              children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                      child: InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, 'logros');
-                    },
-                    child: Image.asset(
-                      trophy,
-                      width: 40,
-                      height: 40,
-                    ),
-                  )),
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Stack(
-                    children: [
-                      CircleAvatar(
-                        radius: 70,
-                        backgroundImage: NetworkImage(
-                          linkfoto,
-                        ),
-                        onBackgroundImageError: (_, __) {
-                          setState(() {
-                            //this._isError = true;
-                          });
-                        },
-                        backgroundColor: azul_logo,
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 5,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.lightBlueAccent[100],
-                          radius: 15,
-                          child: Icon(Icons.camera_alt_rounded,
-                              size: 20, color: azul_logo),
-                        ).onTap(() async {
-                          //ImagePicker().getImage(source: ImageSource.gallery);
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext bc) {
-                                return Container(
-                                  child: new Wrap(
-                                    children: <Widget>[
-                                      new ListTile(
-                                          leading: new Icon(
-                                              Icons.add_a_photo_rounded,
-                                              color: azul_logo),
-                                          title: new Text(
-                                              AppLocalizations.of(context)
-                                                  .editarFotoPerfil),
-                                          onTap: () async {
-                                            var foto = await ImagePicker()
-                                                .getImage(
-                                                    source:
-                                                        ImageSource.gallery);
-                                            Navigator.pop(context);
-                                            print(foto);
-
-                                            if (foto != null) {
-                                              final _firebaseStorage =
-                                                  FirebaseStorage.instance;
-                                              var file = File(foto.path);
-                                              await _firebaseStorage
-                                                  .ref()
-                                                  .child(userName + '/image')
-                                                  .putFile(file);
-                                              editRuta();
-                                              //print(foto.path);
-                                            } else {
-                                              print('No image selected.');
-                                            }
-
-                                            init();
-                                            setState(() {});
-                                          }),
-                                      new ListTile(
-                                        leading: new Icon(
-                                          Icons.delete,
-                                          color: Colors.redAccent,
-                                        ),
-                                        title: new Text(
-                                            AppLocalizations.of(context)
-                                                .eliminarFotoPerfil),
-                                        onTap: () async {
-                                          Navigator.pop(context);
-                                          final _firebaseStorage =
-                                              FirebaseStorage.instance;
-                                          var snapshot = await _firebaseStorage
-                                              .ref()
-                                              .child(userName + '/image')
-                                              .delete();
-                                          init();
-                                          setState(() {});
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              });
-                        }),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            15.height,
-            Column(
-              children: [
-                Text(user, style: boldTextStyle(size: 20)).paddingLeft(12),
-                2.height,
-                Text(about, style: secondaryTextStyle(size: 14))
-                    .paddingLeft(12),
-              ],
-            ),
-            15.height,
-            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              16.height,
               Stack(
                 children: [
-                  Column(
-                    children: [
-                      Text(
-                        nFollow = followers,
-                        style: boldTextStyle(size: 16, color: black),
-                        semanticsLabel: "nFollow",
-                      ).paddingLeft(92),
-                      Text(AppLocalizations.of(context).seguidores,
-                              style: boldTextStyle(size: 12, color: black))
-                          .paddingLeft(92)
-                    ],
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                        child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, 'logros');
+                      },
+                      child: Image.asset(
+                        trophy,
+                        width: 40,
+                        height: 40,
+                      ),
+                    )),
                   ),
-                  Column(
-                    children: [
-                      Text(
-                        nFollowers = follow,
-                        style: boldTextStyle(size: 16, color: black),
-                        semanticsLabel: "nFollowers",
-                      ).paddingRight(92),
-                      Text(AppLocalizations.of(context).seguidos,
-                              style: boldTextStyle(size: 12, color: black))
-                          .paddingRight(92)
-                    ],
-                  ),
-                ],
-              ),
-              ElevatedButton.icon(
-                label: Text(AppLocalizations.of(context).editarPerfil),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(150, 40),
-                  primary: Color.fromRGBO(68, 102, 216, 1.0),
-                  onPrimary: Colors.white,
-                  onSurface: Colors.grey,
-                ),
-                icon: Icon(Icons.person_outline_sharp, size: 18),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Editar(user, about, email, ciudad),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 70,
+                          backgroundImage: NetworkImage(
+                            linkfoto,
+                          ),
+                          onBackgroundImageError: (_, __) {
+                            setState(() {
+                              //this._isError = true;
+                            });
+                          },
+                          backgroundColor: azul_logo,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 5,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.lightBlueAccent[100],
+                            radius: 15,
+                            child: Icon(Icons.camera_alt_rounded,
+                                size: 20, color: azul_logo),
+                          ).onTap(() async {
+                            //ImagePicker().getImage(source: ImageSource.gallery);
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext bc) {
+                                  return Container(
+                                    child: new Wrap(
+                                      children: <Widget>[
+                                        new ListTile(
+                                            leading: new Icon(
+                                                Icons.add_a_photo_rounded,
+                                                color: azul_logo),
+                                            title: new Text(
+                                                AppLocalizations.of(context)
+                                                    .editarFotoPerfil),
+                                            onTap: () async {
+                                              var foto = await ImagePicker()
+                                                  .getImage(
+                                                      source:
+                                                          ImageSource.gallery);
+                                              Navigator.pop(context);
+                                              print(foto);
+
+                                              if (foto != null) {
+                                                final _firebaseStorage =
+                                                    FirebaseStorage.instance;
+                                                var file = File(foto.path);
+                                                await _firebaseStorage
+                                                    .ref()
+                                                    .child(userName + '/image')
+                                                    .putFile(file);
+                                                editRuta();
+                                                //print(foto.path);
+                                              } else {
+                                                print('No image selected.');
+                                              }
+
+                                              init();
+                                              setState(() {});
+                                            }),
+                                        new ListTile(
+                                          leading: new Icon(
+                                            Icons.delete,
+                                            color: Colors.redAccent,
+                                          ),
+                                          title: new Text(
+                                              AppLocalizations.of(context)
+                                                  .eliminarFotoPerfil),
+                                          onTap: () async {
+                                            Navigator.pop(context);
+                                            final _firebaseStorage =
+                                                FirebaseStorage.instance;
+                                            var snapshot =
+                                                await _firebaseStorage
+                                                    .ref()
+                                                    .child(userName + '/image')
+                                                    .delete();
+                                            init();
+                                            setState(() {});
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                });
+                          }),
+                        ),
+                      ],
                     ),
-                  ).then((value) => setState(() {}));
-                  //Navigator.pushNamed(context, "editar");
-                  //setState(() {});
-                },
-              ),
-            ]),
-            10.height,
-            Divider(
-              height: 30,
-              thickness: 3,
-              color: Colors.grey[650],
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Column(
-                children: [
-                  Text(
-                    nPosts = posts.length.toString(),
-                    style: boldTextStyle(size: 16, color: black),
-                    semanticsLabel: "nPosts",
                   ),
-                  Text(AppLocalizations.of(context).posts,
-                      style: boldTextStyle(size: 12, color: black))
                 ],
               ),
-            ),
-            Column(
-              children: List.generate(
-                //nPosts.toInt(),
-                1,
-                (int index) {
-                  return GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    itemCount: posts.length,
-                    padding: EdgeInsets.all(16),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
-                        childAspectRatio: cardWidth / cardHeight),
-                    itemBuilder: (context, index) => Product(index),
-                  );
-                },
+              15.height,
+              Column(
+                children: [
+                  Text(user, style: boldTextStyle(size: 20)).paddingLeft(12),
+                  2.height,
+                  Text(about, style: secondaryTextStyle(size: 14))
+                      .paddingLeft(12),
+                ],
               ),
-            )
-          ],
-        ).paddingAll(16),
-      ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: '1',
-        elevation: 5,
-        onPressed: () {
-          Navigator.pushNamed(context, 'upload');
-        },
-        backgroundColor: azul_logo,
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
+              15.height,
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                Stack(
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          nFollow = followers,
+                          style: boldTextStyle(size: 16, color: black),
+                          semanticsLabel: "nFollow",
+                        ).paddingLeft(92),
+                        Text(AppLocalizations.of(context).seguidores,
+                                style: boldTextStyle(size: 12, color: black))
+                            .paddingLeft(92)
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          nFollowers = follow,
+                          style: boldTextStyle(size: 16, color: black),
+                          semanticsLabel: "nFollowers",
+                        ).paddingRight(92),
+                        Text(AppLocalizations.of(context).seguidos,
+                                style: boldTextStyle(size: 12, color: black))
+                            .paddingRight(92)
+                      ],
+                    ),
+                  ],
+                ),
+                ElevatedButton.icon(
+                  label: Text(AppLocalizations.of(context).editarPerfil),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(150, 40),
+                    primary: Color.fromRGBO(68, 102, 216, 1.0),
+                    onPrimary: Colors.white,
+                    onSurface: Colors.grey,
+                  ),
+                  icon: Icon(Icons.person_outline_sharp, size: 18),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            Editar(user, about, email, ciudad),
+                      ),
+                    ).then((value) => setState(() {}));
+                    //Navigator.pushNamed(context, "editar");
+                    //setState(() {});
+                  },
+                ),
+              ]),
+              10.height,
+              Divider(
+                height: 30,
+                thickness: 3,
+                color: Colors.grey[650],
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  children: [
+                    Text(
+                      nPosts = posts.length.toString(),
+                      style: boldTextStyle(size: 16, color: black),
+                      semanticsLabel: "nPosts",
+                    ),
+                    Text(AppLocalizations.of(context).posts,
+                        style: boldTextStyle(size: 12, color: black))
+                  ],
+                ),
+              ),
+              Column(
+                children: List.generate(
+                  //nPosts.toInt(),
+                  1,
+                  (int index) {
+                    return GridView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      itemCount: posts.length,
+                      padding: EdgeInsets.all(16),
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          childAspectRatio: cardWidth / cardHeight),
+                      itemBuilder: (context, index) => Product(index),
+                    );
+                  },
+                ),
+              )
+            ],
+          ).paddingAll(16),
+        ),
+        floatingActionButton: FloatingActionButton(
+          heroTag: '1',
+          elevation: 5,
+          onPressed: () {
+            Navigator.pushNamed(context, 'upload');
+          },
+          backgroundColor: azul_logo,
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ),
       ),
     );
@@ -438,7 +443,7 @@ class Product extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         await Post(posts[pos]['id']).launch(context);
-        Perfil().launch(context);
+        //Perfil().launch(context);
       },
       child: Container(
         child: Column(
