@@ -86,6 +86,10 @@
     "repetirContrasena": "Repeat Password",
     "caracterNoPermitido":"The '/' character is not allowed",
     "minimoDeCaracters":"Username must be at least 3 characters long",
-    "contrasenaNoCoinciden":"Passwords do not match"
+    "contrasenaNoCoinciden":"Passwords do not match",
+    "cambiarContrasena":"Change Password",
+    "contrasenaActual":"Current password",
+    "nuevaContrasena":"New Password",
+    "confirmaNuevaContrasena":"Confirm new password"
 
 }

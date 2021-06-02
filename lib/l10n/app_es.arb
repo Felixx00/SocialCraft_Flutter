@@ -86,7 +86,11 @@
     "repetirContrasena": "Repetir Contraseña",
     "caracterNoPermitido":"El carácter '/' no está permitido",
     "minimoDeCaracters":"El nombre de usuario debe tener mínimo 3 carácteres",
-    "contrasenaNoCoinciden":"Las contraseñas no coinciden"
+    "contrasenaNoCoinciden":"Las contraseñas no coinciden",
+    "cambiarContrasena":"Cambiar Contraseña",
+    "contrasenaActual":"Contraseña actual",
+    "nuevaContrasena":"Nueva Contraseña",
+    "confirmaNuevaContrasena":"Confirma nueva contraseña"
 
 
 
