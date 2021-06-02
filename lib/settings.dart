@@ -129,7 +129,7 @@ class SettingsState extends State<Settings> {
 
 showAlertDialog(BuildContext context) {
   Widget cancelButton = TextButton(
-    child: Text("Sí"),
+    child: Text(AppLocalizations.of(context).si),
     onPressed: () async {
       final storage = new FlutterSecureStorage();
       await storage.deleteAll();
@@ -140,14 +140,14 @@ showAlertDialog(BuildContext context) {
     },
   );
   Widget continueButton = TextButton(
-    child: Text("No"),
+    child: Text(AppLocalizations.of(context).no),
     onPressed: () {
       Navigator.pop(context);
     },
   );
 
   AlertDialog alert = AlertDialog(
-    content: Text("¿Estas seguro que deseas cerrar sesión?"),
+    content: Text(AppLocalizations.of(context).estasSeguroQueDeseasCerrarSesion),
     actions: [
       cancelButton,
       continueButton,
@@ -164,7 +164,7 @@ showAlertDialog(BuildContext context) {
 
 showAlertDialogEliminar(BuildContext context) {
   Widget cancelButton = TextButton(
-    child: Text("Sí"),
+    child: Text(AppLocalizations.of(context).si),
     onPressed: () async {
       final storage = new FlutterSecureStorage();
       String token = await storage.read(key: 'jwt');
@@ -190,14 +190,14 @@ showAlertDialogEliminar(BuildContext context) {
     },
   );
   Widget continueButton = TextButton(
-    child: Text("No"),
+    child: Text(AppLocalizations.of(context).no),
     onPressed: () {
       Navigator.pop(context);
     },
   );
 
   AlertDialog alert = AlertDialog(
-    content: Text("¿Estas seguro que deseas eliminar tu cuenta?"),
+    content: Text(AppLocalizations.of(context).estasSeguroQueDeseasEliminarTuCuenta),
     actions: [
       cancelButton,
       continueButton,
