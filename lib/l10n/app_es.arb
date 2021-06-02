@@ -81,7 +81,14 @@
     "camposObligatoriosValoracion":"Campos obligatorios: Puntuación y Comentario",
     "valoracion":"Valoración",
     "comentario": "Comentario",
-    "expreseSuOpinionAqui":"Exprese su opinión aqui"
+    "expreseSuOpinionAqui":"Exprese su opinión aqui",
+    "nombreDeUsuario": "Nombre de Usuario",
+    "repetirContrasena": "Repetir Contraseña",
+    "caracterNoPermitido":"El carácter '/' no está permitido",
+    "minimoDeCaracters":"El nombre de usuario debe tener mínimo 3 carácteres",
+    "contrasenaNoCoinciden":"Las contraseñas no coinciden"
+
+
 
 
 }

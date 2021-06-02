@@ -10,6 +10,7 @@ import 'package:socialcraft/utils/fonts.dart';
 import 'package:socialcraft/utils/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:socialcraft/utils/images.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() => runApp(Register());
 FocusNode nameNode;
@@ -124,7 +125,7 @@ class RegisterW extends State<Register> {
                             decoration: InputDecoration(
                               icon: Icon(Icons.portrait, color: azul_logo),
                               border: InputBorder.none,
-                              hintText: "Nombre",
+                              hintText: AppLocalizations.of(context).nombre,
                             ),
                             onChanged: (texto) {
                               name = texto;
@@ -139,7 +140,7 @@ class RegisterW extends State<Register> {
                             decoration: InputDecoration(
                               icon: Icon(Icons.person, color: wrongName ? Colors.red[600] : azul_logo),
                               border: InputBorder.none,
-                              hintText: "Nombre de Usuario",
+                              hintText: AppLocalizations.of(context).nombreDeUsuario,
                             ),
                             onChanged: (texto) {
                               user = texto;
@@ -156,7 +157,7 @@ class RegisterW extends State<Register> {
                             decoration: InputDecoration(
                               icon: Icon(Icons.lock, color: azul_logo),
                               border: InputBorder.none,
-                              hintText: "Contraseña",
+                              hintText: AppLocalizations.of(context).password,
                             ),
                             obscureText: true,
                             onChanged: (texto) {
@@ -175,7 +176,7 @@ class RegisterW extends State<Register> {
                               icon: Icon(
                                   Icons.lock, color: correct ? azul_logo : Colors.red[600]),
                               border: InputBorder.none,
-                              hintText: "Repetir Contraseña",
+                              hintText: AppLocalizations.of(context).repetirContrasena,
                             ),
                             obscureText: true,
                             onChanged: (texto) {
@@ -193,7 +194,7 @@ class RegisterW extends State<Register> {
                             decoration: InputDecoration(
                               icon: Icon(Icons.email, color: correctMail ? azul_logo : Colors.red[600]),
                               border: InputBorder.none,
-                              hintText: "Email",
+                              hintText: AppLocalizations.of(context).email,
                             ),
                             onChanged: (texto) {
                               mail = texto;
@@ -210,7 +211,7 @@ class RegisterW extends State<Register> {
                             decoration: InputDecoration(
                               icon: Icon(Icons.location_on, color: azul_logo),
                               border: InputBorder.none,
-                              hintText: "Ciudad",
+                              hintText: AppLocalizations.of(context).ciudad,
                             ),
                             onChanged: (texto) {
                               city = texto;
@@ -220,7 +221,7 @@ class RegisterW extends State<Register> {
                             .cornerRadiusWithClipRRect(12)
                             .paddingOnly(top: 8, bottom: 8),
                         Container(
-                          child: CommonButton("Registrar")
+                          child: CommonButton(AppLocalizations.of(context).newAcount)
                               .paddingOnly(top: 16, bottom: 16)
                               .onTap(
                             () {
@@ -229,12 +230,12 @@ class RegisterW extends State<Register> {
                                 setState(() {});
                                 if(user.length < 3) {
                                   toast(
-                                      "El carácter '/' no está permitido",
+                                      AppLocalizations.of(context).caracterNoPermitido,
                                           bgColor: toast_color);
                                 }
                                 else {
                                   toast(
-                                      "El nombre de usuario debe tener mínimo 3 carácteres",
+                                      AppLocalizations.of(context).minimoDeCaracters,
                                       bgColor: toast_color);
                                 }
                               }
@@ -249,7 +250,7 @@ class RegisterW extends State<Register> {
                               else {
                                 correct = false;
                                 setState(() {});
-                                toast("Las contraseñas no coinciden", bgColor: toast_color);
+                                toast(AppLocalizations.of(context).contrasenaNoCoinciden, bgColor: toast_color);
                               }
                               if(mail.validateEmail()){
                                 correctMail=true;
@@ -258,7 +259,7 @@ class RegisterW extends State<Register> {
                               if(mail.isNotEmpty & !mail.validateEmail()){
                                 correctMail=false;
                                 setState(() {});
-                                toast("Introduce un email válido", bgColor: toast_color);
+                                toast(AppLocalizations.of(context).emailIncorrecto, bgColor: toast_color);
                               }
                               if(user.isNotEmpty & name.isNotEmpty & pwd.isNotEmpty & pwd2.isNotEmpty  & mail.isNotEmpty & city.isNotEmpty){
                                 if(correct & correctMail & (user.length >= 3)){
@@ -271,7 +272,7 @@ class RegisterW extends State<Register> {
                               }
                             }
                               else{
-                                toast("Rellena todos los campos", bgColor: toast_color);
+                                toast(AppLocalizations.of(context).rellearCampos, bgColor: toast_color);
                             }
                           },
                         ),

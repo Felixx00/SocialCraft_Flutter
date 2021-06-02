@@ -81,6 +81,11 @@
     "camposObligatoriosValoracion":"Must fill comment and rate",
     "valoracion":"Rate",
     "comentario": "Comment",
-    "expreseSuOpinionAqui":"Express your opinion here"
+    "expreseSuOpinionAqui":"Express your opinion here",
+    "nombreDeUsuario": "Username",
+    "repetirContrasena": "Repeat Password",
+    "caracterNoPermitido":"The '/' character is not allowed",
+    "minimoDeCaracters":"Username must be at least 3 characters long",
+    "contrasenaNoCoinciden":"Passwords do not match"
 
 }

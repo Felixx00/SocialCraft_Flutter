@@ -81,6 +81,11 @@
     "camposObligatoriosValoracion":"Camps obligatoris: Puntuació y Comentari",
     "valoracion":"Valoració",
     "comentario": "Comentari",
-    "expreseSuOpinionAqui":"Expressi la seva opinió aquí"
+    "expreseSuOpinionAqui":"Expressi la seva opinió aquí",
+    "nombreDeUsuario": "Nom d'Usuari",
+    "repetirContrasena": "Repeteix la contrassenya",
+    "caracterNoPermitido":"El caràcter '/' no està permès",
+    "minimoDeCaracters":"El nom d'usuari ha de tenir mínim 3 caràcters",
+    "contrasenaNoCoinciden":"Les contrasenyes no coincideixen"
 
 }
