@@ -168,7 +168,7 @@ class PerfilState extends State<Perfil> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.arrow_back).onTap(() {
-          Navigator.pop(context);
+          Navigator.maybePop(context);
         }),
         title: Text(userName,
             style: GoogleFonts.comfortaa(
@@ -249,8 +249,9 @@ class PerfilState extends State<Perfil> {
                                           leading: new Icon(
                                               Icons.add_a_photo_rounded,
                                               color: azul_logo),
-                                          title:
-                                              new Text(AppLocalizations.of(context).editarFotoPerfil),
+                                          title: new Text(
+                                              AppLocalizations.of(context)
+                                                  .editarFotoPerfil),
                                           onTap: () async {
                                             var foto = await ImagePicker()
                                                 .getImage(
@@ -281,8 +282,9 @@ class PerfilState extends State<Perfil> {
                                           Icons.delete,
                                           color: Colors.redAccent,
                                         ),
-                                        title:
-                                            new Text(AppLocalizations.of(context).eliminarFotoPerfil),
+                                        title: new Text(
+                                            AppLocalizations.of(context)
+                                                .eliminarFotoPerfil),
                                         onTap: () async {
                                           Navigator.pop(context);
                                           final _firebaseStorage =
@@ -358,8 +360,7 @@ class PerfilState extends State<Perfil> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          Editar(user,about,email,ciudad),
+                      builder: (context) => Editar(user, about, email, ciudad),
                     ),
                   ).then((value) => setState(() {}));
                   //Navigator.pushNamed(context, "editar");
@@ -382,7 +383,8 @@ class PerfilState extends State<Perfil> {
                     style: boldTextStyle(size: 16, color: black),
                     semanticsLabel: "nPosts",
                   ),
-                  Text(AppLocalizations.of(context).posts, style: boldTextStyle(size: 12, color: black))
+                  Text(AppLocalizations.of(context).posts,
+                      style: boldTextStyle(size: 12, color: black))
                 ],
               ),
             ),
