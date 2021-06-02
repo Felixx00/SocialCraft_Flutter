@@ -86,6 +86,10 @@
     "repetirContrasena": "Repeteix la contrassenya",
     "caracterNoPermitido":"El caràcter '/' no està permès",
     "minimoDeCaracters":"El nom d'usuari ha de tenir mínim 3 caràcters",
-    "contrasenaNoCoinciden":"Les contrasenyes no coincideixen"
+    "contrasenaNoCoinciden":"Les contrasenyes no coincideixen",
+    "cambiarContrasena":"Canviar Contrasenya ",
+    "contrasenaActual":"Contrasenya actual",
+    "nuevaContrasena":"Nova Contrasenya",
+    "confirmaNuevaContrasena":"Confirma nova contrasenya"
 
 }

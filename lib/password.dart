@@ -7,6 +7,7 @@ import 'package:socialcraft/utils/images.dart';
 import 'package:socialcraft/resp.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Password extends StatefulWidget {
   static String tag = '/password';
@@ -65,7 +66,7 @@ class PasswordState extends State<Password> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Cambiar Contraseña'),
+          title: Text(AppLocalizations.of(context).cambiarContrasena),
           backgroundColor: azul_logo,
         ),
         body: SingleChildScrollView(
@@ -75,7 +76,7 @@ class PasswordState extends State<Password> {
               Image.asset(key, width: 120, height: 120),
               15.height,
               Text(
-                'Cambiar Contraseña',
+                AppLocalizations.of(context).cambiarContrasena,
                 style: TextStyle(fontSize: 28),
               ),
               20.height,
@@ -94,7 +95,7 @@ class PasswordState extends State<Password> {
                           decoration: InputDecoration(
                             icon: Icon(Icons.lock_rounded, color: azul_logo),
                             border: InputBorder.none,
-                            hintText: "Contraseña actual",
+                            hintText: AppLocalizations.of(context).contrasenaActual
                           ),
                         ).paddingOnly(left: 8),
                       ).cornerRadiusWithClipRRect(12).paddingOnly(bottom: 8),
@@ -109,7 +110,7 @@ class PasswordState extends State<Password> {
                           decoration: InputDecoration(
                             icon: Icon(Icons.lock_rounded, color: azul_logo),
                             border: InputBorder.none,
-                            hintText: "Nueva Contraseña",
+                            hintText: AppLocalizations.of(context).nuevaContrasena,
                           ),
                         ).paddingOnly(left: 8),
                       )
@@ -127,7 +128,7 @@ class PasswordState extends State<Password> {
                             icon:
                                 Icon(Icons.lock_open_rounded, color: azul_logo),
                             border: InputBorder.none,
-                            hintText: "Confirma nueva contraseña",
+                            hintText: AppLocalizations.of(context).confirmaNuevaContrasena,
                           ),
                         ).paddingOnly(left: 8),
                       )
@@ -138,7 +139,7 @@ class PasswordState extends State<Password> {
               Align(
                   alignment: Alignment.center,
                   child: ElevatedButton.icon(
-                    label: Text('Guardar'),
+                    label: Text(AppLocalizations.of(context).guardar),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(140, 40),
                       //primary: Colors.lightBlueAccent[200],
