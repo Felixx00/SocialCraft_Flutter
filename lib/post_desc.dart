@@ -64,7 +64,7 @@ class PostDesc extends StatelessWidget {
                     child: Text("@" + usuario,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 16, color: azul_logo))
-                        .paddingOnly(left: 16, right: 16, top: 5),
+                        .paddingOnly(right: 16, top: 5),
                     onTap: () {
                       Myself().then((response) async {
                         myself = response.data['username'];
@@ -92,7 +92,12 @@ class PostDesc extends StatelessWidget {
                   Icon(Icons.star_outlined, color: azul_logo, size: 30),
                   16.width,
                   Text(
-                    correct ? AppLocalizations.of(context).valoracionDosPuntos + rate + "/5" : AppLocalizations.of(context).valoracionDosPuntos + " -",
+                    correct
+                        ? AppLocalizations.of(context).valoracionDosPuntos +
+                            rate +
+                            "/5"
+                        : AppLocalizations.of(context).valoracionDosPuntos +
+                            " -",
                     style: TextStyle(fontSize: 16),
                   )
                 ]),
@@ -110,7 +115,7 @@ class PostDesc extends StatelessWidget {
                   Icon(Icons.grid_view, color: azul_logo, size: 30),
                   16.width,
                   Text(
-                    AppLocalizations.of(context).categoria+": " + categoria,
+                    AppLocalizations.of(context).categoria + ": " + categoria,
                     style: TextStyle(fontSize: 16),
                   )
                 ]),
@@ -119,7 +124,10 @@ class PostDesc extends StatelessWidget {
                   Icon(Icons.av_timer, color: azul_logo, size: 30),
                   16.width,
                   Text(
-                    AppLocalizations.of(context).duracion + ": " + duracion + "min",
+                    AppLocalizations.of(context).duracion +
+                        ": " +
+                        duracion +
+                        "min",
                     style: TextStyle(fontSize: 16),
                   )
                 ]),
@@ -130,7 +138,9 @@ class PostDesc extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width / 1.5,
                     child: Text(
-                      AppLocalizations.of(context).materiales + ": " + materiales,
+                      AppLocalizations.of(context).materiales +
+                          ": " +
+                          materiales,
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
