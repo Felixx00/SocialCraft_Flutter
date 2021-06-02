@@ -8,3 +8,5 @@ const insignia = 'images/insignia.png';
 const key = 'images/key2.png';
 const trophy = 'images/trophy.png';
 const fondo = 'images/fondo.jpg';
+const tick = 'images/tick.jpg';
+const trophy2 = 'images/desafio.png';

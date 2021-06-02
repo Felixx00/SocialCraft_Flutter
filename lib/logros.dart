@@ -254,8 +254,7 @@ class LogrosState extends State<Logros> {
                                 backgroundColor: azul_logo,
                                 radius: 55,
                                 child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      'https://i.pinimg.com/originals/c7/80/5e/c7805ee9aa1a16baaa33a7b1be2f220e.png'),
+                                  backgroundImage: AssetImage(trophy2),
                                   radius: 45,
                                 ),
                               ),
@@ -348,8 +347,7 @@ class LogrosState extends State<Logros> {
                                   backgroundColor: azul_logo,
                                   radius: 55,
                                   child: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        'https://banner2.cleanpng.com/20180502/aiq/kisspng-computer-icons-check-mark-symbol-5aea6d79974689.2450967015253128896196.jpg'),
+                                    backgroundImage: AssetImage(tick),
                                     radius: 45,
                                   ),
                                 ),
@@ -427,6 +425,23 @@ class LogrosState extends State<Logros> {
                   ).paddingOnly(top: 10, right: 30),
                 ]),
                 30.height,
+                ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 1, bottom: 1),
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            title: ElevatedButton(),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),

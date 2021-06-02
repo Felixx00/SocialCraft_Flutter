@@ -328,7 +328,7 @@ class SearchW extends State<Search> {
         builder: (buildcontext) {
           return AlertDialog(
             title:
-                Text("Información del buscador" , style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                Text(AppLocalizations.of(context).informacionDelBuscador , style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
             content:
              SingleChildScrollView(
               child: RichText(
@@ -336,23 +336,23 @@ class SearchW extends State<Search> {
                 text: new TextSpan(
                   style: TextStyle(color: Colors.black),
                   children: <TextSpan>[
-                    new TextSpan(text: "Usuario:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                    new TextSpan(text: "Introduce mínimo 3 caracteres\n\n" , style: new TextStyle(fontSize: 17)),
-                    new TextSpan(text: "Título:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                    new TextSpan(text: "Introduce mínimo 1 carácter\n\n" , style: new TextStyle(fontSize: 17)),
-                    new TextSpan(text: "Duración:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                    new TextSpan(text: "Indica si el tutorial dura (min): \n" , style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: AppLocalizations.of(context).usuario +":\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    new TextSpan(text: AppLocalizations.of(context).introduceMinimoCaracteres + "\n\n" , style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: AppLocalizations.of(context).titulo + ":\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    new TextSpan(text: AppLocalizations.of(context).introduceTitulo + "\n\n" , style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: AppLocalizations.of(context).duracion + ":\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    new TextSpan(text: AppLocalizations.of(context).indicaSiElTutorialDura + ": \n" , style: new TextStyle(fontSize: 17)),
                     new TextSpan(text: "   <10\n     10\n     20\n     30\n     40\n     50\n     60\n   >60\n\n", style: new TextStyle(fontSize: 17)),
-                    new TextSpan(text: "Dificultad:\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                    new TextSpan(text: "Selecciona entre: \n", style: new TextStyle(fontSize: 17)),
-                    new TextSpan(text: "     1 o facil \n     2 o intermedio \n     3 o dificil\n", style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: AppLocalizations.of(context).dificultad + ":\n", style: new TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    new TextSpan(text: AppLocalizations.of(context).selecionar + ": \n", style: new TextStyle(fontSize: 17)),
+                    new TextSpan(text: "     1 o "+ AppLocalizations.of(context).facil +" \n     2 o "+ AppLocalizations.of(context).intermedio + " \n     3 o "+ AppLocalizations.of(context).dificil +"\n", style: new TextStyle(fontSize: 17)),
                   ],
                 ),
               ),
             ),
             actions: <Widget>[
               RaisedButton(
-                child: Text("CERRAR", style: TextStyle(color: Colors.white),),
+                child: Text(AppLocalizations.of(context).cerrar, style: TextStyle(color: Colors.white),),
                color:  azul_logo,
                 onPressed: (){ Navigator.of(context).pop(); },
               )

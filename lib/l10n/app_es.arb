@@ -86,7 +86,18 @@
     "repetirContrasena": "Repetir Contraseña",
     "caracterNoPermitido":"El carácter '/' no está permitido",
     "minimoDeCaracters":"El nombre de usuario debe tener mínimo 3 carácteres",
-    "contrasenaNoCoinciden":"Las contraseñas no coinciden"
+    "contrasenaNoCoinciden":"Las contraseñas no coinciden",
+    "cambiarContrasena":"Cambiar Contraseña",
+    "contrasenaActual":"Contraseña actual",
+    "nuevaContrasena":"Nueva Contraseña",
+    "confirmaNuevaContrasena":"Confirma nueva contraseña",
+    "pasosEditadosCorrecamente":"Pasos editados correctamente",
+    "informacionDelBuscador":"Información del buscador",
+    "usuario":"Usuario",
+    "introduceMinimoCaracteres":"Introduce mínimo 3 caracteres",
+    "introduceTitulo":"Introduce mínimo 1 carácter",
+    "indicaSiElTutorialDura": "Indica si el tutorial dura (min)",
+    "cerrar":"Cerrar"
 
 
 

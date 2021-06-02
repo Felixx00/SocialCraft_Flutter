@@ -417,6 +417,7 @@ class UploadState extends State<Upload> {
                       map['categoria'] = value2;
                       map['duracion'] = value4;
                       map['descripcion'] = desc;
+                      map['idioma'] = idioma;
                       print(map);
                       print(result);
 

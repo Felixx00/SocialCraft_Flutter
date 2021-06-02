@@ -86,6 +86,18 @@
     "repetirContrasena": "Repeat Password",
     "caracterNoPermitido":"The '/' character is not allowed",
     "minimoDeCaracters":"Username must be at least 3 characters long",
-    "contrasenaNoCoinciden":"Passwords do not match"
+    "contrasenaNoCoinciden":"Passwords do not match",
+    "cambiarContrasena":"Change Password",
+    "contrasenaActual":"Current password",
+    "nuevaContrasena":"New Password",
+    "confirmaNuevaContrasena":"Confirm new password",
+    "pasosEditadosCorrecamente":"Steps edited correctly",
+    "informacionDelBuscador":"Search Info",
+    "usuario":"User",
+    "introduceMinimoCaracteres":"Enter at least 3 characters",
+    "introduceTitulo":"Enter at least 1 character",
+    "indicaSiElTutorialDura": "Indicate if the tutorial lasts (min)",
+    "cerrar":"Close"
+
 
 }
