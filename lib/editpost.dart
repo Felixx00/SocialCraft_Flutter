@@ -25,15 +25,21 @@ import 'resp.dart';
 class EditPost extends StatefulWidget {
   static String tag = '/upload';
   final String idPost;
+  final String tutorial;
+  final String descripcion;
   List<dynamic> pasos = [];
-  EditPost(this.idPost, this.pasos);
+  EditPost(this.idPost, this.pasos, this.tutorial, this.descripcion);
   @override
   EditPostState createState() => EditPostState();
 }
 
 class EditPostState extends State<EditPost> {
+  TextEditingController _controllerT;
+  TextEditingController _controllerD;
   @override
   void initState() {
+    _controllerT = TextEditingController(text: widget.tutorial);
+    _controllerD = TextEditingController(text: widget.descripcion);
     super.initState();
     init();
   }
@@ -212,6 +218,7 @@ class EditPostState extends State<EditPost> {
               Container(
                 decoration: BoxDecoration(color: Colors.grey[300]),
                 child: TextFormField(
+                  controller:  _controllerT,
                   keyboardType: TextInputType.name,
                   cursorColor: azul_logo,
                   onChanged: (newValue) {
@@ -229,6 +236,7 @@ class EditPostState extends State<EditPost> {
               Container(
                 decoration: BoxDecoration(color: Colors.grey[300]),
                 child: TextFormField(
+                  controller:  _controllerD,
                   keyboardType: TextInputType.name,
                   cursorColor: azul_logo,
                   onChanged: (newValue) {

@@ -185,7 +185,7 @@ class PostState extends State<Post> {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EditPost(tutId, pasos),
+                          builder: (context) => EditPost(tutId, pasos, titulo ,descripcion),
                         ),
                       );
                       init();
