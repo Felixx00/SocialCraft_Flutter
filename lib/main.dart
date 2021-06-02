@@ -1,3 +1,7 @@
+//import 'dart:js';
+
+//import 'dart:js';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -38,59 +42,53 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider(
-      create: (context) => LocaleProvider(),
-      builder: (context, child) {
-        final provider = Provider.of<LocaleProvider>(context);
+  Widget build(BuildContext context){
 
-        FirebaseMessaging messaging = FirebaseMessaging.instance;
-        messaging.getToken().then((value) => print(value));
-        /*
-        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-          print('Got a message whilst in the foreground!');
-          print('Message data: ${message.data}');
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => LocaleProvider()),
+        ],
+        child: Consumer<LocaleProvider>(
+            builder: (context,provider,child) => MaterialApp(
 
-          if (message.notification != null) {
-            print(
-                'Message also contained a notification: ${message.notification}');
-          }
-        });
-        */
-        return MaterialApp(
-            supportedLocales: L10n.all,
-            locale: provider.localee,
-            localizationsDelegates: [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            routes: <String, WidgetBuilder>{
-              //'subir_comentario': (BuildContext context) => SubirComentario(),
-              'login': (BuildContext context) => Login(),
-              'register': (BuildContext context) => Register(),
-              'barra': (BuildContext context) => barra(),
-              'perfil': (BuildContext context) => Perfil(),
-              //'perfil2': (BuildContext context) => Perfil2(),
-              'forgotPassword': (BuildContext context) => ForgotPassword(),
-              'editar': (BuildContext context) => Editar("","","",""),
-              'search': (BuildContext context) => Search(),
-              'password': (BuildContext context) => Password(),
-              'settings': (BuildContext context) => Settings(),
-              'transition': (BuildContext context) => Transition(),
-              //'post': (BuildContext context) => Post(),
-              'upload': (BuildContext context) => Upload(),
-              'materiales': (BuildContext context) => Materiales(),
-              //'editPost': (BuildContext context) => EditPost(),
-              'home': (BuildContext context) => Home(),
-              'tienda': (BuildContext context) => Tienda(),
-              //'subirpasos': (BuildContext context) => SubirPasos(),
-              //'post_comentarios': (BuildContext context) => PostComentarios(),
-              'logros': (BuildContext context) => Logros(),
-            },
-            debugShowCheckedModeBanner: false,
-            home: Transition(),
-            theme: ThemeData(
-              textTheme: GoogleFonts.comfortaaTextTheme(),
-            ));
-      });
+                supportedLocales: L10n.all,
+                locale: provider.localee,
+                localizationsDelegates: [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                routes: <String, WidgetBuilder>{
+                  //'subir_comentario': (BuildContext context) => SubirComentario(),
+                  'login': (BuildContext context) => Login(),
+                  'register': (BuildContext context) => Register(),
+                  'barra': (BuildContext context) => barra(),
+                  'perfil': (BuildContext context) => Perfil(),
+                  //'perfil2': (BuildContext context) => Perfil2(),
+                  'forgotPassword': (BuildContext context) => ForgotPassword(),
+                  'editar': (BuildContext context) => Editar("","","",""),
+                  'search': (BuildContext context) => Search(),
+                  'password': (BuildContext context) => Password(),
+                  'settings': (BuildContext context) => Settings(),
+                  'transition': (BuildContext context) => Transition(),
+                  //'post': (BuildContext context) => Post(),
+                  'upload': (BuildContext context) => Upload(),
+                  'materiales': (BuildContext context) => Materiales(),
+                  //'editPost': (BuildContext context) => EditPost(),
+                  'home': (BuildContext context) => Home(),
+                  'tienda': (BuildContext context) => Tienda(),
+                  //'subirpasos': (BuildContext context) => SubirPasos(),
+                  //'post_comentarios': (BuildContext context) => PostComentarios(),
+                  'logros': (BuildContext context) => Logros(),
+                },
+                debugShowCheckedModeBanner: false,
+                home: Transition(),
+                theme: ThemeData(
+                  textTheme: GoogleFonts.comfortaaTextTheme(),
+                )
+
+            ))
+    );
+  }
+
 }
