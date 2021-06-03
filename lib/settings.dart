@@ -50,22 +50,14 @@ class SettingsState extends State<Settings> {
           child: Column(
             children: [
               30.height,
-              Align(
-                  alignment: Alignment.center,
-                  child: ElevatedButton.icon(
-                    label: Text(AppLocalizations.of(context).cerrarSesion),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(140, 40),
-                      primary: azul_logo,
-                      onPrimary: Colors.white,
-                      onSurface: Colors.grey,
-                    ),
-                    icon: Icon(Icons.exit_to_app_rounded, size: 18),
-                    onPressed: () {
-                      showAlertDialog(context);
-                    },
-                  )).paddingTop(10),
-              20.height,
+
+              /*Divider(
+                height: 20,
+                thickness: 2,
+                indent: 20,
+                endIndent: 20,
+                color: Colors.black38,
+              ),*/
               Align(
                   alignment: Alignment.center,
                   child: ElevatedButton.icon(
@@ -81,7 +73,7 @@ class SettingsState extends State<Settings> {
                       showAlertDialogEliminar(context);
                     },
                   )).paddingTop(10),
-              20.height,
+              10.height,
               Divider(
                 height: 20,
                 thickness: 2,
@@ -89,43 +81,85 @@ class SettingsState extends State<Settings> {
                 endIndent: 20,
                 color: Colors.black38,
               ),
-              DropdownButton(
-                icon: Icon(Icons.language),
-                value: localee,
-                items: L10n.all.map(
-                  (localee) {
-                    final flag = L10n.getFlag(localee.languageCode);
-                    return DropdownMenuItem(
-                      child: Center(
-                        child: Text(
-                          flag,
-                          style: TextStyle(fontSize: 32),
-                        ),
-                      ),
-                      value: localee,
-                      onTap: () {
-                        final provider =
-                            Provider.of<LocaleProvider>(context, listen: false);
-                        //provider.setLocale(localee);
-                      },
-                    );
-                  },
-                ).toList(),
-                onChanged: (_) {},
-              ),
-              Divider(
-                height: 20,
-                thickness: 2,
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black38,
-              ),
+              Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton.icon(
+                    label: Text(AppLocalizations.of(context).cerrarSesion),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(140, 40),
+                      primary: azul_logo,
+                      onPrimary: Colors.white,
+                      onSurface: Colors.grey,
+                    ),
+                    icon: Icon(Icons.exit_to_app_rounded, size: 18),
+                    onPressed: () {
+                      showAlertDialog(context);
+                    },
+                  )).paddingTop(10),
+              Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton.icon(
+                    label: Text(AppLocalizations.of(context).idioma),
+                    style: ElevatedButton.styleFrom(
+                      primary: azul_logo,
+                      onPrimary: Colors.white,
+                      onSurface: Colors.grey,
+                    ),
+                    icon: Icon(Icons.language_sharp, size: 18),
+                    onPressed: () {
+                      showAlertDialogIdioma(context);
+                    },
+                  )).paddingTop(10)
+
             ],
           ),
         ),
       ),
     );
   }
+}
+
+showAlertDialogIdioma(BuildContext context) {
+  return showDialog(
+      context: context, builder:(BuildContext context){
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context).selecionar),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: Text("English"),
+                  onTap: () {
+                    final provider = Provider.of<LocaleProvider>(context, listen: false);
+                    provider.setLocale('en');
+                    Navigator.of(context).pop();
+                  }
+                ),
+                Padding(padding:EdgeInsets.all(8.0)),
+                GestureDetector(
+                    child: Text("Español"),
+                    onTap: () {
+                      final provider = Provider.of<LocaleProvider>(context, listen: false);
+                      provider.setLocale('es');
+                      Navigator.of(context).pop();
+                    }
+                ),
+                Padding(padding:EdgeInsets.all(8.0)),
+                GestureDetector(
+                    child: Text("Català"),
+                    onTap: () {
+                      final provider = Provider.of<LocaleProvider>(context, listen: false);
+                      provider.setLocale('ca');
+                      Navigator.of(context).pop();
+                    }
+                ),
+                Padding(padding:EdgeInsets.all(8.0)),
+              ]
+            )
+          )
+        );
+
+  });
 }
 
 showAlertDialog(BuildContext context) {
