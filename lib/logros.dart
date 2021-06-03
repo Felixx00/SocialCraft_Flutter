@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialcraft/utils/widgets.dart';
@@ -6,6 +8,7 @@ import 'package:socialcraft/utils/images.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:percent_indicator/percent_indicator.dart';
+import 'resp.dart';
 
 class Logros extends StatefulWidget {
   static String tag = '/logros';
@@ -21,7 +24,36 @@ class LogrosState extends State<Logros> {
     init();
   }
 
-  init() async {}
+  Future<Resp> challenges() async {
+    final response = await http.get(
+      Uri.https('api.socialcraft.club', 'challenges/getMyChallenges'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return Resp.fromJson2(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load response');
+    }
+  }
+
+  List<String> lista = [];
+  var desafio;
+
+  init() async {
+    final storage2 = new FlutterSecureStorage();
+    token = await storage2.read(key: 'jwt');
+    await challenges().then((respuesta) async {
+      print(respuesta);
+      print(respuesta.list.length);
+      desafio = respuesta.list[0]['idDesafio'];
+    });
+    setState(() {});
+  }
 
   @override
   void setState(fn) {
@@ -47,7 +79,7 @@ class LogrosState extends State<Logros> {
             ),
             child: Column(
               children: [
-                20.height,
+                /*
                 Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -112,33 +144,14 @@ class LogrosState extends State<Logros> {
                                 circularStrokeCap: CircularStrokeCap.round,
                                 progressColor: azul_logo,
                               ),
-                              ElevatedButton.icon(
-                                label: Text(
-                                  'Claim',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: Size(70, 45),
-                                  elevation: 10,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  primary: Colors.grey[600],
-                                  onPrimary: Colors.white,
-                                  onSurface: Colors.grey,
-                                ),
-                                icon:
-                                    Icon(Icons.attach_money_outlined, size: 20),
-                                onPressed: () {},
-                              ),
                             ],
                           ),
                         ],
                       ),
                     ),
                   ),
-                ).center(),
+                ).center(),*/
+
                 30.height,
                 Card(
                   shape: RoundedRectangleBorder(
@@ -149,100 +162,7 @@ class LogrosState extends State<Logros> {
                   color: Colors.blue[100],
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width - 40,
-                    height: 200,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: azul_logo,
-                                radius: 55,
-                                child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      'https://i.pinimg.com/originals/c7/80/5e/c7805ee9aa1a16baaa33a7b1be2f220e.png'),
-                                  radius: 45,
-                                ),
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    'Likes',
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      color: azul_logo,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  10.height,
-                                  Text(
-                                    'Da 10 likes',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: azul_logo,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: new LinearPercentIndicator(
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  animation: true,
-                                  lineHeight: 20.0,
-                                  animationDuration: 2000,
-                                  percent: 1.0,
-                                  center: Text("100.0%"),
-                                  linearStrokeCap: LinearStrokeCap.roundAll,
-                                  progressColor: Colors.green,
-                                ),
-                              ),
-                              ElevatedButton.icon(
-                                label: Text(
-                                  'Claim',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  //minimumSize: Size(60, 45),
-                                  elevation: 10,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  primary: azul_logo,
-                                  onPrimary: Colors.white,
-                                  onSurface: Colors.grey,
-                                ),
-                                icon:
-                                    Icon(Icons.attach_money_outlined, size: 20),
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ).center(),
-                30.height,
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  elevation: 25,
-                  shadowColor: Colors.black,
-                  color: Colors.blue[100],
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width - 40,
-                    height: 200,
+                    height: 150,
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
@@ -261,7 +181,7 @@ class LogrosState extends State<Logros> {
                               Column(
                                 children: [
                                   Text(
-                                    'Posts',
+                                    'Comentarios',
                                     style: TextStyle(
                                       fontSize: 25,
                                       color: azul_logo,
@@ -270,7 +190,7 @@ class LogrosState extends State<Logros> {
                                   ),
                                   10.height,
                                   Text(
-                                    'Publica 15 posts',
+                                    'Haz 9 comentarios',
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: azul_logo,
@@ -280,42 +200,58 @@ class LogrosState extends State<Logros> {
                               ),
                             ],
                           ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ).center(),
+                30.height,
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 25,
+                  shadowColor: Colors.black,
+                  color: Colors.blue[100],
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width - 40,
+                    height: 150,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: new LinearPercentIndicator(
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  animation: true,
-                                  lineHeight: 20.0,
-                                  animationDuration: 2000,
-                                  percent: 0.45,
-                                  center: Text("46.67%"),
-                                  linearStrokeCap: LinearStrokeCap.roundAll,
-                                  progressColor: Colors.green,
+                              CircleAvatar(
+                                backgroundColor: azul_logo,
+                                radius: 55,
+                                child: CircleAvatar(
+                                  backgroundImage: desafio != null
+                                      ? AssetImage(tick)
+                                      : AssetImage(trophy2),
+                                  radius: 45,
                                 ),
                               ),
-                              ElevatedButton.icon(
-                                label: Text(
-                                  'Claim',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  //minimumSize: Size(60, 45),
-                                  elevation: 10,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  primary: Colors.grey[600],
-                                  onPrimary: Colors.white,
-                                  onSurface: Colors.grey,
-                                ),
-                                icon:
-                                    Icon(Icons.attach_money_outlined, size: 20),
-                                onPressed: () {},
+                              Column(
+                                children: [
+                                  Text(
+                                    'Categorias',
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      color: azul_logo,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  10.height,
+                                  Text(
+                                    'Sigue 5 categorias',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: azul_logo,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -325,123 +261,112 @@ class LogrosState extends State<Logros> {
                   ),
                 ).center(),
                 30.height,
-                Stack(alignment: Alignment.topRight, children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    elevation: 25,
-                    shadowColor: Colors.black,
-                    color: Colors.blue[100],
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width - 40,
-                      height: 200,
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: azul_logo,
-                                  radius: 55,
-                                  child: CircleAvatar(
-                                    backgroundImage: AssetImage(tick),
-                                    radius: 45,
-                                  ),
-                                ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      'Comenta',
-                                      style: TextStyle(
-                                        fontSize: 25,
-                                        color: azul_logo,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    10.height,
-                                    Text(
-                                      'Haz 20 comentarios',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: azul_logo,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: new LinearPercentIndicator(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.5,
-                                    animation: true,
-                                    lineHeight: 20.0,
-                                    animationDuration: 2000,
-                                    percent: 1.0,
-                                    center: Text("100.00%"),
-                                    linearStrokeCap: LinearStrokeCap.roundAll,
-                                    progressColor: Colors.green,
-                                  ),
-                                ),
-                                ElevatedButton.icon(
-                                  label: Text(
-                                    'Claimed',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    //minimumSize: Size(60, 45),
-                                    elevation: 10,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    primary: Colors.grey[600],
-                                    onPrimary: Colors.white,
-                                    onSurface: Colors.grey,
-                                  ),
-                                  icon: Icon(Icons.check, size: 20),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ).center(),
-                  Icon(
-                    Icons.info_outline_rounded,
-                    color: azul_logo,
-                    size: 24.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ).paddingOnly(top: 10, right: 30),
-                ]),
-                30.height,
-                ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 1, bottom: 1),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 25,
+                  shadowColor: Colors.black,
+                  color: Colors.blue[100],
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width - 40,
+                    height: 150,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
-                        children: <Widget>[
-                          ListTile(
-                            title: ElevatedButton(),
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: azul_logo,
+                                radius: 55,
+                                child: CircleAvatar(
+                                  backgroundImage: AssetImage(trophy2),
+                                  radius: 45,
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    'Seguido',
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      color: azul_logo,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  10.height,
+                                  Text(
+                                    'Ten 10 seguidores',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: azul_logo,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                ).center(),
+                30.height,
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 25,
+                  shadowColor: Colors.black,
+                  color: Colors.blue[100],
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width - 40,
+                    height: 150,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: azul_logo,
+                                radius: 55,
+                                child: CircleAvatar(
+                                  backgroundImage: AssetImage(trophy2),
+                                  radius: 45,
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    'Seguidor',
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      color: azul_logo,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  10.height,
+                                  Text(
+                                    'Sigue a 20 usuarios',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: azul_logo,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ).center(),
+                30.height,
               ],
             ),
           ),
