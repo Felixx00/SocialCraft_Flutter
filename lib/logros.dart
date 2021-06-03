@@ -181,7 +181,7 @@ class LogrosState extends State<Logros> {
                               Column(
                                 children: [
                                   Text(
-                                    'Comentarios',
+                                    'Categorias',
                                     style: TextStyle(
                                       fontSize: 25,
                                       color: azul_logo,
@@ -190,7 +190,7 @@ class LogrosState extends State<Logros> {
                                   ),
                                   10.height,
                                   Text(
-                                    'Haz 9 comentarios',
+                                    'Sigue 9 categorias',
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: azul_logo,
@@ -236,7 +236,7 @@ class LogrosState extends State<Logros> {
                               Column(
                                 children: [
                                   Text(
-                                    'Categorias',
+                                    'Comenta',
                                     style: TextStyle(
                                       fontSize: 25,
                                       color: azul_logo,
@@ -245,7 +245,7 @@ class LogrosState extends State<Logros> {
                                   ),
                                   10.height,
                                   Text(
-                                    'Sigue 5 categorias',
+                                    'Haz 1 comentario',
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: azul_logo,
