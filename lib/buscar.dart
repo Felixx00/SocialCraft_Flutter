@@ -421,7 +421,7 @@ class SearchW extends State<Search> {
                         }
                         busqueda = texto;
                         print(value1);
-                        if (busqueda.length > 0 && busqueda.length <= 3) {
+                        if (busqueda.length > 0 && busqueda.length < 3) {
                           if (value1 == '1') {
                             listSearchTitle(busqueda).then((response) async {
                               tutorials = response.list;
