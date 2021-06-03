@@ -43,7 +43,7 @@ class SettingsState extends State<Settings> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text( AppLocalizations.of(context).configuracion ),
+          title: Text(AppLocalizations.of(context).configuracion),
           backgroundColor: azul_logo,
         ),
         body: SingleChildScrollView(
@@ -56,7 +56,7 @@ class SettingsState extends State<Settings> {
                     label: Text(AppLocalizations.of(context).cerrarSesion),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(140, 40),
-                      primary: Colors.red[400],
+                      primary: azul_logo,
                       onPrimary: Colors.white,
                       onSurface: Colors.grey,
                     ),
@@ -66,13 +66,6 @@ class SettingsState extends State<Settings> {
                     },
                   )).paddingTop(10),
               20.height,
-              Divider(
-                height: 20,
-                thickness: 2,
-                indent: 20,
-                endIndent: 20,
-                color: Colors.black38,
-              ),
               Align(
                   alignment: Alignment.center,
                   child: ElevatedButton.icon(
@@ -100,25 +93,33 @@ class SettingsState extends State<Settings> {
                 icon: Icon(Icons.language),
                 value: localee,
                 items: L10n.all.map(
-                      (localee){
+                  (localee) {
                     final flag = L10n.getFlag(localee.languageCode);
                     return DropdownMenuItem(
                       child: Center(
                         child: Text(
                           flag,
-                          style:TextStyle(fontSize: 32),
+                          style: TextStyle(fontSize: 32),
                         ),
                       ),
                       value: localee,
-                      onTap:() {
-                        final provider = Provider.of<LocaleProvider>(context,listen:false);
+                      onTap: () {
+                        final provider =
+                            Provider.of<LocaleProvider>(context, listen: false);
                         provider.setLocale(localee);
                       },
                     );
-
-                  },).toList(),
+                  },
+                ).toList(),
                 onChanged: (_) {},
-              )
+              ),
+              Divider(
+                height: 20,
+                thickness: 2,
+                indent: 20,
+                endIndent: 20,
+                color: Colors.black38,
+              ),
             ],
           ),
         ),
@@ -147,7 +148,8 @@ showAlertDialog(BuildContext context) {
   );
 
   AlertDialog alert = AlertDialog(
-    content: Text(AppLocalizations.of(context).estasSeguroQueDeseasCerrarSesion),
+    content:
+        Text(AppLocalizations.of(context).estasSeguroQueDeseasCerrarSesion),
     actions: [
       cancelButton,
       continueButton,
@@ -197,7 +199,8 @@ showAlertDialogEliminar(BuildContext context) {
   );
 
   AlertDialog alert = AlertDialog(
-    content: Text(AppLocalizations.of(context).estasSeguroQueDeseasEliminarTuCuenta),
+    content:
+        Text(AppLocalizations.of(context).estasSeguroQueDeseasEliminarTuCuenta),
     actions: [
       cancelButton,
       continueButton,
