@@ -97,7 +97,8 @@
     "introduceMinimoCaracteres":"Introduce mínimo 3 caracteres",
     "introduceTitulo":"Introduce mínimo 1 carácter",
     "indicaSiElTutorialDura": "Indica si el tutorial dura (min)",
-    "cerrar":"Cerrar"
+    "cerrar":"Cerrar",
+    "idioma":"IDIOMA"
 
 
 

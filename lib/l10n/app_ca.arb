@@ -97,6 +97,7 @@
     "introduceMinimoCaracteres":"Introdueix mínim 3 caràcters",
     "introduceTitulo":"Introdueix mínim 1 caràcter",
     "indicaSiElTutorialDura": "Indica si els tutorials duren (min)",
-    "cerrar":"Tancar"
+    "cerrar":"Tancar",
+    "idioma":"IDIOMA"
 
 }
