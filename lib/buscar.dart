@@ -437,21 +437,21 @@ class SearchW extends State<Search> {
                               print(tutorials.length);
                             });
                           } else if (value1 == '3') {
-                            if (busqueda == "facil" || busqueda == "1"|| busqueda == "easy") {
+                            if (busqueda == "facil" || busqueda == "Facil" || busqueda == "1"|| busqueda == "easy"|| busqueda == "Easy") {
                               listSearchDifficulty("1").then((response) async {
                                 tutorials = response.list;
                                 //users = usersL;
                                 setState(() {});
                               });
                             }
-                            if (busqueda == "intermedio" || busqueda == "2"|| busqueda == "intermig" || busqueda == "normal") {
+                            if (busqueda == "intermedio" || busqueda == "2"|| busqueda == "intermig" || busqueda == "normal" || busqueda == "Intermedio" ||  busqueda == "Intermig" || busqueda == "Normal") {
                               listSearchDifficulty("2").then((response) async {
                                 tutorials = response.list;
                                 //users = usersL;
                                 setState(() {});
                               });
                             }
-                            if (busqueda == "dificil" || busqueda == "3" || busqueda == "difficult") {
+                            if (busqueda == "dificil" || busqueda == "3" || busqueda == "hard" || busqueda == "Dificil" || busqueda == "Hard") {
                               listSearchDifficulty("3").then((response) async {
                                 tutorials = response.list;
                                 //users = usersL;
@@ -476,21 +476,21 @@ class SearchW extends State<Search> {
                               print(tutorials.length);
                             });
                           } else if (value1 == '3') {
-                            if (busqueda == "facil" || busqueda == "1") {
+                            if (busqueda == "facil" || busqueda == "Facil" || busqueda == "1"|| busqueda == "easy"|| busqueda == "Easy") {
                               listSearchDifficulty("1").then((response) async {
                                 tutorials = response.list;
                                 //users = usersL;
                                 setState(() {});
                               });
                             }
-                            if (busqueda == "intermedio" || busqueda == "2") {
+                            if (busqueda == "intermedio" || busqueda == "2"|| busqueda == "intermig" || busqueda == "normal" || busqueda == "Intermedio" ||  busqueda == "Intermig" || busqueda == "Normal") {
                               listSearchDifficulty("2").then((response) async {
                                 tutorials = response.list;
                                 //users = usersL;
                                 setState(() {});
                               });
                             }
-                            if (busqueda == "dificil" || busqueda == "3") {
+                            if (busqueda == "dificil" || busqueda == "3" || busqueda == "hard" || busqueda == "Dificil" || busqueda == "Hard"){
                               listSearchDifficulty("3").then((response) async {
                                 tutorials = response.list;
                                 //users = usersL;
