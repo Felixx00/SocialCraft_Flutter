@@ -106,7 +106,7 @@ class SettingsState extends State<Settings> {
                       onTap: () {
                         final provider =
                             Provider.of<LocaleProvider>(context, listen: false);
-                        provider.setLocale(localee);
+                        //provider.setLocale(localee);
                       },
                     );
                   },
