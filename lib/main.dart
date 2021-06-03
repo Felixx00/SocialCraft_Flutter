@@ -2,6 +2,7 @@
 
 //import 'dart:js';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:socialcraft/tienda.dart';
 import 'buscar.dart';
 import 'editpost.dart';
 import 'home.dart';
+import 'logged_in.dart';
 import 'perfil2.dart';
 import 'login.dart';
 import 'register.dart';
@@ -88,7 +90,21 @@ class MyApp extends StatelessWidget {
                 theme: ThemeData(
                   textTheme: GoogleFonts.comfortaaTextTheme(),
                 )
-            )
+            ),
+                child: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+                  // ignore: missing_return
+                  builder: (context, snapshot){
+                    final provider = Provider.of<GoogleSignInProvider>(context);
+                    if(provider.isSigningIn){
+                      return buildLoading();
+                    } else if(snapshot.hasData){
+                      return LoggedInWidget();
+                    }else {
+                      return null;
+                    }
+                  },
+        )
         )
     );
   }
