@@ -46,15 +46,14 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => LocaleProvider()),
           ChangeNotifierProvider(create: (context) => GoogleSignInProvider())
         ],
         child: Consumer<LocaleProvider>(
-            builder: (context,provider,child) => MaterialApp(
+            builder: (context, provider, child) => MaterialApp(
                 supportedLocales: L10n.all,
                 locale: provider.localee,
                 localizationsDelegates: [
@@ -70,7 +69,7 @@ class MyApp extends StatelessWidget {
                   'perfil': (BuildContext context) => Perfil(),
                   //'perfil2': (BuildContext context) => Perfil2(),
                   'forgotPassword': (BuildContext context) => ForgotPassword(),
-                  'editar': (BuildContext context) => Editar("","","",""),
+                  'editar': (BuildContext context) => Editar("", "", "", ""),
                   'search': (BuildContext context) => Search(),
                   'password': (BuildContext context) => Password(),
                   'settings': (BuildContext context) => Settings(),
@@ -84,37 +83,35 @@ class MyApp extends StatelessWidget {
                   //'subirpasos': (BuildContext context) => SubirPasos(),
                   //'post_comentarios': (BuildContext context) => PostComentarios(),
                   'logros': (BuildContext context) => Logros(),
+                  'loggedIn': (BuildContext context) => LoggedInWidget(),
                 },
                 debugShowCheckedModeBanner: false,
                 home: Transition(),
                 theme: ThemeData(
                   textTheme: GoogleFonts.comfortaaTextTheme(),
-                )
-            ),
-                child: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-                  // ignore: missing_return
-                  builder: (context, snapshot){
-                    final provider = Provider.of<GoogleSignInProvider>(context);
-                    if(provider.isSigningIn){
-                      return buildLoading();
-                    } else if(snapshot.hasData){
-                      return LoggedInWidget();
-                    }else {
-                      return null;
-                    }
-                  },
-        )
-        )
-    );
+                )),
+            child: StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              // ignore: missing_return
+              builder: (context, snapshot) {
+                final provider = Provider.of<GoogleSignInProvider>(context);
+                if (provider.isSigningIn) {
+                  return buildLoading();
+                } else if (snapshot.hasData) {
+                  print("aaaaaaaaaaaaAAAAAaaaaaaaa");
+                  Navigator.pushNamed(context, 'loggedIn');
+                } else {
+                  return null;
+                }
+              },
+            )));
   }
 
   Widget buildLoading() => Stack(
-    fit: StackFit.expand,
-    children: [
-      //CustomPaint(painter: BackgroundPainter()),
-      Center(child: CircularProgressIndicator()),
-    ],
-  );
-
+        fit: StackFit.expand,
+        children: [
+          //CustomPaint(painter: BackgroundPainter()),
+          Center(child: CircularProgressIndicator()),
+        ],
+      );
 }
